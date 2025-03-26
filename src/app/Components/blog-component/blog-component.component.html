@@ -1,1 +1,124 @@
-<p>blog-component works!</p>
+<div class="main-container">
+    <!-- Left Sidebar -->
+    <!-- Add Font Awesome CDN link in the head section of your HTML -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+
+    <div class="sidebar">
+        <h3>Filter by Category</h3>
+        <ul class="filter-options">
+            <li><input type="checkbox" id="lost-found"> <label for="lost-found">My Posts</label></li>
+            <li><input type="checkbox" id="lost-found"> <label for="lost-found">Lost & Found</label></li>
+            <li><input type="checkbox" id="help-advice"> <label for="help-advice">Help & Advice</label></li>
+            <li><input type="checkbox" id="success-story"> <label for="success-story">Success Story</label></li>
+        </ul>
+    </div>
+
+    <!-- Right Section -->
+    <div class="posts-container">
+        <!-- Top Controls -->
+        <div class="top-controls">
+            <!-- Add Post Button -->
+            <button class="add-post" id="addPost">
+                <i class="fas fa-plus"></i> ADD POST
+            </button>
+
+            <div class="container">
+                <!-- Light Theme Search -->
+                <div class="search-wrapper">
+                    <div class="search-box">
+                        <i class="fas fa-search search-icon"></i>
+                        <input type="text" class="search-input" placeholder="Search anything...">
+                        <button class="search-button">Search</button>
+                    </div>
+                </div>
+            </div>
+            
+
+            <div class="sort-buttons">
+                <!-- Oldest Button with Icon -->
+                <button class="btn" id="sortLatest">
+                    <i class="fas fa-calendar-alt"></i> <i class="fas fa-arrow-up"></i> Latest
+                </button>
+
+                <!-- Latest Button with Icon -->
+                <button class="btn" id="sortOldest">
+                    <i class="fas fa-calendar-alt"></i> <i class="fas fa-arrow-down"></i> Oldest
+                </button>
+            </div>
+        </div>
+
+        <!-- Posts -->
+        <div class="blog-grid">
+            <div class="blog-grid-img">
+                <img alt="img" src="https://www.bootdey.com/image/480x480/00FFFF/000000">
+            </div>
+            <div class="blog-grid-text">
+                <h3><a href="#!">Business tool for customers</a></h3>
+                <p>Exercitation ullamco laboris nisi ut aliquip ex ea commodo.</p>
+                <div class="meta">
+                    <ul>
+                        <li><i class="fas fa-calendar-alt"></i> 10 Jul, 2025</li>
+                        <li><i class="fas fa-user"></i> User</li>
+                        <li><i class="fas fa-comments"></i> 38</li>
+                        <li><i class="fas fa-thumbs-up"></i> 38</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="blog-grid">
+            <div class="blog-grid-img">
+                <img alt="img" src="https://www.bootdey.com/image/480x480/00FFFF/000000">
+            </div>
+            <div class="blog-grid-text">
+                <h3><a href="#!">Growth your business strategy</a></h3>
+                <p>Exercitation ullamco laboris nisi ut aliquip ex ea commodo.</p>
+                <div class="meta">
+                    <ul>
+                        <li><i class="fas fa-calendar-alt"></i> 25 Jun, 2025</li>
+                        <li><i class="fas fa-user"></i> User</li>
+                        <li><i class="fas fa-comments"></i> 68</li>
+                        <li><i class="fas fa-thumbs-up"></i> 38</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="blog-grid">
+            <div class="blog-grid-img">
+                <img alt="img" src="https://www.bootdey.com/image/480x480/00FFFF/000000">
+            </div>
+            <div class="blog-grid-text">
+                <h3><a href="#!">Business success master plan</a></h3>
+                <p>Exercitation ullamco laboris nisi ut aliquip ex ea commodo.</p>
+                <div class="meta">
+                    <ul>
+                        <li><i class="fas fa-calendar-alt"></i> 16 May, 2025</li>
+                        <li><i class="fas fa-user"></i> User</li>
+                        <li><i class="fas fa-comments"></i> 58</li>
+                        <li><i class="fas fa-thumbs-up"></i> 38</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="blog-grid">
+            <div class="blog-grid-img">
+                <img alt="img" src="https://www.bootdey.com/image/480x480/00FFFF/000000">
+            </div>
+            <div class="blog-grid-text">
+                <h3><a href="#!">Results professional report</a></h3>
+                <p>Exercitation ullamco laboris nisi ut aliquip ex ea commodo.</p>
+                <div class="meta">
+                    <ul>
+                        <li><i class="fas fa-calendar-alt"></i> 02 Apr, 2025</li>
+                        <li><i class="fas fa-user"></i> User</li>
+                        <li><i class="fas fa-comments"></i> 38</li>
+                        <li><i class="fas fa-thumbs-up"></i> 38</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>

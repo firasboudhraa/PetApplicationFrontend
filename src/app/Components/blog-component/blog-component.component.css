@@ -1,0 +1,311 @@
+body {
+    margin-top: 20px;
+    font-family: Arial, sans-serif;
+}
+
+
+.blog-grid-text h3 a {
+    font-size: 20px;              /* Larger font size for the title */
+    font-weight: bold;            /* Make the title bold */
+    color: #333;                  /* Dark color for the text */
+    text-decoration: none;        /* Remove underline */
+    transition: all 0.3s ease;    /* Smooth transition for hover effect */
+    line-height: 1.4;             /* Adjust line height for better readability */
+}
+
+.blog-grid-text h3 a:hover {
+    color: #007bff;               /* Change text color to blue on hover */
+    text-decoration: underline;   /* Add underline on hover */
+    transform: scale(1.05);        /* Slightly enlarge the title on hover */
+}
+
+
+
+
+.page-btn {
+    padding: 10px 15px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    cursor: pointer;
+    margin: 0 10px;
+    border-radius: 4px;
+}
+
+.page-btn:hover {
+    background-color: #0056b3;
+}
+
+.page-numbers {
+    display: flex;
+}
+
+.page-numbers .page-num {
+    padding: 10px;
+    margin: 0 5px;
+    cursor: pointer;
+    border: 1px solid #007bff;
+    border-radius: 4px;
+}
+
+.page-numbers .page-num:hover {
+    background-color: #007bff;
+    color: white;
+}
+
+/* Main container layout */
+.main-container {
+    display: flex;
+    height: 100%;
+    width: 100%;
+    overflow: hidden;
+}
+
+/* Left sidebar */
+.sidebar {
+    width: 250px; /* Adjust width as necessary */
+    height: 100%;
+    background-color: #f4f4f4;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+.sidebar h3 {
+    font-size: 20px;
+    margin-bottom: 15px;
+    color: #030b04;
+}
+
+
+.filter-options {
+    list-style: none;
+    padding: 0;
+    font-size: 20px;
+}
+
+/* Make the checkboxes larger */
+input[type="checkbox"] {
+    transform: scale(1.5); /* Increase the scale factor to make the checkbox larger */
+    margin-right: 10px; /* Optional: adjust spacing between checkbox and label */
+}
+
+.filter-options li {
+    margin-bottom: 10px;
+}
+
+.filter-options input {
+    margin-right: 10px;
+}
+
+/* Posts container with scrollbar */
+.posts-container {
+    flex-grow: 1; /* This will make it take the remaining space */
+    height: 100%;
+    overflow-y: auto; /* Add scroll if content overflows */
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+/* Top controls */
+.top-controls {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+
+.btn {
+    padding: 10px 15px;
+    border: none;
+    background: #20d23b;
+    color: white;
+    cursor: pointer;
+    border-radius: 5px;
+    font-size: 14px;
+}
+
+.btn:hover {
+    background: #1bade2;
+}
+
+/* Blog post layout */
+.blog-grid {
+    display: flex;
+    align-items: center;
+    padding: 15px;
+    border-bottom: 1px solid #ddd;
+}
+
+.blog-grid-img img {
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+    border-radius: 5px;
+}
+
+.blog-grid-text {
+    padding-left: 15px;
+}
+
+.blog-grid h3 {
+    font-size: 16px;
+    margin-bottom: 5px;
+}
+
+/* Style the "Filter by Category" heading */
+.sidebar h3 {
+    font-size: 18px;         /* Adjust the font size */
+    font-weight: bold;       /* Make the font bold */
+    color: #251f1f;             /* Change the font color */
+    margin-bottom: 20px;     /* Add space below the heading */
+    text-transform: uppercase; /* Optional: make the text uppercase */
+    border-bottom: 3px solid #4e574f; /* Optional: add a border below */
+    padding-bottom: 5px;     /* Optional: add some padding under the heading */
+}
+
+/* Style the Add Post button */
+.add-post {
+    padding: 15px 40px;  /* Reduced padding to make the button smaller */
+    background-color: #31f437;  /* Green background */
+    border: none;
+    font-family: Arial, sans-serif;
+    color: rgb(0, 0, 0) !important; /* Black text color */
+    cursor: pointer;
+    border-radius: 50px;
+    font-size: 15px;
+    display: inline-flex;  /* Use inline-flex to keep everything on the same line */
+    font-weight: bold; 
+    align-items: center;  /* Align text and icon horizontally */
+    height: 60px;  /* Set a fixed height for the button */
+    white-space: nowrap;  /* Ensure text doesn't wrap to the next line */
+}
+
+.add-post:hover {
+    background-color: #16e343;  /* Darker green when hovered */
+}
+
+/* Style the icons inside the Add Post button */
+.add-post i {
+    margin-right: 20px; /* Space between icon and text */
+}
+
+/* Style the buttons with grey background */
+.btn {
+    padding: 25px 15px;  /* Reduced padding for a smaller button */
+    font-size: 14px;     /* Text size */
+    height: 35px;        /* Set a fixed height for the button */
+    border: none;
+    background-color: #d3d3d3;  /* Grey background */
+    color: black;  /* Text color */
+    cursor: pointer;
+    border-radius: 5px;
+    display: flex;
+    align-items: center; /* Align text and icon horizontally */
+}
+
+.btn:hover {
+    background-color: #a9a9a9; /* Darker grey when hovered */
+}
+
+/* Style the icons inside the buttons */
+.btn i {
+    margin-right: 8px; /* Space between icon and text */
+}
+
+.blog-grid p {
+    font-size: 14px;
+    margin-bottom: 5px;
+}
+
+.meta ul {
+    padding: 0;
+    font-size: 12px;
+}
+
+.meta ul li {
+    display: inline;
+    margin-right: 10px;
+}
+
+/* Sorting buttons */
+.sort-buttons {
+    display: flex;
+    gap: 5px;
+    font-weight: normal;
+    font-family: Arial, sans-serif;
+}
+
+.search-wrapper {
+    max-width: 500px;
+    margin: 20px auto;
+}
+
+.search-box {
+    position: relative;
+    box-shadow: 0 2px 15px rgba(0, 0, 0, 0.05);
+    border-radius: 50px;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+}
+
+.search-box:focus-within {
+    box-shadow: 0 3px 20px rgba(0, 0, 0, 0.1);
+    transform: translateY(-2px);
+}
+
+.search-input {
+    border-radius: 50px;
+    padding-left: 45px;
+    padding-right: 20px;
+    border: 2px solid transparent;
+    transition: all 0.3s ease;
+    height: 50px;
+    flex-grow: 1;
+}
+
+.search-input:focus {
+    border-color: #0d6efd;
+    box-shadow: none;
+}
+
+.search-icon {
+    position: absolute;
+    left: 16px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #6c757d;
+    z-index: 10;
+}
+
+.search-button {
+    padding: 5px 15px;  /* Reduced padding */
+    font-size: 14px;     /* Keep the text size reasonable */
+    height: 35px;        /* Set a fixed height for the button */
+    border-radius: 50px;
+    background-color: #0d6efd;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+.search-button:hover {
+    background-color: #0b5ed7;
+    transform: scale(1.05);
+}
+
+.search-box.dark {
+    background-color: #212529;
+}
+
+.search-box.dark .search-input {
+    background-color: #212529;
+    color: #fff;
+}
+
+.search-box.dark .search-input::placeholder {
+    color: #6c757d;
+}
+
+.search-box.dark .search-icon {
+    color: #6c757d;
+}

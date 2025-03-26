@@ -1,0 +1,7 @@
+/* Make the commenter's profile photo smaller */
+.profile-photo-sm {
+    width: 30px; /* Adjust this value as per your desired size */
+    height: 30px; /* Adjust this value as per your desired size */
+    border-radius: 50%;
+  }
+  

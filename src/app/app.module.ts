@@ -12,6 +12,7 @@ import {HttpClientModule} from '@angular/common/http';
 import { FooterComponentComponent } from './Components/footer-component/footer-component.component';
 import { NavbarComponent } from './Components/navbar/navbar.component';
 import { ContactInfoComponent } from './Components/contact-info/contact-info.component';
+import { PostDetailComponent } from './post-detail/post-detail.component';
 
 @NgModule({
   declarations: [
@@ -22,7 +23,8 @@ import { ContactInfoComponent } from './Components/contact-info/contact-info.com
     VetComponentComponent,
     FooterComponentComponent,
     NavbarComponent,
-    ContactInfoComponent
+    ContactInfoComponent,
+    PostDetailComponent
   ],
   imports: [
     BrowserModule,

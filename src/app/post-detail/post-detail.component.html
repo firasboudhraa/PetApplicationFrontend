@@ -1,0 +1,43 @@
+<div class="container">
+    <div class="row">
+      <div class="col-md-8">
+        <div class="post-content">
+          <img [src]="post.imageUrl" alt="post-image" class="img-responsive post-image">
+          <div class="post-container">
+            <img [src]="post.authorAvatar" alt="user" class="profile-photo-md pull-left">
+            <div class="post-detail">
+              <div class="user-info">
+                <h5><a href="timeline.html" class="profile-link">{{ post.author }}</a> <span class="following">following</span></h5>
+                <p class="text-muted">Published {{ post.timeAgo }}</p>
+              </div>
+              <div class="reaction">
+                <a class="btn text-green"><i class="fa fa-thumbs-up"></i> {{ post.likes }}</a>
+                <a class="btn text-red"><i class="fa fa-thumbs-down"></i> {{ post.dislikes }}</a>
+              </div>
+              <div class="line-divider"></div>
+              <div class="post-text">
+                <p>{{ post.content }}</p>
+              </div>
+              <div class="line-divider"></div>
+              <div class="post-comment" *ngFor="let comment of post.comments">
+                <img [src]="comment.avatar" alt="" class="profile-photo-sm">
+                <p><a href="timeline.html" class="profile-link">{{ comment.author }}</a> {{ comment.text }}</p>
+              </div>
+              <div class="post-comment">
+                <img [src]="userAvatar" alt="" class="profile-photo-sm">
+                <input type="text" class="form-control" placeholder="Post a comment">
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <style>
+    .profile-photo-sm {
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+    }
+  </style>
