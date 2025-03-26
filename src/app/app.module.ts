@@ -3,26 +3,21 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { AboutComponentComponent } from './Components/about-component/about-component.component';
-import { BlogComponentComponent } from './Components/blog-component/blog-component.component';
-import { HomeComponentComponent } from './Components/home-component/home-component.component';
-import { VetComponentComponent } from './Components/vet-component/vet-component.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import {HttpClientModule} from '@angular/common/http';
-import { FooterComponentComponent } from './Components/footer-component/footer-component.component';
-import { NavbarComponent } from './Components/navbar/navbar.component';
-import { ContactInfoComponent } from './Components/contact-info/contact-info.component';
+import { FooterComponent } from './Components/FrontOffice/footer/footer.component';
+import { ContactInfoComponent } from './Components/FrontOffice/contact-info/contact-info.component';
+import { NavbarComponent } from './Components/FrontOffice/navbar/navbar.component';
+import { HomeComponent } from './Components/FrontOffice/home/home.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    AboutComponentComponent,
-    BlogComponentComponent,
-    HomeComponentComponent,
-    VetComponentComponent,
-    FooterComponentComponent,
+    HomeComponent,
     NavbarComponent,
-    ContactInfoComponent
+    ContactInfoComponent,
+    FooterComponent,
+    HomeComponent
   ],
   imports: [
     BrowserModule,
