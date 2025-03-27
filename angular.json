@@ -39,6 +39,7 @@
             "scripts": [
               "node_modules/aos/dist/aos.js",
               "node_modules/jquery/dist/jquery.min.js",
+              "node_modules/timepicker/jquery.timepicker.min.js",
               "node_modules/popper.js/dist/umd/popper.min.js",
               "node_modules/bootstrap/dist/js/bootstrap.min.js",
               "src/assets/js/jquery-migrate-3.0.1.min.js",
