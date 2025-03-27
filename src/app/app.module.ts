@@ -9,6 +9,9 @@ import { FooterComponent } from './Components/FrontOffice/footer/footer.componen
 import { ContactInfoComponent } from './Components/FrontOffice/contact-info/contact-info.component';
 import { NavbarComponent } from './Components/FrontOffice/navbar/navbar.component';
 import { HomeComponent } from './Components/FrontOffice/home/home.component';
+import { ServiceComponent } from './Components/FrontOffice/service/service.component';
+import { AddServiceComponent } from './Components/FrontOffice/add-service/add-service.component';
+import { DetailServiceComponent } from './Components/FrontOffice/detail-service/detail-service.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -17,6 +20,9 @@ import { HomeComponent } from './Components/FrontOffice/home/home.component';
     ContactInfoComponent,
     FooterComponent,
     HomeComponent,
+    ServiceComponent,
+    AddServiceComponent,
+    DetailServiceComponent,
   ],
   imports: [
     BrowserModule,

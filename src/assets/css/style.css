@@ -8825,8 +8825,8 @@ textarea.form-control {
   visibility: hidden; }*/
 
   .ftco-animate {
-    opacity: 1 !important;
-    visibility: visible !important;
+    opacity: 1 ;
+    visibility: visible ;
   }
   
 
