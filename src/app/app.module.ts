@@ -9,6 +9,8 @@ import { FooterComponent } from './Components/FrontOffice/footer/footer.componen
 import { ContactInfoComponent } from './Components/FrontOffice/contact-info/contact-info.component';
 import { NavbarComponent } from './Components/FrontOffice/navbar/navbar.component';
 import { HomeComponent } from './Components/FrontOffice/home/home.component';
+import { PetCardComponent } from './Components/Pets/pet-card/pet-card.component';
+import { ShowPetsComponent } from './Components/Pets/show-pets/show-pets.component';
 
 @NgModule({
   declarations: [
@@ -17,7 +19,9 @@ import { HomeComponent } from './Components/FrontOffice/home/home.component';
     NavbarComponent,
     ContactInfoComponent,
     FooterComponent,
-    HomeComponent
+    HomeComponent,
+    PetCardComponent,
+    ShowPetsComponent
   ],
   imports: [
     BrowserModule,
