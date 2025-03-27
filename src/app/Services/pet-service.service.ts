@@ -19,6 +19,10 @@ export class PetServiceService {
     return this.http.get<PetService>(this.apiUrl+'service/'+id);
   }
 
+  getAvailableSlots(id:number): Observable<string[]>{
+    return this.http.get<string[]>(this.apiUrl+id+'/slots');
+  }
+
   addService(s:PetService): Observable<PetService>{
     return this.http.post<PetService>(this.apiUrl+'add-service', s);
   }

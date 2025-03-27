@@ -1,1 +1,64 @@
-<p>detail-service works!</p>
+<!-- Detail Service Section -->
+<section class="ftco-section bg-light py-5">
+    <div class="container">
+      <div class="row mb-5">
+        <!-- Service Details Column -->
+        <div class="col-md-8 offset-md-2">
+          <div class="service-detail-card shadow-lg rounded-lg p-5 bg-white">
+            
+            <!-- Service Header with Title -->
+            <div class="text-center mb-4">
+              <h2 class="font-weight-bold text-dark mb-3">{{ service.name }}</h2>
+              <div class="icon d-flex align-items-center justify-content-center rounded-circle bg-primary text-white mx-auto mb-3" style="width: 80px; height: 80px;">
+                <span class="flaticon-customer-service" style="font-size: 30px;"></span>
+              </div>
+            </div>
+    
+            <!-- Service Description -->
+            <div class="service-description mb-4">
+              <h4 class="text-dark font-weight-bold mb-2">Description</h4>
+              <p class="text-muted">{{ service.description }}</p>
+            </div>
+    
+            <!-- Service Price and Duration -->
+            <div class="service-info d-flex justify-content-between mb-4">
+              <div class="price">
+                <h4 class="text-dark font-weight-bold">Price:</h4>
+                <p class="text-muted">{{ service.price | currency }}</p>
+              </div>
+              <div class="duration">
+                <h4 class="text-dark font-weight-bold">Duration:</h4>
+                <p class="text-muted">{{ service.durationInMinutes }} minutes</p>
+              </div>
+            </div>
+    
+            <!-- Service Start and End Date -->
+            <div class="service-dates mb-4">
+              <h4 class="text-dark font-weight-bold">Available From:</h4>
+              <p class="text-muted">{{ service.startDate | date:'short' }}</p>
+              
+              <h4 class="text-dark font-weight-bold">To:</h4>
+              <p class="text-muted">{{ service.endDate | date:'short' }}</p>
+            </div>
+    
+            <!-- Available Slots Section -->
+            <div class="available-slots mb-5">
+              <h4 class="text-dark font-weight-bold mb-3">Available Slots:</h4>
+              <ul class="list-unstyled">
+                <li *ngFor="let slot of availableSlots" class="py-1">
+                  <span class="text-muted">{{ slot }}</span>
+                </li>
+              </ul>
+              <p *ngIf="availableSlots.length === 0" class="text-muted">No available slots at the moment.</p>
+            </div>
+    
+            <!-- Book Appointment Button -->
+            <div class="text-center mt-4">
+              <button class="btn btn-primary px-5 py-3 font-weight-bold">Book Appointment</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  

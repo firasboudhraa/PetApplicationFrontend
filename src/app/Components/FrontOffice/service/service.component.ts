@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import type { PetService } from 'src/app/models/service';
 import  { PetServiceService } from 'src/app/Services/pet-service.service';
 
 @Component({
@@ -8,37 +9,26 @@ import  { PetServiceService } from 'src/app/Services/pet-service.service';
 })
 export class ServiceComponent {
   services : any[] = [];
+  chunkedServices: any[] = [];
   constructor( private ps:PetServiceService) { }
 
   ngOnInit(): void {
     this.ps.getServices().subscribe(
-      (data) => this.services = data
+      (data) =>{ 
+        this.services = data 
+        console.log(this.services)
+        this.chunkArray(this.services, 3);
+      }
     );
   }
-
-
-  selectedService: any = null;
-
-  openModal(service: any) {
-    this.selectedService = service;
-    const modalElement = document.getElementById('serviceModal');
-    if (modalElement) {
-      (modalElement as any).classList.add('show');
-      (modalElement as any).style.display = 'block';
+  chunkArray(array: any[], size: number) {
+    this.chunkedServices = [];
+    for (let i = 0; i < array.length; i += size) {
+      this.chunkedServices.push(array.slice(i, i + size));
     }
+    console.log(this.chunkedServices);
   }
 
-  closeModal() {
-    const modalElement = document.getElementById('serviceModal');
-    if (modalElement) {
-      (modalElement as any).classList.remove('show');
-      (modalElement as any).style.display = 'none';
-    }
-  }
 
-  bookAppointment(service: any) {
-    alert(`Booking an appointment for: ${service.name}`);
-    this.closeModal();
-  }
 
 }
