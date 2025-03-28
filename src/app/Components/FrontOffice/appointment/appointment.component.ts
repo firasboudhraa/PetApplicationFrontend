@@ -1,32 +1,49 @@
 import { Component } from '@angular/core';
-import dayGridPlugin from '@fullcalendar/daygrid';
-import { CalendarOptions } from '@fullcalendar/core';
-import interactionPlugin from '@fullcalendar/interaction'; // needed for dayClick
+import { ActivatedRoute } from '@angular/router';
+import { PetServiceService } from 'src/app/Services/pet-service.service';
+import { DatePipe } from '@angular/common';
+import  { AppointmentService } from 'src/app/Services/appointment.service';
 
 @Component({
   selector: 'app-appointment',
   templateUrl: './appointment.component.html',
-  styleUrls: ['./appointment.component.css']
+  styleUrls: ['./appointment.component.css'],
+  providers: [DatePipe] 
 })
 export class AppointmentComponent {
+  serviceId!: number;
+  serviceName!: string;
+  availableSlots: string[] = [];
+  selectedDate: string | null = null;  
 
-  calendarPlugins = [ 
-    dayGridPlugin ];
+  constructor(private route: ActivatedRoute, 
+              private service: PetServiceService,
+              private as: AppointmentService,
+              private datePipe: DatePipe) {}
 
-    calendarOptions: CalendarOptions = {
-      plugins: [dayGridPlugin, interactionPlugin], 
-      initialView: 'dayGridMonth', 
-      selectable: true,
-      editable: true,
-      events: [
-        { title: 'Meeting', date: '2024-04-10' },
-        { title: 'Conference', date: '2024-04-15' }
-      ],
-      dateClick: this.handleDateClick.bind(this)
-    };
-
-  handleDateClick(arg: any) {
-    alert('Date clicked: ' + arg.dateStr);
+  ngOnInit(): void {
+    this.serviceId = this.route.snapshot.params['id'];
+    this.service.getServiceById(this.serviceId).subscribe(data => {
+      this.serviceName = data.name;
+    });
+    this.service.getAvailableSlots(this.serviceId).subscribe(data => {
+      this.availableSlots = data; 
+    });
   }
 
+  selectSlot(slot: string): void {
+    this.selectedDate = slot; 
+  }
+
+  confirmAppointment(): void {
+    if (this.selectedDate) {
+      console.log('Appointment confirmed for:', this.selectedDate);
+    } else {
+      alert('Please select a time slot!');
+    }
+  }
+
+  formatDate(date: string): string {
+    return this.datePipe.transform(date, 'MMMM d, yyyy h:mm a') || date;
+  }
 }

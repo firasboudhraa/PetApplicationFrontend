@@ -1,2 +1,39 @@
-
-<full-calendar defaultView="dayGridMonth" [options]="calendarOptions"></full-calendar>
+<section class="appointment-container bg-light py-5">
+    <div class="container">
+      <div class="text-center mb-4">
+        <h2 class="font-weight-bold text-dark">Book an Appointment for {{ serviceName }}</h2>
+        <p class="text-muted">Select an available time slot below.</p>
+      </div>
+  
+      <!-- Input for displaying selected slot -->
+      <div class="calendar-wrapper p-4 shadow-lg rounded bg-white">
+        <input 
+          type="text" 
+          class="form-control custom-datepicker"
+          placeholder="Select a date"
+          [value]="selectedDate ? formatDate(selectedDate) : 'No date selected'"
+          readonly
+        />
+      </div>
+  
+      <!-- Available Slots -->
+      <div class="available-slots mt-4">
+        <h4 class="text-dark font-weight-bold mb-3">Available Slots:</h4>
+        <ul class="list-group">
+          <li 
+            *ngFor="let slot of availableSlots" 
+            class="list-group-item list-group-item-action text-center"
+            (click)="selectSlot(slot)"  
+          >
+            {{ formatDate(slot) }}  
+          </li>
+        </ul>
+      </div>
+  
+      <!-- Confirm Appointment Button -->
+      <div class="text-center mt-4">
+        <button class="btn btn-success px-5 py-3" (click)="confirmAppointment()">Confirm Appointment</button>
+      </div>
+    </div>
+  </section>
+  

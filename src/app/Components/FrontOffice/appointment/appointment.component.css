@@ -1,0 +1,14 @@
+  .appointment-container {
+    animation: fadeIn 0.8s ease-in-out;
+  }
+  
+  .calendar-wrapper {
+    max-width: 600px;
+    margin: 0 auto;
+  }
+  
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  

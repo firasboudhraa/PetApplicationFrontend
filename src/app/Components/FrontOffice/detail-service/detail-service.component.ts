@@ -11,7 +11,7 @@ import { formatDate } from '@angular/common';
 })
 export class DetailServiceComponent implements OnInit {
   id!: number;
-  service!: PetService;
+  service!: any;
   availableSlots: string[] = [];
 
   

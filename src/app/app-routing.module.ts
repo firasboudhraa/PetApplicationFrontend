@@ -11,7 +11,7 @@ const routes: Routes = [
   {path:'service', component:ServiceComponent},
   {path:'add-service',component:AddServiceComponent},
   {path:'serviceDetail/:id', component:DetailServiceComponent},
-  {path:'appointment',component:AppointmentComponent},
+  {path:'appointment/:id',component:AppointmentComponent},
   {path:'',redirectTo:'home',pathMatch:'full'},
 
 ];
