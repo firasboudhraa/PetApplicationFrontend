@@ -1,4 +1,4 @@
-import { NgModule, Component } from '@angular/core';
+import { NgModule, Component, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -12,6 +12,8 @@ import { HomeComponent } from './Components/FrontOffice/home/home.component';
 import { ServiceComponent } from './Components/FrontOffice/service/service.component';
 import { AddServiceComponent } from './Components/FrontOffice/add-service/add-service.component';
 import { DetailServiceComponent } from './Components/FrontOffice/detail-service/detail-service.component';
+import { FullCalendarModule } from '@fullcalendar/angular';
+import { AppointmentComponent } from './Components/FrontOffice/appointment/appointment.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -23,6 +25,7 @@ import { DetailServiceComponent } from './Components/FrontOffice/detail-service/
     ServiceComponent,
     AddServiceComponent,
     DetailServiceComponent,
+    AppointmentComponent,
   ],
   imports: [
     BrowserModule,
@@ -30,8 +33,10 @@ import { DetailServiceComponent } from './Components/FrontOffice/detail-service/
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
+    FullCalendarModule
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class AppModule { }
