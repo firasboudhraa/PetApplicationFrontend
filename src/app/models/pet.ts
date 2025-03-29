@@ -1,7 +1,7 @@
 export interface Pet {
     id: number;
     name: string;
-    image: string
+    imagePath: string
     species: string;
     age: number;
     color: string;

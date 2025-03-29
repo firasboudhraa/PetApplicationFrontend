@@ -1,8 +1,8 @@
 <section class="ftco-section">
-    <div class="container">
-        <div class="row d-flex">
+    <div class="container ">
+        <div class="card-container">
             <ng-container  *ngFor="let pet of pets">
-                <div class="col-md-4 d-flex ">
+                <div >
                     <app-pet-card [pet]="pet"></app-pet-card>
                 </div>
             </ng-container>
@@ -14,14 +14,27 @@
         <div class="col text-center">
           <div class="block-27">
             <ul>
-              <li><a href="#">&lt;</a></li>
-              <li class="active"><span>1</span></li>
-              <li><a href="#">2</a></li>
-              <li><a href="#">3</a></li>
-              <li><a href="#">4</a></li>
-              <li><a href="#">5</a></li>
-              <li><a href="#">&gt;</a></li>
+              <li>
+                <a href="#" (click)="$event.preventDefault(); changePage(currentPage - 1)">&lt;</a>
+              </li>
+              <li *ngFor="let page of getIndexArray(totalPages); let i = index" [class.active]="i + 1 === currentPage">
+                <a href="#" (click)="$event.preventDefault(); changePage(i + 1)">{{ i + 1 }}</a>
+              </li>
+              <li>
+                <a href="#" (click)="$event.preventDefault(); changePage(currentPage + 1)">&gt;</a>
+              </li>
             </ul>
+            <!-- <ul>
+              <li>
+                <a href="#" (click)="$event.preventDefault(); changePage(currentPage - 1)">&lt;</a>
+              </li>
+              <li *ngFor="let page of [].constructor(totalPages); let i = index" [class.active]="i + 1 === currentPage">
+                <a href="#" (click)="$event.preventDefault(); changePage(i + 1)">{{ i + 1 }}</a>
+              </li>
+              <li>
+                <a href="#" (click)="$event.preventDefault(); changePage(currentPage + 1)">&gt;</a>
+              </li>
+            </ul> -->
           </div>
         </div>
       </div>

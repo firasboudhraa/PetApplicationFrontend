@@ -8,4 +8,11 @@ import { Pet } from 'src/app/models/pet';
 })
 export class PetCardComponent {
   @Input() pet!: Pet;
+
+  private apiUrl = 'http://localhost:8222/api/v1/pet/images';
+
+
+  getImageUrl(filename: string): string {
+    return `${this.apiUrl}/${filename}`;
+}
 }
