@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Renderer2 } from '@angular/core';
 import { Pet } from 'src/app/models/pet';
 import { PetdataServiceService } from 'src/app/Services/petdata-service.service';
 
@@ -14,7 +14,23 @@ export class ShowPetsComponent  {
   currentPage: number = 1;
   itemsPerPage: number = 3;
   totalItems: number = 0;
-  constructor(private petDataService: PetdataServiceService) {}
+
+  showModal = false;
+  constructor(private petDataService: PetdataServiceService ,private renderer: Renderer2 ) {}
+  openModal() {
+    this.showModal = true;
+    this.renderer.addClass(document.querySelector('.ftco-section'), 'blur-effect');
+    this.renderer.addClass(document.querySelector('app-navbar'), 'blur-effect');
+    this.renderer.addClass(document.querySelector('app-footer'), 'blur-effect');
+    
+  }
+  
+  closeModal() {
+    this.showModal = false;
+    this.renderer.removeClass(document.querySelector('.ftco-section'), 'blur-effect');
+    this.renderer.removeClass(document.querySelector('app-navbar'), 'blur-effect');
+    this.renderer.removeClass(document.querySelector('app-footer'), 'blur-effect');
+  }
 
   get totalPages(): number {
     return Math.ceil(this.totalItems / this.itemsPerPage);

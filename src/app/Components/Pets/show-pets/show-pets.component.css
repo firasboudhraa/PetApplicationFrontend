@@ -4,3 +4,37 @@
     justify-content: center;
     gap: 5vw;    
 }
+
+
+.modal-header {
+    background-color: #007bff;
+    color: white;
+  }
+  
+  .modal-body {
+    padding: 20px;
+  }
+  
+  .modal-footer {
+    justify-content: center;
+  }
+
+
+.modal-content {
+  margin: 2rem auto;
+  z-index: 1050;
+}
+
+.custom-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1050;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(0, 0, 0, 0.4); /* Optional dark overlay */
+  isolation: isolate; /* Prevent blur from affecting modal */
+}

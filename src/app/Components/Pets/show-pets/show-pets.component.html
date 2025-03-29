@@ -1,4 +1,4 @@
-<section class="ftco-section">
+<section class="ftco-section" >
     <div class="container ">
         <div class="card-container">
             <ng-container  *ngFor="let pet of pets">
@@ -24,19 +24,29 @@
                 <a href="#" (click)="$event.preventDefault(); changePage(currentPage + 1)">&gt;</a>
               </li>
             </ul>
-            <!-- <ul>
-              <li>
-                <a href="#" (click)="$event.preventDefault(); changePage(currentPage - 1)">&lt;</a>
-              </li>
-              <li *ngFor="let page of [].constructor(totalPages); let i = index" [class.active]="i + 1 === currentPage">
-                <a href="#" (click)="$event.preventDefault(); changePage(i + 1)">{{ i + 1 }}</a>
-              </li>
-              <li>
-                <a href="#" (click)="$event.preventDefault(); changePage(currentPage + 1)">&gt;</a>
-              </li>
-            </ul> -->
+
           </div>
         </div>
       </div>
     </div>
+
   </section>
+  <button type="button" class="btn btn-primary" (click)="openModal()">Open Modal</button>
+
+  <!-- Modal HTML -->
+  <div class="modal fade show d-block custom-modal" tabindex="-1" role="dialog" *ngIf="showModal">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">My Modal</h5>
+          <button type="button" class="close" (click)="closeModal()">&times;</button>
+        </div>
+        <div class="modal-body">
+          Modal content goes here.
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-secondary" (click)="closeModal()">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
