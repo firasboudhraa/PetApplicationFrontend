@@ -1,178 +1,106 @@
 <section class="home-blog bg-sand">
     <div class="container-fluid px-0">
-        <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
-
-        <!-- section title -->
-        <div class="row justify-content-md-center">
-            <div class="col-xl-5 col-lg-6 col-md-8">
-                <div class="section-title text-center title-ex1">
-                    <h2>Welcome to Our Community</h2>
-                    <p>Discover the latest news, updates, and posts. Stay connected with our vibrant community!</p>
-                </div>
-            </div>
+      <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+  
+      <!-- section title -->
+      <div class="row justify-content-md-center">
+        <div class="col-xl-5 col-lg-6 col-md-8">
+          <div class="section-title text-center title-ex1">
+            <h2>Welcome to Our Community</h2>
+            <p>Explore a variety of topics such as Help & Advice, Success Stories, and more. Interact with fellow members, share ideas, and stay connected!</p>
+          </div>
         </div>
-        
-        <!-- Search Bar Section -->
-        <div class="row justify-content-md-center">
-            <div class="col-xl-5 col-lg-6 col-md-8">
-                <div class="search-bar text-center">
-                    <input type="text" class="form-control" placeholder="Search for posts, topics, or updates...">
-                    <button class="btn btn-primary">Search</button>
-                </div>
-            </div>
+      </div>
+  
+      <!-- Add Post Button Section -->
+      <div class="row justify-content-md-center">
+        <div class="col-md-4">
+          <a href="#" class="btn btn-success btn-lg btn-block">Add Post</a>
         </div>
-        
-        <!-- section title ends -->
-        <div class="row no-gutters">
-            <!-- Blog post 1 -->
-            <div class="col-md-4 mb-4 d-flex" style="padding-right: 15px; padding-left: 15px;">
-                <div class="media blog-media w-100">
-                    <a href="blog-post-left-sidebar.html"><img class="d-flex w-100" src="https://www.bootdey.com/image/350x380/6495ED/000000" alt="Generic placeholder image"></a>
-                    <div class="circle">
-                        <h5 class="day">14</h5>
-                        <span class="month">sep</span>
-                    </div>
-                    <div class="media-body">
-                        <a href=""><h5 class="mt-0">Standard Post dza d azdazdzaddza daz az</h5></a>
-                        Sodales aliquid, in eget ac cupidatat velit s s s s s ss s s sautem numquam ullam ducimus occaecati placeat error.
-                        <a href="blog-post-left-sidebar.html" class="post-link">Read More</a>
-                        <ul>
-                            <li>by: Admin</li>
-                            <li class="text-right">
-                                <a href="blog-post-left-sidebar.html"><i class="fas fa-comments"></i> 07 comments</a>
-                            </li>
-                            <li class="text-right">
-                                <a href="blog-post-left-sidebar.html"><i class="fas fa-thumbs-up"></i> 15 likes</a>
-                            </li>
-                        </ul>
-                    </div>
+      </div>
+  
+      <div class="row">
+        <!-- Search Filter Section aligned left -->
+        <div class="col-md-6">
+          <form id="category-search-form">
+            <div class="form-group">
+              <label for="search-categories">Search by Category</label><br>
+              <div class="row">
+                <!-- First row: My Posts and Help & Advice -->
+                <div class="col-6">
+                  <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="my_posts" id="myPosts">
+                    <label class="form-check-label" for="myPosts">My Posts</label>
+                  </div>
                 </div>
-            </div>
-
-            <!-- Blog post 2 -->
-            <div class="col-md-4 mb-4 d-flex" style="padding-right: 15px; padding-left: 15px;">
-                <div class="media blog-media w-100">
-                    <a href="blog-post-left-sidebar.html"><img class="d-flex w-100" src="https://www.bootdey.com/image/350x380/FFB6C1/000000" alt="Generic placeholder image"></a>
-                    <div class="circle">
-                        <h5 class="day">12</h5>
-                        <span class="month">sep</span>
-                    </div>
-                    <div class="media-body">
-                        <a href=""><h5 class="mt-0">Perferendis labore</h5></a>
-                        Sodales aliquid, in eget ac cupidatat velit autem numquam ullam ducimus occaecati placeat error.
-                        <a href="blog-post-left-sidebar.html" class="post-link">Read More</a>
-                        <ul>
-                            <li>by: Admin</li>
-                            <li class="text-right">
-                                <a href="blog-post-left-sidebar.html"><i class="fas fa-comments"></i> 04 comments</a>
-                            </li>
-                            <li class="text-right">
-                                <a href="blog-post-left-sidebar.html"><i class="fas fa-thumbs-up"></i> 8 likes</a>
-                            </li>
-                        </ul>
-                    </div>
+                <div class="col-6">
+                  <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="help_advice" id="helpAdvice">
+                    <label class="form-check-label" for="helpAdvice">Help & Advice</label>
+                  </div>
                 </div>
-            </div>
-
-            <!-- Blog post 3 -->
-            <div class="col-md-4 mb-4 d-flex" style="padding-right: 15px; padding-left: 15px;">
-                <div class="media blog-media w-100">
-                    <a href="blog-post-left-sidebar.html"><img class="d-flex w-100" src="https://www.bootdey.com/image/350x380/FF7F50/000000" alt="Generic placeholder image"></a>
-                    <div class="circle">
-                        <h5 class="day">09</h5>
-                        <span class="month">sep</span>
-                    </div>
-                    <div class="media-body">
-                        <a href=""><h5 class="mt-0">Deleniti incdunt magni</h5></a>
-                        Sodales aliquid, in eget ac cupidatat velit autem numquam ullam ducimus occaecati placeat error.
-                        <a href="blog-post-left-sidebar.html" class="post-link">Read More</a>
-                        <ul>
-                            <li>by: Admin</li>
-                            <li class="text-right">
-                                <a href="blog-post-left-sidebar.html"><i class="fas fa-comments"></i> 10 comments</a>
-                            </li>
-                            <li class="text-right">
-                                <a href="blog-post-left-sidebar.html"><i class="fas fa-thumbs-up"></i> 20 likes</a>
-                            </li>
-                        </ul>
-                    </div>
+              </div>
+  
+              <div class="row">
+                <!-- Second row: Lost & Found and Success Stories -->
+                <div class="col-6">
+                  <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="lost_found" id="lostFound">
+                    <label class="form-check-label" for="lostFound">Lost & Found</label>
+                  </div>
                 </div>
-            </div>
-
-            <!-- Blog post 4 -->
-            <div class="col-md-4 mb-4 d-flex" style="padding-right: 15px; padding-left: 15px;">
-                <div class="media blog-media w-100">
-                    <a href="blog-post-left-sidebar.html"><img class="d-flex w-100" src="https://www.bootdey.com/image/350x380/008B8B/000000" alt="Generic placeholder image"></a>
-                    <div class="circle">
-                        <h5 class="day">04</h5>
-                        <span class="month">sep</span>
-                    </div>
-                    <div class="media-body">
-                        <a href=""><h5 class="mt-0">Explicabo magnam</h5></a>
-                        Sodales aliquid, in eget ac cupidatat velit autem numquam ullam ducimus occaecati placeat error.
-                        <a href="blog-post-left-sidebar.html" class="post-link">Read More</a>
-                        <ul>
-                            <li>by: Admin</li>
-                            <li class="text-right">
-                                <a href="blog-post-left-sidebar.html"><i class="fas fa-comments"></i> 06 comments</a>
-                            </li>
-                            <li class="text-right">
-                                <a href="blog-post-left-sidebar.html"><i class="fas fa-thumbs-up"></i> 12 likes</a>
-                            </li>
-                        </ul>
-                    </div>
+                <div class="col-6">
+                  <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="success_stories" id="successStories">
+                    <label class="form-check-label" for="successStories">Success Stories</label>
+                  </div>
                 </div>
+              </div>
             </div>
-
-            <!-- Blog post 5 -->
-            <div class="col-md-4 mb-4 d-flex" style="padding-right: 15px; padding-left: 15px;">
-                <div class="media blog-media w-100">
-                    <a href="blog-post-left-sidebar.html"><img class="d-flex w-100" src="https://www.bootdey.com/image/350x380/6495ED/000000" alt="Generic placeholder image"></a>
-                    <div class="circle">
-                        <h5 class="day">20</h5>
-                        <span class="month">aug</span>
-                    </div>
-                    <div class="media-body">
-                        <a href=""><h5 class="mt-0">Another Blog Post</h5></a>
-                        Aenean scelerisque purus ut nunc condimentum, eu gravida tortor venenatis.
-                        <a href="blog-post-left-sidebar.html" class="post-link">Read More</a>
-                        <ul>
-                            <li>by: Admin</li>
-                            <li class="text-right">
-                                <a href="blog-post-left-sidebar.html"><i class="fas fa-comments"></i> 05 comments</a>
-                            </li>
-                            <li class="text-right">
-                                <a href="blog-post-left-sidebar.html"><i class="fas fa-thumbs-up"></i> 18 likes</a>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Blog post 6 -->
-            <div class="col-md-4 mb-4 d-flex" style="padding-right: 15px; padding-left: 15px;">
-                <div class="media blog-media w-100">
-                    <a href="blog-post-left-sidebar.html"><img class="d-flex w-100" src="https://www.bootdey.com/image/350x380/FFB6C1/000000" alt="Generic placeholder image"></a>
-                    <div class="circle">
-                        <h5 class="day">25</h5>
-                        <span class="month">aug</span>
-                    </div>
-                    <div class="media-body">
-                        <a href=""><h5 class="mt-0">Tech Innovations</h5></a>
-                        Donec in suscipit dui. Phasellus auctor orci ut aliquam viverra.
-                        <a href="blog-post-left-sidebar.html" class="post-link">Read More</a>
-                        <ul>
-                            <li>by: Admin</li>
-                            <li class="text-right">
-                                <a href="blog-post-left-sidebar.html"><i class="fas fa-comments"></i> 08 comments</a>
-                            </li>
-                            <li class="text-right">
-                                <a href="blog-post-left-sidebar.html"><i class="fas fa-thumbs-up"></i> 22 likes</a>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
+            <button id="apply" type="submit" class="btn btn-primary">Apply Filters</button>
+          </form>
         </div>
-    </div>
-</section>
+  
+        <!-- Search Bar Section aligned right -->
+        <div class="col-md-6">
+          <div class="search-bar text-center">
+            <input type="text" class="form-control" placeholder="Search for posts, topics, or updates...">
+            <button class="btn btn-primary">Search</button>
+          </div>
+        </div>
+      </div>
+  
+      <section class="home-blog bg-sand">
+        <div class="container-fluid px-0">
+          <div class="row no-gutters">
+            <!-- Use *ngFor to display posts dynamically -->
+             
+            <div *ngFor="let post of posts" class="col-md-4 mb-4 d-flex" style="padding-right: 15px; padding-left: 15px;" >
+              <div class="media blog-media w-100">
+                <a [routerLink]="['/post', post.id]">
+                  <img class="d-flex w-100" [src]="post.imageUrl" alt="Generic placeholder image" style="max-width: 100%; max-height: 100%; object-fit: cover;">
+                </a>
+                <div class="circle">
+                  <h5 class="day">{{ post.createdAt | date:'dd' }}</h5>
+                  <span class="month">{{ post.createdAt | date:'MMM' }}</span>
+                </div>
+                <div class="media-body">
+                  <a [routerLink]="['/post', post.id]"><h5 class="mt-0">{{ post.title }}</h5></a>
+                  <p>{{ post.content }}</p>
+                  <a [routerLink]="['/post', post.id]" class="post-link">Read More</a>
+                  <ul>
+                    <li>by: {{ userNames.get(post.userId) }}</li> <!-- Display the user's name here -->
+                    <li class="text-right">
+                      <a [routerLink]="['/post', post.id]"><i class="fas fa-comments"></i> {{ post.comments }} comments</a>
+                    </li>
+                    <li class="text-right">
+                      <a href="blog-post-left-sidebar.html"><i class="fas fa-thumbs-up"></i> {{ post.likes }} likes</a>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      
