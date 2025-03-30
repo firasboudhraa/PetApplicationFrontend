@@ -1,0 +1,19 @@
+<div class="pet-card"  >
+
+    <div class="blog-entry align-self-stretch">
+      
+      <img  class="block-20 rounded " [src]="getImageUrl(pet.imagePath) " > 
+      
+        <div class="text p-4 ">
+          <h3 class=""><strong>{{ pet.name }} </strong> 
+            <span class="badge bg-primary">{{ pet.species }}</span>
+            </h3>           
+              <div class="info-container">
+                <div > <strong>Color: </strong> {{pet.color}} </div>
+                <div > <strong>Age:</strong>  {{pet.age}} </div>
+                  <a href="#" class="meta-chat" [ngStyle]="{'color': pet.sex === 'Male' ? 'blue' : '#D455F3'}">
+                    <span class="fa fa-venus-mars"></span> {{ pet.sex }}
+                  </a>
+                </div>
+        </div>
+  </div>

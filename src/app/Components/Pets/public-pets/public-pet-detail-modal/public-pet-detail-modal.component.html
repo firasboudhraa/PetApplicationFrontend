@@ -1,0 +1,36 @@
+<div class="modal fade show d-block" tabindex="-1" role="dialog" *ngIf="isVisible">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header d-flex justify-content-between align-items-center">
+          <h5 class="modal-title mb-0">{{ pet.name }} Info</h5>
+          <div class="d-flex align-items-center gap-3">
+            
+            <i class="fa fa-times cursor-pointer  fs-5" (click)="closeModal();" title="Close"></i>
+          </div>
+        </div>
+        <div class="modal-body">
+             <div class="pet-card"  >
+
+                  
+                  <img  class="block-20 rounded " [src]="getImageUrl(pet.imagePath) " > 
+                  
+                    <div class="text p-4 w-100 mx-auto">
+                        <h3 class=""><strong>{{ pet.name }} </strong> 
+                            <span class="badge bg-primary">{{ pet.species }}</span>
+                        </h3>           
+                          <div class="info-container">
+                            <div > <strong>Color: </strong> {{pet.color}} </div>
+                            <div > <strong>Age:</strong>  {{pet.age}} </div>
+                              <a href="#" class="meta-chat" [ngStyle]="{'color': pet.sex === 'Male' ? 'blue' : '#D455F3'}">
+                                <span class="fa fa-venus-mars"></span> {{ pet.sex }}
+                              </a>
+                            </div>
+                    </div>
+            </div>
+        <div class="modal-footer">
+          <button class="btn btn-danger" (click)="closeModal()" >Close</button>
+        </div>
+
+      </div>
+    </div>
+  </div>

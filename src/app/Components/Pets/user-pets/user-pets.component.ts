@@ -1,14 +1,14 @@
-import { Component, OnInit, Renderer2 } from '@angular/core';
+import { Component, Renderer2 } from '@angular/core';
 import { Pet } from 'src/app/models/pet';
 import { PetdataServiceService } from 'src/app/Services/petdata-service.service';
 
 @Component({
-  selector: 'app-show-pets',
-  templateUrl: './show-pets.component.html',
-  styleUrls: ['./show-pets.component.css']
+  selector: 'app-user-pets',
+  templateUrl: './user-pets.component.html',
+  styleUrls: ['./user-pets.component.css']
 })
-export class ShowPetsComponent implements OnInit {
-  pets: Pet[] = []; // Current page pets
+export class UserPetsComponent {
+ pets: Pet[] = []; // Current page pets
 
   allPets: Pet[] = []; 
   selectedPet!: Pet;
