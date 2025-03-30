@@ -37,12 +37,21 @@
   <app-add-pet-modal
   [isVisible]="showModal"
   (close)="closeModal()"
-  (petAdded)="onPetAdded()">
+  (petAdded)="loadPetsAfterChange()">
 </app-add-pet-modal>
+
+<app-edit-pet-modal
+[isVisible]="showEditModal"
+(close)="closeEditModal()"
+[pet]="selectedPet"
+(petEdited)="loadPetsAfterChange()">
+</app-edit-pet-modal>
+
 
 <app-pet-detail-modal
 [isVisible]="showDetail"
 (close)="closeDetailModal()"
+(passToEdit)=" openEditModal()"
 [pet]="selectedPet"
 (petRemoved)="loadPetsAfterChange()"
 >

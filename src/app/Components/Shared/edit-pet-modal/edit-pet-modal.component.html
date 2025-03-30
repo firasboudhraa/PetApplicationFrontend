@@ -2,7 +2,7 @@
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title">Enter your pet info</h5>
+          <h5 class="modal-title">Edit your pet info</h5>
           <button type="button" class="close" (click)="closeModal()">&times;</button>
         </div>
         <div class="modal-body">
@@ -68,12 +68,18 @@
                     </div>
                   </div>
 
-                <button type="submit" class="btn btn-primary" [disabled]="petForm.invalid">Submit</button>
-              </form>
-        </div>
-        <div class="modal-footer">
-          <button class="btn btn-danger" (click)="closeModal()">Close</button>
-        </div>
+                </form>
+            </div>
+            <div class="modal-footer d-flex justify-content-between" *ngIf="!confirmationShowed">
+                <button (click)="showConfirmButton()" class="btn btn-primary" [disabled]="petForm.invalid">Update</button>
+                <button class="btn btn-danger" (click)="closeModal()">Close</button>
+            </div>
+            <div class="confirmation-container" *ngIf="confirmationShowed">
+                <p>Are you sure ? </p>
+                <button class="btn btn-success" (click)="onSubmit()" >Confirm Update</button>
+                <button class="btn btn-secondary" (click)="hideConfirmButton()" >Cancel</button>
+                
+              </div>
       </div>
     </div>
   </div>

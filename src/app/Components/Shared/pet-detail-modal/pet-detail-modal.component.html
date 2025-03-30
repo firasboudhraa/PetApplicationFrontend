@@ -1,9 +1,15 @@
 <div class="modal fade show d-block" tabindex="-1" role="dialog" *ngIf="isVisible">
     <div class="modal-dialog">
       <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title">{{pet.name}} Info</h5>
-          <button type="button" class="close" (click)="closeModal()">&times;</button>
+        <div class="modal-header d-flex justify-content-between align-items-center">
+          <h5 class="modal-title mb-0">{{ pet.name }} Info</h5>
+          <div class="d-flex align-items-center gap-3">
+            <span class="edit-action" (click)="openEditModal()" title="Edit">
+              <i class="fa fa-pencil me-1"></i> Edit
+            </span>
+            
+            <i class="fa fa-times cursor-pointer  fs-5" (click)="closeModal();" title="Close"></i>
+          </div>
         </div>
         <div class="modal-body">
              <div class="pet-card"  >
@@ -12,12 +18,12 @@
                   <img  class="block-20 rounded " [src]="getImageUrl(pet.imagePath) " > 
                   
                     <div class="text p-4 w-100 mx-auto">
-                        <h3 class="">{{ pet.name }} 
+                        <h3 class=""><strong>{{ pet.name }} </strong> 
                             <span class="badge bg-primary">{{ pet.species }}</span>
                         </h3>           
                           <div class="info-container">
-                            <div >Color: {{pet.color}} </div>
-                            <div >Age: {{pet.age}} </div>
+                            <div > <strong>Color: </strong> {{pet.color}} </div>
+                            <div > <strong>Age:</strong>  {{pet.age}} </div>
                               <a href="#" class="meta-chat" [ngStyle]="{'color': pet.sex === 'Male' ? 'blue' : '#D455F3'}">
                                 <span class="fa fa-venus-mars"></span> {{ pet.sex }}
                               </a>
@@ -25,7 +31,13 @@
                     </div>
             </div>
         <div class="modal-footer">
-          <button class="btn btn-danger" (click)="removePet(pet.id)" >Remove Pet</button>
+          <button class="btn btn-danger" (click)="showConfirmButton()" *ngIf="!confirmationShowed" >Remove Pet</button>
+        </div>
+        <div class="confirmation-container" *ngIf="confirmationShowed">
+          <p>Are you sure ? </p>
+          <button class="btn btn-secondary" (click)="hideConfirmButton()" >Cancel</button>
+          <button class="btn btn-danger" (click)="removePet(pet.id)" >Confirm Remove</button>
+          
         </div>
       </div>
     </div>

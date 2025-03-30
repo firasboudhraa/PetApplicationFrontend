@@ -18,6 +18,7 @@ export class ShowPetsComponent implements OnInit {
 
   showModal: boolean = false;
   showDetail: boolean = false;
+  showEditModal: boolean = false;
   constructor(private petDataService: PetdataServiceService ,private renderer: Renderer2 ) {}
 
   openModal() {
@@ -43,6 +44,20 @@ export class ShowPetsComponent implements OnInit {
   }
   closeDetailModal() {
     this.showDetail = false;
+    this.renderer.removeClass(document.querySelector('.ftco-section'), 'blur-effect');
+    this.renderer.removeClass(document.querySelector('app-navbar'), 'blur-effect');
+    this.renderer.removeClass(document.querySelector('app-footer'), 'blur-effect');
+    console.log(this.selectedPet)
+  }
+  openEditModal() {
+    this.showEditModal = true;
+    this.renderer.addClass(document.querySelector('.ftco-section'), 'blur-effect');
+    this.renderer.addClass(document.querySelector('app-navbar'), 'blur-effect');
+    this.renderer.addClass(document.querySelector('app-footer'), 'blur-effect');
+    
+  }
+  closeEditModal() {
+    this.showEditModal = false;
     this.renderer.removeClass(document.querySelector('.ftco-section'), 'blur-effect');
     this.renderer.removeClass(document.querySelector('app-navbar'), 'blur-effect');
     this.renderer.removeClass(document.querySelector('app-footer'), 'blur-effect');

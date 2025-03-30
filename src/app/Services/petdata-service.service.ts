@@ -20,4 +20,7 @@ export class PetdataServiceService {
   removePet(id: number): Observable<any> {
     return this.http.delete(`${this.apiUrl}/delete-pet/${id}`);
   }
+  updatePet(id: number, pet: FormData): Observable<any> {
+    return this.http.put(`${this.apiUrl}/modify-pet?id=${id}`, pet);
+  }
 }
