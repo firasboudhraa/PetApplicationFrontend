@@ -7,26 +7,42 @@ import { PetdataServiceService } from 'src/app/Services/petdata-service.service'
   templateUrl: './show-pets.component.html',
   styleUrls: ['./show-pets.component.css']
 })
-export class ShowPetsComponent  {
+export class ShowPetsComponent implements OnInit {
   pets: Pet[] = []; // Current page pets
 
   allPets: Pet[] = []; 
+  selectedPet!: Pet;
   currentPage: number = 1;
   itemsPerPage: number = 3;
   totalItems: number = 0;
 
-  showModal = false;
+  showModal: boolean = false;
+  showDetail: boolean = false;
   constructor(private petDataService: PetdataServiceService ,private renderer: Renderer2 ) {}
+
   openModal() {
     this.showModal = true;
     this.renderer.addClass(document.querySelector('.ftco-section'), 'blur-effect');
     this.renderer.addClass(document.querySelector('app-navbar'), 'blur-effect');
     this.renderer.addClass(document.querySelector('app-footer'), 'blur-effect');
-    
   }
   
   closeModal() {
     this.showModal = false;
+    this.renderer.removeClass(document.querySelector('.ftco-section'), 'blur-effect');
+    this.renderer.removeClass(document.querySelector('app-navbar'), 'blur-effect');
+    this.renderer.removeClass(document.querySelector('app-footer'), 'blur-effect');
+  }
+  openDetailModal(pet: Pet) {
+    this.selectedPet = pet;
+    this.showDetail = true;
+    this.renderer.addClass(document.querySelector('.ftco-section'), 'blur-effect');
+    this.renderer.addClass(document.querySelector('app-navbar'), 'blur-effect');
+    this.renderer.addClass(document.querySelector('app-footer'), 'blur-effect');
+    
+  }
+  closeDetailModal() {
+    this.showDetail = false;
     this.renderer.removeClass(document.querySelector('.ftco-section'), 'blur-effect');
     this.renderer.removeClass(document.querySelector('app-navbar'), 'blur-effect');
     this.renderer.removeClass(document.querySelector('app-footer'), 'blur-effect');
@@ -47,9 +63,17 @@ export class ShowPetsComponent  {
   loadPets(): void {
     const startIndex = (this.currentPage - 1) * this.itemsPerPage;
     const endIndex = startIndex + this.itemsPerPage;
-
+    
     this.pets = this.allPets.slice(startIndex, endIndex);
-    console.log(this.pets);
+  }
+  loadPetsAfterChange(): void {
+
+    this.petDataService.getPets().subscribe((data) => {
+      this.allPets = data;
+      this.totalItems = this.allPets.length;
+      this.loadPets();
+    }); 
+
   }
 
   changePage(page: number): void {
@@ -58,7 +82,13 @@ export class ShowPetsComponent  {
       this.loadPets();
     }
   }
+
   getIndexArray(n: number): number[] {
     return Array.from({ length: n }, (_, i) => i); 
   }
+
+  onPetAdded() {
+    this.loadPetsAfterChange(); 
+  }
+  
 }

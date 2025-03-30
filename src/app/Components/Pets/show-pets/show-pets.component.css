@@ -38,3 +38,9 @@
   background-color: rgba(0, 0, 0, 0.4); /* Optional dark overlay */
   isolation: isolate; /* Prevent blur from affecting modal */
 }
+.modal-btn {
+  position: absolute;
+  top: 15vh;
+  right: 20vw;
+  z-index: 1000; /* Ensure it stays above other elements */
+}

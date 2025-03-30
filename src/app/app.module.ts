@@ -15,6 +15,8 @@ import { DetailServiceComponent } from './Components/FrontOffice/detail-service/
 import { PetCardComponent } from './Components/Pets/pet-card/pet-card.component';
 import { ShowPetsComponent } from './Components/Pets/show-pets/show-pets.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { AddPetModalComponent } from './Components/Shared/add-pet-modal/add-pet-modal.component';
+import { PetDetailModalComponent } from './Components/Shared/pet-detail-modal/pet-detail-modal.component';
 
 @NgModule({
   declarations: [
@@ -27,7 +29,9 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     ShowPetsComponent,
     AddServiceComponent,
     DetailServiceComponent,
-    ServiceComponent
+    ServiceComponent,
+    AddPetModalComponent,
+    PetDetailModalComponent
   ],
   imports: [
     BrowserModule,
