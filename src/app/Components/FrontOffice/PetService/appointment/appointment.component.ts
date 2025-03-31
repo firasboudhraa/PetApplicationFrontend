@@ -28,6 +28,7 @@ export class AppointmentComponent {
     });
     this.service.getAvailableSlots(this.serviceId).subscribe(data => {
       this.availableSlots = data; 
+      console.log(this.availableSlots)
     });
   }
 

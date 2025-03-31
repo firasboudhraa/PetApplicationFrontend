@@ -37,7 +37,6 @@ export class ServiceComponent {
         this.showAccessDeniedAlert("You must be a SERVICE PROVIDER to access this page.");
       }
     } catch (error) {
-      console.error("Error parsing user data:", error);
       this.showAccessDeniedAlert("Invalid user data. Please log in again.");
     }
   }

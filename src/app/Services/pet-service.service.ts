@@ -27,4 +27,12 @@ export class PetServiceService {
     return this.http.post<PetService>(this.apiUrl+'add-service', s);
   }
 
+  updateService(s: PetService): Observable<PetService> {
+    return this.http.put<PetService>(this.apiUrl + 'update-service', s);
+  }
+
+  deleteService(id: number): Observable<void> {
+    return this.http.delete<void>(this.apiUrl + 'delete-service/' + id);
+  }
+
 }

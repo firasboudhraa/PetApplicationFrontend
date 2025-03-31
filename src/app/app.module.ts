@@ -10,11 +10,13 @@ import { FooterComponent } from './Components/FrontOffice/footer/footer.componen
 import { ContactInfoComponent } from './Components/FrontOffice/contact-info/contact-info.component';
 import { NavbarComponent } from './Components/FrontOffice/navbar/navbar.component';
 import { HomeComponent } from './Components/FrontOffice/home/home.component';
-import { ServiceComponent } from './Components/FrontOffice/service/service.component';
-import { AddServiceComponent } from './Components/FrontOffice/add-service/add-service.component';
-import { DetailServiceComponent } from './Components/FrontOffice/detail-service/detail-service.component';
+import { ServiceComponent } from './Components/FrontOffice/PetService/service/service.component';
+import { AddServiceComponent } from './Components/FrontOffice/PetService/add-service/add-service.component';
+import { DetailServiceComponent } from './Components/FrontOffice/PetService/detail-service/detail-service.component';
 import { FullCalendarModule } from '@fullcalendar/angular';
-import { AppointmentComponent } from './Components/FrontOffice/appointment/appointment.component';
+import { AppointmentComponent } from './Components/FrontOffice/PetService/appointment/appointment.component';
+import { PetServiceService } from './Services/pet-service.service';
+import { AvailableSlotsComponent } from './Components/FrontOffice/PetService/available-slots/available-slots.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -27,6 +29,7 @@ import { AppointmentComponent } from './Components/FrontOffice/appointment/appoi
     AddServiceComponent,
     DetailServiceComponent,
     AppointmentComponent,
+    AvailableSlotsComponent,
   ],
   imports: [
     BrowserModule,
@@ -40,7 +43,8 @@ import { AppointmentComponent } from './Components/FrontOffice/appointment/appoi
     CarouselModule,
   ],
 
-  providers: [],
+  providers: [PetServiceService],
   bootstrap: [AppComponent],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class AppModule { }

@@ -8,7 +8,7 @@ import Swal from 'sweetalert2';
   templateUrl: './detail-service.component.html',
   styleUrls: ['./detail-service.component.css']
 })
-export class DetailServiceComponent implements OnInit {
+export class DetailServiceComponent {
   id!: number;
   service!: any;
   availableSlots: string[] = [];
@@ -47,7 +47,6 @@ export class DetailServiceComponent implements OnInit {
             You must be logged in to access this page.
           </div>
           <br>
-          <img src="https://media.giphy.com/media/j5Z66YrFjkYYqB3yik/giphy.gif" width="200" alt="Login Required">
         `,
         icon: 'warning',
         position: 'center',
@@ -75,8 +74,13 @@ export class DetailServiceComponent implements OnInit {
       });
     }
   }
+
+  deleteService(id :number){
+    this.ps.deleteService(id).subscribe(
+      ()=> this.ngOnInit()
+    )
+  }
     
-
-
+  
 
 }

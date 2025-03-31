@@ -1,15 +1,17 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { HomeComponent } from './Components/FrontOffice/home/home.component';
-import { ServiceComponent } from './Components/FrontOffice/service/service.component';
-import { AddServiceComponent } from './Components/FrontOffice/add-service/add-service.component';
-import { DetailServiceComponent } from './Components/FrontOffice/detail-service/detail-service.component';
-import { AppointmentComponent } from './Components/FrontOffice/appointment/appointment.component';
+import { ServiceComponent } from './Components/FrontOffice/PetService/service/service.component';
+import { AddServiceComponent } from './Components/FrontOffice/PetService/add-service/add-service.component';
+import { DetailServiceComponent } from './Components/FrontOffice/PetService/detail-service/detail-service.component';
+import { AppointmentComponent } from './Components/FrontOffice/PetService/appointment/appointment.component';
+import { AvailableSlotsComponent } from './Components/FrontOffice/PetService/available-slots/available-slots.component';
 
 const routes: Routes = [
   { path: 'home', component: HomeComponent },
   {path:'service', component:ServiceComponent},
   {path:'add-service',component:AddServiceComponent},
+  {path:'full-calendar/:id',component:AvailableSlotsComponent},
   {path:'serviceDetail/:id', component:DetailServiceComponent},
   {path:'appointment/:id',component:AppointmentComponent},
   {path:'',redirectTo:'home',pathMatch:'full'},
