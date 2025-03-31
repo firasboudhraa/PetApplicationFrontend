@@ -85,7 +85,9 @@
 
                 <a [routerLink]="['/post', post.id]" class="post-link">Read More</a>
                 <ul>
-                  <li>by: {{ userNames.get(post.userId) }}</li>
+                  <li>by: {{ userNames.get(post.userId) }}
+                  </li>
+                  <li>Category: {{ formatCategory(post.type) }}</li>
                   <li class="text-right">
                     <a [routerLink]="['/post', post.id]"><i class="fas fa-comments"></i> {{ post.comments }} comments</a>
                   </li>

@@ -97,4 +97,13 @@ export class BlogComponentComponent implements OnInit {
 
     this.filteredPosts = filtered;
   }
+  formatCategory(category: string): string {
+    if (!category) return '';
+  
+    return category
+      .toLowerCase()
+      .replace(/_/g, ' ')
+      .replace(/\b\w/g, char => char.toUpperCase()); // Met en majuscule la première lettre de chaque mot
+  }
+  
 }
