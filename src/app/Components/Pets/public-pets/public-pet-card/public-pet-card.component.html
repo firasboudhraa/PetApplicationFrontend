@@ -1,6 +1,8 @@
 <div class="pet-card"  >
 
     <div class="blog-entry align-self-stretch">
+        <div class="adoption-badge" *ngIf="pet.forAdoption">🐾 For Adoption</div>
+
       
       <img  class="block-20 rounded " [src]="getImageUrl(pet.imagePath) " > 
       

@@ -19,7 +19,6 @@ export class UserPetsComponent {
   showModal: boolean = false;
   showDetail: boolean = false;
   showEditModal: boolean = false;
-  isUserPet: boolean = false;
   userId:number = 1 ; 
   constructor(private petDataService: PetdataServiceService ,private renderer: Renderer2 ) {}
 
@@ -70,7 +69,7 @@ export class UserPetsComponent {
   }
 
   ngOnInit(): void {
-    this.petDataService.getPets().subscribe((data) => {
+    this.petDataService.getPetsByOwnerId(this.userId).subscribe((data) => {
       this.allPets = data;
       this.totalItems = this.allPets.length;
       this.loadPets();

@@ -12,8 +12,7 @@ import { HomeComponent } from './Components/FrontOffice/home/home.component';
 import { ServiceComponent } from './Components/FrontOffice/service/service.component';
 import { AddServiceComponent } from './Components/FrontOffice/add-service/add-service.component';
 import { DetailServiceComponent } from './Components/FrontOffice/detail-service/detail-service.component';
-import { PetCardComponent } from './Components/Pets/pet-card/pet-card.component';
-import { ShowPetsComponent } from './Components/Pets/show-pets/show-pets.component';
+import { PetCardComponent } from './Components/Pets/user-pets/pet-card/pet-card.component';
 import { AddPetModalComponent } from './Components/Pets/user-pets/add-pet-modal/add-pet-modal.component';
 import { PetDetailModalComponent } from './Components/Pets/user-pets/pet-detail-modal/pet-detail-modal.component';
 import { EditPetModalComponent } from './Components/Pets/user-pets/edit-pet-modal/edit-pet-modal.component';
@@ -34,7 +33,6 @@ import { PublicPetDetailModalComponent } from 'src/app/Components/Pets/public-pe
     AddServiceComponent,
     DetailServiceComponent,
     PetCardComponent,
-    ShowPetsComponent,
     AddServiceComponent,
     DetailServiceComponent,
     ServiceComponent,

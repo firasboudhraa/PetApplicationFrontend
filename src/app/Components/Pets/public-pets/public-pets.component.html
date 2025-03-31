@@ -31,20 +31,8 @@
     </div>
   </section>
 
-  <!-- Modal HTML -->
-  
-  <app-add-pet-modal
-  [isVisible]="showModal"
-  (close)="closeModal()"
-  (petAdded)="loadPetsAfterChange()">
-</app-add-pet-modal>
+  <!-- Modals -->
 
-<app-edit-pet-modal
-[isVisible]="showEditModal"
-(close)="closeEditModal()"
-[pet]="selectedPet"
-(petEdited)="loadPetsAfterChange()">
-</app-edit-pet-modal>
 
 
 <app-public-pet-detail-modal

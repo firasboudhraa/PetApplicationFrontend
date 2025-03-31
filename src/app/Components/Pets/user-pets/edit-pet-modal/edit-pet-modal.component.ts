@@ -40,7 +40,9 @@ export class EditPetModalComponent {
       species: new FormControl('', Validators.required),
       age: new FormControl('', [Validators.required, Validators.min(0)]),
       color: new FormControl('', Validators.required),
-      sex: new FormControl('', Validators.required)
+      sex: new FormControl('', Validators.required),
+      description: new FormControl('', ), 
+      forAdoption: new FormControl(false, )
     });
    
   }
@@ -64,6 +66,8 @@ export class EditPetModalComponent {
       formData.append('age', this.petForm.get('age')?.value);
       formData.append('color', this.petForm.get('color')?.value);
       formData.append('sex', this.petForm.get('sex')?.value);
+      formData.append('description', this.petForm.get('description')?.value); 
+      formData.append('forAdoption', this.petForm.get('forAdoption')?.value );
       formData.append('ownerId', '1');
 
       // Append the file if it exists

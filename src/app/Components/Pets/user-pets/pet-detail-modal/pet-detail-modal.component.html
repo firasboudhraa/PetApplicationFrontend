@@ -16,18 +16,21 @@
 
                   
                   <img  class="block-20 rounded " [src]="getImageUrl(pet.imagePath) " > 
-                  
+                  <div class="adoption-badge">🐾 For Adoption</div>
                     <div class="text p-4 w-100 mx-auto">
                         <h3 class=""><strong>{{ pet.name }} </strong> 
                             <span class="badge bg-primary">{{ pet.species }}</span>
                         </h3>           
-                          <div class="info-container">
-                            <div > <strong>Color: </strong> {{pet.color}} </div>
-                            <div > <strong>Age:</strong>  {{pet.age}} </div>
-                              <a href="#" class="meta-chat" [ngStyle]="{'color': pet.sex === 'Male' ? 'blue' : '#D455F3'}">
-                                <span class="fa fa-venus-mars"></span> {{ pet.sex }}
-                              </a>
+                            <div class="info-container">
+                              <div > <strong>Color: </strong> {{pet.color}} </div>
+                              <div > <strong>Age:</strong>  {{pet.age}} </div>
+                                <a href="#" class="meta-chat" [ngStyle]="{'color': pet.sex === 'Male' ? 'blue' : '#D455F3'}">
+                                  <span class="fa fa-venus-mars"></span> {{ pet.sex }}
+                                </a>
                             </div>
+                            <div class="mt-5">
+                              <p>Description : {{pet.description}}</p>
+                          </div>
                     </div>
             </div>
         <div class="modal-footer">

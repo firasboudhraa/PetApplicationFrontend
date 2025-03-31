@@ -2,7 +2,6 @@
     width: 300px ;
     transition: transform 0.3s ease-in-out;
     position: relative;
-
 }
 .pet-card:hover{
     cursor: pointer;
@@ -16,7 +15,6 @@
     justify-content: space-between;
 
 }
-
 .adoption-badge {
     position: absolute;
     z-index: 10;

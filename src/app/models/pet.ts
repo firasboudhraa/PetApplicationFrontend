@@ -6,5 +6,8 @@ export interface Pet {
     age: number;
     color: string;
     sex: string;
+    ownerId: number;
+    description:string;
+    forAdoption: boolean;
   }
   

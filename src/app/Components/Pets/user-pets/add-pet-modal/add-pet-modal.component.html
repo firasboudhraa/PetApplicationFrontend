@@ -66,7 +66,31 @@
                     <div *ngIf="petForm.get('sex')?.invalid && petForm.get('sex')?.touched" class="text-danger">
                       Pet sex is required.
                     </div>
+                </div>
+                
+                <div class="form-group">
+                  <label for="description">Description</label>
+                  <textarea
+                    id="description"
+                    class="form-control"
+                    formControlName="description"
+                    placeholder="Enter a description for the pet"
+                  ></textarea>
+                </div>
+                
+                <div class="form-group">
+                  <div class="form-check form-switch">
+                    <label class="form-check-label" for="forAdoption">Is it for adoption?</label>
+                    <input
+                      class="form-check-input ms-3"
+                      type="checkbox"
+                      role="switch"
+                      id="forAdoption"
+                      formControlName="forAdoption"
+                    />
                   </div>
+                </div>
+
 
                 <button type="submit" class="btn btn-primary" [disabled]="petForm.invalid">Submit</button>
               </form>

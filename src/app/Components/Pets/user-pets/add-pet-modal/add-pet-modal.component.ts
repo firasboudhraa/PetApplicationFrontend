@@ -31,7 +31,9 @@ export class AddPetModalComponent {
       species: new FormControl('', Validators.required),
       age: new FormControl('', [Validators.required, Validators.min(0)]),
       color: new FormControl('', Validators.required),
-      sex: new FormControl('', Validators.required)
+      sex: new FormControl('', Validators.required),
+      description: new FormControl('', ), 
+      forAdoption: new FormControl(false, )
     });
   }
 
@@ -43,7 +45,9 @@ export class AddPetModalComponent {
       formData.append('age', this.petForm.get('age')?.value);
       formData.append('color', this.petForm.get('color')?.value);
       formData.append('sex', this.petForm.get('sex')?.value);
-      formData.append('ownerId', '1');
+      formData.append('description', this.petForm.get('description')?.value); 
+      formData.append('forAdoption', this.petForm.get('forAdoption')?.value );
+      formData.append('ownerId', '1'); 
 
       if (this.selectedImage) {
         formData.append('image', this.selectedImage);
@@ -51,8 +55,8 @@ export class AddPetModalComponent {
 
       this.petDataService.addPet(formData).subscribe(
         (response) => {
-          console.log('Pet added successfully:', response.status);
-          this.petAdded.emit(); 
+          console.log('Pet added successfully:', response);
+          this.petAdded.emit();
           this.closeModal();
           Swal.fire({
             icon: 'success',
@@ -64,16 +68,17 @@ export class AddPetModalComponent {
             toast: true
           });
         },
-        () => {
-                  Swal.fire({
-                    icon: 'error',
-                    title: 'Error',
-                    text: '❌ Failed to Add your pet.',
-                    position: 'top',
-                    timer: 3000,
-                    showConfirmButton: false,
-                    toast: true
-                  });
+        (error) => {
+          console.error('Error adding pet:', error);
+          Swal.fire({
+            icon: 'error',
+            title: 'Error',
+            text: '❌ Failed to Add your pet.',
+            position: 'top',
+            timer: 3000,
+            showConfirmButton: false,
+            toast: true
+          });
         }
       );
     }
