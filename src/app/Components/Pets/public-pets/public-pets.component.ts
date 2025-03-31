@@ -20,7 +20,7 @@ export class PublicPetsComponent {
   showDetail: boolean = false;
   showEditModal: boolean = false;
   isUserPet: boolean = false;
-  userId:number = 1 ; 
+  userId:number = 2 ; 
   constructor(private petDataService: PetdataServiceService ,private renderer: Renderer2 ) {}
 
   openModal() {

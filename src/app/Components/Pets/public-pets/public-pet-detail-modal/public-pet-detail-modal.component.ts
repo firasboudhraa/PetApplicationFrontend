@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Router } from '@angular/router';
 import { Pet } from 'src/app/models/pet';
 import { PetdataServiceService } from 'src/app/Services/petdata-service.service';
 import Swal from 'sweetalert2';
@@ -13,11 +14,13 @@ export class PublicPetDetailModalComponent {
   @Output() close = new EventEmitter<void>();
   @Output() passToEdit = new EventEmitter<void>();
   @Input() pet!: Pet; 
+  @Input() userId!:number;
   @Output() petRemoved = new EventEmitter<void>(); 
+
   confirmationShowed: boolean = false;
 
   private apiUrl = 'http://localhost:8222/api/v1/pet/images';
-  constructor(private petDataService : PetdataServiceService){}
+  constructor(private petDataService : PetdataServiceService , private router:Router){}
   openEditModal(){
     console.log("clicked") ;
     this.close.emit();
@@ -64,4 +67,10 @@ export class PublicPetDetailModalComponent {
     });
     this.hideConfirmButton();
   }
+  redirectToRequest(petId:number ,  ownerId:number , userId:number){
+    this.closeModal();
+    this.router.navigate(['/adoption-request'], {
+      queryParams: { petId, userId, ownerId }
+    });  }
+  
 }

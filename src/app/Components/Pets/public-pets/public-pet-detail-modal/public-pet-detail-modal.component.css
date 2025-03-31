@@ -32,3 +32,55 @@
 .cursor-pointer {
     cursor: pointer;
   }
+
+
+.animated-button {
+  border: 1px solid gold;
+  background: linear-gradient(45deg, #ffcc00, #ff6600);
+  color: white;
+  border-radius: 20px;
+  padding: 5px 15px;
+  font-size: 0.85rem;
+  font-weight: bold;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
+  background-size: 200% 100%; /* Make the gradient larger */
+  animation: wave 6s linear infinite; /* Slow, smooth, continuous animation */
+}
+
+@keyframes wave {
+  0% {
+    background-position: 100% 0; /* Start from the right */
+  }
+  100% {
+    background-position: -200% 0; /* End on the left */
+  }
+}
+.adoption-badge {
+  position: absolute;
+  z-index: 10;
+  top: 10px;
+  left: 10px;
+  background: linear-gradient(to right, #ec4899, #ef4444, #f59e0b);
+  color: white;
+  font-weight: bold;
+  padding: 6px 12px;
+  font-size: 12px;
+  border-radius: 9999px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+    opacity: 0.9;
+  }
+  50% {
+    transform: scale(1.1);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 0.9;
+  }
+}

@@ -1,41 +1,46 @@
 <div class="modal fade show d-block" tabindex="-1" role="dialog" *ngIf="isVisible">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header d-flex justify-content-between align-items-center">
-          <h5 class="modal-title mb-0">{{ pet.name }}'s Info</h5>
-          <div class="d-flex align-items-center gap-3">
-            
-            <i class="fa fa-times cursor-pointer  fs-5" (click)="closeModal();" title="Close"></i>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header d-flex justify-content-between align-items-center">
+        <h5 class="modal-title mb-0">{{ pet.name }}'s Info</h5>
+        <div class="d-flex align-items-center gap-3">
+          <i class="fa fa-times cursor-pointer fs-5" (click)="closeModal();" title="Close"></i>
+        </div>
+      </div>
+      <div class="modal-body">
+        <div class="pet-card">
+          <div class="adoption-badge" *ngIf="pet.forAdoption && userId!=pet.ownerId">🐾 For Adoption</div>
+          <img class="block-20 rounded" [src]="getImageUrl(pet.imagePath)" alt="Pet Image">
+
+          <div class="text pt-4 ps-4 w-100 mx-auto">
+            <h3 class="mb-4"><strong>{{ pet.name }}</strong>
+              <span class="badge bg-primary">{{ pet.species }}</span>
+            </h3>
+            <div class="info-container">
+              <div><strong>Color:</strong> {{ pet.color }}</div>
+              <div><strong>Age:</strong> {{ pet.age }}</div>
+              <a href="#" class="meta-chat" [ngStyle]="{ 'color': pet.sex === 'Male' ? 'blue' : '#D455F3' }">
+                <span class="fa fa-venus-mars"></span> {{ pet.sex }}
+              </a>
+            </div>
+            <div class="d-flex justify-content-between align-items-center mt-4">
+              <div>
+                <h6><strong>Owner name:</strong> {{ pet.ownerId }}</h6>
+              </div>
+              <!-- Make Adoption Request Button with Gradient Animation -->
+              <button class="btn btn-sm animated-button" *ngIf="pet.forAdoption && userId!=pet.ownerId" (click)="redirectToRequest(pet.id,pet.ownerId,userId)">
+                Make Adoption Request
+              </button>
+            </div>
+            <div>
+              <p>Description: {{ pet.description }}</p>
+            </div>
           </div>
         </div>
-        <div class="modal-body">
-             <div class="pet-card"  >
-
-                  
-                  <img  class="block-20 rounded " [src]="getImageUrl(pet.imagePath) " > 
-                  
-                    <div class="text pt-4 ps-4 w-100 mx-auto">
-                        <h3 class="mb-4"><strong>{{ pet.name }} </strong> 
-                            <span class="badge bg-primary">{{ pet.species }}</span>
-                        </h3>           
-                            <div class="info-container">
-                                <div > <strong>Color: </strong> {{pet.color}} </div>
-                                <div > <strong>Age:</strong>  {{pet.age}} </div>
-                                <a href="#" class="meta-chat" [ngStyle]="{'color': pet.sex === 'Male' ? 'blue' : '#D455F3'}">
-                                    <span class="fa fa-venus-mars"></span> {{ pet.sex }}
-                                </a>
-                            </div>
-                            <div>
-                                <h6 class="mt-5"><strong>Owner name :   </strong>  {{   pet.ownerId}}</h6>
-                                <p>Description : {{pet.description}}</p>
-
-                            </div>
-                    </div>
-            </div>
-        <div class="modal-footer">
-          <button class="btn btn-danger" (click)="closeModal()" >Close</button>
-        </div>
-
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-danger" (click)="closeModal()">Close</button>
       </div>
     </div>
   </div>
+</div>
