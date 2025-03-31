@@ -5,6 +5,7 @@ export interface Comment {
     postId: number;       // ID of the post this comment belongs to
     content: string;      // Content of the comment
     author: string;       // Author of the comment
-    createdAt: string;    // Creation timestamp (can be a string or Date object)
+    createdAt: string;
+    userId :number;    // Creation timestamp (can be a string or Date object)
   }
   

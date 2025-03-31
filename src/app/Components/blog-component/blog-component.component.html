@@ -1,106 +1,107 @@
 <section class="home-blog bg-sand">
-    <div class="container-fluid px-0">
-      <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
-  
-      <!-- section title -->
-      <div class="row justify-content-md-center">
-        <div class="col-xl-5 col-lg-6 col-md-8">
-          <div class="section-title text-center title-ex1">
-            <h2>Welcome to Our Community</h2>
-            <p>Explore a variety of topics such as Help & Advice, Success Stories, and more. Interact with fellow members, share ideas, and stay connected!</p>
-          </div>
+  <div class="container-fluid px-0">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+
+    <!-- Section Title -->
+    <div class="row justify-content-md-center">
+      <div class="col-xl-5 col-lg-6 col-md-8">
+        <div class="section-title text-center title-ex1">
+          <h2>Welcome to Our Community</h2>
+          <p>Explore a variety of topics such as Help & Advice, Success Stories, and more. Interact with fellow members, share ideas, and stay connected!</p>
         </div>
       </div>
-  
-      <!-- Add Post Button Section -->
-      <div class="row justify-content-md-center">
-        <div class="col-md-4">
-          <a href="#" class="btn btn-success btn-lg btn-block">Add Post</a>
-        </div>
+    </div>
+
+    <!-- Add Post Button -->
+    <div class="row justify-content-md-center">
+      <div class="col-md-4">
+        <a href="#" class="btn btn-success btn-lg btn-block">Add Post</a>
       </div>
-  
-      <div class="row">
-        <!-- Search Filter Section aligned left -->
-        <div class="col-md-6">
-          <form id="category-search-form">
-            <div class="form-group">
-              <label for="search-categories">Search by Category</label><br>
-              <div class="row">
-                <!-- First row: My Posts and Help & Advice -->
-                <div class="col-6">
-                  <div class="form-check">
-                    <input class="form-check-input" type="checkbox" value="my_posts" id="myPosts">
-                    <label class="form-check-label" for="myPosts">My Posts</label>
-                  </div>
-                </div>
-                <div class="col-6">
-                  <div class="form-check">
-                    <input class="form-check-input" type="checkbox" value="help_advice" id="helpAdvice">
-                    <label class="form-check-label" for="helpAdvice">Help & Advice</label>
-                  </div>
+    </div>
+
+    <div class="row">
+      <!-- Search Filter Section (Left) -->
+      <div class="col-md-6">
+        <form id="category-search-form">
+          <div class="form-group">
+            <label for="search-categories">Search by Category</label><br>
+            <div class="row">
+              <div class="col-6">
+                <div class="form-check">
+                  <input class="form-check-input" type="checkbox" value="my_posts" id="myPosts" (change)="updateSelectedCategories($event)">
+                  <label class="form-check-label" for="myPosts">My Posts</label>
                 </div>
               </div>
-  
-              <div class="row">
-                <!-- Second row: Lost & Found and Success Stories -->
-                <div class="col-6">
-                  <div class="form-check">
-                    <input class="form-check-input" type="checkbox" value="lost_found" id="lostFound">
-                    <label class="form-check-label" for="lostFound">Lost & Found</label>
-                  </div>
-                </div>
-                <div class="col-6">
-                  <div class="form-check">
-                    <input class="form-check-input" type="checkbox" value="success_stories" id="successStories">
-                    <label class="form-check-label" for="successStories">Success Stories</label>
-                  </div>
+              <div class="col-6">
+                <div class="form-check">
+                  <input class="form-check-input" type="checkbox" value="help_advice" id="helpAdvice" (change)="updateSelectedCategories($event)">
+                  <label class="form-check-label" for="helpAdvice">Help & Advice</label>
                 </div>
               </div>
             </div>
-            <button id="apply" type="submit" class="btn btn-primary">Apply Filters</button>
-          </form>
-        </div>
-  
-        <!-- Search Bar Section aligned right -->
-        <div class="col-md-6">
-          <div class="search-bar text-center">
-            <input type="text" class="form-control" placeholder="Search for posts, topics, or updates...">
-            <button class="btn btn-primary">Search</button>
-          </div>
-        </div>
-      </div>
-  
-      <section class="home-blog bg-sand">
-        <div class="container-fluid px-0">
-          <div class="row no-gutters">
-            <!-- Use *ngFor to display posts dynamically -->
-             
-            <div *ngFor="let post of posts" class="col-md-4 mb-4 d-flex" style="padding-right: 15px; padding-left: 15px;" >
-              <div class="media blog-media w-100">
-                <a [routerLink]="['/post', post.id]">
-                  <img class="d-flex w-100" [src]="post.imageUrl" alt="Generic placeholder image" style="max-width: 100%; max-height: 100%; object-fit: cover;">
-                </a>
-                <div class="circle">
-                  <h5 class="day">{{ post.createdAt | date:'dd' }}</h5>
-                  <span class="month">{{ post.createdAt | date:'MMM' }}</span>
+            <div class="row">
+              <div class="col-6">
+                <div class="form-check">
+                  <input class="form-check-input" type="checkbox" value="lost_found" id="lostFound" (change)="updateSelectedCategories($event)">
+                  <label class="form-check-label" for="lostFound">Lost & Found</label>
                 </div>
-                <div class="media-body">
-                  <a [routerLink]="['/post', post.id]"><h5 class="mt-0">{{ post.title }}</h5></a>
-                  <p>{{ post.content }}</p>
-                  <a [routerLink]="['/post', post.id]" class="post-link">Read More</a>
-                  <ul>
-                    <li>by: {{ userNames.get(post.userId) }}</li> <!-- Display the user's name here -->
-                    <li class="text-right">
-                      <a [routerLink]="['/post', post.id]"><i class="fas fa-comments"></i> {{ post.comments }} comments</a>
-                    </li>
-                    <li class="text-right">
-                      <a href="blog-post-left-sidebar.html"><i class="fas fa-thumbs-up"></i> {{ post.likes }} likes</a>
-                    </li>
-                  </ul>
+              </div>
+              <div class="col-6">
+                <div class="form-check">
+                  <input class="form-check-input" type="checkbox" value="success_stories" id="successStories" (change)="updateSelectedCategories($event)">
+                  <label class="form-check-label" for="successStories">Success Stories</label>
                 </div>
               </div>
             </div>
           </div>
+        </form>
+      </div>
+
+      <!-- Search Bar Section (Right) -->
+      <div class="col-md-6">
+        <div class="search-bar text-center">
+          <input type="text" class="form-control" placeholder="Search for posts, topics, or updates..." [(ngModel)]="searchText" (input)="applyFilters()">
         </div>
-      </section>
-      
+      </div>
+    </div>
+
+    <!-- Blog Posts Section -->
+    <section class="home-blog bg-sand">
+      <div class="container-fluid px-0">
+        <div class="row no-gutters">
+          <!-- Display Posts Dynamically -->
+          <div *ngFor="let post of filteredPosts" class="col-md-4 mb-4 d-flex" style="padding-right: 15px; padding-left: 15px;">
+            <div class="media blog-media w-100">
+              <a [routerLink]="['/post', post.id]">
+                <img class="d-flex w-100" [src]="post.imageUrl" alt="Post image" style="max-width: 100%; max-height: 100%; object-fit: cover;">
+              </a>
+              <div class="circle">
+                <h5 class="day">{{ post.createdAt | date:'dd' }}</h5>
+                <span class="month">{{ post.createdAt | date:'MMM' }}</span>
+              </div>
+              <div class="media-body">
+                <a [routerLink]="['/post', post.id]"><h5 class="mt-0">{{ post.title }}</h5></a>
+                <p>{{ post.content }}</p>
+
+                <a [routerLink]="['/post', post.id]" class="post-link">Read More</a>
+                <ul>
+                  <li>by: {{ userNames.get(post.userId) }}</li>
+                  <li class="text-right">
+                    <a [routerLink]="['/post', post.id]"><i class="fas fa-comments"></i> {{ post.comments }} comments</a>
+                  </li>
+                  <li class="text-right">
+                    <a href="#"><i class="fas fa-thumbs-up"></i> {{ post.likes }} likes</a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+          <!-- No Posts Found Message -->
+          <div *ngIf="filteredPosts.length === 0" class="col-md-12 text-center">
+            <p>No posts found matching your search.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+</section>

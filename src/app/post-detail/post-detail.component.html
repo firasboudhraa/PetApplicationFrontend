@@ -1,47 +1,11 @@
-<div class="container">
-  <div class="row">
-      <div class="col-md-8">
-          <div class="post-content">
-              <img [src]="post?.imageUrl" alt="post-image" class="img-responsive post-image">
-              <div class="post-container">
-                  <img [src]="post?.authorAvatar" alt="user" class="profile-photo-md pull-left">
-                  <div class="post-detail">
-                      <div class="user-info">
-                          <h5><a href="#" class="profile-link">{{ post?.author }}</a></h5>
-                          <p class="text-muted">Published {{ post?.createdAt | date:'MMM dd, yyyy' }}</p>
-                      </div>
-                      <div class="reaction">
-                          <button class="btn text-green"><i class="fa fa-thumbs-up"></i> {{ post?.likes }}</button>
-                          <button class="btn text-red"><i class="fa fa-thumbs-down"></i> {{ post?.dislikes }}</button>
-                      </div>
-                      <div class="line-divider"></div>
-                      <div class="post-text">
-                          <p>{{ post?.content }}</p>
-                      </div>
-                      <div class="line-divider"></div>
-
-                      <!-- Comments Section -->
-                      <div *ngFor="let comment of post?.comments" class="post-comment">
-                          <img [src]="comment.avatar" alt="user" class="profile-photo-sm">
-                          <p><a href="#" class="profile-link">{{ comment.author }}</a> {{ comment.text }}</p>
-                      </div>
-
-                      <!-- Add Comment Section -->
-                      <div class="post-comment">
-                          <img [src]="userAvatar" alt="user" class="profile-photo-sm">
-                          <input type="text" class="form-control" placeholder="Post a comment">
-                      </div>
-                  </div>
-              </div>
-          </div>
-      </div>
+<div *ngIf="post">
+    <h2>{{ post.title }}</h2>
+    <p>{{ post.content }}</p>
+    <p><strong>Posté par :</strong> {{ authorName }}</p>
+  
+    <h3>Commentaires</h3>
+    <div *ngFor="let comment of comments" class="post-comment">
+      <p><strong>{{ commentAuthors.get(comment.userId) || 'Utilisateur inconnu' }} :</strong> {{ comment.content }}</p>
+    </div>
   </div>
-</div>
-
-<style>
-  .profile-photo-sm {
-      width: 30px;
-      height: 30px;
-      border-radius: 50%;
-  }
-</style>
+  
