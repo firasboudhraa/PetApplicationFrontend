@@ -11,6 +11,8 @@
         </div>
       </div>
     </div>
+    <br>
+
 
     <!-- Add Post Button -->
     <div class="row justify-content-md-center">
@@ -18,6 +20,8 @@
         <a href="#" class="btn btn-success btn-lg btn-block">Add Post</a>
       </div>
     </div>
+    <br>
+
 
     <div class="row">
       <!-- Search Filter Section (Left) -->
@@ -58,12 +62,24 @@
       </div>
 
       <!-- Search Bar Section (Right) -->
-      <div class="col-md-6">
-        <div class="search-bar text-center">
-          <input type="text" class="form-control" placeholder="Search for posts, topics, or updates..." [(ngModel)]="searchText" (input)="applyFilters()">
-        </div>
-      </div>
+<div class="col-md-6">
+  <div class="search-bar text-center">
+    <input type="text" class="form-control" placeholder="Search for posts, topics, or updates..." [(ngModel)]="searchText" (input)="applyFilters()">
+    
+    <!-- Refresh Button with Font Awesome -->
+    <button class="btn btn-refresh" (click)="refreshPosts()">
+      <i class="fas fa-sync-alt"></i> Refresh
+    </button>
+
+    <!-- Sort Buttons -->
+    <button class="btn btn-sort" (click)="sortByDate('latest')">Latest</button>
+    <button class="btn btn-sort" (click)="sortByDate('oldest')">Oldest</button>
+    <button class="btn btn-sort" (click)="sortByNumber('mostLiked')">Most Liked</button>
+    <button class="btn btn-sort" (click)="sortByNumber('mostCommented')">Most Commented</button>
+  </div>
+</div>
     </div>
+    
 
     <!-- Blog Posts Section -->
     <section class="home-blog bg-sand">

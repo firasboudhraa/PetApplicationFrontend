@@ -105,5 +105,47 @@ export class BlogComponentComponent implements OnInit {
       .replace(/_/g, ' ')
       .replace(/\b\w/g, char => char.toUpperCase()); // Met en majuscule la première lettre de chaque mot
   }
+  sortByDate(order: string): void {
+    if (order === 'latest') {
+      this.filteredPosts.sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
+    } else if (order === 'oldest') {
+      this.filteredPosts.sort((a, b) => new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime());
+    }
+  }
+
+
+  sortByNumber(criteria: string): void {
+    console.log('Sorting by:', criteria);  // Ajouter un log pour vérifier si la fonction est bien appelée.
+    switch (criteria) {
+      case 'mostLiked':
+        this.filteredPosts.sort((a, b) => b.likes - a.likes);
+        break;
+      case 'mostCommented':
+        this.filteredPosts.sort((a, b) => b.comments - a.comments);
+        break;
+    }
+  }
+  // Méthode pour rafraîchir les posts
+refreshPosts(): void {
+  // Réinitialise le tri des posts comme si tu avais appuyé sur "Latest"
+  this.sortByDate('latest');
+}
+  
+  /* sortBy(criteria: string): void {
+    switch (criteria) {
+      case 'latest':
+        this.filteredPosts.sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
+        break;
+      case 'oldest':
+        this.filteredPosts.sort((a, b) => new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime());
+        break;
+      case 'mostLiked':
+        this.filteredPosts.sort((a, b) => b.likes - a.likes);
+        break;
+      case 'mostCommented':
+        this.filteredPosts.sort((a, b) => b.comments - a.comments);
+        break;
+    }*/
+  
   
 }

@@ -189,3 +189,48 @@ li.text-right a {
     color: #70767e !important;
   }
   
+
+  /* General Button Style */
+.btn {
+    font-weight: 600;
+    border-radius: 30px;
+    padding: 10px 20px;
+    transition: all 0.3s ease;
+    text-transform: capitalize;
+    min-width: 150px;
+  }
+  
+  /* Refresh Button Styling */
+  .btn-refresh {
+    background-color: #36e433; /* Green */
+    color: white;
+    border: 2px solid #5d7061;
+  }
+  
+  .btn-refresh:hover {
+    background-color: #f6c762; /* Darker Green on Hover */
+    border-color: #000000;
+    box-shadow: 0px 2px 10px rgba(1, 255, 60, 0.4);
+    color:white;
+  }
+  
+  /* Sort Button Styling */
+  .btn-sort {
+    background-color: #ef6007; /* Blue */
+    color: rgb(255, 255, 255);
+    border: 2px solid #979ca0;
+    margin-right: 10px;
+  }
+  
+  .btn-sort:hover {
+    background-color:#f6c762; /* Darker Blue on Hover */
+    border-color: #0056b3;
+    box-shadow: 0px 2px 10px rgba(0, 123, 255, 0.4);
+  }
+  
+  /* Focus Effect (Optional) */
+  .btn:focus {
+    outline: none;
+    box-shadow: 0 0 0 0.25rem rgba(1, 124, 255, 0.25);
+  }
+  
