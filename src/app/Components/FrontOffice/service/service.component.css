@@ -26,3 +26,63 @@
   .fab i {
     font-weight: bold;
   }
+
+  .service-card {
+    background: rgba(0, 0, 0, 0.85); /* Dark background */
+    border-radius: 15px;
+    padding: 20px;
+    text-align: center;
+    box-shadow: 0px 10px 20px rgba(0, 255, 0, 0.2);
+    transition: transform 0.3s ease-in-out, box-shadow 0.3s;
+  }
+  
+  .service-card:hover {
+    transform: translateY(-10px) scale(1.05);
+    box-shadow: 0px 15px 30px rgba(0, 255, 0, 0.4);
+  }
+  
+  .icon {
+    font-size: 40px;
+    color: black;
+    background: linear-gradient(135deg, #00ff00, #008000);
+    padding: 15px;
+    border-radius: 50%;
+    display: inline-block;
+    transition: all 0.3s ease-in-out;
+  }
+  
+  .service-card:hover .icon {
+    background: linear-gradient(135deg, #008000, #00ff00);
+  }
+  
+  .details h3 {
+    font-size: 22px;
+    font-weight: bold;
+    margin-top: 10px;
+    color: #00ff00; /* Green text */
+  }
+  
+  .details p {
+    color: rgba(0, 255, 0, 0.8);
+    font-size: 14px;
+    margin-bottom: 15px;
+  }
+  
+  button {
+    background: linear-gradient(135deg, #008000, #00ff00);
+    border: none;
+    padding: 10px 20px;
+    border-radius: 20px;
+    color: black;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.3s ease-in-out;
+  }
+  
+  button:hover {
+    background: linear-gradient(135deg, #00ff00, #008000);
+    transform: scale(1.1);
+  }
+  
+  
+  

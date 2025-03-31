@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import { PetService } from 'src/app/models/service';
+import { ActivatedRoute, Router } from '@angular/router';
 import { PetServiceService } from 'src/app/Services/pet-service.service';
-import { formatDate } from '@angular/common';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-detail-service',
@@ -15,7 +14,7 @@ export class DetailServiceComponent implements OnInit {
   availableSlots: string[] = [];
 
   
-  constructor(private ps: PetServiceService, private Act: ActivatedRoute) { }
+  constructor(private ps: PetServiceService, private Act: ActivatedRoute , private router: Router) { }
 
   ngOnInit(): void {
     this.id = this.Act.snapshot.params['id'];    
@@ -35,6 +34,48 @@ export class DetailServiceComponent implements OnInit {
       }
     );
   }
+  bookAppointment(serviceId : number) {
+    const user = localStorage.getItem('user');
+
+    if (user) {
+      this.router.navigate(['/appointment', serviceId]);
+    } else {
+      Swal.fire({
+        title: '🔒 Access Restricted!',
+        html: `
+          <div style="font-size: 16px; font-weight: 500; color: #fff;">
+            You must be logged in to access this page.
+          </div>
+          <br>
+          <img src="https://media.giphy.com/media/j5Z66YrFjkYYqB3yik/giphy.gif" width="200" alt="Login Required">
+        `,
+        icon: 'warning',
+        position: 'center',
+        background: 'linear-gradient(135deg, #00c853, #1b5e20)',  
+        color: '#ffffff',
+        confirmButtonText: '🔑 Login Now',
+        showCancelButton: true,
+        cancelButtonText: '❌ Maybe Later',
+        customClass: {
+          popup: 'swal2-border-radius', // Adding border-radius
+          confirmButton: 'swal2-confirm-button',
+          cancelButton: 'swal2-cancel-button'
+        },
+        allowOutsideClick: false,
+        showClass: {
+          popup: 'animate__animated animate__zoomIn'  // Fancy Animation
+        },
+        hideClass: {
+          popup: 'animate__animated animate__zoomOut'
+        }
+      }).then((result) => {
+        if (result.isConfirmed) {
+          this.router.navigate(['/login']);
+        }
+      });
+    }
+  }
+    
 
 
 

@@ -11,6 +11,7 @@
   "private": true,
   "dependencies": {
     "@angular/animations": "^16.2.0",
+    "@angular/cdk": "^19.2.7",
     "@angular/common": "^16.2.0",
     "@angular/compiler": "^16.2.0",
     "@angular/core": "^16.2.0",
@@ -31,10 +32,15 @@
     "flaticon": "^0.1.0",
     "jquery": "^3.7.1",
     "ngx-bootstrap": "^19.0.2",
+    "ngx-owl-carousel-o": "^16.0.0",
     "popper.js": "^1.16.1",
+    "primeicons": "^7.0.0",
+    "primeng": "^19.0.10",
     "rxjs": "~7.8.0",
+    "sweetalert2": "^11.17.2",
     "timepicker": "^1.14.1",
     "tslib": "^2.3.0",
+    "uninstall": "^0.0.0",
     "zone.js": "~0.13.0"
   },
   "devDependencies": {

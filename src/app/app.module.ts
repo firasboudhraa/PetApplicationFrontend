@@ -1,9 +1,10 @@
 import { NgModule, Component, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { CarouselModule } from 'ngx-owl-carousel-o';
 import {HttpClientModule} from '@angular/common/http';
 import { FooterComponent } from './Components/FrontOffice/footer/footer.component';
 import { ContactInfoComponent } from './Components/FrontOffice/contact-info/contact-info.component';
@@ -34,10 +35,12 @@ import { AppointmentComponent } from './Components/FrontOffice/appointment/appoi
     ReactiveFormsModule,
     HttpClientModule,
     FullCalendarModule,
-    BsDatepickerModule.forRoot(),
+    CarouselModule,
+    BrowserAnimationsModule,
+    CarouselModule,
   ],
+
   providers: [],
   bootstrap: [AppComponent],
-  schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class AppModule { }

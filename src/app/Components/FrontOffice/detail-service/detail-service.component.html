@@ -47,8 +47,9 @@
 
           <!-- Book Appointment Button -->
           <div class="text-center">
-            <button class="px-6 py-3 bg-indigo-800 text-green-800 font-semibold rounded-lg shadow-md hover:bg-green-700 transition-all" 
-              [routerLink]="['/appointment', service.idService]">
+            <button 
+              class="text-center mt-4"
+              (click)="bookAppointment(service.idService)">
               📅 Book Appointment
             </button>
           </div>
