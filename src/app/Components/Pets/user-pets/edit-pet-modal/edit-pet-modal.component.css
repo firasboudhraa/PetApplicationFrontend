@@ -6,3 +6,7 @@
     width: 100%;
     padding: 5px;
 }
+.custom-modal .modal-body {
+    max-height: 70vh; /* adjust as needed */
+    overflow-y: auto;
+  }

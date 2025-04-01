@@ -10,7 +10,7 @@ export class PetdataServiceService {
   private apiUrl = 'http://localhost:8222/api/v1/pet'; 
 
   constructor(private http: HttpClient) {}
-
+  
   getPets(): Observable<Pet[]> {
     return this.http.get<Pet[]>(`${this.apiUrl}/retrieve-all-pets`);
   }
