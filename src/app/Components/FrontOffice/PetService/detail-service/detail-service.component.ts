@@ -56,13 +56,13 @@ export class DetailServiceComponent {
         showCancelButton: true,
         cancelButtonText: '❌ Maybe Later',
         customClass: {
-          popup: 'swal2-border-radius', // Adding border-radius
+          popup: 'swal2-border-radius', 
           confirmButton: 'swal2-confirm-button',
           cancelButton: 'swal2-cancel-button'
         },
         allowOutsideClick: false,
         showClass: {
-          popup: 'animate__animated animate__zoomIn'  // Fancy Animation
+          popup: 'animate__animated animate__zoomIn'  
         },
         hideClass: {
           popup: 'animate__animated animate__zoomOut'
