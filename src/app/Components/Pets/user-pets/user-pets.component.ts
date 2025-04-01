@@ -24,42 +24,42 @@ export class UserPetsComponent {
 
   openModal() {
     this.showModal = true;
-    this.renderer.addClass(document.querySelector('.ftco-section'), 'blur-effect');
+    this.renderer.addClass(document.querySelector('.page-container'), 'blur-effect');
     this.renderer.addClass(document.querySelector('app-navbar'), 'blur-effect');
     this.renderer.addClass(document.querySelector('app-footer'), 'blur-effect');
   }
   
   closeModal() {
     this.showModal = false;
-    this.renderer.removeClass(document.querySelector('.ftco-section'), 'blur-effect');
+    this.renderer.removeClass(document.querySelector('.page-container'), 'blur-effect');
     this.renderer.removeClass(document.querySelector('app-navbar'), 'blur-effect');
     this.renderer.removeClass(document.querySelector('app-footer'), 'blur-effect');
   }
   openDetailModal(pet: Pet) {
     this.selectedPet = pet;
     this.showDetail = true;
-    this.renderer.addClass(document.querySelector('.ftco-section'), 'blur-effect');
+    this.renderer.addClass(document.querySelector('.page-container'), 'blur-effect');
     this.renderer.addClass(document.querySelector('app-navbar'), 'blur-effect');
     this.renderer.addClass(document.querySelector('app-footer'), 'blur-effect');
     
   }
   closeDetailModal() {
     this.showDetail = false;
-    this.renderer.removeClass(document.querySelector('.ftco-section'), 'blur-effect');
+    this.renderer.removeClass(document.querySelector('.page-container'), 'blur-effect');
     this.renderer.removeClass(document.querySelector('app-navbar'), 'blur-effect');
     this.renderer.removeClass(document.querySelector('app-footer'), 'blur-effect');
     console.log(this.selectedPet)
   }
   openEditModal() {
     this.showEditModal = true;
-    this.renderer.addClass(document.querySelector('.ftco-section'), 'blur-effect');
+    this.renderer.addClass(document.querySelector('.page-container'), 'blur-effect');
     this.renderer.addClass(document.querySelector('app-navbar'), 'blur-effect');
     this.renderer.addClass(document.querySelector('app-footer'), 'blur-effect');
     
   }
   closeEditModal() {
     this.showEditModal = false;
-    this.renderer.removeClass(document.querySelector('.ftco-section'), 'blur-effect');
+    this.renderer.removeClass(document.querySelector('.page-container'), 'blur-effect');
     this.renderer.removeClass(document.querySelector('app-navbar'), 'blur-effect');
     this.renderer.removeClass(document.querySelector('app-footer'), 'blur-effect');
   }

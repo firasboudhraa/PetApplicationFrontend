@@ -1,5 +1,10 @@
-<button type="button" class="btn btn-primary modal-btn" (click)="openModal()">Add a Pet</button>
-<section class="ftco-section" >
+<div class="page-container">
+  <div class="d-flex justify-content-end mb-3">
+    <button type="button" class="btn btn-primary modal-btn" (click)="openModal()">
+      Add a Pet
+    </button>
+  </div>
+  <section class="ftco-section pt-5" >
   <div class="container ">
     <div class="card-container">
       <ng-container  *ngFor="let pet of pets">
@@ -31,6 +36,7 @@
       </div>
     </div>
   </section>
+</div>
 
   <!-- Modal HTML -->
   

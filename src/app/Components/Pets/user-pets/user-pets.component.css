@@ -35,12 +35,15 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: rgba(0, 0, 0, 0.4); /* Optional dark overlay */
-  isolation: isolate; /* Prevent blur from affecting modal */
+  background-color: rgba(0, 0, 0, 0.4); 
+  isolation: isolate; 
 }
 .modal-btn {
-  position: absolute;
-  top: 15vh;
-  right: 20vw;
-  z-index: 1000; /* Ensure it stays above other elements */
+  width: 10vw;
+  z-index: 1000;
+  margin:5vh 10vw 0px 0px ;
+}
+.page-container{
+  display: flex ;
+  flex-direction: column;
 }

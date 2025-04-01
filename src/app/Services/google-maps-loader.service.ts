@@ -8,11 +8,15 @@ export class GoogleMapsLoaderService {
 
   constructor() { }
   loader = new Loader({
-    apiKey: 'AIzaSyAOVYRIgupAurZup5y1PRh8Ismb1A3lLao',  // <-- replace with your actual API key
+    apiKey: this.getApiKey(),  // Use a method to retrieve the API key
     version: 'weekly',
   });
 
   load(): Promise<typeof google> {
     return this.loader.load();
+  }
+
+  private getApiKey(): string {
+    return (window as any).__env?.GOOGLE_MAPS_API_KEY || ''; // Retrieve from a global environment variable
   }
 }
