@@ -6,6 +6,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CarouselModule } from 'ngx-owl-carousel-o';
 import {HttpClientModule} from '@angular/common/http';
+import { NgxPaginationModule } from 'ngx-pagination';
 import { FooterComponent } from './Components/FrontOffice/footer/footer.component';
 import { ContactInfoComponent } from './Components/FrontOffice/contact-info/contact-info.component';
 import { NavbarComponent } from './Components/FrontOffice/navbar/navbar.component';
@@ -41,6 +42,7 @@ import { AvailableSlotsComponent } from './Components/FrontOffice/PetService/ava
     CarouselModule,
     BrowserAnimationsModule,
     CarouselModule,
+    NgxPaginationModule,
   ],
 
   providers: [PetServiceService],

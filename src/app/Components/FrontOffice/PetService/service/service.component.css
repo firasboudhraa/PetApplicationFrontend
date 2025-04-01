@@ -1,88 +1,170 @@
 .fab {
-    position: fixed;
-    bottom: 20px;
-    right: 20px;
-    width: 60px;
-    height: 60px;
-    background-color: #28a745; /* Green color */
-    color: white;
-    border: none;
-    border-radius: 50%;
-    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 17px;
-    cursor: pointer;
-    transition: background-color 0.3s ease-in-out, transform 0.2s;
-    z-index: 1000;
-  }
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  width: 60px;
+  height: 60px;
+  background-color: #619d6f; /* Green color */
+  color: white;
+  border: none;
+  border-radius: 50%;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 17px;
+  cursor: pointer;
+  transition: background-color 0.3s ease-in-out, transform 0.2s;
+  z-index: 1000;
+}
 
-  .fab:hover {
-    background-color: #218838; /* Darker green */
-    transform: scale(1.1); /* Slight zoom effect */
-  }
+.fab:hover {
+  background-color: #218838; /* Darker green */
+  transform: scale(1.1); /* Slight zoom effect */
+}
 
-  .fab i {
-    font-weight: bold;
-  }
+.fab i {
+  font-weight: bold;
+}
 
-  .service-card {
-    background: rgba(0, 0, 0, 0.85); /* Dark background */
-    border-radius: 15px;
-    padding: 20px;
-    text-align: center;
-    box-shadow: 0px 10px 20px rgba(0, 255, 0, 0.2);
-    transition: transform 0.3s ease-in-out, box-shadow 0.3s;
+.service-card {
+  background: rgba(0, 0, 0, 0.85); /* Dark background */
+  border-radius: 15px;
+  padding: 20px;
+  text-align: center;
+  box-shadow: 0px 10px 20px rgba(0, 255, 0, 0.2);
+  transition: transform 0.3s ease-in-out, box-shadow 0.3s;
+}
+
+.service-card:hover {
+  transform: translateY(-10px) scale(1.05);
+  box-shadow: 0px 15px 30px rgba(0, 255, 0, 0.4);
+}
+
+.icon {
+  font-size: 40px;
+  color: black;
+  background: linear-gradient(135deg, #00ff00, #008000);
+  padding: 15px;
+  border-radius: 50%;
+  display: inline-block;
+  transition: all 0.3s ease-in-out;
+}
+
+.service-card:hover .icon {
+  background: linear-gradient(135deg, #008000, #00ff00);
+}
+
+.details h3 {
+  font-size: 22px;
+  font-weight: bold;
+  margin-top: 10px;
+  color: #00ff00; /* Green text */
+}
+
+.details p {
+  color: rgba(0, 255, 0, 0.8);
+  font-size: 14px;
+  margin-bottom: 15px;
+}
+
+button {
+  background: linear-gradient(135deg, #008000, #00ff00);
+  border: none;
+  padding: 10px 20px;
+  border-radius: 20px;
+  color: black;
+  font-weight: bold;
+  cursor: pointer;
+  transition: 0.3s ease-in-out;
+}
+
+button:hover {
+  background: linear-gradient(135deg, #00ff00, #008000);
+  transform: scale(1.1);
+}
+
+.services-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 20px;
+  padding: 20px;
+}
+
+.service-card {
+  width: 320px;
+  transition: transform 0.3s ease-in-out;
+  position: relative;
+  background: #fff;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.service-card:hover {
+  cursor: pointer;
+  transform: scale(1.1);
+}
+
+.info-container {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 15px;
+  margin-top: 15px;
+}
+
+.info-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  color: #181717; /* Green color */
+}
+
+.info-item i {
+  color: #3f453f; /* Icon color */
+  font-size: 16px;
+}
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.pagination-button {
+  background-color: #717c72;
+  border: none;
+  color: white;
+  padding: 10px 15px;
+  margin: 5px;
+  cursor: pointer;
+  border-radius: 5px;
+  transition: background 0.3s;
+}
+
+.pagination-button:hover {
+  background-color: #a08b45;
+}
+
+.pagination-button.active {
+  background-color: #3a2e7d;
+  font-weight: bold;
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+    opacity: 0.9;
   }
-  
-  .service-card:hover {
-    transform: translateY(-10px) scale(1.05);
-    box-shadow: 0px 15px 30px rgba(0, 255, 0, 0.4);
-  }
-  
-  .icon {
-    font-size: 40px;
-    color: black;
-    background: linear-gradient(135deg, #00ff00, #008000);
-    padding: 15px;
-    border-radius: 50%;
-    display: inline-block;
-    transition: all 0.3s ease-in-out;
-  }
-  
-  .service-card:hover .icon {
-    background: linear-gradient(135deg, #008000, #00ff00);
-  }
-  
-  .details h3 {
-    font-size: 22px;
-    font-weight: bold;
-    margin-top: 10px;
-    color: #00ff00; /* Green text */
-  }
-  
-  .details p {
-    color: rgba(0, 255, 0, 0.8);
-    font-size: 14px;
-    margin-bottom: 15px;
-  }
-  
-  button {
-    background: linear-gradient(135deg, #008000, #00ff00);
-    border: none;
-    padding: 10px 20px;
-    border-radius: 20px;
-    color: black;
-    font-weight: bold;
-    cursor: pointer;
-    transition: 0.3s ease-in-out;
-  }
-  
-  button:hover {
-    background: linear-gradient(135deg, #00ff00, #008000);
+  50% {
     transform: scale(1.1);
+    opacity: 1;
   }
-  
-  
-  
+  100% {
+    transform: scale(1);
+    opacity: 0.9;
+  }
+}

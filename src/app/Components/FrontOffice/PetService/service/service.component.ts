@@ -9,14 +9,36 @@ import Swal from 'sweetalert2';
 })
 export class ServiceComponent {
   services : any[] = [];
+  paginatedServices: any[] = [];
+  currentPage = 1;
+  pageSize = 3; 
+  totalPages = 0;
+
   constructor( private ps:PetServiceService , private router:Router) { }
 
   ngOnInit(): void {
     this.ps.getServices().subscribe(
       (data) =>{ 
-        this.services = data 
-      }
+        this.services = data ;
+        this.totalPages = Math.ceil(this.services.length / this.pageSize);
+        this.updatePaginatedServices();      }
     );
+  }
+
+  onPageChange(page: number) {
+    if (page >= 1 && page <= this.totalPages) {
+      this.currentPage = page;
+      this.updatePaginatedServices();
+    }
+  }
+
+  getPagesArray(): number[] {
+    return Array.from({ length: this.totalPages }, (_, i) => i + 1);
+  }
+
+  updatePaginatedServices() {
+    const startIndex = (this.currentPage - 1) * this.pageSize;
+    this.paginatedServices = this.services.slice(startIndex, startIndex + this.pageSize);
   }
 
   checkUserBeforeNavigate() {
@@ -52,7 +74,7 @@ export class ServiceComponent {
       `,
       icon: 'error',
       position: 'center',
-      background: 'linear-gradient(135deg, #00c853, #1b5e20)',  
+      background: 'linear-gradient(135deg,rgb(128, 149, 137),rgb(207, 230, 208))',  
       color: '#ffffff',
       confirmButtonText: '🔑 Login Now',
       showCancelButton: true,
@@ -75,24 +97,8 @@ export class ServiceComponent {
       }
     });
   }
-  carouselOptions = {
-    loop: true,
-    margin: 20,
-    nav: true,
-    dots: true,
-    autoplay: true,
-    autoplayTimeout: 3500,
-    autoplayHoverPause: true,
-    animateOut: 'fadeOut',
-    animateIn: 'fadeIn',
-    smartSpeed: 1000,
-    navText: ['<i class="fa fa-chevron-left"></i>', '<i class="fa fa-chevron-right"></i>'],
-    responsive: {
-      0: { items: 1 },
-      600: { items: 2 },
-      1000: { items: 3 }
-    }
-  };
+
+
   
   
   
