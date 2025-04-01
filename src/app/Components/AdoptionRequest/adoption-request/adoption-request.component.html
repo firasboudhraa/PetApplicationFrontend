@@ -1,0 +1,65 @@
+<div class="container mt-5" >
+    <h2>We appreciate your act  </h2>
+  
+    <div class="card mb-3">
+      <div class="card-body">
+  
+        <!-- Adoption Request Form -->
+        <form [formGroup]="adoptionForm" >
+            
+            <div class="form-group mt-3">
+                <label for="location">When would you meet the pet owner to pick up this pet?</label>
+                <div class="row">
+
+                    <input 
+                    id="time" 
+                    type="time" 
+                    formControlName="time" 
+                    class="form-control col-md-2" 
+                    placeholder="Select a time" 
+                    >
+                    <input 
+                    id="time" 
+                    type="date" 
+                    formControlName="date" 
+                    class="form-control col-md-4" 
+                    placeholder="Select a date" 
+                    >
+                </div>
+            </div>
+            <div class="form-group mt-3">
+                <label for="location">Where would you meet the pet owner to pick up this pet?</label>
+                <div id="map" style="height: 400px;"></div>
+
+                <input 
+                id="location" 
+                type="text" 
+                formControlName="location" 
+                class="form-control" 
+                placeholder="Select a location" 
+                >
+            </div>
+
+          <div class="form-group mt-3">
+            <label for="adopterMessage">Why do you want to adopt this pet?</label>
+            <textarea 
+              id="adopterMessage" 
+              formControlName="adopterMessage" 
+              class="form-control" 
+              placeholder="Tell us why you want to adopt this pet" 
+              rows="3"></textarea>
+          </div>
+  
+          <button 
+            type="submit" 
+            class="btn btn-primary mt-3" 
+            [disabled]="adoptionForm.invalid">
+            Submit Adoption Request
+          </button>
+
+        </form>
+  
+      </div>
+    </div>
+  </div>
+  

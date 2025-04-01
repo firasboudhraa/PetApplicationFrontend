@@ -38,7 +38,6 @@
             ],
             "scripts": [
               "node_modules/aos/dist/aos.js",
-              "node_modules/jquery/dist/jquery.min.js",
               "node_modules/timepicker/jquery.timepicker.min.js",
               "node_modules/popper.js/dist/umd/popper.min.js",
               "node_modules/bootstrap/dist/js/bootstrap.min.js",
@@ -121,6 +120,6 @@
     }
   },
   "cli": {
-    "analytics": "753447a8-ea36-48aa-a9f4-f7a0588d60bf"
+    "analytics": "dd7baa9f-3ec0-4d9c-9e89-1c14e3244b5a"
   }
 }

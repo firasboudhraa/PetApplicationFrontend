@@ -1,0 +1,103 @@
+<div class="modal fade show d-block custom-modal" tabindex="-1" role="dialog" *ngIf="isVisible">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Enter your pet info</h5>
+          <button type="button" class="close" (click)="closeModal()">&times;</button>
+        </div>
+        <div class="modal-body">
+            <form [formGroup]="petForm" (ngSubmit)="onSubmit()">
+                <!-- name -->
+                <div class="form-group">
+                    <label for="name">Pet Name</label>
+                    <input id="name" type="text" class="form-control" formControlName="name" placeholder="Enter pet name" />
+                    <div *ngIf="petForm.get('name')?.invalid && petForm.get('name')?.touched" class="text-danger">
+                        Pet name is required.
+                    </div>
+                </div>
+                <!-- image -->
+                <div class="form-group">
+                    <label for="image">Pet Image</label>
+                    <input
+                      id="image"
+                      type="file"
+                      class="form-control"
+                      (change)="onFileSelected($event)"
+                      accept="image/*"
+                      formControlName="imagePath"
+                    />
+                    <div *ngIf="imageError" class="text-danger">
+                      {{ imageError }}
+                    </div>
+                  </div>
+                <!-- Specie -->
+                <div class="form-group">
+                    <label for="species">Specie</label>
+                    <input id="species" type="text" class="form-control" formControlName="species" placeholder="Enter pet specie" />
+                  <div *ngIf="petForm.get('species')?.invalid && petForm.get('species')?.touched" class="text-danger">
+                    Pet species invalid
+                  </div>
+                </div>
+                <!-- Age --> 
+                <div class="form-group">
+                  <label for="age">Age</label>
+                  <input id="age" type="number" class="form-control" formControlName="age" placeholder="Enter pet age" />
+                  <div *ngIf="petForm.get('age')?.invalid && petForm.get('age')?.touched" class="text-danger">
+                    Pet age must be a valid number and greater than 0.
+                  </div>
+                </div>
+                <!-- Color -->
+                <div class="form-group">
+                    <label for="color">Color</label>
+                    <input id="color" type="text" class="form-control" formControlName="color" placeholder="Enter pet color" />
+                    <div *ngIf="petForm.get('color')?.invalid && petForm.get('color')?.touched" class="text-danger">
+                        Pet color is required.
+                    </div>
+                </div>
+
+                <!-- Sex -->
+                <div class="form-group">
+                    <label for="sex">Sex</label>
+                    <select id="sex" class="form-control" formControlName="sex">
+                      <option value="" disabled>Select pet sex</option>
+                      <option value="Male">Male</option>
+                      <option value="Female">Female</option>
+                    </select>
+                    <div *ngIf="petForm.get('sex')?.invalid && petForm.get('sex')?.touched" class="text-danger">
+                      Pet sex is required.
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                  <label for="description">Description</label>
+                  <textarea
+                    id="description"
+                    class="form-control"
+                    formControlName="description"
+                    placeholder="Enter a description for the pet"
+                  ></textarea>
+                </div>
+                
+                <div class="form-group">
+                  <div class="form-check form-switch">
+                    <label class="form-check-label" for="forAdoption">Is it for adoption?</label>
+                    <input
+                      class="form-check-input ms-3"
+                      type="checkbox"
+                      role="switch"
+                      id="forAdoption"
+                      formControlName="forAdoption"
+                    />
+                  </div>
+                </div>
+
+
+                <button type="submit" class="btn btn-primary" [disabled]="petForm.invalid">Submit</button>
+              </form>
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-danger" (click)="closeModal()">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>

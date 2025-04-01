@@ -12,6 +12,16 @@ import { HomeComponent } from './Components/FrontOffice/home/home.component';
 import { ServiceComponent } from './Components/FrontOffice/service/service.component';
 import { AddServiceComponent } from './Components/FrontOffice/add-service/add-service.component';
 import { DetailServiceComponent } from './Components/FrontOffice/detail-service/detail-service.component';
+import { PetCardComponent } from './Components/Pets/user-pets/pet-card/pet-card.component';
+import { AddPetModalComponent } from './Components/Pets/user-pets/add-pet-modal/add-pet-modal.component';
+import { PetDetailModalComponent } from './Components/Pets/user-pets/pet-detail-modal/pet-detail-modal.component';
+import { EditPetModalComponent } from './Components/Pets/user-pets/edit-pet-modal/edit-pet-modal.component';
+import { UserPetsComponent } from './Components/Pets/user-pets/user-pets.component';
+import { PublicPetsComponent } from './Components/Pets/public-pets/public-pets.component';
+import { PublicPetCardComponent } from './Components/Pets/public-pets/public-pet-card/public-pet-card.component';
+import { PublicPetDetailModalComponent } from 'src/app/Components/Pets/public-pets/public-pet-detail-modal/public-pet-detail-modal.component';
+import { AdoptionRequestComponent } from './Components/AdoptionRequest/adoption-request/adoption-request.component';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -23,6 +33,18 @@ import { DetailServiceComponent } from './Components/FrontOffice/detail-service/
     ServiceComponent,
     AddServiceComponent,
     DetailServiceComponent,
+    PetCardComponent,
+    AddServiceComponent,
+    DetailServiceComponent,
+    ServiceComponent,
+    AddPetModalComponent,
+    PetDetailModalComponent,
+    EditPetModalComponent,
+    UserPetsComponent,
+    PublicPetsComponent,
+    PublicPetCardComponent,
+    PublicPetDetailModalComponent,
+    AdoptionRequestComponent
   ],
   imports: [
     BrowserModule,
@@ -30,6 +52,7 @@ import { DetailServiceComponent } from './Components/FrontOffice/detail-service/
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
+
   ],
   providers: [],
   bootstrap: [AppComponent]
