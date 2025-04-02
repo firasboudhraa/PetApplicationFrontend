@@ -2,7 +2,8 @@
 
     <div class="blog-entry align-self-stretch">
       <div class="adoption-badge" *ngIf="pet.forAdoption">🐾 For Adoption</div>
-      <img  class="block-20 rounded " [src]="getImageUrl(pet.imagePath) " > 
+      <img  class="block-20 rounded " [src]="getImageUrl(pet.imagePath) "
+      style="max-width: 330px; width: 100%; height: 250;" > 
       
         <div class="text p-4 ">
           <h3 class=""><strong>{{ pet.name }} </strong> 

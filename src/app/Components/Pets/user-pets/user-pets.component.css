@@ -22,14 +22,19 @@
 
 .modal-content {
   margin: 2rem auto;
-  z-index: 1050;
+  z-index: 10;
 }
-
+#add-pet-modal{
+  z-index: 5;
+}
+#edit-pet-modal{
+  z-index: 5;
+}
 .custom-modal {
   position: fixed;
   top: 0;
   left: 0;
-  z-index: 1050;
+  z-index: 5;
   width: 100vw;
   height: 100vh;
   display: flex;

@@ -84,3 +84,28 @@
     opacity: 0.9;
   }
 }
+
+.simple-map-btn {
+  background-color: white;
+  color: #333;
+  border: 1px solid #ccc;
+  border-radius: 20px;
+  font-size: 0.85rem;
+  padding: 5px 12px;
+  transition: background-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.simple-map-btn i {
+  color: #000000; /* accent icon color */
+}
+
+.simple-map-btn:hover {
+  background-color: #f8f9fa;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+
+.custom-modal .modal-body {
+  max-height: 70vh; 
+  overflow-y: auto;
+}

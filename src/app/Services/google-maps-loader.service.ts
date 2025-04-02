@@ -10,6 +10,7 @@ export class GoogleMapsLoaderService {
   loader = new Loader({
     apiKey: this.getApiKey(),  // Use a method to retrieve the API key
     version: 'weekly',
+    libraries: ['places']
   });
 
   load(): Promise<typeof google> {

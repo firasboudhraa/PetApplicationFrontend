@@ -31,6 +31,15 @@
                             <div class="mt-5">
                               <p>Description : {{pet.description}}</p>
                           </div>
+                          <div>
+                            <div class="d-flex justify-content-between align-items-center mt-4">
+                              <p class="mb-0">Location: {{humanReadableLocation}}</p>
+                              <button class="btn btn-sm simple-map-btn" (click)="openMap()">
+                                <i class="fa fa-map-marker me-1" style="color: red;"></i> View on Map
+                              </button>
+                            </div>
+                             <div id="map" style="height: 250px;" *ngIf="mapOpened"></div>
+                          </div>
                     </div>
             </div>
         <div class="modal-footer">

@@ -1,6 +1,7 @@
-import { Component, EventEmitter, Input, Output, SimpleChanges } from '@angular/core';
+import { Component, ElementRef, EventEmitter, Input, Output, SimpleChanges, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Pet } from 'src/app/models/pet';
+import { GoogleMapsLoaderService } from 'src/app/Services/google-maps-loader.service';
 import { PetdataServiceService } from 'src/app/Services/petdata-service.service';
 import Swal from 'sweetalert2';
 
@@ -14,9 +15,11 @@ export class EditPetModalComponent {
  @Input() pet!: Pet;
   @Output() close = new EventEmitter<void>();
   @Output() petEdited = new EventEmitter<void>(); // New event emitter for success
+    @ViewChild('modalBody') modalBody!: ElementRef;
   
   confirmationShowed: boolean = false;
-
+  
+  constructor(private petDataService: PetdataServiceService , private mapsLoader :GoogleMapsLoaderService) {}
   showConfirmButton() {
     this.confirmationShowed = true;
   }
@@ -25,9 +28,10 @@ export class EditPetModalComponent {
   }
   closeModal() {
     this.close.emit();
+    this.humanReadableLocation='';
+    this.petForm.reset(); // R
   }
 
-  constructor(private petDataService: PetdataServiceService) {}
 
   petForm!: FormGroup;
   selectedImage: File | null = null;
@@ -42,10 +46,11 @@ export class EditPetModalComponent {
       color: new FormControl('', Validators.required),
       sex: new FormControl('', Validators.required),
       description: new FormControl('', ), 
+      location: new FormControl('', ), 
       forAdoption: new FormControl(false, )
     });
-   
   }
+
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['pet'] && changes['pet'].currentValue) {
       this.petForm.patchValue({
@@ -53,9 +58,106 @@ export class EditPetModalComponent {
         species: this.pet.species,
         age: this.pet.age,
         color: this.pet.color,
-        sex: this.pet.sex
+        sex: this.pet.sex,
+        location: this.pet.location,
+        description: this.pet.description
       });    
     }
+    
+    this.mapsLoader.load().then(() => {
+       this.initMap();
+     }).catch(err => {
+       console.error('Google Maps failed to load', err);
+     });      
+     console.log("entred ")
+     if(this.pet.location) {
+      const [latStr, lngStr] = this.pet.location.split(',').map(coord => coord.trim());
+      const lat = parseFloat(latStr);
+      const lng = parseFloat(lngStr);
+      
+      if (!isNaN(lat) && !isNaN(lng)) {
+        this.getAddressFromLatLng(lat, lng);
+      } 
+    }else {
+      this.humanReadableLocation = 'Unknown location';
+    }
+  }
+  humanReadableLocation: string = '';
+    getAddressFromLatLng(lat: number, lng: number): void {
+      const geocoder = new google.maps.Geocoder();
+      const latlng = { lat, lng };
+    
+      geocoder.geocode({ location: latlng }, (results, status) => {
+        if (status === 'OK') {
+          if (results && results[0]) {
+            this.humanReadableLocation = results[0].formatted_address;
+          } else {
+            console.warn('No results found');
+            this.humanReadableLocation = 'Unknown location';
+          }
+        } else {
+          console.error('Geocoder failed due to: ' + status);
+          this.humanReadableLocation = 'Geocoder failed';
+        }
+      });
+    }
+  onModalScroll() {
+    const pacContainer = document.querySelector('.pac-container') as HTMLElement;
+    if (pacContainer) {
+      pacContainer.style.display = 'none';
+    }
+  }
+  initMap() {
+    const mapElement = document.getElementById('map');
+    const inputElement = document.getElementById('autocomplete') as HTMLInputElement;
+  
+    if (!mapElement || !inputElement) return;
+  
+    const map = new google.maps.Map(mapElement, {
+      center: { lat: 36.8065, lng: 10.1815 }, // default center
+      zoom: 12
+    });
+  
+    let marker: google.maps.Marker | null = null;
+  
+    // Autocomplete integration
+    const autocomplete = new google.maps.places.Autocomplete(inputElement);
+    autocomplete.bindTo('bounds', map);
+  
+    autocomplete.addListener('place_changed', () => {
+      const place = autocomplete.getPlace();
+      if (!place.geometry || !place.geometry.location) return;
+  
+      // Center map and place marker
+      map.setCenter(place.geometry.location);
+      map.setZoom(14);
+  
+      if (marker) marker.setMap(null);
+      marker = new google.maps.Marker({
+        map,
+        position: place.geometry.location
+      });
+  
+      const latlng = `${place.geometry.location.lat()}, ${place.geometry.location.lng()}`;
+      this.petForm.controls['location'].setValue(latlng);
+    });
+  
+    map.addListener('click', (event: google.maps.MapMouseEvent) => {
+      if (!event.latLng) return;
+  
+      const lat = event.latLng.lat();
+      const lng = event.latLng.lng();
+      const latlng = `${lat}, ${lng}`;
+  
+      if (marker) marker.setMap(null);
+      marker = new google.maps.Marker({
+        map,
+        position: event.latLng
+      });
+  
+      this.petForm.controls['location'].setValue(latlng);
+    });
+    
   }
 
   onSubmit() {
@@ -67,6 +169,7 @@ export class EditPetModalComponent {
       formData.append('color', this.petForm.get('color')?.value);
       formData.append('sex', this.petForm.get('sex')?.value);
       formData.append('description', this.petForm.get('description')?.value); 
+      formData.append('location', this.petForm.get('location')?.value); 
       formData.append('forAdoption', this.petForm.get('forAdoption')?.value );
       formData.append('ownerId', '1');
 

@@ -9,5 +9,6 @@ export interface Pet {
     ownerId: number;
     description:string;
     forAdoption: boolean;
+    location:string ;
   }
   

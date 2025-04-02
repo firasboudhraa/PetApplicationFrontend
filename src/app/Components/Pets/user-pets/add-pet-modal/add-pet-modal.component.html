@@ -1,12 +1,12 @@
-<div class="modal fade show d-block custom-modal" tabindex="-1" role="dialog" *ngIf="isVisible">
+<div class="modal fade show d-block custom-modal" id="add-pet-modal" tabindex="-1" role="dialog" *ngIf="isVisible">
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title">Enter your pet info</h5>
           <button type="button" class="close" (click)="closeModal()">&times;</button>
         </div>
-        <div class="modal-body">
-            <form [formGroup]="petForm" (ngSubmit)="onSubmit()">
+        <div class="modal-body" #modalBody (scroll)="onModalScroll()">
+          <form [formGroup]="petForm" (ngSubmit)="onSubmit()">
                 <!-- name -->
                 <div class="form-group">
                     <label for="name">Pet Name</label>
@@ -76,6 +76,31 @@
                     formControlName="description"
                     placeholder="Enter a description for the pet"
                   ></textarea>
+                </div>
+                <div class="form-group mt-3 position-relative">
+                  <label for="location">Where would you meet the pet owner to pick up this pet?</label>
+                
+                  <!-- Search input for autocomplete -->
+                  <input
+                  id="autocomplete"
+                  #autocompleteInput
+                  type="text"
+                  class="form-control mb-2"
+                  placeholder="Type a location"
+                  autocomplete="off"
+                  />
+                
+                  <!-- Map display -->
+                  <div id="map" #map style="height: 400px;"></div>
+                
+                  <!-- Hidden form field to store lat,lng -->
+                  <input
+                    type="text"
+                    formControlName="location"
+                    class="form-control mt-2"
+                    placeholder="Location coordinates"
+                    hidden
+                  />
                 </div>
                 
                 <div class="form-group">

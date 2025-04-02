@@ -41,12 +41,14 @@
   <!-- Modal HTML -->
   
   <app-add-pet-modal
+  id="add-pet-modal"
   [isVisible]="showModal"
   (close)="closeModal()"
   (petAdded)="loadPetsAfterChange()">
 </app-add-pet-modal>
 
 <app-edit-pet-modal
+id="edit-pet-modal"
 [isVisible]="showEditModal"
 (close)="closeEditModal()"
 [pet]="selectedPet"
