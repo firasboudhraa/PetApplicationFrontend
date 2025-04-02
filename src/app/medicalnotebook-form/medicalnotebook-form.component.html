@@ -1,0 +1,74 @@
+
+<div class="container mt-5">
+    <h2 class="mb-3">Gestion des Carnets</h2>
+    <form [formGroup]="carnetForm" class="mb-4">
+      <div class="mb-3">
+        <input class="form-control" formControlName="medicalHistory" placeholder="Historique Médical" required />
+      </div>
+  
+      <!-- Sélection d'un animal par son nom, stocke son ID -->
+      <div class="mb-3">
+        <label for="petSelect">Choisir un animal</label>
+        <select class="form-select" id="petSelect" formControlName="pet_id">
+          <option *ngFor="let pet of pets" [value]="pet.id">{{ pet.name }}</option>
+        </select>
+      </div>
+  
+      <button type="submit" class="btn btn-primary">Enregistrer</button>
+    </form>
+    
+    <ul class="list-group mb-4">
+      <li class="list-group-item d-flex justify-content-between align-items-center" *ngFor="let carnet of carnets">
+        {{ carnet.medicalHistory }} - {{ carnet.pet_id }}
+        <div>
+          <button class="btn btn-warning btn-sm me-2">Modifier</button>
+          <button class="btn btn-danger btn-sm">Supprimer</button>
+        </div>
+      </li>
+    </ul>
+  
+    <h2 class="mb-3">Gestion des Records</h2>
+    <form [formGroup]="recordForm" class="mb-4">
+      <div class="mb-3">
+        <a>date</a>
+        <input class="form-control" formControlName="date" type="date" required />
+      </div>
+      <a>Type of service</a>
+
+      <div class="mb-3">
+        <select class="form-select" formControlName="type">
+          <option value="VACCINATION">Vaccination</option>
+          <option value="SURGERY">Chirurgie</option>
+          <option value="CHECKUP">Contrôle</option>
+          <option value="MEDICATION">Médication</option>
+          <option value="OTHER">Autre</option>
+        </select>
+      </div>
+      <div class="mb-3">
+        <a>Description</a>
+        <input class="form-control" formControlName="description" placeholder="Description" required />
+        <div *ngIf="recordForm.controls['description'].invalid && recordForm.controls['description'].touched" class="text-danger">
+          La description doit contenir au moins 30 caractères.
+        </div>
+      </div>
+      <div class="mb-3">
+        <input class="form-control" formControlName="veterinarian_id" placeholder="ID Vétérinaire" required />
+      </div>
+      <div class="mb-3">
+        <a>next_due_date</a>
+        <input class="form-control" formControlName="next_due_date" type="date" />
+      </div>
+     
+      <button type="submit" class="btn btn-primary">Enregistrer</button>
+    </form>
+    
+    <ul class="list-group">
+      <li class="list-group-item d-flex justify-content-between align-items-center" *ngFor="let record of records">
+        {{ record.date }} - {{ record.type }} - {{ record.description }}
+        <div>
+          <button class="btn btn-warning btn-sm me-2">Modifier</button>
+          <button class="btn btn-danger btn-sm">Supprimer</button>
+        </div>
+      </li>
+    </ul>
+</div>

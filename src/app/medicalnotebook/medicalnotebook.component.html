@@ -1,0 +1,25 @@
+<div class="container mt-5">
+  <h2 class="mb-3">Liste des Carnets</h2>
+
+  <!-- Bouton pour aller vers MedicalNotebookFormComponent -->
+ 
+
+  <div class="row">
+    <div class="col-4 mb-4" *ngFor="let carnet of carnets">
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title">{{ carnet.medicalHistory }}</h5>
+          <p class="card-text">Animal name: {{ carnet.pet_name }}</p>
+          <div class="d-flex justify-content-end">
+            <button class="btn btn-warning btn-sm me-2">Modifier</button>
+            <button class="btn btn-danger btn-sm">Supprimer</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <button class="btn btn-primary" (click)="navigateToMedicalNotebookForm()">Add Medical Notebook</button>
+</div>  
+
+<div class="mb-4">
+</div>

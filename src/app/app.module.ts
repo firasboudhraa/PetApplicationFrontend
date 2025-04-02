@@ -12,6 +12,8 @@ import { HomeComponent } from './Components/FrontOffice/home/home.component';
 import { ServiceComponent } from './Components/FrontOffice/service/service.component';
 import { AddServiceComponent } from './Components/FrontOffice/add-service/add-service.component';
 import { DetailServiceComponent } from './Components/FrontOffice/detail-service/detail-service.component';
+import { MedicalnotebookComponent } from './medicalnotebook/medicalnotebook.component';
+import { MedicalnotebookFormComponent } from './medicalnotebook-form/medicalnotebook-form.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -23,6 +25,8 @@ import { DetailServiceComponent } from './Components/FrontOffice/detail-service/
     ServiceComponent,
     AddServiceComponent,
     DetailServiceComponent,
+    MedicalnotebookComponent,
+    MedicalnotebookFormComponent,
   ],
   imports: [
     BrowserModule,
