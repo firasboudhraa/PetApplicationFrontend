@@ -13,15 +13,13 @@
     </div>
     <br>
 
-
     <!-- Add Post Button -->
     <div class="row justify-content-md-center">
       <div class="col-md-4">
-        <a href="#" class="btn btn-success btn-lg btn-block">Add Post</a>
+        <a href="#" class="btn btn-add-post btn-lg btn-block">Add Post</a>
       </div>
     </div>
     <br>
-
 
     <div class="row">
       <!-- Search Filter Section (Left) -->
@@ -62,64 +60,56 @@
       </div>
 
       <!-- Search Bar Section (Right) -->
-<div class="col-md-6">
-  <div class="search-bar text-center">
-    <input type="text" class="form-control" placeholder="Search for posts, topics, or updates..." [(ngModel)]="searchText" (input)="applyFilters()">
-    
-    <!-- Refresh Button with Font Awesome -->
-    <button class="btn btn-refresh" (click)="refreshPosts()">
-      <i class="fas fa-sync-alt"></i> Refresh
-    </button>
-
-    <!-- Sort Buttons -->
-    <button class="btn btn-sort" (click)="sortByDate('latest')">Latest</button>
-    <button class="btn btn-sort" (click)="sortByDate('oldest')">Oldest</button>
-    <button class="btn btn-sort" (click)="sortByNumber('mostLiked')">Most Liked</button>
-    <button class="btn btn-sort" (click)="sortByNumber('mostCommented')">Most Commented</button>
-  </div>
-</div>
+      <div class="col-md-6">
+        <div class="search-bar text-center">
+          <input type="text" class="form-control" placeholder="Search for posts, topics, or updates..." [(ngModel)]="searchText" (input)="applyFilters()">
+          <button class="btn btn-refresh" (click)="refreshPosts()">
+            <i class="fas fa-sync-alt"></i> Refresh
+          </button>
+          <button class="btn btn-sort" (click)="sortByDate('latest')">Latest</button>
+          <button class="btn btn-sort" (click)="sortByDate('oldest')">Oldest</button>
+          <button class="btn btn-sort" (click)="sortByNumber('mostLiked')">Most Liked</button>
+          <button class="btn btn-sort" (click)="sortByNumber('mostCommented')">Most Commented</button>
+        </div>
+      </div>
     </div>
-    
 
-    <!-- Blog Posts Section -->
-    <section class="home-blog bg-sand">
-      <div class="container-fluid px-0">
-        <div class="row no-gutters">
-          <!-- Display Posts Dynamically -->
-          <div *ngFor="let post of filteredPosts" class="col-md-4 mb-4 d-flex" style="padding-right: 15px; padding-left: 15px;">
-            <div class="media blog-media w-100">
-              <a [routerLink]="['/post', post.id]">
-                <img class="d-flex w-100" [src]="post.imageUrl" alt="Post image" style="max-width: 100%; max-height: 100%; object-fit: cover;">
-              </a>
-              <div class="circle">
-                <h5 class="day">{{ post.createdAt | date:'dd' }}</h5>
-                <span class="month">{{ post.createdAt | date:'MMM' }}</span>
-              </div>
-              <div class="media-body">
-                <a [routerLink]="['/post', post.id]"><h5 class="mt-0">{{ post.title }}</h5></a>
-                <p>{{ post.content }}</p>
+    <!-- Blog Posts Section with New Template -->
+    <section class="dark">
+      <div class="container py-4">
 
-                <a [routerLink]="['/post', post.id]" class="post-link">Read More</a>
-                <ul>
-                  <li>by: {{ userNames.get(post.userId) }}
-                  </li>
-                  <li>Category: {{ formatCategory(post.type) }}</li>
-                  <li class="text-right">
-                    <a [routerLink]="['/post', post.id]"><i class="fas fa-comments"></i> {{ post.comments }} comments</a>
-                  </li>
-                  <li class="text-right">
-                    <a href="#"><i class="fas fa-thumbs-up"></i> {{ post.likes }} likes</a>
-                  </li>
-                </ul>
-              </div>
+        <article *ngFor="let post of filteredPosts; let i = index" class="postcard dark" [ngClass]="getCardColor(i)">
+          <a class="postcard__img_link" [routerLink]="['/post', post.id]">
+            <img class="postcard__img" [src]="post.imageUrl" alt="Post Image">
+          </a>
+          <div class="postcard__text">
+            <h1 class="postcard__title"><a [routerLink]="['/post', post.id]">{{ post.title }}</a></h1>
+            <div class="postcard__subtitle small">
+              <time [attr.datetime]="post.createdAt">
+                <i class="fas fa-calendar-alt mr-2"></i>{{ post.createdAt | date:'EEE, MMM d, y' }}
+              </time>
             </div>
+            <div class="postcard__bar"></div>
+            <div class="postcard__preview-txt">{{ post.content | slice:0:200 }}...</div>
+            <ul class="postcard__tagbox">
+              <li class="tag__item"><i class="fas fa-user mr-2"></i>{{ userNames.get(post.userId) }}</li>
+              <li class="tag__item"><i class="fas fa-tag mr-2"></i>{{ formatCategory(post.type) }}
+</li>
+<li class="tag__item"><i class="fas fa-comments mr-2"></i>{{ post.comments }} Comments</li>
+
+<li class="tag__item">
+                <i class="fas fa-thumbs-up mr-2" ></i> {{ post.likes }} Likes
+              </li>
+            </ul>
           </div>
-          <!-- No Posts Found Message -->
-          <div *ngIf="filteredPosts.length === 0" class="col-md-12 text-center">
-            <p>No posts found matching your search.</p>
-          </div>
+        </article>
+
+        <!-- No Posts Found Message -->
+        <div *ngIf="filteredPosts.length === 0" class="col-md-12 text-center">
+          <p>No posts found matching your search.</p>
         </div>
       </div>
     </section>
   </div>
 </section>
+

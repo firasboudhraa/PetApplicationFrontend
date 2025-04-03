@@ -1,239 +1,293 @@
+@import url("https://fonts.googleapis.com/css2?family=Baloo+2&display=swap");
+
+/* 🌿 Styles Généraux */
+body {
+    font-family: "Baloo 2", cursive;
+    font-size: 16px;
+    color: #59493A; /* Marron Chocolat */
+    background-color: #efede9; /* Beige Crème */
+    text-rendering: optimizeLegibility;
+    font-weight: italic;
+    margin: 0;
+    padding: 0;
+}
+
+/* 🎨 Modes Sombre et Clair */
+body.dark {
+    background-color: #3E3B37; /* Brun Taupe */
+    color: #EADBC8; /* Sable Clair */
+}
+
+body.light {
+    background-color: #F7F3E9; /* Beige Crème */
+    color: #59493A; /* Marron Chocolat */
+}
+
+/* 🌟 Container Principal */
+.container-fluid {
+    background-color: inherit;
+    padding: 20px;
+}
+
+/* 🏷️ Titre Principal */
 .section-title {
-    background: #f8d9c1;
-    background-position: center center; /* Centers the image */
-    background-repeat: no-repeat; /* Prevents the image from repeating */
-    padding: 5px;/* Optional: Adds padding to ensure the text is not against the edges */
-    font-family: 'Gill Sans';
-    font-size: 25px;
+    text-align: center;
+    color: #02ee0a; /* Vert Frais */
     font-style: italic;
-    font-style: bold;
-    color: rgb(255, 8, 148); /* Optional: Changes the text color to white for better visibility */
 }
 
-/*for the filter */
-#category-search-form {
-    padding: 10px;
-    background-color: #ffffff;
+.section-title h2 {
+    font-size: 2.5rem;
+    font-weight: bold;
+    text-transform: uppercase;
+    color: #000000;
+}
+
+.section-title p {
+    font-size: 1.2rem;
+    text-align: center;
+}
+
+/* 🎨 Boutons */
+.btn {
+    font-size: 16px;
+    font-weight: bold;
+    padding: 10px 15px;
     border-radius: 8px;
-    margin-right:auto;
-    padding-left: 20px;
-    padding-right: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease-in-out;
+    text-transform: uppercase;
 }
 
-#category-search-form .form-check {
-    margin-bottom: 5px;
-    
+/* 🔍 Barre de Recherche & Filtres */
+.search-bar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-top: 10px;
 }
 
-#category-search-form .btn {
-    margin-top: 1px;
+.search-bar input {
+    width: 50%;
+    padding: 8px;
+    border: 2px solid #4CAF50; /* Vert Frais pour l'encadrement */
+    border-radius: 6px;
+    outline: none;
+    font-size: 14px;
 }
 
-/* Optional: For layout adjustment */
-.row {
+.btn-refresh, .btn-sort {
+    background-color: #4CAF50; /* Vert Frais */
+    color: white;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+.btn-refresh:hover, .btn-sort:hover {
+    background-color: #1e4420; /* Vert Foncé */
+}
+
+/* ✅ Filtres */
+.form-group label {
+    font-weight: bold;
+    color: #020201;
+}
+
+.form-check-input {
+    margin-right: 8px;
+}
+
+.form-check-label {
+    font-size: 14px;
+}
+
+/* 📌 Cartes */
+.postcard {
     display: flex;
     flex-wrap: wrap;
-    justify-content: space-between;
-    margin-top: 10px;
-    margin-left: 10px;
+    border-radius: 12px;
+    margin-bottom: 2rem;
+    overflow: hidden;
+    position: relative;
+    box-shadow: 0 4px 15px -10px rgba(0, 0, 0, 0.4);
+    transition: transform 0.3s ease;
+    background-color: #ffffff; /* Par défaut blanc */
+    z-index: 1; /* Ensure the card has a stacking context */
 }
 
-/* Adjust content section width (Posts area) */
-.col-md-4 {
-    flex: 0 0 50%;
-    max-width: 100%;
+.postcard.dark {
+    background-color: #3E3B37; /* Brun Taupe */
+    color: #EADBC8; /* Sable Clair */
 }
 
-.col-md-8 {
-    flex: 0 0 700%;
-    max-width: 100%;
+.postcard.light {
+    background-color: #120c0c; /* Blanc Pur */
 }
 
-
-.home-blog {
-    padding-top: 80px;
-    background-image: url('src\assets\images\image_4.jpg');
-    background-position: center center;
-    position: relative ;
-    height: 100%; /* Optional: Ensure it takes up the full viewport height */
-    background-repeat: repeat-x; /* Prevents the image from repeating */
-    background-repeat: repeat-y; /* Prevents the image from repeating */
-
+.postcard__title {
+    font-size: 1.8rem;
+    color: #000000 !important;  /* Vert Frais */
 }
 
-.home-blog::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
+.postcard__img {
+    max-height: 180px;
     width: 100%;
-    height: 100%;
-    background-color: rgba(92, 145, 108, 0.3); /* Adjust opacity here */
-    z-index: 0;
+    object-fit: cover;
+    border-radius: 8px;
 }
 
-.fas, .fa-comments, .fa-thumbs-up {
-    color: #0a0b0b !important; /* Bootstrap primary blue */
-  }
-  
-
-  
-  
-
-@media (min-width: 992px) {
-    .home-blog {
-        padding-top: 100px;
-        padding-bottom: 100px;
-    }
+.postcard__bar {
+    width: 50px;
+    height: 8px;
+    margin: 10px 0;
+    border-radius: 5px;
+    background-color: #46b54a; /* Vert Frais */
+    transition: width 0.3s ease;
 }
 
-
-
-
-@media (min-width: 100px) {
-    .media.blog-media {
-        display: table;
-    }
+.postcard:hover {
+    transform: scale(1.02);
 }
 
-
-.media.blog-media .circle {
-    width: 70px;
-    height: 80px;
-    border-radius: 100%;
-    background-color: rgba(0, 0, 0, 0.546);
-    white-space: nowrap;
-    position: absolute;
-    padding: 0;
-    top: 20px;
-    left: 20px;
-    text-align: center;
-    box-shadow: none;
-    transform: translateX(0);
-    color: #fff;
-    transition: background-color 0.3s ease;
+.postcard:hover .postcard__bar {
+    width: 120px;
 }
 
-.media.blog-media .circle .day {
-    color: #fff;
-    font-weight: 500;
-    font-size: 28px;
-    line-height: 1;
-    margin-top: 12px;
-}
-
-.media.blog-media .circle .month {
-    font-size: 14px;
-}
-
-.media.blog-media > a {
+.postcard__text {
+    padding: 1.5rem;
     position: relative;
-    display: block;
+    display: flex;
+    flex-direction: column;
+    font-size: 18px;
+    text-align: justify;
 }
 
-
-
-
-
-.media.blog-media .media-body {
-    border: 1px solid #efeff3;
-    padding: 30px 30px 10px;
+/* 🎭 Tags */
+.postcard__tagbox {
+    display: flex;
+    flex-wrap: wrap;
     font-size: 14px;
-    background: #fff;
-    border-top: none;
+    margin-top: 10px;
+    justify-content: center;
 }
 
-@media (min-width: 992px) {
-    .media.blog-media .media-body {
-        padding: 15px 20px 15px;
-        border-top: 1px solid #efeff3;
-        display: table-cell;
-        vertical-align: top;
-    }
-}
-
-
-
-
-
-.media.blog-media .media-body ul {
-    padding: 10px 0 0;
-}
-
-.media.blog-media .media-body ul li {
+.tag__item {
     display: inline-block;
-    width: 49%;
-    position: relative;
+    background: rgba(255, 255, 255, 0.2), 0.2;
+    border-radius: 6px;
+    padding: 6px 14px;
+    margin: 0 6px 6px 0;
+    transition: background-color 0.3s;
 }
 
-
-.media.blog-media:hover .media-body h5 {
-    color: #31bf1c;
+.tag__item:hover {
+    background: rgba(245, 173, 102, 0.8);
 }
-.media-body h5 {
-    font-size: 22px; /* Adjust title size */
-    font-weight: normal; /* Make title bold */
-     color: #cd8512; /* Darker color for readability */
-    margin-bottom: 10px;
-  }
-  
- 
- 
 
-.media.blog-media:hover .media-body a.post-link {
-    color: #0cc652;
-    text-decoration: underline;
+/* 📱 Responsive */
+@media screen and (min-width: 769px) {
+    .postcard {
+        flex-wrap: inherit;
+    }
+
+    .postcard__title {
+        font-size: 2rem;
+    }
+
+    .postcard__text {
+        padding: 2rem;
+    }
 }
-li.text-right a {
-    color: #70767e !important;
-  }
-  
 
-  /* General Button Style */
-.btn {
-    font-weight: 600;
-    border-radius: 30px;
-    padding: 10px 20px;
-    transition: all 0.3s ease;
-    text-transform: capitalize;
-    min-width: 150px;
-  }
-  
-  /* Refresh Button Styling */
-  .btn-refresh {
-    background-color: #36e433; /* Green */
-    color: white;
-    border: 2px solid #5d7061;
-    margin-right: 1px;
-    padding: 8px 15px
+@media screen and (min-width: 1024px) {
+    .postcard__text {
+        padding: 2rem 3rem;
+    }
+}
+@media screen and (max-width: 768px) {
+    .postcard__text {
+        padding: 1rem;
+    }
 
-  }
-  
-  .btn-refresh:hover {
-    background-color: #f6c762; /* Darker Green on Hover */
-    border-color: #000000;
-    box-shadow: 0px 2px 10px rgba(1, 255, 60, 0.4);
-    color:white;
-  }
-  
-  /* Sort Button Styling */
-  .btn-sort {
-    background-color: #ef6007; /* Blue */
-    color: rgb(255, 255, 255);
-    border: 2px solid #979ca0;
-    margin-right: 1px;
-  }
-  
-  .btn-sort:hover {
-    background-color:#f6c762; /* Darker Blue on Hover */
-    border-color: #0056b3;
-    box-shadow: 0px 2px 10px rgba(0, 123, 255, 0.4);
-  }
-  
-  /* Focus Effect (Optional) */
-  .btn:focus {
-    outline: none;
-    box-shadow: 0 0 0 0.25rem rgba(1, 124, 255, 0.25);
-  }
-  
+    .postcard__title {
+        font-size: 1.5rem;
+    }
+
+    .search-bar input {
+        width: 80%;
+    }
+
+    /* Like Button Specific Styling */
+    .like-button {
+        position: relative;
+        z-index: 10; /* Ensure it's above other elements */
+        background: none;
+        border: none;
+        color: #007bff;
+        cursor: pointer;
+        font-size: 16px;
+        margin-top: 10px; /* Optional: Adjust the button's position */
+    }
+
+    .like-button:hover {
+        text-decoration: underline;
+    }
+
+    /* Modal Styles */
+    .modal-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.5);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 1000; /* Ensure it's on top */
+    }
+
+    .modal-content {
+        background: white;
+        padding: 20px;
+        border-radius: 8px;
+        text-align: center;
+        width: 300px;
+        z-index: 1001; /* Ensure content is also above everything else */
+    }
+
+    .modal-content h2 {
+        margin-bottom: 10px;
+    }
+
+    .modal-content ul {
+        list-style: none;
+        padding: 0;
+    }
+
+    .modal-content ul li {
+        padding: 5px;
+    }
+
+    .close-button {
+        background: #007bff;
+        color: white;
+        border: none;
+        padding: 10px;
+        margin-top: 10px;
+        cursor: pointer;
+        border-radius: 5px;
+    }
+
+    .close-button:hover {
+        background: #0056b3;
+    }
+
+    .tag__item i {
+        cursor: pointer;
+        z-index: 1000; /* Make sure it's on top of other elements */
+    }
+}

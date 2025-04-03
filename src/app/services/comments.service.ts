@@ -11,13 +11,22 @@ export class CommentService {
 
   constructor(private http: HttpClient) {}
 
-  // Récupérer les commentaires d'un post
+  // Obtenir les commentaires d'un post par son ID
   getCommentsByPostId(postId: number): Observable<Comment[]> {
     return this.http.get<Comment[]>(`${this.apiUrl}/post/${postId}`);
   }
 
-  // Créer un commentaire
-  createComment(postId: number, userId: number, content: string): Observable<Comment> {
-    return this.http.post<Comment>(this.apiUrl, { postId, userId, content });
-  }
+  // Ajouter un nouveau commentaire
+// comment.service.ts
+
+addComment(postId: number, userId: number, commentData: { content: string }): Observable<Comment> {
+  const url = `${this.apiUrl}/${postId}/${userId}`; // Utiliser l'URL avec postId et userId
+  return this.http.post<Comment>(url, commentData);
 }
+
+likeComment(commentId: number, userId: number): Observable<void> {
+  return this.http.put<void>(`${this.apiUrl}/${commentId}/like/${userId}`, {});
+}
+
+}
+

@@ -21,4 +21,8 @@ export class PostsService {
   getPostById(id: number): Observable<Post> {
     return this.http.get<Post>(`${this.apiUrl}/${id}`);
   }
+  
+  likePost(postId: number, userId: number): Observable<Post> {
+    return this.http.post<Post>(`${this.apiUrl}/${postId}/like`, { userId });
+  }
 }
