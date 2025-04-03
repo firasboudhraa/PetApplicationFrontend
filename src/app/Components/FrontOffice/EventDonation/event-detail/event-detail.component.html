@@ -1,0 +1,52 @@
+<section class="ftco-section bg-light py-5">
+  <div class="container">
+    <div class="row justify-content-center">
+      <!-- Event Details Card -->
+      <div class="col-md-8">
+        <div class="event-detail-card bg-white shadow-lg rounded-lg p-5 transition-all hover:shadow-xl">
+          
+          <!-- Event Header -->
+          <div class="text-center mb-5">
+            <h2 class="font-bold text-gray-900 text-3xl mb-2">{{ event?.nameEvent }}</h2>
+            <div class="flex justify-center items-center w-20 h-20 mx-auto mb-4 bg-gradient-to-r from-blue-500 to-indigo-600 rounded-full">
+              <span class="flaticon-event text-white text-2xl"></span>
+            </div>
+            <p class="text-gray-600 text-lg">{{ event?.description }}</p>
+          </div>
+
+          <!-- Event Info -->
+          <div class="grid grid-cols-2 gap-5 text-center mb-5">
+            <div class="bg-gray-100 p-3 rounded-lg shadow">
+              <h4 class="text-lg font-semibold text-gray-800">📅 Date & Time</h4>
+              <p class="text-gray-600">{{ event?.dateEvent | date: 'dd/MM/yyyy HH:mm' }}</p>
+            </div>
+            <div class="bg-gray-100 p-3 rounded-lg shadow">
+              <h4 class="text-lg font-semibold text-gray-800">📍 Location</h4>
+              <p class="text-gray-600">{{ event?.location }}</p>
+            </div>
+          </div>
+
+          <!-- Donations Section -->
+          <div class="text-center mb-5">
+            <h4 class="text-lg font-semibold text-gray-800">💵 Donations</h4>
+            <div *ngFor="let donation of event?.donations">
+              <!-- Ajout de la condition ngIf ici -->
+              <div *ngIf="donation.status !== 'PENDING'" class="bg-gray-100 p-3 rounded-lg shadow mb-3">
+                <p class="text-gray-600">Amount: ${{ donation.amount }}</p>
+                <p class="text-gray-600">Date: {{ donation.date | date: 'dd/MM/yyyy HH:mm' }}</p>
+                <p class="text-gray-600">Status: {{ donation.status }}</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Back to Events Button -->
+          <div class="text-center">
+            <button class="btn btn-primary" [routerLink]="['/event']">
+              🔙 Back to Events
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

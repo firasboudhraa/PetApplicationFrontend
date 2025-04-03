@@ -1,0 +1,85 @@
+.donation-container {
+    max-width: 500px;
+    margin: 2rem auto;
+    padding: 2rem;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    background-color: #fff;
+}
+
+.donation-container h2 {
+    text-align: center;
+    color: #2c3e50;
+    margin-bottom: 1.5rem;
+}
+
+.donation-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.form-control {
+    padding: 0.75rem;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 1rem;
+}
+
+.paypal-section {
+    margin-top: 1rem;
+    border-top: 1px solid #eee;
+    padding-top: 1.5rem;
+}
+
+.payment-method-label {
+    margin-bottom: 0.75rem;
+    font-weight: 500;
+    color: #2c3e50;
+}
+
+.paypal-button {
+    margin: 0 auto;
+    width: fit-content;
+}
+
+.alert {
+    padding: 0.75rem;
+    border-radius: 4px;
+    text-align: center;
+}
+
+.alert-info {
+    background-color: #e7f5ff;
+    color: #1864ab;
+}
+
+/* Ajoutez ceci à votre fichier add-donation.component.css */
+.back-button-container {
+    margin-top: 2rem;
+    text-align: center;
+  }
+  
+  .btn-secondary {
+    background-color: #6c757d;
+    color: white;
+    padding: 0.5rem 1rem;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  
+  .btn-secondary:hover {
+    background-color: #5a6268;
+  }
+  
+  .btn-secondary i {
+    margin-right: 0.5rem;
+  }

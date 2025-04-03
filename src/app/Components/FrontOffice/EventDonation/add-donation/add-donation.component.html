@@ -1,0 +1,32 @@
+<div class="donation-container">
+    <h2>Make a Donation</h2>
+    
+    <div class="form-group">
+      <label for="amount">Amount (USD):</label>
+      <input type="number" [(ngModel)]="amount" 
+             id="amount" class="form-control" 
+             min="1" step="0.01" required
+             (input)="onAmountChange()">
+    </div>
+  
+    <div *ngIf="loading" class="alert alert-info">
+      Loading payment options...
+    </div>
+  
+    <div *ngIf="error" class="alert alert-danger">
+      {{ error }}
+    </div>
+  
+    <div *ngIf="paymentCompleted" class="alert alert-success">
+      Payment completed successfully!
+    </div>
+  
+    <div id="paypal-button-container" *ngIf="amount > 0"></div>
+
+    <!-- Bouton de retour -->
+    <div class="back-button-container">
+      <button class="btn btn-secondary" [routerLink]="['/event']">
+        <i class="fas fa-arrow-left"></i> Back to Events
+      </button>
+    </div>
+</div>
