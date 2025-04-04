@@ -1,7 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
+import { Pet } from 'src/app/models/pet';
+import { AdoptionRequestService } from 'src/app/Services/adoption-request.service';
 import { GoogleMapsLoaderService } from 'src/app/Services/google-maps-loader.service';
+import { PetdataServiceService } from 'src/app/Services/petdata-service.service';
 
 @Component({
   selector: 'app-adoption-request',
@@ -14,23 +17,60 @@ export class AdoptionRequestComponent implements OnInit {
   marker: any;
   isMapReady = false;
   location: string = '';
+  requesterUserId!:number ;
+  petId!:number ;
+  adoptedPet!:Pet ;
+  minDate: string = '';
 
   constructor(
     private fb: FormBuilder,
     private route: ActivatedRoute,
-    private mapsLoader: GoogleMapsLoaderService
+    private mapsLoader: GoogleMapsLoaderService,
+    private petdataService: PetdataServiceService ,
+    private adoptionRequestService: AdoptionRequestService
   ) {}
 
   ngOnInit(): void {
-    this.adoptionForm = this.fb.group({
-      location: ['']
-    });
+    //min date start from tomorow
+    const currentDate = new Date();
+    currentDate.setDate(currentDate.getDate() + 1);
+    this.minDate = currentDate.toISOString().split('T')[0];
 
+
+    this.requesterUserId = Number(this.route.snapshot.queryParamMap.get('userId'));
+    this.petId = Number(this.route.snapshot.queryParamMap.get('petId'));
+    this.petdataService.getPetById(this.petId).subscribe((data) => {
+      this.adoptedPet = data;
+      this.adoptionForm.patchValue({
+        adoptedPet: this.adoptedPet,
+        requesterUserId: this.requesterUserId,
+      });
+    });
+    this.adoptionForm = this.fb.group({
+      location: [''],
+      time: ['',Validators.required],
+      date: ['',Validators.required],
+      message: [''],
+      adoptedPet: [this.adoptedPet],
+      requesterUserId: [this.requesterUserId]
+      
+    });
+    console.log(this.adoptionForm.value)
     this.mapsLoader.load().then(() => {
       this.initMap();
     }).catch(err => {
       console.error('Google Maps failed to load', err);
     });
+  }
+  submitAdoptionRequest() {
+    if (this.adoptionForm.valid) { 
+      console.log(this.adoptionForm.value);
+      this.adoptionRequestService.saveAdoptionRequest(this.adoptionForm.value).subscribe(
+        (response) => {
+          console.log('Adoption request submitted successfully:', response);
+          alert('Adoption request submitted successfully!');
+        });
+    }
   }
   
 
@@ -40,8 +80,18 @@ export class AdoptionRequestComponent implements OnInit {
   
     if (!mapElement || !inputElement) return;
   
+    let defaultCenter = { lat: 36.8065, lng: 10.1815 }; // default center (if pet location is not available)
+
+    // If pet location exists, use it to set the map's center
+    if (this.adoptedPet.location) {
+      const petLocation = this.adoptedPet.location.split(','); // Assuming location format is "lat, lng"
+      const petLat = parseFloat(petLocation[0].trim());
+      const petLng = parseFloat(petLocation[1].trim());
+      defaultCenter = { lat: petLat, lng: petLng };
+    }
+  
     const map = new google.maps.Map(mapElement, {
-      center: { lat: 36.8065, lng: 10.1815 }, // default center
+      center: defaultCenter, // Set center to pet location if available, otherwise default
       zoom: 12
     });
   
@@ -62,7 +112,8 @@ export class AdoptionRequestComponent implements OnInit {
       if (marker) marker.setMap(null);
       marker = new google.maps.Marker({
         map,
-        position: place.geometry.location
+        position: place.geometry.location,
+        label: 'Selected Location', // Custom label for selected location
       });
   
       const latlng = `${place.geometry.location.lat()}, ${place.geometry.location.lng()}`;
@@ -79,12 +130,33 @@ export class AdoptionRequestComponent implements OnInit {
       if (marker) marker.setMap(null);
       marker = new google.maps.Marker({
         map,
-        position: event.latLng
+        position: event.latLng,
+        label: 'Selected Location', // Custom label for clicked location
       });
   
       this.adoptionForm.controls['location'].setValue(latlng);
     });
+  
+    // Pin pet's location if pet.location is available
+    if (this.adoptedPet.location) {
+      const petLocation = this.adoptedPet.location.split(','); // Assuming location format is "lat, lng"
+      const petLat = parseFloat(petLocation[0].trim());
+      const petLng = parseFloat(petLocation[1].trim());
+  
+      const petPosition = new google.maps.LatLng(petLat, petLng);
+  
+      // Place the pet's marker
+      new google.maps.Marker({
+        map,
+        position: petPosition,
+        label: 'Actual Pet Location', // Custom label for pet's location
+      });
+  
+      map.setCenter(petPosition); // Center map on pet's location
+      map.setZoom(14); // Optional: Adjust zoom level for pet's location
+    }
   }
+  
   
   
 }

@@ -7,6 +7,7 @@ import { DetailServiceComponent } from './Components/FrontOffice/detail-service/
 import { UserPetsComponent } from './Components/Pets/user-pets/user-pets.component';
 import { PublicPetsComponent } from './Components/Pets/public-pets/public-pets.component';
 import { AdoptionRequestComponent } from './Components/AdoptionRequest/adoption-request/adoption-request.component';
+import { AdoptionRequestDashbordComponent } from './Components/AdoptionRequest/adoption-request-dashbord/adoption-request-dashbord.component';
 
   
   const routes: Routes = [
@@ -16,6 +17,7 @@ import { AdoptionRequestComponent } from './Components/AdoptionRequest/adoption-
   {path:'service', component:ServiceComponent},
   {path:'add-service',component:AddServiceComponent},
   {path:'serviceDetail/:id', component:DetailServiceComponent},
+  {path:'adoptionRequestDashboard', component:AdoptionRequestDashbordComponent},
   {path:'',redirectTo:'home',pathMatch:'full'},
   { path: 'adoption-request', component: AdoptionRequestComponent }
 

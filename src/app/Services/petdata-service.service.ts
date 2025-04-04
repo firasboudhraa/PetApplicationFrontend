@@ -14,6 +14,9 @@ export class PetdataServiceService {
   getPets(): Observable<Pet[]> {
     return this.http.get<Pet[]>(`${this.apiUrl}/retrieve-all-pets`);
   }
+  getPetById(petId: number): Observable<Pet>{
+    return this.http.get<Pet>(`${this.apiUrl}/retrieve-pet/${petId}`)
+  }
   getPetsByOwnerId(id: number): Observable<Pet[]> {
     return this.http.get<Pet[]>(`${this.apiUrl}/${id}`);
   }
