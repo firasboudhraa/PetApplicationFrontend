@@ -18,7 +18,7 @@ export class AddDonationComponent implements OnInit, OnDestroy {
   donationId: string | null = null;
   private paypalButtons: any;
 
-  private readonly paypalClientId = 'AcRNmlTOelCjXZB_LhOBQdj4nuEprFipRanFAPL7oe4TQuxaQHau7Zgh_wAB76TpkqbuqNL1OSpqxIzp';
+  private readonly paypalClientId = 'YOUR_CLIENT_ID';
   private readonly apiBaseUrl = 'http://localhost:8010';
 
   constructor(
