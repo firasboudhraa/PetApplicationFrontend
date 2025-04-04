@@ -66,7 +66,7 @@ export class AvailableSlotsComponent {
   };
 
   handleEventClick(arg: any) {
-    this.selectedSlot= new Date(arg.event.startStr);
+    this.selectedSlot = new Date(arg.event.startStr);
     const formattedDate = this.selectedSlot.toLocaleString('en-GB', { 
       year: 'numeric', 
       month: 'long', 
@@ -75,25 +75,74 @@ export class AvailableSlotsComponent {
       minute: '2-digit' 
     });
   
+    // Sample pets data - Replace with an actual API call if necessary
+    const pets = [
+      { id: 1, name: 'Bella', image: 'https://example.com/pets/bella.jpg' },
+      { id: 2, name: 'Max', image: 'https://example.com/pets/max.jpg' },
+      { id: 3, name: 'Luna', image: 'https://example.com/pets/luna.jpg' }
+    ];
+  
+    // Construct the pet selection HTML dynamically
+    let petOptions = pets.map(pet => {
+      return `
+        <div class="flex items-center mb-4">
+          <input type="radio" id="pet-${pet.id}" name="pet" value="${pet.id}" class="mr-3" />
+          <img src="${pet.image}" alt="${pet.name}" class="w-16 h-16 rounded-full border-2 border-gray-300 mr-3" />
+          <label for="pet-${pet.id}" class="text-lg font-medium">${pet.name}</label>
+        </div>
+      `;
+    }).join('');
+  
     Swal.fire({
       title: 'Book Appointment',
-      input: 'text', 
-      inputValue: formattedDate, 
       icon: 'info',
+      input: 'text',  
+      inputValue: formattedDate,  
+      inputAttributes: {
+        readonly: 'true' 
+      },
+      html: `
+        <div>
+          <p><strong>Select your Pet:</strong></p>
+          <div class="pets-container">
+            ${petOptions}
+          </div>
+        </div>
+      `,
       showCancelButton: true,
       confirmButtonText: 'Yes, Book it!',
       cancelButtonText: 'No, Cancel',
-      inputAttributes: {
-        readonly: 'true' 
+      preConfirm: () => {
+        const selectedPetId = (document.querySelector('input[name="pet"]:checked') as HTMLInputElement)?.value;
+                if (!selectedPetId) {
+          Swal.showValidationMessage('Please select a pet to proceed!');
+          return false;
+        }
+  
+        return selectedPetId; 
+      },
+      willClose: () => {
+        const selectedPetInput = document.querySelector('input[name="pet"]:checked') as HTMLInputElement | null;
+        if (selectedPetInput) {
+          selectedPetInput.checked = false;
+        }
       }
     }).then((result) => {
       if (result.isConfirmed) {
-        Swal.fire(
-          'Booked!',
-          'Your appointment has been scheduled.',
-          'success'
-        );
+        const petId = result.value;
+        const selectedPet = pets.find(pet => pet.id === parseInt(petId, 10));
+  
+        if (selectedPet) {
+          Swal.fire(
+            'Appointment Booked!',
+            `Your appointment with ${selectedPet.name} has been successfully scheduled!`,
+            'success'
+          );
+        } else {
+          Swal.fire('Error', 'There was an issue booking the appointment.', 'error');
+        }
       }
     });
   }
+  
 }

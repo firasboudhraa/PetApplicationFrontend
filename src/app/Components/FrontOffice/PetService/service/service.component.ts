@@ -1,31 +1,58 @@
-import { Router } from '@angular/router';
 import { Component } from '@angular/core';
-import  { PetServiceService } from 'src/app/Services/pet-service.service';
+import { Router } from '@angular/router';
+import { PetServiceService } from 'src/app/Services/pet-service.service';
 import Swal from 'sweetalert2';
+
 @Component({
   selector: 'app-service',
   templateUrl: './service.component.html',
   styleUrls: ['./service.component.css']
 })
 export class ServiceComponent {
-  services : any[] = [];
+  services: any[] = [];
+  filteredServices: any[] = [];
   paginatedServices: any[] = [];
   currentPage = 1;
-  pageSize = 3; 
+  pageSize = 3;
+  pageSizeOptions = [3, 6, 9, 12];
   totalPages = 0;
+  filterCriteria = '';
 
-  constructor( private ps:PetServiceService , private router:Router) { }
+  constructor(private ps: PetServiceService, private router: Router) {}
 
   ngOnInit(): void {
-    this.ps.getServices().subscribe(
-      (data) =>{ 
-        this.services = data ;
-        this.totalPages = Math.ceil(this.services.length / this.pageSize);
-        this.updatePaginatedServices();      }
-    );
+    this.ps.getServices().subscribe(data => {
+      this.services = data;
+      this.filteredServices = data;
+      this.calculateTotalPages();
+      this.updatePaginatedServices();
+    });
   }
 
-  onPageChange(page: number) {
+  filterServices(): void {
+    if (!this.filterCriteria.trim()) {
+      this.filteredServices = this.services;
+    } else {
+      this.filteredServices = this.services.filter(service =>
+        service.name.toLowerCase().includes(this.filterCriteria.toLowerCase())
+      );
+    }
+    this.currentPage = 1;
+    this.calculateTotalPages();
+    this.updatePaginatedServices();
+  }
+
+  calculateTotalPages(): void {
+    this.totalPages = Math.ceil(this.filteredServices.length / this.pageSize);
+  }
+
+  updatePaginatedServices(): void {
+    this.calculateTotalPages();
+    const startIndex = (this.currentPage - 1) * this.pageSize;
+    this.paginatedServices = this.filteredServices.slice(startIndex, startIndex + this.pageSize);
+  }
+
+  onPageChange(page: number): void {
     if (page >= 1 && page <= this.totalPages) {
       this.currentPage = page;
       this.updatePaginatedServices();
@@ -36,14 +63,8 @@ export class ServiceComponent {
     return Array.from({ length: this.totalPages }, (_, i) => i + 1);
   }
 
-  updatePaginatedServices() {
-    const startIndex = (this.currentPage - 1) * this.pageSize;
-    this.paginatedServices = this.services.slice(startIndex, startIndex + this.pageSize);
-  }
-
   checkUserBeforeNavigate() {
     const userString = localStorage.getItem('user');
-    
     if (!userString) {
       this.showAccessDeniedAlert("You must be logged in to access this page.");
       return;
@@ -58,7 +79,7 @@ export class ServiceComponent {
       } else {
         this.showAccessDeniedAlert("You must be a SERVICE PROVIDER to access this page.");
       }
-    } catch (error) {
+    } catch {
       this.showAccessDeniedAlert("Invalid user data. Please log in again.");
     }
   }
@@ -66,40 +87,20 @@ export class ServiceComponent {
   showAccessDeniedAlert(message: string) {
     Swal.fire({
       title: '🔒 Access Denied!',
-      html: `
-        <div style="font-size: 16px; font-weight: 500; color: #fff;">
-          ${message}
-        </div>
-        <br>
-      `,
+      html: `<div style="font-size: 16px; font-weight: 500; color: #fff;">${message}</div><br>`,
       icon: 'error',
-      position: 'center',
-      background: 'linear-gradient(135deg,rgb(128, 149, 137),rgb(207, 230, 208))',  
+      background: 'linear-gradient(135deg,rgb(128, 149, 137),rgb(207, 230, 208))',
       color: '#ffffff',
       confirmButtonText: '🔑 Login Now',
       showCancelButton: true,
       cancelButtonText: '❌ Maybe Later',
-      customClass: {
-        popup: 'swal2-border-radius',
-        confirmButton: 'swal2-confirm-button',
-        cancelButton: 'swal2-cancel-button'
-      },
       allowOutsideClick: false,
-      showClass: {
-        popup: 'animate__animated animate__zoomIn'
-      },
-      hideClass: {
-        popup: 'animate__animated animate__zoomOut'
-      }
+      showClass: { popup: 'animate__animated animate__zoomIn' },
+      hideClass: { popup: 'animate__animated animate__zoomOut' }
     }).then((result) => {
       if (result.isConfirmed) {
         this.router.navigate(['/login']);
       }
     });
   }
-
-
-  
-  
-  
 }

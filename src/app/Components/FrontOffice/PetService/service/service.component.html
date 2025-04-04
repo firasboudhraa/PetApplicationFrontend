@@ -10,107 +10,107 @@
     </div>
 </section>
 
+<div class="filters-container">
+  <div class="search-bar">
+    <input
+      type="text"
+      [(ngModel)]="filterCriteria"
+      placeholder="🔍 Search services..."
+      (input)="filterServices()"
+    />
+  </div>
 
-
-<section class="ftco-section ftco-no-pt ftco-no-pb">
-    <div class="container">
-        <div class="row d-flex no-gutters">
-            <div class="col-md-5 d-flex">
-                <div class="img img-video d-flex align-self-stretch align-items-center justify-content-center justify-content-md-center mb-4 mb-sm-0" style="background-image:url(assets/images/about-1.jpg);">
-                </div>
-            </div>
-            <div class="col-md-7 pl-md-5 py-md-5">
-                <div class="heading-section pt-md-5">
-            <h2 class="mb-4">Why Choose Us?</h2>
-                </div>
-                <div class="row">
-                    <div class="col-md-6 services-2 w-100 d-flex">
-                        <div class="icon d-flex align-items-center justify-content-center"><span class="flaticon-stethoscope"></span></div>
-                        <div class="text pl-3">
-                            <h4>Care Advices</h4>
-                            <p>Far far away, behind the word mountains, far from the countries.</p>
-                        </div>
-                    </div>
-                    <div class="col-md-6 services-2 w-100 d-flex">
-                        <div class="icon d-flex align-items-center justify-content-center"><span class="flaticon-customer-service"></span></div>
-                        <div class="text pl-3">
-                            <h4>Customer Supports</h4>
-                            <p>Far far away, behind the word mountains, far from the countries.</p>
-                        </div>
-                    </div>
-                    <div class="col-md-6 services-2 w-100 d-flex">
-                        <div class="icon d-flex align-items-center justify-content-center"><span class="flaticon-emergency-call"></span></div>
-                        <div class="text pl-3">
-                            <h4>Emergency Services</h4>
-                            <p>Far far away, behind the word mountains, far from the countries.</p>
-                        </div>
-                    </div>
-                    <div class="col-md-6 services-2 w-100 d-flex">
-                        <div class="icon d-flex align-items-center justify-content-center"><span class="flaticon-veterinarian"></span></div>
-                        <div class="text pl-3">
-                            <h4>Veterinary Help</h4>
-                            <p>Far far away, behind the word mountains, far from the countries.</p>
-                        </div>
-                    </div>
-                </div>
-        </div>
-    </div>
-    </div>
-</section>
+  <div class="page-size-selector">
+    <label for="pageSize">Show:</label>
+    <select id="pageSize" [(ngModel)]="pageSize" (change)="updatePaginatedServices()">
+      <option *ngFor="let size of pageSizeOptions" [value]="size">{{ size }}</option>
+    </select>
+    <span>per page</span>
+  </div>
+</div>
 
 <div class="services-container">
   <div *ngFor="let service of paginatedServices" class="service-card">
-    <div class="blog-entry align-self-stretch">
-      
-      <!-- Badge for Popular Services -->
-      <div class="adoption-badge" *ngIf="service.popular">
-        🔥 Trending Service
+    <div class="icon-container">
+      <div class="icon"><i class="fa fa-cogs"></i></div>
+    </div>
+
+    <div class="text-content">
+      <h3 class="title">{{ service.name }}</h3>
+
+      <div class="info">
+        <p><i class="fa fa-dollar-sign"></i> <strong>Price:</strong> {{ service.price | currency }}</p>
+        <p><i class="fa fa-clock"></i> <strong>Duration:</strong> {{ service.durationInMinutes }} min</p>
+        <p *ngIf="service.address"><i class="fa fa-map-marker-alt"></i> <strong>Location:</strong> {{ service.address }}</p>
       </div>
 
-      <!-- Service Image/Icon -->
-      <div class="icon">
-        <span class="flaticon-customer-service"></span>
-      </div>
-
-      <!-- Service Details -->
-      <div class="text p-4">
-        <h3 class="details">
-          <strong>{{ service.name }}</strong>
-        </h3>
-        
-        <!-- Info Container with Price, Duration, and Address -->
-        <div class="info-container">
-          <div class="info-item">
-            <i class=""></i> <strong>Price:</strong> {{ service.price | currency }}
-          </div>
-          <div class="info-item">
-            <i class="fa fa-clock"></i> <strong>Duration:</strong> {{ service.durationInMinutes }} min
-          </div>
-          <div *ngIf="service.address" class="info-item">
-            <i class="fa fa-map-marker-alt"></i> <strong>Location:</strong> {{ service.address }}
-          </div>
-        </div>
-
-        <!-- Learn More Button -->
-        <div class="text-center mt-4">
-          <button [routerLink]="['/serviceDetail', service.idService]">
-            Learn More <i class="fa fa-arrow-right"></i>
-          </button>
-        </div>
-      </div>
+      <button [routerLink]="['/serviceDetail', service.idService]" class="details-btn">
+        View Details <i class="fa fa-arrow-right"></i>
+      </button>
     </div>
   </div>
 </div>
 
-    <!-- Pagination Section -->
-    <div class="pagination flex justify-center mt-8">
-      <button *ngFor="let page of getPagesArray()" 
-              (click)="onPageChange(page)" 
-              [class.active]="currentPage === page"
-              class="pagination-button">
-        {{ page }}
-      </button>
-    </div>
+<div class="pagination">
+  <button
+    *ngFor="let page of getPagesArray()"
+    class="pagination-button"
+    [ngClass]="{ 'active': currentPage === page }"
+    (click)="onPageChange(page)"
+  >
+    {{ page }}
+  </button>
+</div>
+
+
+
+
+
+    <section class="ftco-section ftco-no-pt ftco-no-pb">
+      <div class="container">
+          <div class="row d-flex no-gutters">
+              <div class="col-md-5 d-flex">
+                  <div class="img img-video d-flex align-self-stretch align-items-center justify-content-center justify-content-md-center mb-4 mb-sm-0" style="background-image:url(assets/images/about-1.jpg);">
+                  </div>
+              </div>
+              <div class="col-md-7 pl-md-5 py-md-5">
+                  <div class="heading-section pt-md-5">
+              <h2 class="mb-4">Why Choose Us?</h2>
+                  </div>
+                  <div class="row">
+                      <div class="col-md-6 services-2 w-100 d-flex">
+                          <div class="icon d-flex align-items-center justify-content-center"><span class="flaticon-stethoscope"></span></div>
+                          <div class="text pl-3">
+                              <h4>Care Advices</h4>
+                              <p>Far far away, behind the word mountains, far from the countries.</p>
+                          </div>
+                      </div>
+                      <div class="col-md-6 services-2 w-100 d-flex">
+                          <div class="icon d-flex align-items-center justify-content-center"><span class="flaticon-customer-service"></span></div>
+                          <div class="text pl-3">
+                              <h4>Customer Supports</h4>
+                              <p>Far far away, behind the word mountains, far from the countries.</p>
+                          </div>
+                      </div>
+                      <div class="col-md-6 services-2 w-100 d-flex">
+                          <div class="icon d-flex align-items-center justify-content-center"><span class="flaticon-emergency-call"></span></div>
+                          <div class="text pl-3">
+                              <h4>Emergency Services</h4>
+                              <p>Far far away, behind the word mountains, far from the countries.</p>
+                          </div>
+                      </div>
+                      <div class="col-md-6 services-2 w-100 d-flex">
+                          <div class="icon d-flex align-items-center justify-content-center"><span class="flaticon-veterinarian"></span></div>
+                          <div class="text pl-3">
+                              <h4>Veterinary Help</h4>
+                              <p>Far far away, behind the word mountains, far from the countries.</p>
+                          </div>
+                      </div>
+                  </div>
+          </div>
+      </div>
+      </div>
+  </section>
 
 <!-- Floating Action Button -->
 
