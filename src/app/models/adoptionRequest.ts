@@ -7,6 +7,7 @@ export interface AdoptionRequest {
     location: string;
     message: string;
     isConfirmed: boolean;
+    isRejected: boolean;
     isChangedByPetOwner: boolean;
     isChangedByRequestOwner: boolean;
     date: Date;  // Using Date type

@@ -1,180 +1,49 @@
-<div class="container mt-4">
-  <div class="card">
-    <div class="card-header">
-      <ul class="nav nav-tabs card-header-tabs" id="adoptionRequestTabs" role="tablist">
-        <li class="nav-item" role="presentation">
-          <a
-            class="nav-link"
-            [class.active]="activeTab === 'pending'"
-            (click)="setActiveTab('pending')"
-            id="pending-tab"
-            role="tab"
-            aria-controls="pending"
-            aria-selected="true"
-          >
-            Pending
-          </a>
-        </li>
-        <li class="nav-item" role="presentation">
-          <a
-            class="nav-link"
-            [class.active]="activeTab === 'confirmed'"
-            (click)="setActiveTab('confirmed')"
-            id="confirmed-tab"
-            role="tab"
-            aria-controls="confirmed"
-            aria-selected="false"
-          >
-            Confirmed
-          </a>
-        </li>
-        <li class="nav-item" role="presentation">
-          <a
-            class="nav-link"
-            [class.active]="activeTab === 'rejected'"
-            (click)="setActiveTab('rejected')"
-            id="rejected-tab"
-            role="tab"
-            aria-controls="rejected"
-            aria-selected="false"
-          >
-            Rejected
-          </a>
-        </li>
-      </ul>
+<div class="container d-flex justify-content-center align-items-center col-10 mt-5">
+  <div class="card shadow-lg">
+    <div class="card-header text-center bg-primary text-white">
+      <h4 class="card-title mb-0">View your related adoption Requests</h4>
     </div>
     <div class="card-body">
-      <div class="tab-content" id="adoptionRequestTabsContent">
-        <!-- Pending Tab -->
-        <div
-          class="tab-pane fade"
-          [class.show]="activeTab === 'pending'"
-          [class.active]="activeTab === 'pending'"
-          id="pending"
-          role="tabpanel"
-          aria-labelledby="pending-tab"
-        >
-          <div *ngIf="pendingRequests.length > 0; else noPending">
-            <table class="table table-striped">
-              <thead>
-                <tr>
-                  <th scope="col">Pet image</th>
-                  <th scope="col">Pet Name</th>
-                  <th scope="col">Location</th>
-                  <th scope="col">Message</th>
-                  <th scope="col">Date</th>
-                  <th scope="col">Time</th>
-                  <th scope="col">Actions</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr *ngFor="let request of pendingRequests">
-                  <td><img [src]="request.adoptedPet.imagePath" alt="Avatar" class="avatar-img"></td>
-                  <td>{{ request.adoptedPet.name }}</td>
-                  <td>{{ request.location }}</td>
-                  <td>{{ request.message }}</td>
-                  <td>{{ request.date }}</td>
-                  <td>{{ request.time }}</td>
-                  <td>
-                    <button class="btn btn-danger" >Delete</button>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
+      <div class="row">
+        <!-- Navigation Tabs -->
+        <div class="col-2 col-md-1 p-0">
+          <div class="nav flex-column nav-pills" id="v-pills-tab-with-icon" role="tablist" aria-orientation="vertical">
+            <a
+              class="nav-link"
+              [class.bg-primary]="activeTab === 'Sent'"
+              [class.text-white]="activeTab === 'Sent'"
+              (click)="setActiveTab('Sent')"
+              role="tab"
+              aria-controls="v-pills-home-icons"
+              aria-selected="true"
+            >
+              <i class="flaticon-home"></i> Sent
+            </a>
+            <a
+              class="nav-link"
+              [class.bg-primary]="activeTab === 'Received'"
+              [class.text-white]="activeTab === 'Received'"
+              (click)="setActiveTab('Received')"
+              role="tab"
+              aria-controls="v-pills-Received-icons"
+              aria-selected="false"
+            >
+              <i class="flaticon-user-4"></i> Received
+            </a>
           </div>
-          <ng-template #noPending>
-            <p>No pending adoption requests</p>
-          </ng-template>
         </div>
 
-        <!-- Confirmed Tab -->
-        <div
-          class="tab-pane fade"
-          [class.show]="activeTab === 'confirmed'"
-          [class.active]="activeTab === 'confirmed'"
-          id="confirmed"
-          role="tabpanel"
-          aria-labelledby="confirmed-tab"
-        >
-          <div *ngIf="confirmedRequests.length > 0; else noConfirmed">
-            <table class="table table-striped">
-              <thead>
-                <tr>
-                  <th scope="col">#</th>
-                  <th scope="col">Avatar</th>
-                  <th scope="col">Name</th>
-                  <th scope="col">Message</th>
-                  <th scope="col">Location</th>
-                  <th scope="col">Date</th>
-                  <th scope="col">Time</th>
-                  <th scope="col">Actions</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr *ngFor="let request of confirmedRequests">
-                  <td>{{ request.id }}</td>
-                  <td><img [src]="request.adoptedPet.imagePath" alt="Avatar" class="avatar-img"></td>
-                  <td>{{ request.adoptedPet.name }}</td>
-                  <td>{{ request.message }}</td>
-                  <td>{{ request.location }}</td>
-                  <td>{{ request.date }}</td>
-                  <td>{{ request.time }}</td>
-                  <td>
-                    <button class="btn btn-success" >Confirm</button>
-                    <button class="btn btn-danger" >Reject</button>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
+        <!-- Tab Content -->
+        <div class="col-12 col-md-11 p-0"> <!-- Make content larger, reduced sidebar width -->
+          <div *ngIf="activeTab === 'Sent'" class="tab-content">
+            <app-sent-request></app-sent-request>
           </div>
-          <ng-template #noConfirmed>
-            <p>No confirmed adoption requests</p>
-          </ng-template>
-        </div>
 
-        <!-- Rejected Tab -->
-        <div
-          class="tab-pane fade"
-          [class.show]="activeTab === 'rejected'"
-          [class.active]="activeTab === 'rejected'"
-          id="rejected"
-          role="tabpanel"
-          aria-labelledby="rejected-tab"
-        >
-          <div *ngIf="rejectedRequests.length > 0; else noRejected">
-            <table class="table table-striped">
-              <thead>
-                <tr>
-                  <th scope="col">#</th>
-                  <th scope="col">Avatar</th>
-                  <th scope="col">Name</th>
-                  <th scope="col">Message</th>
-                  <th scope="col">Location</th>
-                  <th scope="col">Date</th>
-                  <th scope="col">Time</th>
-                  <th scope="col">Actions</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr *ngFor="let request of rejectedRequests">
-                  <td>{{ request.id }}</td>
-                  <td><img [src]="request.adoptedPet.imagePath" alt="Avatar" class="avatar-img"></td>
-                  <td>{{ request.adoptedPet.name }}</td>
-                  <td>{{ request.message }}</td>
-                  <td>{{ request.location }}</td>
-                  <td>{{ request.date }}</td>
-                  <td>{{ request.time }}</td>
-                  <td>
-                    <button class="btn btn-success" >Confirm</button>
-                    <button class="btn btn-danger" >Reject</button>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
+          <div *ngIf="activeTab === 'Received'" class="tab-content">
+            <h5>Welcome to the Received Tab</h5>
+            <p>Even the all-powerful Pointing has no control about the blind texts it is an almost unorthographic life. One day however a small line of blind text by the name of Lorem Ipsum decided to leave for the far World of Grammar.</p>
+            <p>The Big Oxmox advised her not to do so, because there were thousands of bad Commas, wild Question Marks, and devious Semikoli, but the Little Blind Text didn’t listen. She packed her seven versalia, put her initial into the belt, and made herself on the way.</p>
           </div>
-          <ng-template #noRejected>
-            <p>No rejected adoption requests</p>
-          </ng-template>
         </div>
       </div>
     </div>

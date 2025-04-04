@@ -18,4 +18,7 @@ export class AdoptionRequestService {
   getAdoptionRequests(requesterUserId:number): Observable<AdoptionRequest[]> {
     return this.http.get<AdoptionRequest[]>(`${this.apiUrl}/requester/${requesterUserId}`);
   }
+  deleteAdoptionRequest(id: number): Observable<any> {
+    return this.http.delete(`${this.apiUrl}/${id}`);
+  }
 }
