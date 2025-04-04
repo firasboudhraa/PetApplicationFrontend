@@ -5,6 +5,7 @@ import { DonationComponent } from './Components/FrontOffice/EventDonation/donati
 import { EventComponent } from './Components/FrontOffice/EventDonation/event/event.component';
 import { EventDetailComponent } from './Components/FrontOffice/EventDonation/event-detail/event-detail.component';
 import { AddDonationComponent } from './Components/FrontOffice/EventDonation/add-donation/add-donation.component';
+import { AddEventComponent } from './Components/FrontOffice/EventDonation/add-event/add-event.component';
 
 const routes: Routes = [
   { path: 'home', component: HomeComponent },
@@ -12,6 +13,7 @@ const routes: Routes = [
   {path:'event', component:EventComponent},
   {path:'event-detail/:id', component:EventDetailComponent},
   {path:'add-donation/:id', component:AddDonationComponent},
+  {path:'add-event', component:AddEventComponent},
   {path:'',redirectTo:'home',pathMatch:'full'},
 
 ];

@@ -53,3 +53,71 @@
     background-color: #0056b3;
   }
   
+  /* Style for Add Event button */
+.btn-primary {
+  background-color: #21b641;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  color: white;
+  font-weight: bold;
+  transition: all 0.3s;
+}
+
+.btn-primary:hover {
+  background-color: #1a9a35;
+  transform: translateY(-2px);
+}
+
+.btn-primary i {
+  margin-right: 8px;
+}
+
+/* Style pour le conteneur du titre */
+.position-relative {
+  position: relative;
+  padding-bottom: 20px;
+}
+
+/* Style pour le bouton Add Event */
+.add-event-btn-container {
+  position: absolute;
+  right: 15px;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+/* Style pour le titre */
+.heading-section {
+  display: inline-block;
+  margin: 0 auto;
+  font-size: 2rem;
+  position: relative;
+  padding-bottom: 10px;
+}
+
+.heading-section:after {
+  content: '';
+  position: absolute;
+  width: 50px;
+  height: 3px;
+  background: #f8b739;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+/* Responsive pour mobile */
+@media (max-width: 768px) {
+  .heading-section {
+      font-size: 1.5rem;
+      margin-bottom: 40px !important;
+  }
+  
+  .add-event-btn-container {
+      position: static;
+      transform: none;
+      margin-top: 20px;
+      text-align: center;
+  }
+}

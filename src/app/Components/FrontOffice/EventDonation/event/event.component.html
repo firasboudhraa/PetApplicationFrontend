@@ -15,9 +15,18 @@
 
 <section class="ftco-section bg-light">
     <div class="container">
-        <div class="row justify-content-center pb-5 mb-3">
-            <div class="col-md-7 heading-section text-center ftco-animate">
-                <h2>Trending Events 🔥</h2>
+        <!-- Nouvelle disposition avec titre centré et bouton à droite -->
+        <div class="row align-items-center pb-5 mb-3">
+            <!-- Titre centré prenant toute la largeur -->
+            <div class="col-12 text-center position-relative">
+                <h2 class="heading-section ftco-animate mb-4">Trending Events 🔥</h2>
+                
+                <!-- Bouton positionné absolument à droite -->
+                <div class="add-event-btn-container">
+                    <button class="btn btn-primary" [routerLink]="['/add-event']">
+                         Add New Event
+                    </button>
+                </div>
             </div>
         </div>
 
@@ -33,12 +42,11 @@
 
                         <button class="btn btn-info mt-3" [routerLink]="['/event-detail', event.idEvent]">
                             🔍 View Details
-                          </button>
-                        <!-- Button for Donation -->
+                        </button>
                         <button class="btn btn-success mt-3" [routerLink]="['/add-donation', event.idEvent]">
                             💖 Donate Now
                         </button>                               
-                     </div>
+                    </div>
                 </div>
             </div>
         </div>

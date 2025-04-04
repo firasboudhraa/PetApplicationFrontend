@@ -1,0 +1,48 @@
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+<div class="container mt-5">
+    <h2>Add New Event</h2>
+    <form [formGroup]="eventForm" (ngSubmit)="onSubmit()">
+      <div class="form-group">
+        <label for="nameEvent">Nom de l'événement</label>
+        <input type="text" class="form-control" id="nameEvent" formControlName="nameEvent">
+        <div *ngIf="submitted && eventForm.get('nameEvent')?.errors" class="text-danger">
+          <div *ngIf="eventForm.get('nameEvent')?.errors?.['required']">Le nom est requis</div>
+          <div *ngIf="eventForm.get('nameEvent')?.errors?.['minlength']">Le nom doit avoir au moins 3 caractères</div>
+        </div>
+      </div>
+  
+      <div class="form-group">
+        <label for="description">Description</label>
+        <textarea class="form-control" id="description" formControlName="description" rows="3"></textarea>
+        <div *ngIf="submitted && eventForm.get('description')?.errors" class="text-danger">
+          <div *ngIf="eventForm.get('description')?.errors?.['required']">La description est requise</div>
+          <div *ngIf="eventForm.get('description')?.errors?.['minlength']">La description doit avoir au moins 10 caractères</div>
+        </div>
+      </div>
+  
+      <div class="form-group">
+        <label for="dateEvent">Date de l'événement</label>
+        <input type="datetime-local" class="form-control" id="dateEvent" formControlName="dateEvent">
+        <div *ngIf="submitted && eventForm.get('dateEvent')?.errors" class="text-danger">
+          <div *ngIf="eventForm.get('dateEvent')?.errors?.['required']">La date est requise</div>
+        </div>
+      </div>
+  
+      <div class="form-group">
+        <label for="location">Lieu</label>
+        <input type="text" class="form-control" id="location" formControlName="location">
+        <div *ngIf="submitted && eventForm.get('location')?.errors" class="text-danger">
+          <div *ngIf="eventForm.get('location')?.errors?.['required']">Le lieu est requis</div>
+        </div>
+      </div>
+  
+      <div class="button-group text-center mt-4">
+        <button type="submit" class="btn btn-success mr-3">
+          <i class="fas fa-check"></i> Add
+        </button>
+        <button type="button" class="btn btn-outline-primary" [routerLink]="['/event']">
+          <i class="fas fa-arrow-left"></i> Back To Events
+        </button>
+      </div>
+    </form>
+  </div>

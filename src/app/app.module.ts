@@ -13,6 +13,7 @@ import { DonationComponent } from './Components/FrontOffice/EventDonation/donati
 import { AddDonationComponent } from './Components/FrontOffice/EventDonation/add-donation/add-donation.component';
 import { EventComponent } from './Components/FrontOffice/EventDonation/event/event.component';
 import { EventDetailComponent } from './Components/FrontOffice/EventDonation/event-detail/event-detail.component';
+import { AddEventComponent } from './Components/FrontOffice/EventDonation/add-event/add-event.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -25,6 +26,7 @@ import { EventDetailComponent } from './Components/FrontOffice/EventDonation/eve
     AddDonationComponent,
     EventComponent,
     EventDetailComponent,
+    AddEventComponent,
   ],
   imports: [
     BrowserModule,
