@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { Carnet } from '../models/carnet';
 import { RecordTypeEnum } from '../models/recordtypeEnum';
 import { MedicalService } from '../Services/medical.service';
+import { forkJoin, map, catchError, of } from 'rxjs';
 
 
 @Component({
@@ -13,7 +14,7 @@ import { MedicalService } from '../Services/medical.service';
 })
 export class MedicalnotebookComponent implements OnInit {
   constructor(private router: Router,private medicalService: MedicalService) {}
-
+/*
   carnets_test = [
     { medicalHistory: 'Historique Médical 1', pet_name: 'hhgff1234' },
     { medicalHistory: 'Historique Médical 2', pet_name: 'vvvvv5678' },
@@ -66,9 +67,98 @@ export class MedicalnotebookComponent implements OnInit {
         }
       ]
     }
-  ];
+  ];*/
+  carnets !: any[] 
+  /*
+  ngOnInit(): void {
+    this.medicalService.getCarnetsWithRecords().subscribe({
+      next: (data: Carnet[]) => {
+        this.carnets = data;
+        console.log('Carnets avec historiques:', this.carnets);
+      },
+      error: (err: any) => {
+        console.error('Erreur chargement carnets/records', err);
+      }
+    });
+  }*/
+
+  ngOnInit(): void {
+    this.loadCarnets();
+  }
+
+  // Charger la liste des carnets médicaux
+  loadCarnets(): void {
+    this.medicalService.getAllCarnets().subscribe({
+      next: (data) => {
+        this.carnets = []; // Réinitialise la liste des carnets
+        const carnetRequests = data.map(carnet => {  
+          return this.medicalService.getMedicalRecordsByCarnetId(carnet.id).pipe(
+            map(response => {
+              console.log('Réponse des records pour le carnet', carnet.id, response);  // Affiche la réponse pour vérifier la structure
+              
+              // Vérifier si 'medicalRecords' existe et est un tableau
+              if (Array.isArray(response)) {
+                carnet.medicalHistory = response.map(record => ({
+                  date: new Date(record['dateTime']),
+                  type: record['type'],  // Assurer que 'type' existe dans la réponse
+                  description: record['description'],
+                  next_due_date: record['next_due_date'] ? new Date(record['next_due_date']) : new Date(0), // Date par défaut si pas de next_due_date
+                  carnet_id: record['carnetId']  // Vérifie que 'carnetId' est bien une clé
+                }));
+              } else {
+                carnet.medicalHistory = []; // Si 'response' n'est pas un tableau, initialiser avec un tableau vide
+              }
+              return response; // Retourner le carnet avec ses records
+            }),
+            catchError(err => {
+              console.error('Erreur lors de la récupération des records pour le carnet ID:', carnet.id, err);
+              return of(null); // Retourner null en cas d'erreur
+            })
+          );
+        });
+    
+        // Utilisation de forkJoin pour attendre que toutes les requêtes se terminent
+        forkJoin(carnetRequests).subscribe({
+          next: (carnetsWithRecords) => {
+            // Filtrer les carnets avec des résultats valides
+            this.carnets = carnetsWithRecords.filter(carnet => carnet !== null);
+            console.log('Carnets avec historiques:', this.carnets);
+          },
+          error: (err) => {
+            console.error('Erreur lors du chargement des carnets avec les historiques', err);
+          }
+        });
+      },
+      error: (error) => {
+        console.error('Erreur lors du chargement des carnets', error);
+      }
+    });
+  }
+  
+
   
   
+  
+
+  // Supprimer un carnet
+  deleteCarnet(id: string): void {
+    this.medicalService.deleteCarnet(id).subscribe({
+      next: () => {
+        console.log(`Carnet ${id} supprimé`);
+        this.loadCarnets(); // Recharger la liste après suppression
+      },
+      error: (error) => {
+        console.error('Erreur lors de la suppression du carnet', error);
+      }
+    });
+  }
+
+  // Navigation vers le formulaire d'ajout d'un carnet
+  navigateToMedicalNotebookForm(): void {
+    this.router.navigate(['/medicalnotebookform']);
+  }
+  
+  /*
 
   Carnets: any[] = [];
   records: any[] = [];
@@ -82,5 +172,5 @@ export class MedicalnotebookComponent implements OnInit {
 
   navigateToMedicalNotebookForm(): void {
     this.router.navigate(['/medicalnotebookform']);
-  }
+  }*/
 }

@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { forkJoin, map, Observable, switchMap } from 'rxjs';
 import { Carnet } from '../models/carnet';
 
 @Injectable({
@@ -8,39 +8,76 @@ import { Carnet } from '../models/carnet';
 })
 export class MedicalService {
 
-  private apiUrl = 'http://localhost:3000'; // Modifie avec ton URL d’API
+  private baseUrl = 'http://localhost:8070/api/carnet';
 
   constructor(private http: HttpClient) {}
 
-  /** 🔹 Récupérer tous les animaux */
-  getAllPets(): Observable<any[]> {
-    return this.http.get<any[]>(`${this.apiUrl}/pets`);
+  // 🔹 Récupère tous les carnets seuls
+  getAllCarnets(): Observable<Carnet[]> {
+    return this.http.get<Carnet[]>(`${this.baseUrl}/retrieve-all-carnets`);
   }
 
-  /** 🔹 Récupérer tous les carnets */
-  getAllCarnets(): Observable<any[]> {
-    return this.http.get<any[]>(`${this.apiUrl}/carnets`);
+  // 🔹 Récupère les records d’un carnet spécifique
+  getMedicalRecordsByCarnetId(carnetId: number): Observable<Record<string, any>[]> {
+    return this.http.get<Record<string, any>[]>(`${this.baseUrl}/${carnetId}/medical-records`);
   }
+
+
+  /*getCarnetsWithRecords(): Observable<Carnet[]> {
+    return this.getAllCarnets().pipe(
+      switchMap((carnets: Carnet[]) =>
+        forkJoin(
+          carnets.map(carnet =>
+            this.getMedicalRecordsByCarnetId(carnet.id).pipe(
+              map((records: Record<string, any>[]) => ({
+                ...carnet,
+                medicalHistory: records
+              } as Carnet)) // <-- Cast explicite ici
+            )
+          )
+        )
+      )
+    );
+  }*/
+
+
+  /** 🔹 Récupérer tous les animaux */
+  getAllPets(): Observable<any[]> {
+    return this.http.get<any[]>(`${this.baseUrl}/pets`);
+  }
+
+ 
 
   /** 🔹 Récupérer un carnet par ID */
   getCarnetById(id: string): Observable<any> {
-    return this.http.get<any>(`${this.apiUrl}/carnets/${id}`);
+    return this.http.get<any>(`${this.baseUrl}/carnets/${id}`);
   }
 
   /** 🔹 Ajouter un carnet */
   addCarnet(carnet: any): Observable<any> {
-    return this.http.post(`${this.apiUrl}/carnets`, carnet);
+    return this.http.post(`${this.baseUrl}/carnets`, carnet);
   }
 
   /** 🔹 Mettre à jour un carnet */
   updateCarnet(carnet: any, id: string): Observable<any> {
-    return this.http.put(`${this.apiUrl}/carnets/${id}`, carnet);
+    return this.http.put(`${this.baseUrl}/carnets/${id}`, carnet);
   }
 
   /** 🔹 Ajouter un record */
   addRecord(record: any): Observable<any> {
-    return this.http.post(`${this.apiUrl}/records`, record);
+    return this.http.post(`${this.baseUrl}/records`, record);
   }
+
+   
+  
+ 
+  
+   
+  
+    // Supprimer un carnet médical
+    deleteCarnet(id: string): Observable<void> {
+      return this.http.delete<void>(`${this.baseUrl}/${id}`);
+    }
 
   /*constructor(private http : HttpClient) { }
   private carnets: any[] = [];  // Stockage des carnets

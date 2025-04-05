@@ -7,22 +7,28 @@
       <div class="card shadow-lg">
         <div class="card-body">
           <h5 class="card-title">🩺 Carnet Médical</h5>
-          <p class="card-text"><strong>Animal :</strong> {{ carnet.medicalHistory[0].name }}</p>
 
-          <!-- Vérifie s'il y a des records -->
-          <div *ngIf="carnet.medicalHistory.length > 0; else noRecords">
+          <!-- Vérifie s’il y a au moins un record pour afficher le nom -->
+          <p class="card-text" *ngIf="carnet.medicalRecords && carnet.medicalRecords.length > 0">
+          </p>
+          <p class="text-muted" *ngIf="!carnet.medicalRecords || carnet.medicalRecords.length === 0">
+            📌 Aucun historique médical disponible.
+          </p>
+
+          <!-- Historique médical -->
+          <div *ngIf="carnet.medicalRecords && carnet.medicalRecords.length > 0">
             <h6 class="mt-3">🗂 Historique Médical</h6>
 
             <div class="row">
               <!-- Boucle sur les records du carnet -->
-              <div class="col-md-12 mb-2" *ngFor="let record of carnet.medicalHistory">
+              <div class="col-md-12 mb-2" *ngFor="let record of carnet.medicalRecords">
                 <div class="card border-secondary">
                   <div class="card-body">
                     <h6 class="card-title">{{ record.type }}</h6>
-                    <p class="card-text"><strong>Date :</strong> {{ record.date | date:'dd/MM/yyyy' }}</p>
+                    <p class="card-text"><strong>Date :</strong> {{ record.dateTime | date:'dd/MM/yyyy' }}</p>
                     <p class="card-text"><strong>Description :</strong> {{ record.description }}</p>
-                    <p class="card-text"><strong>Vétérinaire :</strong> {{ record.veterinarian_id }}</p>
-                    
+                    <p class="card-text"><strong>Vétérinaire :</strong> {{ record.veterinarian_id || 'Non précisé' }}</p>
+
                     <!-- Boutons d'action -->
                     <div class="d-flex justify-content-end">
                       <button class="btn btn-warning btn-sm me-2">✏️ Modifier</button>
@@ -34,15 +40,11 @@
             </div>
           </div>
 
-          <!-- Message si aucun record n'est disponible -->
-          <ng-template #noRecords>
-            <p class="text-muted">📌 Aucun historique médical disponible.</p>
-          </ng-template>
         </div>
       </div>
     </div>
   </div>
 
-  <!-- Bouton d'ajout d'un carnet médical -->
+  !-- Bouton d'ajout d'un carnet médical -->
   <button class="btn btn-primary mt-3" (click)="navigateToMedicalNotebookForm()">➕ Ajouter un Carnet</button>
 </div>
