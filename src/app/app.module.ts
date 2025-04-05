@@ -23,6 +23,7 @@ import { PublicPetDetailModalComponent } from 'src/app/Components/Pets/public-pe
 import { AdoptionRequestComponent } from './Components/AdoptionRequest/adoption-request/adoption-request.component';
 import { AdoptionRequestDashbordComponent } from './Components/AdoptionRequest/adoption-request-dashbord/adoption-request-dashbord.component';
 import { SentRequestComponent } from './Components/AdoptionRequest/adoption-request-dashbord/sent-request/sent-request.component';
+import { ReceivedRequestComponent } from './Components/AdoptionRequest/adoption-request-dashbord/received-request/received-request.component';
 
 @NgModule({
   declarations: [
@@ -48,7 +49,8 @@ import { SentRequestComponent } from './Components/AdoptionRequest/adoption-requ
     PublicPetDetailModalComponent,
     AdoptionRequestComponent,
     AdoptionRequestDashbordComponent,
-    SentRequestComponent
+    SentRequestComponent,
+    ReceivedRequestComponent
   ],
   imports: [
     BrowserModule,

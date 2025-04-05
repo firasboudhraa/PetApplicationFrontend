@@ -4,15 +4,15 @@ import { GoogleMapsLoaderService } from 'src/app/Services/google-maps-loader.ser
 import Swal from 'sweetalert2';
 
 @Component({
-  selector: 'app-sent-request',
-  templateUrl: './sent-request.component.html',
-  styleUrls: ['./sent-request.component.css']
+  selector: 'app-received-request',
+  templateUrl: './received-request.component.html',
+  styleUrls: ['./received-request.component.css']
 })
-export class SentRequestComponent {
-  pendingRequests: any[] = [];
+export class ReceivedRequestComponent {
+pendingRequests: any[] = [];
   confirmedRequests: any[] = [];
   rejectedRequests: any[] = [];
-  userId:number = 2 ;
+  userId:number = 1 ;
   activeTab: string = 'pending'; // Default tab
   private imageApiUrl = 'http://localhost:8222/api/v1/pet/images';
 
@@ -59,16 +59,25 @@ export class SentRequestComponent {
           });
         });
   }
+  
+  showOptions: number | null = null;  // Store the ID of the request whose options are visible
 
-   
+  toggleOptions(requestId: number) {
+    // If the clicked request is the one that already has visible options, hide them
+    if (this.showOptions === requestId) {
+      this.showOptions = null;
+    } else {
+      this.showOptions = requestId;
+    }
+  }
   fetchAdoptionRequests() {
-    this.adoptionRequestService.getAdoptionRequests(this.userId).subscribe(async requests => {
+    this.adoptionRequestService.getReceivedAdoptionRequest(this.userId).subscribe(async requests => {
       console.log('All Requests:', requests);
 
       const pendingRequestsPromises = requests
         .map(async request => {
           request.adoptedPet.imagePath = this.getImageUrl(request.adoptedPet.imagePath);
-    //      request.location = await this.mapsLoader.getLocationInLetters(request.location); // Use the service
+        //  request.location = await this.mapsLoader.getLocationInLetters(request.location); // Use the service
           return request;
         });
 
@@ -82,4 +91,5 @@ export class SentRequestComponent {
       console.log('Rejected Requests:', this.rejectedRequests);
     });
   }
+  
 }

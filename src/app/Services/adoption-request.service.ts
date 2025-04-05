@@ -18,6 +18,9 @@ export class AdoptionRequestService {
   getAdoptionRequests(requesterUserId:number): Observable<AdoptionRequest[]> {
     return this.http.get<AdoptionRequest[]>(`${this.apiUrl}/requester/${requesterUserId}`);
   }
+  getReceivedAdoptionRequest(ownerId:number):Observable<AdoptionRequest[]>{
+    return this.http.get<AdoptionRequest[]>(`${this.apiUrl}/owner/${ownerId}`);
+  }
   deleteAdoptionRequest(id: number): Observable<any> {
     return this.http.delete(`${this.apiUrl}/${id}`);
   }
