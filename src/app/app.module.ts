@@ -24,6 +24,11 @@ import { AdoptionRequestComponent } from './Components/AdoptionRequest/adoption-
 import { AdoptionRequestDashbordComponent } from './Components/AdoptionRequest/adoption-request-dashbord/adoption-request-dashbord.component';
 import { SentRequestComponent } from './Components/AdoptionRequest/adoption-request-dashbord/sent-request/sent-request.component';
 import { ReceivedRequestComponent } from './Components/AdoptionRequest/adoption-request-dashbord/received-request/received-request.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
+import { MatTooltipModule } from '@angular/material/tooltip';
+
 
 @NgModule({
   declarations: [
@@ -58,6 +63,11 @@ import { ReceivedRequestComponent } from './Components/AdoptionRequest/adoption-
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
+    BrowserAnimationsModule,
+    MatButtonModule,
+    MatIconModule,
+    MatTooltipModule
+
 
   ],
   providers: [],

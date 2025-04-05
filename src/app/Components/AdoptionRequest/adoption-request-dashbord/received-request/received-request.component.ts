@@ -15,7 +15,11 @@ pendingRequests: any[] = [];
   userId:number = 1 ;
   activeTab: string = 'pending'; // Default tab
   private imageApiUrl = 'http://localhost:8222/api/v1/pet/images';
+  requestId = 0;
 
+  toggleMenu(requestId: number) {
+    this.requestId = this.requestId === requestId ? 0 : requestId;
+  }
   setActiveTab(tab: string): void {
     this.activeTab = tab;
   }  

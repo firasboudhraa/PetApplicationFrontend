@@ -7,16 +7,40 @@
     border-radius: 50%;
     object-fit: cover;
   }
-  .float-options {
+  .fab-menu {
     position: absolute;
-    top: 20px;
-    right: 0;
-    z-index: 10;
+    transform: translate(150%, -70%);
     display: flex;
     flex-direction: column;
+    gap: 10px;
+    overflow: visible;
   }
   
-  .float-options button {
-    margin: 5px 0;
+  .fab-menu button {
+    transition: transform 0.3s ease;
   }
   
+  button.mat-fab {
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+    z-index: 10;
+  }
+  
+  button.mat-mini-fab {
+    z-index: 9;
+  }
+  
+  button.mat-fab  {
+    background-color: #3f51b5;
+  }
+
+  .fab-container {
+    position: relative;
+  }
+
+
+
+  .fab-container .fab-menu button {
+    transition: transform 0.3s ease;
+  }
