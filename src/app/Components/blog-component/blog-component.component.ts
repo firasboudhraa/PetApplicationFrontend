@@ -15,7 +15,7 @@ export class BlogComponentComponent implements OnInit {
   filteredPosts: Post[] = [];
   userNames: Map<number, string> = new Map();
   searchText: string = "";
-  selectedCategories: string[] = [];
+  selectedTypes: string[] = [];
 
   constructor(
     private postService: PostsService,
@@ -30,7 +30,6 @@ export class BlogComponentComponent implements OnInit {
   fetchPosts(): void {
     this.postService.getPosts().subscribe(
       (data) => {
-        console.log('Fetched posts:', data);  // Add this log to see the post data structure
         this.posts = data;
         this.filteredPosts = [...data];
         this.fetchUserNames();
@@ -69,11 +68,11 @@ export class BlogComponentComponent implements OnInit {
   }
 
   updateSelectedCategories(event: any): void {
-    const category = event.target.value;
+    const type = event.target.value;
     if (event.target.checked) {
-      this.selectedCategories.push(category);
+      this.selectedTypes.push(type);
     } else {
-      this.selectedCategories = this.selectedCategories.filter(cat => cat !== category);
+      this.selectedTypes = this.selectedTypes.filter(cat => cat !== type);
     }
     this.applyFilters();
   }
@@ -82,8 +81,8 @@ export class BlogComponentComponent implements OnInit {
     let filtered = [...this.posts];
 
     // Filtrage par catégorie
-    if (this.selectedCategories.length > 0) {
-      filtered = filtered.filter(post => this.selectedCategories.includes(post.type));
+    if (this.selectedTypes.length > 0) {
+      filtered = filtered.filter(post => this.selectedTypes.includes(post.type));
     }
 
     // Filtrage par recherche texte
@@ -101,13 +100,11 @@ export class BlogComponentComponent implements OnInit {
 
   formatCategory(category: string): string {
     if (!category) return '';
-    console.log('Category to format:', category);  // Add this log to see the raw category value
     return category
       .toLowerCase()
       .replace(/_/g, ' ')
       .replace(/\b\w/g, char => char.toUpperCase());
   }
-  
 
   sortByDate(order: string): void {
     if (order === 'latest') {
