@@ -27,7 +27,7 @@ export class AddPostComponent {
 
   onSubmit(): void {
     if (this.postForm.valid) {
-      const userId = 1; // Replace with dynamic userId from JWT later
+      const userId = 2; // Replace with dynamic userId from JWT later
       const postType = this.mapTypeToEnum(this.postForm.value.type);  // Changed to 'type'
   
       // Log to check if the type is mapped correctly

@@ -16,6 +16,9 @@ export class BlogComponentComponent implements OnInit {
   userNames: Map<number, string> = new Map();
   searchText: string = "";
   selectedTypes: string[] = [];
+  currentPage: number = 1;
+  postsPerPage: number = 5;
+  totalPages: number = 1;
 
   constructor(
     private postService: PostsService,
@@ -31,7 +34,8 @@ export class BlogComponentComponent implements OnInit {
     this.postService.getPosts().subscribe(
       (data) => {
         this.posts = data;
-        this.filteredPosts = [...data];
+        this.totalPages = Math.ceil(this.posts.length / this.postsPerPage);
+        this.filteredPosts = this.paginatePosts();
         this.fetchUserNames();
         this.fetchCommentsCount();
       },
@@ -40,7 +44,13 @@ export class BlogComponentComponent implements OnInit {
       }
     );
   }
-  
+
+  paginatePosts(): Post[] {
+    const start = (this.currentPage - 1) * this.postsPerPage;
+    const end = start + this.postsPerPage;
+    return this.posts.slice(start, end);
+  }
+
   fetchUserNames(): void {
     this.posts.forEach(post => {
       this.userService.getUserById(post.userId).subscribe(
@@ -96,6 +106,8 @@ export class BlogComponentComponent implements OnInit {
     }
 
     this.filteredPosts = filtered;
+    this.totalPages = Math.ceil(this.filteredPosts.length / this.postsPerPage);
+    this.currentPage = 1; // Reset to first page when filters change
   }
 
   formatCategory(category: string): string {
@@ -129,8 +141,14 @@ export class BlogComponentComponent implements OnInit {
     return index % 2 === 0 ? 'ligh-theme' : 'light-theme';
   }
 
-  // Rafraîchir les posts
   refreshPosts(): void {
     this.sortByDate('latest');
+  }
+
+  goToPage(page: number): void {
+    if (page >= 1 && page <= this.totalPages) {
+      this.currentPage = page;
+      this.filteredPosts = this.paginatePosts();
+    }
   }
 }

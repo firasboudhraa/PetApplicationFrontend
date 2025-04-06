@@ -24,8 +24,8 @@
 
     <br>
 
+    <!-- Search Filter Section (Left) -->
     <div class="row">
-      <!-- Search Filter Section (Left) -->
       <div class="col-md-5">
         <form id="category-search-form">
           <div class="form-group">
@@ -71,10 +71,9 @@
       </div>
     </div>
 
-    <!-- Blog Posts Section with New Template -->
+    <!-- Blog Posts Section -->
     <section class="dark">
       <div class="container py-4">
-
         <article *ngFor="let post of filteredPosts; let i = index" class="postcard dark" [ngClass]="getCardColor(i)">
           <a class="postcard__img_link" [routerLink]="['/post', post.id]">
             <img class="postcard__img" [src]="post.imageUrl" alt="Post Image">
@@ -98,6 +97,23 @@
             </ul>
           </div>
         </article>
+<!-- Pagination -->
+<div class="pagination">
+  <button (click)="goToPage(1)" [disabled]="currentPage === 1" class="pagination__button pagination__first">
+    <i class="fas fa-angle-double-left"></i>
+  </button>
+  <button (click)="goToPage(currentPage - 1)" [disabled]="currentPage === 1" class="pagination__button pagination__prev">
+    <i class="fas fa-angle-left"></i>
+  </button>
+  <span class="pagination__page-info">{{ currentPage }} / {{ totalPages }}</span>
+  <button (click)="goToPage(currentPage + 1)" [disabled]="currentPage === totalPages" class="pagination__button pagination__next">
+    <i class="fas fa-angle-right"></i>
+  </button>
+  <button (click)="goToPage(totalPages)" [disabled]="currentPage === totalPages" class="pagination__button pagination__last">
+    <i class="fas fa-angle-double-right"></i>
+  </button>
+</div>
+
 
         <!-- No Posts Found Message -->
         <div *ngIf="filteredPosts.length === 0" class="col-md-12 text-center">

@@ -466,3 +466,42 @@ body.light {
 
     
 }
+.pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 40px;
+  }
+  
+  .pagination__button {
+    background-color: #1e4d2b;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    cursor: pointer;
+    border-radius: 5px;
+    margin: 0 5px;
+  }
+  
+  .pagination__button:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+  }
+  
+  .pagination__button:hover {
+    background-color: #66bb6a;
+  }
+  
+  .pagination__page-info {
+    font-size: 1rem;
+    font-weight: 500;
+    color: #3e3b37;
+  }
+  
+  .pagination__first, .pagination__last {
+    font-size: 1.2rem;
+  }
+  
+  .pagination__prev, .pagination__next {
+    font-size: 1.4rem;
+  }
