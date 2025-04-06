@@ -12,9 +12,10 @@
 
   <!-- Likes Section for Post -->
   <div class="likes-section">
-    <button class="like-icon">
+    <button class="like-icon" (click)="likePost(post.id)">
       <i class="fa fa-thumbs-up"> Like</i>
     </button>
+    
     <button class="likes-button" (click)="toggleLikesPopup()">
       <i class="fa fa-heart"></i> {{ post.likes }} Like{{ post.likes > 1 ? 's' : '' }}
     </button>
@@ -36,7 +37,7 @@
         <button (click)="likeComment(comment.id)" class="like-button">
           <i class="fa fa-thumbs-up"></i> Like
         </button>
-        <span class="likes-count">{{ comment.likes }} Likes{{ comment.likes > 1 ? 's' : '' }}</span>
+        <span class="likes-count">{{ comment.likes }} Like{{ comment.likes > 1 ? 's' : '' }}</span>
       </div>
     </div>
 

@@ -149,4 +149,19 @@ export class PostDetailComponent implements OnInit {
   toggleLikesPopup(): void {
     this.showLikesPopup = !this.showLikesPopup;
   }
+
+  
+  likePost(postId: number): void {
+    const userId = this.userId; // userId=1 pour le moment
+    this.postService.likePost(postId, userId).subscribe({
+      next: () => {
+        this.loadPost(postId); // recharger depuis le backend
+      },
+      error: (err) => {
+        console.error('Erreur lors du like du post :', err);
+      }
+    });
+  }
+  
+  
 }

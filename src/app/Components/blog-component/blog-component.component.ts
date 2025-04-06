@@ -30,6 +30,7 @@ export class BlogComponentComponent implements OnInit {
   fetchPosts(): void {
     this.postService.getPosts().subscribe(
       (data) => {
+        console.log('Fetched posts:', data);  // Add this log to see the post data structure
         this.posts = data;
         this.filteredPosts = [...data];
         this.fetchUserNames();
@@ -40,7 +41,7 @@ export class BlogComponentComponent implements OnInit {
       }
     );
   }
-
+  
   fetchUserNames(): void {
     this.posts.forEach(post => {
       this.userService.getUserById(post.userId).subscribe(
@@ -82,7 +83,7 @@ export class BlogComponentComponent implements OnInit {
 
     // Filtrage par catégorie
     if (this.selectedCategories.length > 0) {
-      filtered = filtered.filter(post => this.selectedCategories.includes(post.type.toLowerCase()));
+      filtered = filtered.filter(post => this.selectedCategories.includes(post.type));
     }
 
     // Filtrage par recherche texte
@@ -97,14 +98,17 @@ export class BlogComponentComponent implements OnInit {
 
     this.filteredPosts = filtered;
   }
+
   formatCategory(category: string): string {
     if (!category) return '';
-  
+    console.log('Category to format:', category);  // Add this log to see the raw category value
     return category
       .toLowerCase()
       .replace(/_/g, ' ')
-      .replace(/\b\w/g, char => char.toUpperCase()); // Met en majuscule la première lettre de chaque mot
+      .replace(/\b\w/g, char => char.toUpperCase());
   }
+  
+
   sortByDate(order: string): void {
     if (order === 'latest') {
       this.filteredPosts.sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
@@ -113,9 +117,7 @@ export class BlogComponentComponent implements OnInit {
     }
   }
 
-
   sortByNumber(criteria: string): void {
-    console.log('Sorting by:', criteria);  // Ajouter un log pour vérifier si la fonction est bien appelée.
     switch (criteria) {
       case 'mostLiked':
         this.filteredPosts.sort((a, b) => b.likes - a.likes);
@@ -129,12 +131,9 @@ export class BlogComponentComponent implements OnInit {
   getCardColor(index: number): string {
     return index % 2 === 0 ? 'ligh-theme' : 'light-theme';
   }
-  
-  // Méthode pour rafraîchir les posts
-refreshPosts(): void {
-  // Réinitialise le tri des posts comme si tu avais appuyé sur "Latest"
-  this.sortByDate('latest');
-}
 
-
+  // Rafraîchir les posts
+  refreshPosts(): void {
+    this.sortByDate('latest');
+  }
 }

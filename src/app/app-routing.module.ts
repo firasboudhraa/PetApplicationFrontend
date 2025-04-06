@@ -5,6 +5,7 @@ import { AboutComponentComponent } from './Components/about-component/about-comp
 import { VetComponentComponent } from './Components/vet-component/vet-component.component';
 import { PostDetailComponent } from './post-detail/post-detail.component';
 import { BlogComponentComponent } from './Components/blog-component/blog-component.component';
+import { AddPostComponent } from './add-post/add-post.component';
 
 
 const routes: Routes = [
@@ -13,6 +14,7 @@ const routes: Routes = [
   { path: 'vet', component: VetComponentComponent },
   { path: 'blog', component: BlogComponentComponent },
   { path: 'post/:id', component: PostDetailComponent },
+  { path: 'add-post', component: AddPostComponent }, 
   {path:'',redirectTo:'home',pathMatch:'full'},
 
 ];

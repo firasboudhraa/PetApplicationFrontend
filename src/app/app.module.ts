@@ -13,6 +13,7 @@ import { FooterComponentComponent } from './Components/footer-component/footer-c
 import { NavbarComponent } from './Components/navbar/navbar.component';
 import { ContactInfoComponent } from './Components/contact-info/contact-info.component';
 import { PostDetailComponent } from './post-detail/post-detail.component';
+import { AddPostComponent } from './add-post/add-post.component';
 
 @NgModule({
   declarations: [
@@ -24,7 +25,8 @@ import { PostDetailComponent } from './post-detail/post-detail.component';
     FooterComponentComponent,
     NavbarComponent,
     ContactInfoComponent,
-    PostDetailComponent
+    PostDetailComponent,
+    AddPostComponent
   ],
   imports: [
     BrowserModule,

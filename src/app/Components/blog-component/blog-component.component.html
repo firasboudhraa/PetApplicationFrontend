@@ -16,41 +16,38 @@
     <!-- Add Post Button -->
     <div class="row justify-content-md-center">
       <div class="col-md-4">
-        <a href="#" class="btn btn-add-post btn-lg btn-block">Add Post</a>
+        <a [routerLink]="'/add-post'" class="btn btn-add-post btn-lg btn-block shining-btn">
+          <i class="fas fa-plus-circle"></i> Add Post
+        </a>
       </div>
     </div>
+
     <br>
 
     <div class="row">
       <!-- Search Filter Section (Left) -->
-      <div class="col-md-6">
+      <div class="col-md-5">
         <form id="category-search-form">
           <div class="form-group">
             <label for="search-categories">Search by Category</label><br>
             <div class="row">
               <div class="col-6">
                 <div class="form-check">
-                  <input class="form-check-input" type="checkbox" value="my_posts" id="myPosts" (change)="updateSelectedCategories($event)">
-                  <label class="form-check-label" for="myPosts">My Posts</label>
+                  <input class="form-check-input" type="checkbox" value="Help & Advice" id="helpAdvice" (change)="updateSelectedCategories($event)">
+                  <label class="form-check-label" for="helpAdvice">Help & Advice</label>
                 </div>
               </div>
               <div class="col-6">
                 <div class="form-check">
-                  <input class="form-check-input" type="checkbox" value="help_advice" id="helpAdvice" (change)="updateSelectedCategories($event)">
-                  <label class="form-check-label" for="helpAdvice">Help & Advice</label>
+                  <input class="form-check-input" type="checkbox" value="Lost & Found" id="lostFound" (change)="updateSelectedCategories($event)">
+                  <label class="form-check-label" for="lostFound">Lost & Found</label>
                 </div>
               </div>
             </div>
             <div class="row">
               <div class="col-6">
                 <div class="form-check">
-                  <input class="form-check-input" type="checkbox" value="lost_found" id="lostFound" (change)="updateSelectedCategories($event)">
-                  <label class="form-check-label" for="lostFound">Lost & Found</label>
-                </div>
-              </div>
-              <div class="col-6">
-                <div class="form-check">
-                  <input class="form-check-input" type="checkbox" value="success_stories" id="successStories" (change)="updateSelectedCategories($event)">
+                  <input class="form-check-input" type="checkbox" value="Success Stories" id="successStories" (change)="updateSelectedCategories($event)">
                   <label class="form-check-label" for="successStories">Success Stories</label>
                 </div>
               </div>
@@ -60,8 +57,8 @@
       </div>
 
       <!-- Search Bar Section (Right) -->
-      <div class="col-md-6">
-        <div class="search-bar text-center">
+      <div class="col-md-7">
+        <div class="search-bar">
           <input type="text" class="form-control" placeholder="Search for posts, topics, or updates..." [(ngModel)]="searchText" (input)="applyFilters()">
           <button class="btn btn-refresh" (click)="refreshPosts()">
             <i class="fas fa-sync-alt"></i> Refresh
@@ -93,11 +90,9 @@
             <div class="postcard__preview-txt">{{ post.content | slice:0:200 }}...</div>
             <ul class="postcard__tagbox">
               <li class="tag__item"><i class="fas fa-user mr-2"></i>{{ userNames.get(post.userId) }}</li>
-              <li class="tag__item"><i class="fas fa-tag mr-2"></i>{{ formatCategory(post.type) }}
-</li>
-<li class="tag__item"><i class="fas fa-comments mr-2"></i>{{ post.comments }} Comments</li>
-
-<li class="tag__item">
+              <li class="tag__item"><i class="fas fa-tag mr-2"></i>{{ formatCategory(post.type) }}</li>
+              <li class="tag__item"><i class="fas fa-comments mr-2"></i>{{ post.comments }} Comments</li>
+              <li class="tag__item">
                 <i class="fas fa-thumbs-up mr-2" ></i> {{ post.likes }} Likes
               </li>
             </ul>
@@ -112,4 +107,3 @@
     </section>
   </div>
 </section>
-

@@ -4,8 +4,8 @@
 body {
     font-family: "Baloo 2", cursive;
     font-size: 16px;
-    color: #59493A; /* Marron Chocolat */
-    background-color: #efede9; /* Beige Crème */
+    color: #1e4d2b; /* Vert Foncé */
+    background-color: #f0fdf4; /* Vert Très Clair */
     text-rendering: optimizeLegibility;
     font-weight: italic;
     margin: 0;
@@ -19,8 +19,8 @@ body.dark {
 }
 
 body.light {
-    background-color: #F7F3E9; /* Beige Crème */
-    color: #59493A; /* Marron Chocolat */
+    background-color: #f0fdf4; /* Vert Très Clair */
+    color: #1e4d2b; /* Vert Foncé */
 }
 
 /* 🌟 Container Principal */
@@ -32,15 +32,15 @@ body.light {
 /* 🏷️ Titre Principal */
 .section-title {
     text-align: center;
-    color: #02ee0a; /* Vert Frais */
+    color: #000000; /* Vert Clair */
     font-style: italic;
 }
 
 .section-title h2 {
-    font-size: 2.5rem;
+    font-size: 2.2rem;
     font-weight: bold;
     text-transform: uppercase;
-    color: #000000;
+    color: #2e7d32; /* Vert Pro */
 }
 
 .section-title p {
@@ -56,44 +56,248 @@ body.light {
     border-radius: 8px;
     transition: all 0.3s ease-in-out;
     text-transform: uppercase;
+    background-color: #42bc48;
+    color: white;
+    border: none;
+}
+
+.btn:hover {
+    background-color: #1e4d2b;
 }
 
 /* 🔍 Barre de Recherche & Filtres */
 .search-bar {
     display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: flex-end;
     gap: 10px;
     flex-wrap: wrap;
     margin-top: 10px;
 }
 
 .search-bar input {
-    width: 50%;
+    width: 55%;
     padding: 8px;
-    border: 2px solid #4CAF50; /* Vert Frais pour l'encadrement */
+    border: 2px solid #66bb6a;
     border-radius: 6px;
     outline: none;
     font-size: 14px;
 }
 
-.btn-refresh, .btn-sort {
-    background-color: #4CAF50; /* Vert Frais */
+.search-bar .btn-refresh,
+.search-bar .btn-sort {
+    background-color: #66bb6a;
     color: white;
     border: none;
-    padding: 8px 12px;
+    padding: 8px 15px;
     border-radius: 6px;
     cursor: pointer;
+    transition: background-color 0.3s ease;
 }
 
-.btn-refresh:hover, .btn-sort:hover {
-    background-color: #1e4420; /* Vert Foncé */
+.search-bar .btn-refresh:hover,
+.search-bar .btn-sort:hover {
+    background-color: #2e7d32;
 }
 
 /* ✅ Filtres */
 .form-group label {
     font-weight: bold;
-    color: #020201;
+    color: #1a1b27;
+    
+}
+
+.form-check-input {
+    margin-right: 8px;
+    margin-left: 50px;
+
+}
+
+.form-check-label {
+    font-size: 14px;
+    padding-left: 50px;
+    margin-left: 30px;
+
+}
+
+/* 📌 Cartes */
+.postcard {
+    display: flex;
+    flex-wrap: wrap;
+    border-radius: 12px;
+    margin-bottom: 2rem;
+    overflow: hidden;
+    position: relative;
+    box-shadow: 0 4px 15px -10px rgba(0, 0, 0, 0.4);
+    transition: transform 0.3s ease;
+    background-color: #ffffff;
+    z-index: 1;
+}
+
+.postcard.dark {
+    background-color: #ffffff;
+    color: #0b0907;
+}
+
+.postcard.light {
+    background-color: #f0fdf4;
+}
+
+.postcard__title {
+    font-size: 1.8rem;
+    color: #2e7d32 !important;
+}
+
+.postcard__img {
+    max-height: 180px;
+    width: 100%;
+    object-fit: cover;
+    border-radius: 8px;
+}
+
+.postcard__bar {
+    width: 50px;
+    height: 8px;
+    margin: 10px 0;
+    border-radius: 5px;
+    background-color: #66bb6a;
+    transition: width 0.3s ease;
+}
+
+.postcard:hover {
+    transform: scale(1.02);
+}
+
+.postcard:hover .postcard__bar {
+    width: 120px;
+}
+
+.postcard__text {
+    padding: 1.5rem;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    font-size: 18px;
+    text-align: justify;
+}
+
+/* 🎭 Tags */
+.postcard__tagbox {
+    display: flex;
+    flex-wrap: wrap;
+    font-size: 14px;
+    margin-top: 10px;
+    justify-content: center;
+}
+@import url("https://fonts.googleapis.com/css2?family=Baloo+2&display=swap");
+
+/* 🌿 Styles Généraux */
+body {
+    font-family: "Baloo 2", cursive;
+    font-size: 16px;
+    color: #1e4d2b; /* Vert Foncé */
+    background-color: #f0fdf4; /* Vert Très Clair */
+    text-rendering: optimizeLegibility;
+    font-weight: italic;
+    margin: 0;
+    padding: 0;
+}
+
+/* 🎨 Modes Sombre et Clair */
+body.dark {
+    background-color: #3E3B37; /* Brun Taupe */
+    color: #EADBC8; /* Sable Clair */
+}
+
+body.light {
+    background-color: #f0fdf4; /* Vert Très Clair */
+    color: #1e4d2b; /* Vert Foncé */
+}
+
+/* 🌟 Container Principal */
+.container-fluid {
+    background-color: inherit;
+    padding: 20px;
+}
+
+/* 🏷️ Titre Principal */
+.section-title {
+    text-align: center;
+    color: #000000; /* Vert Clair */
+    font-style: italic;
+}
+
+.section-title h2 {
+    font-size: 2.2rem;
+    font-weight: bold;
+    text-transform: uppercase;
+    color: #2e7d32; /* Vert Pro */
+}
+
+.section-title p {
+    font-size: 1.2rem;
+    text-align: center;
+}
+
+/* 🎨 Boutons */
+.btn {
+    font-size: 16px;
+    font-weight: bold;
+    padding: 10px 15px;
+    border-radius: 8px;
+    transition: all 0.3s ease-in-out;
+    text-transform: uppercase;
+    background-color: #42bc48;
+    color: white;
+    border: none;
+}
+
+.btn:hover {
+    background-color: #1e4d2b;
+}
+
+/* 🔍 Barre de Recherche & Filtres */
+.search-bar {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 20px;
+    flex-wrap: wrap;
+    margin-top: 10px;
+}
+
+.search-bar input {
+    width: 90%;
+    padding: 8px;
+    border: 2px solid #66bb6a;
+    border-radius: 60px;
+    outline: none;
+    font-size: 14px;
+}
+
+.search-bar .btn-refresh,
+.search-bar .btn-sort {
+    background-color: #dce0dd;
+    color: rgb(0, 0, 0);
+    border: none;
+
+    padding: 8px 15px;
+    border-radius: 60px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.search-bar .btn-refresh:hover,
+.search-bar .btn-sort:hover {
+    background-color: #2e7d32;
+}
+
+/* ✅ Filtres */
+.form-group label {
+    font-weight: bold;
+    color: #1a1b27;
+    margin-left: 50px;
+    
 }
 
 .form-check-input {
@@ -114,22 +318,22 @@ body.light {
     position: relative;
     box-shadow: 0 4px 15px -10px rgba(0, 0, 0, 0.4);
     transition: transform 0.3s ease;
-    background-color: #ffffff; /* Par défaut blanc */
-    z-index: 1; /* Ensure the card has a stacking context */
+    background-color: #ffffff;
+    z-index: 1;
 }
 
 .postcard.dark {
-    background-color: #3E3B37; /* Brun Taupe */
-    color: #EADBC8; /* Sable Clair */
+    background-color: #ffffff;
+    color: #0b0907;
 }
 
 .postcard.light {
-    background-color: #120c0c; /* Blanc Pur */
+    background-color: #f0fdf4;
 }
 
 .postcard__title {
     font-size: 1.8rem;
-    color: #000000 !important;  /* Vert Frais */
+    color: #2e7d32 !important;
 }
 
 .postcard__img {
@@ -144,7 +348,7 @@ body.light {
     height: 8px;
     margin: 10px 0;
     border-radius: 5px;
-    background-color: #46b54a; /* Vert Frais */
+    background-color: #66bb6a;
     transition: width 0.3s ease;
 }
 
@@ -176,118 +380,89 @@ body.light {
 
 .tag__item {
     display: inline-block;
-    background: rgba(255, 255, 255, 0.2), 0.2;
+    background: rgba(102, 187, 106, 0.15);
     border-radius: 6px;
     padding: 6px 14px;
     margin: 0 6px 6px 0;
     transition: background-color 0.3s;
+    color: #1e4d2b;
 }
 
 .tag__item:hover {
-    background: rgba(245, 173, 102, 0.8);
+    background: rgba(102, 187, 106, 0.35);
 }
 
 /* 📱 Responsive */
-@media screen and (min-width: 769px) {
-    .postcard {
-        flex-wrap: inherit;
-    }
-
-    .postcard__title {
-        font-size: 2rem;
-    }
-
-    .postcard__text {
-        padding: 2rem;
-    }
-}
-
-@media screen and (min-width: 1024px) {
-    .postcard__text {
-        padding: 2rem 3rem;
-    }
-}
 @media screen and (max-width: 768px) {
-    .postcard__text {
-        padding: 1rem;
-    }
-
-    .postcard__title {
-        font-size: 1.5rem;
-    }
-
     .search-bar input {
-        width: 80%;
-    }
-
-    /* Like Button Specific Styling */
-    .like-button {
-        position: relative;
-        z-index: 10; /* Ensure it's above other elements */
-        background: none;
-        border: none;
-        color: #007bff;
-        cursor: pointer;
-        font-size: 16px;
-        margin-top: 10px; /* Optional: Adjust the button's position */
-    }
-
-    .like-button:hover {
-        text-decoration: underline;
-    }
-
-    /* Modal Styles */
-    .modal-overlay {
-        position: fixed;
-        top: 0;
-        left: 0;
         width: 100%;
-        height: 100%;
-        background: rgba(0, 0, 0, 0.5);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        z-index: 1000; /* Ensure it's on top */
     }
 
-    .modal-content {
-        background: white;
-        padding: 20px;
-        border-radius: 8px;
-        text-align: center;
-        width: 300px;
-        z-index: 1001; /* Ensure content is also above everything else */
+
+    /* 🌟 Glowing Animation */
+@keyframes shine {
+    0% {
+        box-shadow: 0 0 5px rgba(255, 255, 255, 0.4), 0 0 10px rgba(255, 255, 255, 0.6), 0 0 15px rgba(255, 255, 255, 0.8);
+    }
+    50% {
+        box-shadow: 0 0 15px rgba(255, 255, 255, 0.8), 0 0 20px rgba(255, 255, 255, 0.8), 0 0 30px rgba(255, 255, 255, 1);
+    }
+    100% {
+        box-shadow: 0 0 5px rgba(255, 255, 255, 0.4), 0 0 10px rgba(255, 255, 255, 0.6), 0 0 15px rgba(255, 255, 255, 0.8);
+    }
+}
+
+/* 🌟 Shining Button */
+.shining-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px 15px;
+    border-radius: 8px;
+    background-color: #2e7d32;
+    color: white;
+    font-size: 16px;
+    font-weight: bold;
+    text-transform: uppercase;
+    text-decoration: none;
+    box-shadow: 0 0 5px rgba(255, 255, 255, 0.4), 0 0 10px rgba(255, 255, 255, 0.6), 0 0 15px rgba(255, 255, 255, 0.8);
+    animation: shine 2s infinite;
+    transition: all 0.3s ease-in-out;
+}
+
+.shining-btn:hover {
+    background-color: #1e4d2b; /* Darker green on hover */
+    box-shadow: 0 0 20px rgba(255, 255, 255, 1), 0 0 30px rgba(255, 255, 255, 1), 0 0 40px rgba(255, 255, 255, 1);
+}
+
+/* For the icon */
+.shining-btn i {
+    margin-right: 10px;
+}
+
+}
+
+
+.tag__item {
+    display: inline-block;
+    background: rgba(102, 187, 106, 0.15);
+    border-radius: 6px;
+    padding: 6px 14px;
+    margin: 0 6px 6px 0;
+    transition: background-color 0.3s;
+    color: #1e4d2b;
+}
+
+.tag__item:hover {
+    background: rgba(102, 187, 106, 0.35);
+}
+
+/* 📱 Responsive */
+@media screen and (max-width: 768px) {
+    .search-bar input {
+        width: 100%;
     }
 
-    .modal-content h2 {
-        margin-bottom: 10px;
-    }
 
-    .modal-content ul {
-        list-style: none;
-        padding: 0;
-    }
-
-    .modal-content ul li {
-        padding: 5px;
-    }
-
-    .close-button {
-        background: #007bff;
-        color: white;
-        border: none;
-        padding: 10px;
-        margin-top: 10px;
-        cursor: pointer;
-        border-radius: 5px;
-    }
-
-    .close-button:hover {
-        background: #0056b3;
-    }
-
-    .tag__item i {
-        cursor: pointer;
-        z-index: 1000; /* Make sure it's on top of other elements */
-    }
+    
 }

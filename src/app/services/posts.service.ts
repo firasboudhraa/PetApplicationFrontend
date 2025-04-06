@@ -22,7 +22,14 @@ export class PostsService {
     return this.http.get<Post>(`${this.apiUrl}/${id}`);
   }
   
-  likePost(postId: number, userId: number): Observable<Post> {
-    return this.http.post<Post>(`${this.apiUrl}/${postId}/like`, { userId });
+  likePost(postId: number, userId: number): Observable<void> {
+    return this.http.put<void>(`${this.apiUrl}/${postId}/like/${userId}`, {});
   }
+  
+  
+
+  addPost(postData: any, userId: number): Observable<Post> {
+    return this.http.post<Post>(`${this.apiUrl}/${userId}`, postData);
+  }
+  
 }

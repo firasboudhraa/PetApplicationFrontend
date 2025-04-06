@@ -1,13 +1,13 @@
 /* Styles principaux du conteneur du post */
 .post-detail-container {
   font-family: Arial, sans-serif;
-  max-width: 1200px; /* Augmenter la largeur du conteneur */
+  max-width: 1200px;
   margin: 20px auto;
-  background-color: #F7F3E9; /* Beige crème */
+  background-color: #ffffff; /* Fond blanc */
   padding: 20px;
   border-radius: 8px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  width: 90%; /* Largeur dynamique */
+  width: 90%;
 }
 
 /* Titre et contenu du post */
@@ -18,12 +18,12 @@
 .post-title {
   font-size: 2rem;
   font-weight: bold;
-  color: #3E3B37; /* Brun taupe */
+  color: #1e4d2b; /* Vert foncé */
 }
 
 .postcard__img {
-  width: 80%; /* Réduire la taille de l'image */
-  max-width: 800px; /* Limiter la taille maximale */
+  width: 40%; /* Réduction de la taille à 60% du conteneur */
+  max-width: 600px; /* Taille maximale de l’image */
   border-radius: 8px;
   margin-top: 10px;
   display: block;
@@ -31,23 +31,24 @@
   margin-right: auto;
 }
 
+
 .post-content {
   font-size: 1.1rem;
   margin: 10px 0;
-  color: #3E3B37; /* Brun taupe */
+  color: #2e2e2e; /* Gris foncé */
 }
 
 .post-author {
   font-size: 1rem;
   font-weight: 600;
-  color: #59493A; /* Marron chocolat */
+  color: #2e7d32; /* Vert professionnel */
 }
 
 /* Date du post */
 time {
   display: block;
   font-size: 0.9rem;
-  color: #A67C52; /* Caramel */
+  color: #66bb6a; /* Vert clair */
   margin-top: 10px;
 }
 
@@ -60,7 +61,7 @@ time {
 }
 
 .like-icon, .likes-button {
-  background-color: #A67C52; /* Caramel */
+  background-color: #2e7d32; /* Vert moyen */
   color: white;
   padding: 8px 15px;
   border: none;
@@ -77,7 +78,7 @@ time {
 }
 
 .like-icon:hover, .likes-button:hover {
-  background-color: #59493A; /* Marron chocolat */
+  background-color: #1e4d2b; /* Vert foncé */
 }
 
 /* Section des commentaires */
@@ -88,27 +89,27 @@ time {
 .comments-title {
   font-size: 1.5rem;
   font-weight: bold;
-  color: #3E3B37; /* Brun taupe */
+  color: #1e4d2b;
 }
 
 .post-comment {
-  background-color: #EADBC8; /* Sable clair */
+  background-color: #f0fdf4; /* Vert très clair */
   margin-top: 15px;
   padding: 10px;
   border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
 }
 
 .comment-author {
   font-size: 1rem;
   font-weight: 600;
-  color: #A67C52; /* Caramel */
+  color: #2e7d32;
 }
 
 .comment-content {
   font-size: 1.1rem;
   margin-top: 5px;
-  color: #3E3B37; /* Brun taupe */
+  color: #2e2e2e;
 }
 
 /* Section pour ajouter un commentaire */
@@ -119,17 +120,17 @@ time {
 textarea {
   width: 100%;
   padding: 10px;
-  border: 1px solid #A67C52; /* Caramel */
+  border: 1px solid #81c784; /* Bord vert clair */
   border-radius: 5px;
   font-size: 1rem;
-  color: #3E3B37; /* Brun taupe */
-  background-color: #F7F3E9; /* Beige crème */
+  color: #2e2e2e;
+  background-color: #ffffff;
 }
 
 button {
   margin-top: 10px;
   padding: 10px 20px;
-  background-color: #A67C52; /* Caramel */
+  background-color: #2e7d32;
   color: white;
   border: none;
   border-radius: 5px;
@@ -138,7 +139,7 @@ button {
 }
 
 button:hover {
-  background-color: #59493A; /* Marron chocolat */
+  background-color: #1e4d2b;
 }
 
 /* Popup des likes */
@@ -155,7 +156,7 @@ button:hover {
 }
 
 .likes-modal-content {
-  background-color: white;
+  background-color: #ffffff;
   padding: 20px;
   border-radius: 8px;
   width: 300px;
@@ -168,7 +169,7 @@ button:hover {
   right: 10px;
   font-size: 20px;
   cursor: pointer;
-  color: #A67C52; /* Caramel */
+  color: #2e7d32;
 }
 
 .likes-list {
@@ -179,7 +180,7 @@ button:hover {
 .likes-list-item {
   margin: 10px 0;
   font-size: 1.1rem;
-  color: #3E3B37; /* Brun taupe */
+  color: #2e2e2e;
 }
 
 /* Section pour les likes des commentaires */
@@ -190,7 +191,7 @@ button:hover {
 }
 
 .like-button {
-  background-color: #A67C52; /* Caramel */
+  background-color: #2e7d32;
   color: white;
   padding: 5px 10px;
   font-size: 14px;
@@ -200,11 +201,11 @@ button:hover {
 }
 
 .like-button:hover {
-  background-color: #59493A; /* Marron chocolat */
+  background-color: #1e4d2b;
 }
 
 .likes-count {
   margin-left: 10px;
   font-size: 14px;
-  color: #59493A; /* Marron chocolat */
+  color: #1e4d2b;
 }
