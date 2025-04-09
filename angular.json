@@ -34,7 +34,9 @@
               "src/assets/css/magnific-popup.css",
               "src/assets/css/owl.carousel.min.css",
               "src/assets/css/owl.theme.default.min.css",
-              "src/assets/css/style.css"
+              "src/assets/css/style.css",
+              "src/assets/css/kaiadmin.min.css",
+              "src/assets/css/plugins.min.css"
             ],
             "scripts": [
               "node_modules/aos/dist/aos.js",
@@ -51,7 +53,8 @@
               "src/assets/js/jquery.animateNumber.min.js",
               "src/assets/js/bootstrap-datepicker.js",
               "src/assets/js/scrollax.min.js",
-              "src/assets/js/main.js"
+              "src/assets/js/main.js",
+              "src/assets/js/plugin/webfont/webfont.min.js"
             ]
           },
           "configurations": {
