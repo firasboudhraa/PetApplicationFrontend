@@ -128,6 +128,7 @@ export class AddPetModalComponent {
           console.log('Pet added successfully:', response);
           this.petAdded.emit();
           this.closeModal();
+          this.petForm.reset(); // Reset the form after successful submission
           Swal.fire({
             icon: 'success',
             title: 'Pet Added',
@@ -137,6 +138,7 @@ export class AddPetModalComponent {
             showConfirmButton: false,
             toast: true
           });
+          
         },
         (error) => {
           console.error('Error adding pet:', error);

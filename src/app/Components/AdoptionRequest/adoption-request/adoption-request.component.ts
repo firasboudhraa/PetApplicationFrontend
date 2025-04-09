@@ -35,17 +35,6 @@ export class AdoptionRequestComponent implements OnInit {
     const currentDate = new Date();
     currentDate.setDate(currentDate.getDate() + 1);
     this.minDate = currentDate.toISOString().split('T')[0];
-
-
-    this.requesterUserId = Number(this.route.snapshot.queryParamMap.get('userId'));
-    this.petId = Number(this.route.snapshot.queryParamMap.get('petId'));
-    this.petdataService.getPetById(this.petId).subscribe((data) => {
-      this.adoptedPet = data;
-      this.adoptionForm.patchValue({
-        adoptedPet: this.adoptedPet,
-        requesterUserId: this.requesterUserId,
-      });
-    });
     this.adoptionForm = this.fb.group({
       location: [''],
       time: ['',Validators.required],
@@ -55,12 +44,25 @@ export class AdoptionRequestComponent implements OnInit {
       requesterUserId: [this.requesterUserId]
       
     });
-    console.log(this.adoptionForm.value)
-    this.mapsLoader.load().then(() => {
-      this.initMap();
-    }).catch(err => {
-      console.error('Google Maps failed to load', err);
+
+    this.requesterUserId = Number(this.route.snapshot.queryParamMap.get('userId'));
+    this.petId = Number(this.route.snapshot.queryParamMap.get('petId'));
+    this.petdataService.getPetById(this.petId).subscribe((data) => {
+      this.adoptedPet = data;
+      this.adoptionForm.patchValue({
+        adoptedPet: this.adoptedPet,
+        requesterUserId: this.requesterUserId,
+      });
+      this.mapsLoader.load().then(() => {
+        this.initMap();
+      }).catch(err => {
+        console.error('Google Maps failed to load', err);
+      });
+      console.log(this.adoptedPet);
     });
+
+    console.log(this.adoptionForm.value)
+
   }
   submitAdoptionRequest() {
     if (this.adoptionForm.valid) { 
