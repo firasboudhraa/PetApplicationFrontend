@@ -11,24 +11,31 @@ import { AuthService } from './auth.service';
 
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {
-
   constructor(private authService: AuthService) {}
 
   intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
-    // Skip adding token for auth requests
-    if (request.url.includes('/auth/')) {
+    // Skip token for specific endpoints only
+    const skipAuth = [
+      '/auth/login',
+      '/auth/register',
+      '/auth/activate-account'
+    ].some(url => request.url.includes(url));
+
+    if (skipAuth) {
       return next.handle(request);
     }
 
     const token = this.authService.getToken();
-    if (token) {
-      request = request.clone({
-        setHeaders: {
-          Authorization: `Bearer ${token}`
-        }
-      });
+    if (!token) {
+      return next.handle(request);
     }
 
-    return next.handle(request);
+    // Clone request with auth header
+    const authReq = request.clone({
+      setHeaders: { Authorization: `Bearer ${token}` }
+    });
+
+    return next.handle(authReq);
   }
+
 }

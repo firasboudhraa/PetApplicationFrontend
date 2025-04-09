@@ -14,9 +14,9 @@ export class UserProfileComponent {
     private router: Router,
     private http: HttpClient
   ) {}
+  private apiUrl = 'http://localhost:8081/auth'; // without /logout
 
   logout() {
-    // Get the token from storage
     const token = this.authService.getToken();
     
     if (!token) {
@@ -24,21 +24,23 @@ export class UserProfileComponent {
       return;
     }
 
-    // Prepare headers with the token
+    // Use full URL to ensure correct endpoint
+    const logoutUrl = `${this.apiUrl}/logout`;
+    
+    // Include both the auth token and cache-control headers
     const headers = new HttpHeaders({
-      'Authorization': `Bearer ${token}`
+      'Authorization': `Bearer ${token}`,
+      'Cache-Control': 'no-cache',
+      'Pragma': 'no-cache'
     });
 
-    // Call the logout endpoint
-    this.http.post('/auth/logout', {}, { headers }).subscribe({
+    this.http.post(logoutUrl, {}, { headers }).subscribe({
       next: () => {
-        // Clear local storage and redirect on success
         this.authService.clearToken();
         this.router.navigate(['/home']);
       },
       error: (err) => {
         console.error('Logout failed:', err);
-        // Even if backend logout fails, clear local token and redirect
         this.authService.clearToken();
         this.router.navigate(['/home']);
       }

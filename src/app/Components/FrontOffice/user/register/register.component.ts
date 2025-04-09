@@ -32,7 +32,7 @@ export class RegisterComponent {
     if (this.registerForm.valid) {
       this.authService.register(this.registerForm.value).subscribe({
         next: () => {
-          this.successMessage = 'Registration successful! Please check your email to activate your account.';
+          this.successMessage = 'Registration successful! proceed to login';
           this.errorMessage = '';
           this.registerForm.reset();
           
