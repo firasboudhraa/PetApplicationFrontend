@@ -58,15 +58,80 @@ export class MedicalnotebookFormComponent implements OnInit {
       attachments: [[]]
     });
   }
-
-  /** 🔹 Charger tous les carnets */
-  loadCarnets() {
-    this.medicalService.getAllCarnets().subscribe(
-      (data) => (this.carnets = data),
-      (error) => console.error("Erreur de chargement des carnets", error)
-    );
+ 
+  saveCarnet(): void {
+    if (this.carnetForm.valid) {
+      const selectedPetId = +this.carnetForm.value.pet_id;  // Convertir en nombre
+      console.log('ID de l\'animal sélectionné:', selectedPetId);
+  
+      const selectedPet = this.pets.find(pet => pet.id === selectedPetId);  // Trouver l'animal sélectionné
+  
+      // Vérifiez que selectedPet est bien trouvé et contient les bonnes données
+      console.log("Animal sélectionné :", selectedPet);
+  
+      if (!selectedPet) {
+        console.error('Animal non trouvé pour l\'ID:', selectedPetId);
+        return;  // Si l'animal n'est pas trouvé, on arrête l'exécution
+      }
+  
+      // Créer l'objet à envoyer à l'API avec l'ID et le nom de l'animal
+      const carnetData = { pet_id: selectedPetId, name: selectedPet.name };
+  
+      // Appeler l'API pour enregistrer le carnet
+      this.medicalService.createCarnet(carnetData).subscribe({
+        next: (response) => {
+          console.log('Carnet créé avec succès:', response);
+          this.loadCarnets(); // Recharge les carnets après la création
+        },
+        error: (error) => {
+          console.error('Erreur lors de la création du carnet:', error);
+        }
+      });
+    }
   }
 
+
+  saveRecord(): void {
+    if (this.recordForm.valid) {
+      // Récupération des valeurs du formulaire
+      const recordData = {
+        dateTime: this.recordForm.value.date,
+        type: this.recordForm.value.type,
+        description: this.recordForm.value.description,
+        veterinarian_id: this.recordForm.value.veterinarian_id,
+        next_due_date: this.recordForm.value.next_due_date,
+        carnetId: this.recordForm.value.carnet_id, // Sélection du carnet
+      };
+  
+      // Appel à l'API pour ajouter un record médical
+      this.medicalService.createMedicalRecord(recordData).subscribe({
+        next: (response) => {
+          console.log('Record médical ajouté avec succès:', response);
+        },
+        error: (error) => {
+          console.error('Erreur lors de l\'ajout du record médical:', error);
+        }
+      });
+    }
+  }
+  
+
+
+  
+  
+  /** 🔹 Charger tous les carnets */
+  loadCarnets(): void {
+    this.medicalService.getAllCarnets().subscribe({
+      next: (response) => {
+        console.log('Carnets récupérés:', response); // Vérifiez que vous recevez la liste correcte
+        this.carnets = response; // Assurez-vous que 'carnets' est un tableau
+      },
+      error: (error) => {
+        console.error('Erreur lors du chargement des carnets:', error);
+      }
+    });
+  }
+  
   /** 🔹 Charger un carnet par ID */
   loadCarnetById(id: string) {
     this.medicalService.getCarnetById(id).subscribe(
@@ -85,7 +150,7 @@ export class MedicalnotebookFormComponent implements OnInit {
     );
   }
 
-  /** 🔹 Sauvegarder un carnet */
+  /** 🔹 Sauvegarder un carnet 
   saveCarnet() {
     if (this.carnetForm.valid) {
       if (this.id) {
@@ -102,9 +167,9 @@ export class MedicalnotebookFormComponent implements OnInit {
         );
       }
     }
-  }
+  }*/
 
-  /** 🔹 Sauvegarder un record */
+  /** 🔹 Sauvegarder un record 
   saveRecord() {
     if (this.recordForm.valid) {
       this.medicalService.addRecord(this.recordForm.value).subscribe(
@@ -114,7 +179,7 @@ export class MedicalnotebookFormComponent implements OnInit {
         },
         (error) => console.error("Erreur d'ajout du record", error)
       );
-    }
+    }*/
   }
 
 
@@ -176,7 +241,7 @@ throw new Error('Method not implemented.');
   
   
   
-  }
+  
 
 
 

@@ -9,3 +9,7 @@ export interface Record {
 }
 export { RecordTypeEnum };
 
+export interface FullCarnetResponse {
+  name: string;
+  medicalRecords: Record[];
+}

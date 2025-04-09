@@ -7,6 +7,7 @@
       <div class="card shadow-lg">
         <div class="card-body">
           <h5 class="card-title">🩺 Carnet Médical</h5>
+          <p class="fw-bold text-primary">{{ carnet.name }}</p>
 
           <!-- Vérifie s’il y a au moins un record pour afficher le nom -->
           <p class="card-text" *ngIf="carnet.medicalRecords && carnet.medicalRecords.length > 0">
@@ -28,23 +29,25 @@
                     <p class="card-text"><strong>Date :</strong> {{ record.dateTime | date:'dd/MM/yyyy' }}</p>
                     <p class="card-text"><strong>Description :</strong> {{ record.description }}</p>
                     <p class="card-text"><strong>Vétérinaire :</strong> {{ record.veterinarian_id || 'Non précisé' }}</p>
+                    <p class="card-text"><strong>next date :</strong> {{ record.next_due_date || 'Non précisé' }}</p>
 
                     <!-- Boutons d'action -->
                     <div class="d-flex justify-content-end">
                       <button class="btn btn-warning btn-sm me-2">✏️ Modifier</button>
-                      <button class="btn btn-danger btn-sm">🗑 Supprimer</button>
+
                     </div>
                   </div>
                 </div>
               </div>
             </div>
           </div>
+          <button class="btn btn-danger btn-sm"  (click)="deleteCarnet(carnet.id)">🗑 Supprimer</button>
 
         </div>
       </div>
     </div>
+    
   </div>
 
-  !-- Bouton d'ajout d'un carnet médical -->
   <button class="btn btn-primary mt-3" (click)="navigateToMedicalNotebookForm()">➕ Ajouter un Carnet</button>
 </div>

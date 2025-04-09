@@ -2,6 +2,7 @@
   <h2 class="mb-3">📝 Gestion des Carnets Médicaux</h2>
 
   <!-- FORMULAIRE CARNET -->
+<!-- FORMULAIRE CARNET -->
 <form [formGroup]="carnetForm" class="mb-4" (ngSubmit)="saveCarnet()">
   <fieldset class="border p-3 rounded">
     <legend>🩺 Ajouter un Carnet</legend>
@@ -24,11 +25,13 @@
 </form>
 
 
+
+
   
 
   <!-- FORMULAIRE RECORD -->
   <h2 class="mb-3">📂 Gestion des Records Médicaux</h2>
-  <form [formGroup]="recordForm" class="mb-4">
+  <form [formGroup]="recordForm" class="mb-4" (ngSubmit)="saveRecord()">
     <fieldset class="border p-3 rounded">
       <legend>📄 Ajouter un Record</legend>
 

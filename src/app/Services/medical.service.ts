@@ -9,6 +9,8 @@ import { Carnet } from '../models/carnet';
 export class MedicalService {
 
   private baseUrl = 'http://localhost:8070/api/carnet';
+  private baseUrl1 = 'http://localhost:8071/api/medicalrecord';
+
 
   constructor(private http: HttpClient) {}
 
@@ -21,8 +23,14 @@ export class MedicalService {
   getMedicalRecordsByCarnetId(carnetId: number): Observable<Record<string, any>[]> {
     return this.http.get<Record<string, any>[]>(`${this.baseUrl}/${carnetId}/medical-records`);
   }
-
-
+    // 🔹 Crée un nouveau carnet
+  createCarnet(carnet: any): Observable<any> {
+    return this.http.post<any>(`${this.baseUrl}/add-carnet`, carnet);
+  }
+  createMedicalRecord(record: any): Observable<any> {
+    return this.http.post<any>(`${this.baseUrl1}/add-medicalRecord`, record);
+  }
+  
   /*getCarnetsWithRecords(): Observable<Carnet[]> {
     return this.getAllCarnets().pipe(
       switchMap((carnets: Carnet[]) =>
@@ -75,8 +83,8 @@ export class MedicalService {
    
   
     // Supprimer un carnet médical
-    deleteCarnet(id: string): Observable<void> {
-      return this.http.delete<void>(`${this.baseUrl}/${id}`);
+    deleteCarnet(id: number): Observable<any> {
+      return this.http.delete(`${this.baseUrl}/carnet/${id}`);
     }
 
   /*constructor(private http : HttpClient) { }

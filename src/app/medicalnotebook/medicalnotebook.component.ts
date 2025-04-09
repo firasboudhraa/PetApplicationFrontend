@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Carnet } from '../models/carnet';
 import { RecordTypeEnum } from '../models/recordtypeEnum';
 import { MedicalService } from '../Services/medical.service';
@@ -13,16 +13,13 @@ import { forkJoin, map, catchError, of } from 'rxjs';
   styleUrls: ['./medicalnotebook.component.css']
 })
 export class MedicalnotebookComponent implements OnInit {
-  constructor(private router: Router,private medicalService: MedicalService) {}
+  constructor(private router: Router,private medicalService: MedicalService,private act:ActivatedRoute) {}
 /*
   carnets_test = [
     { medicalHistory: 'Historique Médical 1', pet_name: 'hhgff1234' },
     { medicalHistory: 'Historique Médical 2', pet_name: 'vvvvv5678' },
     { medicalHistory: 'Historique Médical 3', pet_name: 'aaaaa91011' }
   ];
-
-
-
 
   carnets: Carnet[] = [
     {
@@ -69,6 +66,7 @@ export class MedicalnotebookComponent implements OnInit {
     }
   ];*/
   carnets !: any[] 
+  id!:number
   /*
   ngOnInit(): void {
     this.medicalService.getCarnetsWithRecords().subscribe({
@@ -83,6 +81,9 @@ export class MedicalnotebookComponent implements OnInit {
   }*/
 
   ngOnInit(): void {
+    this.id=this.act.snapshot.params['id']
+    console.log(this.id)
+
     this.loadCarnets();
   }
 
@@ -99,6 +100,8 @@ export class MedicalnotebookComponent implements OnInit {
               // Vérifier si 'medicalRecords' existe et est un tableau
               if (Array.isArray(response)) {
                 carnet.medicalHistory = response.map(record => ({
+                  
+                  // Assurer que 'name' existe dans la réponse
                   date: new Date(record['dateTime']),
                   type: record['type'],  // Assurer que 'type' existe dans la réponse
                   description: record['description'],
@@ -141,17 +144,25 @@ export class MedicalnotebookComponent implements OnInit {
   
 
   // Supprimer un carnet
-  deleteCarnet(id: string): void {
+  
+  deleteCarnet(id: number): void {
+    if (!id) {
+      console.error('ID du carnet manquant');
+      return;
+    }
+    
     this.medicalService.deleteCarnet(id).subscribe({
       next: () => {
-        console.log(`Carnet ${id} supprimé`);
-        this.loadCarnets(); // Recharger la liste après suppression
+        // Supprimer le carnet localement
+        this.carnets = this.carnets.filter(carnet => carnet.id !== id);
       },
-      error: (error) => {
-        console.error('Erreur lors de la suppression du carnet', error);
+      error: (err) => {
+        console.error('Erreur lors de la suppression du carnet', err);
       }
     });
   }
+  
+  
 
   // Navigation vers le formulaire d'ajout d'un carnet
   navigateToMedicalNotebookForm(): void {
