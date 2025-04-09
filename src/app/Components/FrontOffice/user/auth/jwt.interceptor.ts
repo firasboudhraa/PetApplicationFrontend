@@ -1,4 +1,4 @@
-// jwt.interceptor.ts
+// auth.interceptor.ts
 import { Injectable } from '@angular/core';
 import {
   HttpRequest,
@@ -10,13 +10,17 @@ import { Observable } from 'rxjs';
 import { AuthService } from './auth.service';
 
 @Injectable()
-export class JwtInterceptor implements HttpInterceptor {
+export class AuthInterceptor implements HttpInterceptor {
 
   constructor(private authService: AuthService) {}
 
   intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
+    // Skip adding token for auth requests
+    if (request.url.includes('/auth/')) {
+      return next.handle(request);
+    }
+
     const token = this.authService.getToken();
-    
     if (token) {
       request = request.clone({
         setHeaders: {

@@ -17,8 +17,8 @@ import { LoginComponent } from './Components/FrontOffice/user/login/login.compon
 import { UserProfileComponent } from './Components/FrontOffice/user/user-profile/user-profile.component';
 import { RegisterComponent } from './Components/FrontOffice/user/register/register.component';
 import { ActivateAccountComponent } from './Components/FrontOffice/user/activate-account/activate-account.component';
-import { JwtInterceptor } from './Components/FrontOffice/user/auth/jwt.interceptor';
 import { NotFoundComponent } from './not-found/not-found.component';
+import { AuthInterceptor } from './Components/FrontOffice/user/auth/jwt.interceptor';
 @NgModule({
   declarations: [
     AppComponent,
@@ -46,7 +46,11 @@ import { NotFoundComponent } from './not-found/not-found.component';
     FormsModule,
     ReactiveFormsModule,
   ],
-  providers: [    { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true }  ],
+  providers: [  {
+    provide: HTTP_INTERCEPTORS,
+    useClass: AuthInterceptor,
+    multi: true
+  }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

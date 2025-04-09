@@ -24,39 +24,48 @@ interface AuthResponse {
   providedIn: 'root'
 })
 export class AuthService {
-  private apiUrl =  'http://localhost:8081'; // Update with your gateway/base URL
-
+  private apiUrl = 'http://localhost:8081';
+  private tokenKey = 'auth_token'; // Key for localStorage
 
   constructor(private http: HttpClient) { }
 
   register(userData: RegisterRequest): Observable<any> {
-    // Transform role to uppercase if needed
     const payload = {
-        ...userData,
-        role: userData.role.toUpperCase().replace(' ', '_')
+      ...userData,
+      role: userData.role.toUpperCase().replace(' ', '_')
     };
     return this.http.post(`${this.apiUrl}/auth/register`, payload);
-}
-
-// In your Angular auth service
-login(credentials: any): Observable<any> {
-  return this.http.post('/auth/login', credentials).pipe(
-    tap((response: any) => {
-      // Store in sessionStorage instead of localStorage
-      sessionStorage.setItem('token', response.token);
-    })
-  );
-}
-
-  logout(): void {
-    localStorage.removeItem('auth_token');
   }
 
-  isLoggedIn(): boolean {
-    return !!localStorage.getItem('auth_token');
+  login(credentials: LoginRequest): Observable<any> {
+    return this.http.post(`${this.apiUrl}/auth/login`, credentials).pipe(
+      tap((response: any) => {
+        if (response.token) {
+          this.setToken(response.token);
+        }
+      })
+    );
+  }
+
+  logout(): void {
+    localStorage.removeItem(this.tokenKey);
+  }
+
+
+  private setToken(token: string): void {
+    localStorage.setItem(this.tokenKey, token);
   }
 
   getToken(): string | null {
     return localStorage.getItem('auth_token');
+  }
+
+  clearToken(): void {
+    localStorage.removeItem('auth_token');
+    // Any other cleanup you need to do
+  }
+
+  isLoggedIn(): boolean {
+    return !!this.getToken();
   }
 }
