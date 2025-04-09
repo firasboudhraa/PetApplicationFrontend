@@ -6,6 +6,7 @@ import { VetComponentComponent } from './Components/vet-component/vet-component.
 import { PostDetailComponent } from './post-detail/post-detail.component';
 import { BlogComponentComponent } from './Components/blog-component/blog-component.component';
 import { AddPostComponent } from './add-post/add-post.component';
+import { ModifyPostComponent } from './modify-post/modify-post.component';
 
 
 const routes: Routes = [
@@ -16,6 +17,8 @@ const routes: Routes = [
   { path: 'post/:id', component: PostDetailComponent },
   { path: 'add-post', component: AddPostComponent }, 
   {path:'',redirectTo:'home',pathMatch:'full'},
+  { path: 'modify-post/:id', component: ModifyPostComponent },  // Add route for modifying post
+
 
 ];
 

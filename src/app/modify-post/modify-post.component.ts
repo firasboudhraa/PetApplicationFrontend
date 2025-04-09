@@ -1,21 +1,25 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { PostsService } from 'src/app/services/posts.service';
-import { Router } from '@angular/router';
+import { Post } from 'src/app/models/Post';
+import { UserService } from 'src/app/services/user.service';
+
 
 @Component({
-  selector: 'app-add-post',
-  templateUrl: './add-post.component.html',
-  styleUrls: ['./add-post.component.css']
+  selector: 'app-modify-post',
+  templateUrl: './modify-post.component.html',
+  styleUrls: ['./modify-post.component.css']
 })
-export class AddPostComponent {
+export class ModifyPostComponent implements OnInit {
   postForm: FormGroup;
   selectedFile: File | null = null;
   imageError: string | null = null;
   isSubmitting: boolean = false;
   errorMessage: string = '';
-
-  userId: number = 2; // Replace this with dynamic user ID (e.g., from JWT)
+  postId: number = -1; // Default value
+  post: Post | null = null;
+  userId: number = 2; // Dynamically fetched user ID, like JWT token
 
   types = [
     { label: 'Success Story', value: 'success_stories' },
@@ -26,22 +30,50 @@ export class AddPostComponent {
   constructor(
     private fb: FormBuilder,
     private postService: PostsService,
-    public router: Router
+    private route: ActivatedRoute,
+    public router: Router,
+    private userService: UserService
   ) {
     this.postForm = this.fb.group({
       title: ['', Validators.required],
       content: ['', Validators.required],
       type: ['', Validators.required],
-      image: [null, Validators.required] // Ensure image is required
+      image: [null]
+    });
+  }
+
+  ngOnInit(): void {
+    this.postId = Number(this.route.snapshot.paramMap.get('id')); // Ensure it's properly set
+    if (this.postId) {
+      this.loadPostDetails(this.postId);
+    }
+  }
+  
+
+  // Fetch post details by ID
+  private loadPostDetails(postId: number): void {
+    this.postService.getPostById(postId).subscribe(
+      (post: Post) => {
+        this.post = post;
+        this.populateForm(post);
+      },
+      (error) => console.error('Error loading post details:', error)
+    );
+  }
+
+  // Populate the form with the existing post details
+  private populateForm(post: Post): void {
+    this.postForm.patchValue({
+      title: post.title,
+      content: post.content,
+      type: post.type
     });
   }
 
   onFileSelected(event: Event): void {
     const input = event.target as HTMLInputElement;
-
     if (input.files && input.files[0]) {
       const file = input.files[0];
-
       if (!file.type.startsWith('image/')) {
         this.imageError = 'Seules les images sont autorisées.';
         this.selectedFile = null;
@@ -55,28 +87,28 @@ export class AddPostComponent {
   }
 
   onSubmit(): void {
-    if (this.postForm.valid && this.selectedFile) {
+    if (this.postForm.valid) {
       this.isSubmitting = true;
-
-      // Ideally, the user ID should be dynamically fetched (e.g., from JWT)
-      const userId = this.userId;
 
       const formData = new FormData();
       formData.append('title', this.postForm.get('title')?.value);
       formData.append('content', this.postForm.get('content')?.value);
       formData.append('type', this.mapTypeToEnum(this.postForm.get('type')?.value));
-      formData.append('image', this.selectedFile);
 
-      this.postService.addPost(formData, userId).subscribe(
+      if (this.selectedFile) {
+        formData.append('image', this.selectedFile);
+      }
+
+      // Call the updatePost service method with the dynamic userId
+      this.postService.updatePost(this.postId, formData, this.userId).subscribe(
         () => {
           this.isSubmitting = false;
-          this.router.navigate(['/blog']);
-          this.postForm.reset(); // Optionally reset form after successful post
+          this.router.navigate(['/blog']); // Navigate to the blog page or another view
         },
         (error) => {
           this.isSubmitting = false;
-          this.errorMessage = 'Erreur lors de la publication du post. Veuillez réessayer.';
-          console.error('Error uploading post:', error);
+          this.errorMessage = 'Erreur lors de la mise à jour du post. Veuillez réessayer.';
+          console.error('Error updating post:', error);
         }
       );
     }

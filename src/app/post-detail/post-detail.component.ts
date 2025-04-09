@@ -6,6 +6,8 @@ import { CommentService } from 'src/app/services/comments.service';
 import { Post } from 'src/app/models/Post';
 import { Comment } from 'src/app/models/Comment';
 import { UserDTO } from 'src/app/models/userDTO';
+import { Router } from '@angular/router';
+
 
 @Component({
   selector: 'app-post-detail',
@@ -26,7 +28,9 @@ export class PostDetailComponent implements OnInit {
     private route: ActivatedRoute,
     private postService: PostsService,
     private userService: UserService,
-    private commentService: CommentService
+    private commentService: CommentService,
+    private Router: Router
+
   ) {}
 
   ngOnInit(): void {
@@ -53,6 +57,13 @@ export class PostDetailComponent implements OnInit {
     );
   }
 
+  formatCategory(category: string): string {
+    if (!category) return '';
+    return category
+      .toLowerCase()
+      .replace(/_/g, ' ')
+      .replace(/\b\w/g, char => char.toUpperCase());
+  }
   /**
    * Charge l'auteur du post.
    */
@@ -146,10 +157,12 @@ export class PostDetailComponent implements OnInit {
   /**
    * Affiche ou masque la popup des likes.
    */
+
+  // Method to toggle modal visibility
   toggleLikesPopup(): void {
     this.showLikesPopup = !this.showLikesPopup;
   }
-
+  
   
   likePost(postId: number): void {
     const userId = this.userId; // userId=1 pour le moment
@@ -163,5 +176,19 @@ export class PostDetailComponent implements OnInit {
     });
   }
   
+  
+
+  deletePost(postId: number): void {
+    if (confirm("Are you sure you want to delete this post?")) {
+      this.postService.deletePost(postId).subscribe(
+        () => {
+          console.log('Post deleted successfully');
+          // Optionally navigate away after deletion, e.g., to the homepage or post list
+          this.Router.navigate(['/blog']);
+        },
+        (error) => console.error('Error deleting post:', error)
+      );
+    }
+  }
   
 }

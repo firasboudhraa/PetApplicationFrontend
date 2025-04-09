@@ -14,6 +14,7 @@ import { NavbarComponent } from './Components/navbar/navbar.component';
 import { ContactInfoComponent } from './Components/contact-info/contact-info.component';
 import { PostDetailComponent } from './post-detail/post-detail.component';
 import { AddPostComponent } from './add-post/add-post.component';
+import { ModifyPostComponent } from './modify-post/modify-post.component';
 
 @NgModule({
   declarations: [
@@ -26,7 +27,8 @@ import { AddPostComponent } from './add-post/add-post.component';
     NavbarComponent,
     ContactInfoComponent,
     PostDetailComponent,
-    AddPostComponent
+    AddPostComponent,
+    ModifyPostComponent
   ],
   imports: [
     BrowserModule,

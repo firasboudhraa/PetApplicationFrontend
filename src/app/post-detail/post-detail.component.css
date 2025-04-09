@@ -22,7 +22,6 @@
 }
 
 /* Image du post */
-/* Image du post */
 .post-image {
   max-width: 60%;
   border-radius: 8px;
@@ -33,6 +32,47 @@
   object-fit: cover; /* Ensures the image fits nicely without distortion */
 }
 
+/* Boutons de modification et suppression */
+.modify-post-button {
+  background-color: #0d00ff; /* Vert professionnel */
+  color: white;
+  border: none;
+  padding: 6px 12px; /* Smaller padding */
+  border-radius: 4px; /* Smaller radius */
+  cursor: pointer;
+  font-size: 14px; /* Smaller font size */
+  display: inline-flex;
+  align-items: center;
+  margin-right: 8px;
+}
+
+.modify-post-button i {
+  margin-right: 6px;
+}
+
+.modify-post-button:hover {
+  background-color: #1e4d2b; /* Vert foncé */
+}
+
+.delete-post-button {
+  background-color: red;
+  color: white;
+  border: none;
+  padding: 6px 12px; /* Smaller padding */
+  border-radius: 4px; /* Smaller radius */
+  cursor: pointer;
+  font-size: 14px; /* Smaller font size */
+  display: inline-flex;
+  align-items: center;
+}
+
+.delete-post-button i {
+  margin-right: 6px;
+}
+
+.delete-post-button:hover {
+  background-color: darkred;
+}
 
 /* Contenu du post */
 .post-content {
@@ -44,15 +84,19 @@
 .post-author {
   font-size: 1rem;
   font-weight: 600;
-  color: #2e7d32; /* Vert professionnel */
+  color: #000000; /* Vert professionnel */
 }
 
 /* Date du post */
 time {
   display: block;
   font-size: 0.9rem;
-  color: #66bb6a; /* Vert clair */
+  color: #757575; /* Vert clair */
   margin-top: 10px;
+}
+
+time i {
+  margin-right: 5px;
 }
 
 /* Section des likes du post */
@@ -66,14 +110,14 @@ time {
 .like-icon, .likes-button {
   background-color: #2e7d32; /* Vert moyen */
   color: white;
-  padding: 8px 15px;
+  padding: 6px 12px; /* Smaller padding */
   border: none;
-  border-radius: 5px;
-  font-size: 1rem;
+  border-radius: 4px; /* Smaller radius */
+  font-size: 14px; /* Smaller font size */
   cursor: pointer;
   display: flex;
   align-items: center;
-  margin-right: 15px;
+  margin-right: 12px;
 }
 
 .like-icon i, .likes-button i {
@@ -92,7 +136,7 @@ time {
 .comments-title {
   font-size: 1.5rem;
   font-weight: bold;
-  color: #1e4d2b;
+  color: #000000;
 }
 
 .post-comment {
@@ -122,9 +166,9 @@ time {
 
 textarea {
   width: 100%;
-  padding: 10px;
+  padding: 8px; /* Smaller padding */
   border: 1px solid #81c784; /* Bord vert clair */
-  border-radius: 5px;
+  border-radius: 4px; /* Smaller radius */
   font-size: 1rem;
   color: #2e2e2e;
   background-color: #ffffff;
@@ -132,12 +176,12 @@ textarea {
 
 button {
   margin-top: 10px;
-  padding: 10px 20px;
+  padding: 6px 12px; /* Smaller padding */
   background-color: #2e7d32;
   color: white;
   border: none;
-  border-radius: 5px;
-  font-size: 1rem;
+  border-radius: 4px; /* Smaller radius */
+  font-size: 14px; /* Smaller font size */
   cursor: pointer;
 }
 
@@ -162,17 +206,8 @@ button:hover {
   background-color: #ffffff;
   padding: 20px;
   border-radius: 8px;
-  width: 300px;
+  width: 600px;
   text-align: center;
-}
-
-.likes-modal-close {
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  font-size: 20px;
-  cursor: pointer;
-  color: #2e7d32;
 }
 
 .likes-list {
@@ -182,7 +217,7 @@ button:hover {
 
 .likes-list-item {
   margin: 10px 0;
-  font-size: 1.1rem;
+  font-size: 2.1rem;
   color: #2e2e2e;
 }
 
@@ -197,9 +232,9 @@ button:hover {
   background-color: #2e7d32;
   color: white;
   padding: 5px 10px;
-  font-size: 14px;
+  font-size: 14px; /* Smaller font size */
   border: none;
-  border-radius: 5px;
+  border-radius: 4px; /* Smaller radius */
   cursor: pointer;
 }
 
@@ -211,4 +246,19 @@ button:hover {
   margin-left: 10px;
   font-size: 14px;
   color: #1e4d2b;
+}
+  
+/* Bouton pour fermer la popup des likes */
+.likes-modal-close {
+  position: absolute;
+  top: 280px;
+  right: 630px;
+  font-size: 24px; /* Increase size for better visibility */
+  cursor: pointer;
+  color: #ff0101; /* Color for the close button */
+  z-index: 10; /* Ensure it's above modal content */
+}
+
+.likes-modal-close:hover {
+  color: #1e4d2b; /* Change color on hover for better UX */
 }

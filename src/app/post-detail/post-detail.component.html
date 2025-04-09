@@ -1,5 +1,7 @@
 <div *ngIf="post" class="post-detail-container">
   <!-- Post Content -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+
   <div class="post-header">
     <h2 class="post-title">{{ post.title }}</h2>
     <img [src]="'http://localhost:8082/posts/images/' + post.imageUrl" alt="Post Image" class="post-image" />
@@ -7,18 +9,33 @@
     <p class="post-author"><strong>Posted By :</strong> {{ authorName || 'Utilisateur inconnu' }} </p>
   </div>
   <time [attr.datetime]="post.createdAt">
-    <i class="fas fa-calendar-alt mr-2"></i> Posted At : {{ post.createdAt | date:'EEE, MMM d, y' }}
+    <i class="fas fa-calendar-alt mr-2"></i> Posted At : {{ post.createdAt | date:'EEE, MMM d, y' }} ,
+Category : {{ formatCategory(post.type) }}
   </time>
+
+  
+
+  <!-- Modify Post Button (Blue) with Font Awesome Icon -->
+  <button class="modify-post-button" [routerLink]="['/modify-post', post.id]">
+    <i class="fas fa-edit"></i> Modify Post
+  </button>
+
+  <!-- Delete Post Button (Red) with Font Awesome Icon -->
+  <button class="delete-post-button" (click)="deletePost(post.id)">
+    <i class="fas fa-trash-alt"></i> Delete Post
+  </button>
 
   <!-- Likes Section for Post -->
   <div class="likes-section">
     <button class="like-icon" (click)="likePost(post.id)">
-      <i class="fa fa-thumbs-up"> Like</i>
+      <i class="fas fa-thumbs-up"></i> Like
     </button>
     
-    <button class="likes-button" (click)="toggleLikesPopup()">
-      <i class="fa fa-heart"></i> {{ post.likes }} Like{{ post.likes > 1 ? 's' : '' }}
+    
+    <button class="likes-button" (click)="toggleLikesPopup()" title="Click to see who liked this post">
+      <i class="fa fa-heart"></i> {{ post.likes }} Like{{ post.likes > 1 ? 's' : '' }} - See Who Liked
     </button>
+    
   </div>
 
   <!-- Comments Section -->
@@ -48,18 +65,23 @@
     </div>
   </div>
 
-  <!-- Likes Popup Modal for Post -->
-  <div class="likes-modal" *ngIf="showLikesPopup">
-    <div class="likes-modal-content">
+ <!-- Likes Popup Modal for Post -->
+<div class="likes-modal" *ngIf="showLikesPopup">
+  <div class="likes-modal-content">
+    <!-- Close Button -->
+    <h3 class="likes-modal-title">
+      <i class="fa fa-users"></i> Liked By :
+    </h3>
+    <ul class="likes-list">
       <span class="likes-modal-close" (click)="toggleLikesPopup()">×</span>
-      <h3 class="likes-modal-title">
-        <i class="fa fa-users"></i> Liked By :
-      </h3>
-      <ul class="likes-list">
-        <li *ngFor="let userId of post.likedBy" class="likes-list-item">
-          <i class="fa fa-user"></i> {{ userNames.get(userId) || 'Loading...' }}
-        </li>
-      </ul>
-    </div>
+ 
+      <li *ngFor="let userId of post.likedBy" class="likes-list-item">
+        <i class="fa fa-user"></i> {{ userNames.get(userId) || 'Loading...' }}
+
+      </li>
+    </ul>
   </div>
+</div>
+
+
 </div>

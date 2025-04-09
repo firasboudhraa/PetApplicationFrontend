@@ -21,6 +21,9 @@ export class PostsService {
   }
   
   
+  deletePost(postId: number): Observable<void> {
+    return this.http.delete<void>(`${this.apiUrl}/${postId}`);
+  }
   // Get a specific post by ID
   getPostById(id: number): Observable<Post> {
     return this.http.get<Post>(`${this.apiUrl}/${id}`);
@@ -35,5 +38,9 @@ export class PostsService {
   // addPost(postData: any, userId: number): Observable<Post> {
   //   return this.http.post<Post>(`${this.apiUrl}/${userId}`, postData);
   // }
+  
+  updatePost(postId: number, postData: FormData, userId: number): Observable<Post> {
+    return this.http.put<Post>(`${this.apiUrl}/${userId}/${postId}`, postData);
+  }
   
 }
