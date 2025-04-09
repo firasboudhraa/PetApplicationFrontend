@@ -18,6 +18,9 @@ import { FullCalendarModule } from '@fullcalendar/angular';
 import { AppointmentComponent } from './Components/FrontOffice/PetService/appointment/appointment.component';
 import { PetServiceService } from './Services/pet-service.service';
 import { AvailableSlotsComponent } from './Components/FrontOffice/PetService/available-slots/available-slots.component';
+import { DashboardComponent } from './Components/BackOffice/dashboard/dashboard.component';
+import { UsersComponent } from './Components/BackOffice/dashboard/users/users.component';
+import { SidebarComponent } from './Components/BackOffice/sidebar/sidebar.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -31,6 +34,9 @@ import { AvailableSlotsComponent } from './Components/FrontOffice/PetService/ava
     DetailServiceComponent,
     AppointmentComponent,
     AvailableSlotsComponent,
+    DashboardComponent,
+    UsersComponent,
+    SidebarComponent,
   ],
   imports: [
     BrowserModule,

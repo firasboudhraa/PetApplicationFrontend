@@ -6,6 +6,8 @@ import { AddServiceComponent } from './Components/FrontOffice/PetService/add-ser
 import { DetailServiceComponent } from './Components/FrontOffice/PetService/detail-service/detail-service.component';
 import { AppointmentComponent } from './Components/FrontOffice/PetService/appointment/appointment.component';
 import { AvailableSlotsComponent } from './Components/FrontOffice/PetService/available-slots/available-slots.component';
+import { DashboardComponent } from './Components/BackOffice/dashboard/dashboard.component';
+import { UsersComponent } from './Components/BackOffice/dashboard/users/users.component';
 
 const routes: Routes = [
   { path: 'home', component: HomeComponent },
@@ -14,6 +16,11 @@ const routes: Routes = [
   {path:'full-calendar/:id',component:AvailableSlotsComponent},
   {path:'serviceDetail/:id', component:DetailServiceComponent},
   {path:'appointment/:id',component:AppointmentComponent},
+  {path:'dashboard',component:DashboardComponent,
+    children:[
+     {path:'users',component:UsersComponent},
+    ]
+  },
   {path:'',redirectTo:'home',pathMatch:'full'},
 
 ];
