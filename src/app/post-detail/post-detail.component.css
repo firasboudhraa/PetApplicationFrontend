@@ -21,17 +21,20 @@
   color: #1e4d2b; /* Vert foncé */
 }
 
-.postcard__img {
-  width: 40%; /* Réduction de la taille à 60% du conteneur */
-  max-width: 600px; /* Taille maximale de l’image */
+/* Image du post */
+/* Image du post */
+.post-image {
+  max-width: 60%;
   border-radius: 8px;
   margin-top: 10px;
   display: block;
   margin-left: auto;
   margin-right: auto;
+  object-fit: cover; /* Ensures the image fits nicely without distortion */
 }
 
 
+/* Contenu du post */
 .post-content {
   font-size: 1.1rem;
   margin: 10px 0;

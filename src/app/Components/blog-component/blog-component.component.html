@@ -76,7 +76,7 @@
       <div class="container py-4">
         <article *ngFor="let post of filteredPosts; let i = index" class="postcard dark" [ngClass]="getCardColor(i)">
           <a class="postcard__img_link" [routerLink]="['/post', post.id]">
-            <img class="postcard__img" [src]="post.imageUrl" alt="Post Image">
+            <img [src]="'http://localhost:8082/posts/images/' + post.imageUrl" alt="Post Image" class="post-image" />
           </a>
           <div class="postcard__text">
             <h1 class="postcard__title"><a [routerLink]="['/post', post.id]">{{ post.title }}</a></h1>

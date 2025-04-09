@@ -127,7 +127,7 @@ export class PostDetailComponent implements OnInit {
         },
         (error) => console.error('Erreur lors de l\'ajout du commentaire:', error)
       );
-    }
+    } 
   }
 
   /**

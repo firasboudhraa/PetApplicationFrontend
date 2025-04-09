@@ -2,7 +2,7 @@
   <!-- Post Content -->
   <div class="post-header">
     <h2 class="post-title">{{ post.title }}</h2>
-    <img class="postcard__img" [src]="post.imageUrl" alt="Post Image">
+    <img [src]="'http://localhost:8082/posts/images/' + post.imageUrl" alt="Post Image" class="post-image" />
     <p class="post-content">{{ post.content }}</p>
     <p class="post-author"><strong>Posted By :</strong> {{ authorName || 'Utilisateur inconnu' }} </p>
   </div>

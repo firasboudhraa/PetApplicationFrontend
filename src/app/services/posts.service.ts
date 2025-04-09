@@ -16,7 +16,11 @@ export class PostsService {
   getPosts(): Observable<Post[]> {
     return this.http.get<Post[]>(this.apiUrl);
   }
-
+  addPost(postData: any, userId: number): Observable<Post> {
+    return this.http.post<Post>(`${this.apiUrl}/${userId}`, postData);
+  }
+  
+  
   // Get a specific post by ID
   getPostById(id: number): Observable<Post> {
     return this.http.get<Post>(`${this.apiUrl}/${id}`);
@@ -28,8 +32,8 @@ export class PostsService {
   
   
 
-  addPost(postData: any, userId: number): Observable<Post> {
-    return this.http.post<Post>(`${this.apiUrl}/${userId}`, postData);
-  }
+  // addPost(postData: any, userId: number): Observable<Post> {
+  //   return this.http.post<Post>(`${this.apiUrl}/${userId}`, postData);
+  // }
   
 }

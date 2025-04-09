@@ -10,45 +10,78 @@ import { Router } from '@angular/router';
 })
 export class AddPostComponent {
   postForm: FormGroup;
+  selectedFile: File | null = null;
+  imageError: string | null = null;
+  isSubmitting: boolean = false;
+  errorMessage: string = '';
 
-  types = [  // Renamed from 'categories' to 'types'
+  userId: number = 2; // Replace this with dynamic user ID (e.g., from JWT)
+
+  types = [
     { label: 'Success Story', value: 'success_stories' },
     { label: 'Lost & Found', value: 'lost_found' },
     { label: 'Help & Advice', value: 'help_advice' }
   ];
 
-  constructor(private fb: FormBuilder, private postService: PostsService, private router: Router) {
+  constructor(
+    private fb: FormBuilder,
+    private postService: PostsService,
+    private router: Router
+  ) {
     this.postForm = this.fb.group({
       title: ['', Validators.required],
       content: ['', Validators.required],
-      type: ['', Validators.required]  // Changed 'category' to 'type'
+      type: ['', Validators.required],
+      image: [null, Validators.required] // Ensure image is required
     });
   }
 
-  onSubmit(): void {
-    if (this.postForm.valid) {
-      const userId = 2; // Replace with dynamic userId from JWT later
-      const postType = this.mapTypeToEnum(this.postForm.value.type);  // Changed to 'type'
-  
-      // Log to check if the type is mapped correctly
-      console.log('Mapped Type:', postType);
-  
-      // Replace the category with the corresponding type value
-      const postData = {
-        ...this.postForm.value,
-        type: postType  // Ensure 'type' is passed correctly
-      };
-  
-      console.log('Form Submitted:', postData); // Log the cleaned-up form data
-  
-      this.postService.addPost(postData, userId).subscribe(() => {
-        this.router.navigate(['/blog']);
-      });
+  onFileSelected(event: Event): void {
+    const input = event.target as HTMLInputElement;
+
+    if (input.files && input.files[0]) {
+      const file = input.files[0];
+
+      if (!file.type.startsWith('image/')) {
+        this.imageError = 'Seules les images sont autorisées.';
+        this.selectedFile = null;
+        this.postForm.get('image')?.setValue(null);
+      } else {
+        this.imageError = null;
+        this.selectedFile = file;
+        this.postForm.get('image')?.setValue(file);
+      }
     }
   }
-  
 
-  // Helper function to map the type string to the PostTypeEnum
+  onSubmit(): void {
+    if (this.postForm.valid && this.selectedFile) {
+      this.isSubmitting = true;
+
+      // Ideally, the user ID should be dynamically fetched (e.g., from JWT)
+      const userId = this.userId;
+
+      const formData = new FormData();
+      formData.append('title', this.postForm.get('title')?.value);
+      formData.append('content', this.postForm.get('content')?.value);
+      formData.append('type', this.mapTypeToEnum(this.postForm.get('type')?.value));
+      formData.append('image', this.selectedFile);
+
+      this.postService.addPost(formData, userId).subscribe(
+        () => {
+          this.isSubmitting = false;
+          this.router.navigate(['/blog']);
+          this.postForm.reset(); // Optionally reset form after successful post
+        },
+        (error) => {
+          this.isSubmitting = false;
+          this.errorMessage = 'Erreur lors de la publication du post. Veuillez réessayer.';
+          console.error('Error uploading post:', error);
+        }
+      );
+    }
+  }
+
   mapTypeToEnum(type: string): string {
     switch (type) {
       case 'success_stories':

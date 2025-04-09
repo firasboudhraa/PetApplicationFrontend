@@ -505,3 +505,13 @@ body.light {
   .pagination__prev, .pagination__next {
     font-size: 1.4rem;
   }
+
+
+  .post-image {
+    max-width: 50%;
+    height: auto;
+    border-radius: 8px;
+    margin-top: 10px;
+    
+  }
+  
