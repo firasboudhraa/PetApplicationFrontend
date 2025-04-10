@@ -21,6 +21,7 @@ import { AvailableSlotsComponent } from './Components/FrontOffice/PetService/ava
 import { DashboardComponent } from './Components/BackOffice/dashboard/dashboard.component';
 import { UsersComponent } from './Components/BackOffice/dashboard/users/users.component';
 import { SidebarComponent } from './Components/BackOffice/sidebar/sidebar.component';
+import { HeaderComponent } from './Components/BackOffice/header/header.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -37,6 +38,10 @@ import { SidebarComponent } from './Components/BackOffice/sidebar/sidebar.compon
     DashboardComponent,
     UsersComponent,
     SidebarComponent,
+    DashboardComponent,
+    UsersComponent,
+    SidebarComponent,
+    HeaderComponent
   ],
   imports: [
     BrowserModule,
@@ -49,6 +54,7 @@ import { SidebarComponent } from './Components/BackOffice/sidebar/sidebar.compon
     BrowserAnimationsModule,
     CarouselModule,
     NgxPaginationModule,
+
   ],
 
   providers: [PetServiceService],
