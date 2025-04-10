@@ -23,6 +23,7 @@ import { UsersComponent } from './Components/BackOffice/dashboard/users/users.co
 import { SidebarComponent } from './Components/BackOffice/sidebar/sidebar.component';
 import { HeaderComponent } from './Components/BackOffice/header/header.component';
 import { ServicesComponent } from './Components/BackOffice/dashboard/services/services.component';
+import { ModifyServiceComponent } from './Components/FrontOffice/PetService/modify-service/modify-service.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -43,7 +44,8 @@ import { ServicesComponent } from './Components/BackOffice/dashboard/services/se
     UsersComponent,
     SidebarComponent,
     HeaderComponent,
-    ServicesComponent
+    ServicesComponent,
+    ModifyServiceComponent
   ],
   imports: [
     BrowserModule,

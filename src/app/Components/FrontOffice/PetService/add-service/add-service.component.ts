@@ -12,7 +12,7 @@ export class AddServiceComponent {
   serviceForm!: FormGroup;
   loading = false;  
 
-  constructor(private fb: FormBuilder, private ps:PetServiceService , private router:Router) { 
+  constructor( private ps:PetServiceService , private router:Router) { 
     this.serviceForm = new FormGroup({
       name: new FormControl('', Validators.required),
       description:  new FormControl ('', Validators.required),
