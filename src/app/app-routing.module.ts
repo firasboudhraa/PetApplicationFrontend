@@ -8,6 +8,7 @@ import { AppointmentComponent } from './Components/FrontOffice/PetService/appoin
 import { AvailableSlotsComponent } from './Components/FrontOffice/PetService/available-slots/available-slots.component';
 import { DashboardComponent } from './Components/BackOffice/dashboard/dashboard.component';
 import { UsersComponent } from './Components/BackOffice/dashboard/users/users.component';
+import { ServicesComponent } from './Components/BackOffice/dashboard/services/services.component';
 
 const routes: Routes = [
   { path: 'home', component: HomeComponent },
@@ -19,6 +20,7 @@ const routes: Routes = [
   {path:'dashboard',component:DashboardComponent,
     children:[
      {path:'users',component:UsersComponent},
+     {path:'services',component:ServicesComponent},
     ]
   },
   {path:'',redirectTo:'home',pathMatch:'full'},

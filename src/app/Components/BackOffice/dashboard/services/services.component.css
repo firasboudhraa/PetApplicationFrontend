@@ -1,0 +1,173 @@
+:root {
+    --primary: #4caf50;
+    --dark: #1e1e2f;
+    --light: #f4f4f9;
+    --accent: #ffcc00;
+  }
+  
+  body {
+    font-family: 'Segoe UI', sans-serif;
+  }
+  
+  .page-center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column; /* Optional, if not already set */
+    min-height: 80vh;
+}   
+  
+  .search-bar input {
+    padding: 12px 16px;
+    width: 250px;
+    border: 2px solid var(--primary);
+    border-radius: 10px;
+    font-size: 16px;
+    outline: none;
+  }
+  
+  .page-size-selector {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-weight: 500;
+  }
+  
+  .page-size-selector select {
+    padding: 8px;
+    font-size: 15px;
+    border-radius: 8px;
+    border: 1px solid #aaa;
+  }
+  
+  .services-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 25px;
+    padding: 20px;
+    margin-left: 100px;
+  }
+  
+  .service-card {
+    background-color: var(--dark);
+    color: var(--light);
+    border-radius: 16px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
+    width: 320px;
+    padding: 25px;
+    transition: transform 0.3s ease, box-shadow 0.3s;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+  
+  .service-card:hover {
+    transform: translateY(-5px) scale(1.02);
+    box-shadow: 0 12px 24px rgba(0, 255, 0, 0.2);
+  }
+  
+  .icon-container {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+  }
+  
+  .icon {
+    font-size: 40px;
+    color: var(--light);
+    background: var(--primary);
+    padding: 15px;
+    border-radius: 50%;
+  }
+  
+  .text-content .title {
+    font-size: 20px;
+    margin-bottom: 15px;
+    font-weight: 600;
+    color: var(--accent);
+    text-align: center;
+  }
+  
+  .info p {
+    font-size: 15px;
+    margin: 6px 0;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  
+  .details-btn {
+    margin-top: 20px;
+    background: linear-gradient(to right, #00ff8c, #32cd32);
+    color: black;
+    border: none;
+    padding: 10px 18px;
+    font-weight: bold;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: 0.3s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+  }
+  
+  .details-btn:hover {
+    background: linear-gradient(to right, #32cd32, #00ff8c);
+    transform: scale(1.05);
+  }
+  
+  .pagination {
+    display: flex;
+    justify-content: center;
+    margin: 30px 0;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+  
+  .pagination-button {
+    background-color: var(--dark);
+    border: 2px solid var(--primary);
+    color: var(--light);
+    padding: 10px 16px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-weight: bold;
+  }
+  
+  .pagination-button:hover {
+    background-color: var(--primary);
+    color: black;
+  }
+  
+  .pagination-button.active {
+    background-color: var(--accent);
+    color: black;
+  }
+  
+  .fab {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    width: 60px;
+    height: 60px;
+    background: linear-gradient(135deg, var(--primary), #2ecc71);
+    color: white;
+    border: none;
+    border-radius: 50%;
+    font-size: 22px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    cursor: pointer;
+    transition: transform 0.3s ease;
+  }
+  
+  .fab:hover {
+    transform: scale(1.1);
+    background: linear-gradient(135deg, #2ecc71, var(--primary));
+  }
+  

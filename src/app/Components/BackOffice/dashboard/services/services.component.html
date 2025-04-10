@@ -1,0 +1,33 @@
+<div class="page-center">
+<div class="services-container">
+    <div *ngFor="let service of services.slice((currentPage - 1) * pageSize, currentPage * pageSize)" class="service-card">
+      <div class="icon-container">
+        <div class="icon"><i class="fa fa-cogs"></i></div>
+      </div>
+  
+      <div class="text-content">
+        <h3 class="title">{{ service.name }}</h3>
+  
+        <div class="info">
+          <p><i class="fa fa-dollar-sign"></i> <strong>Price:</strong> {{ service.price | currency }}</p>
+          <p><i class="fa fa-clock"></i> <strong>Duration:</strong> {{ service.durationInMinutes }} min</p>
+          <p *ngIf="service.address"><i class="fa fa-map-marker-alt"></i> <strong>Location:</strong> {{ service.address }}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+  
+  <div class="pagination">
+    <button
+      *ngFor="let page of getPagesArray()"
+      class="pagination-button"
+      [ngClass]="{ 'active': currentPage === page }"
+      (click)="onPageChange(page)"
+    >
+      {{ page }}
+    </button>
+  </div>
+
+
+  

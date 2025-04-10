@@ -22,6 +22,7 @@ import { DashboardComponent } from './Components/BackOffice/dashboard/dashboard.
 import { UsersComponent } from './Components/BackOffice/dashboard/users/users.component';
 import { SidebarComponent } from './Components/BackOffice/sidebar/sidebar.component';
 import { HeaderComponent } from './Components/BackOffice/header/header.component';
+import { ServicesComponent } from './Components/BackOffice/dashboard/services/services.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -41,7 +42,8 @@ import { HeaderComponent } from './Components/BackOffice/header/header.component
     DashboardComponent,
     UsersComponent,
     SidebarComponent,
-    HeaderComponent
+    HeaderComponent,
+    ServicesComponent
   ],
   imports: [
     BrowserModule,
