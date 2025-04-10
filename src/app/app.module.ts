@@ -12,6 +12,10 @@ import { HomeComponent } from './Components/FrontOffice/home/home.component';
 import { ServiceComponent } from './Components/FrontOffice/service/service.component';
 import { AddServiceComponent } from './Components/FrontOffice/add-service/add-service.component';
 import { DetailServiceComponent } from './Components/FrontOffice/detail-service/detail-service.component';
+import { DashboardComponent } from './Components/BackOffice/dashboard/dashboard.component';
+import { UsersComponent } from './Components/BackOffice/dashboard/users/users.component';
+import { SidebarComponent } from './Components/BackOffice/sidebar/sidebar.component';
+import { HeaderComponent } from './Components/BackOffice/header/header.component';
 import { LoginComponent } from './login/login.component';
 import { UserProfileComponent } from './user-profile/user-profile.component';
 @NgModule({
@@ -25,6 +29,10 @@ import { UserProfileComponent } from './user-profile/user-profile.component';
     ServiceComponent,
     AddServiceComponent,
     DetailServiceComponent,
+    DashboardComponent,
+    UsersComponent,
+    SidebarComponent,
+    HeaderComponent
     LoginComponent,
     UserProfileComponent
     
@@ -36,6 +44,7 @@ import { UserProfileComponent } from './user-profile/user-profile.component';
     HttpClientModule,
     FormsModule,
     ReactiveFormsModule,
+
   ],
   providers: [],
   bootstrap: [AppComponent]
