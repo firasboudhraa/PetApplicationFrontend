@@ -87,7 +87,7 @@
                   <td>{{ request.time }}</td>
                   <td>
                     <!-- FAB Button -->
-                    <button mat-fab color="primary" (click)="toggleOptions(request.id); toggleMenu(request.id)" matTooltip="Actions" matTooltipPosition="right">
+                    <button mat-fab color="primary" (click)=" toggleMenu(request.id)" matTooltip="Actions" matTooltipPosition="right">
                       <mat-icon>add</mat-icon>
                     </button>
 
@@ -104,7 +104,7 @@
                       </button>
 
                       <!-- Confirm Button (Green) -->
-                      <button mat-mini-fab class="top" color="primary" matTooltip="Confirm" matTooltipPosition="right" style="background-color: #28a745; color: #fff;">
+                      <button mat-mini-fab class="top" color="primary" (click)="confirmRequest(request.id)" matTooltip="Confirm" matTooltipPosition="right" style="background-color: #28a745; color: #fff;">
                         <mat-icon>check</mat-icon>
                       </button>
                     </div>
@@ -155,12 +155,11 @@
                   <td>{{ request.date }}</td>
                   <td>{{ request.time }}</td>
                   <td>
-                    <button class="btn btn-success">Confirm</button>
                     <button
                       class="btn btn-danger"
                       (click)="deleteRequest(request.id)"
                     >
-                      Reject
+                      Delete
                     </button>
                   </td>
                 </tr>

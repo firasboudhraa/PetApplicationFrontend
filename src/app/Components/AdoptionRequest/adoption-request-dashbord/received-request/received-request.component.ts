@@ -17,9 +17,6 @@ pendingRequests: any[] = [];
   private imageApiUrl = 'http://localhost:8222/api/v1/pet/images';
   requestId = 0;
 
-  toggleMenu(requestId: number) {
-    this.requestId = this.requestId === requestId ? 0 : requestId;
-  }
   setActiveTab(tab: string): void {
     this.activeTab = tab;
   }  
@@ -39,6 +36,28 @@ pendingRequests: any[] = [];
   getImageUrl(filename: string): string {
     return `${this.imageApiUrl}/${filename}`;
   }
+  confirmRequest(requestId: number): void {
+    this.adoptionRequestService.confirmAdoptionRequest(requestId).subscribe(() => {
+      Swal.fire({
+        icon: 'success',
+        title: 'Request confirmed',
+        text: '✅ The Request was confirmed successfully!',
+        position: 'top',
+        timer: 3000,
+        toast: true
+      });
+      this.fetchAdoptionRequests(); 
+    }, error => {
+      Swal.fire({
+        icon: 'error',
+        title: 'Error',
+        text: '❌ Failed to confirm request.',
+        position: 'top',
+        timer: 3000,
+        toast: true
+      });
+    });
+  }
   deleteRequest(requestId: number): void {
     this.adoptionRequestService.deleteAdoptionRequest(requestId).subscribe(() => {
       Swal.fire({
@@ -50,7 +69,7 @@ pendingRequests: any[] = [];
         showConfirmButton: false,
         toast: true
       });
-      this.fetchAdoptionRequests(); // Refresh the requests after deletion
+      this.fetchAdoptionRequests(); 
     }, error => {
           Swal.fire({
             icon: 'error',
@@ -63,16 +82,10 @@ pendingRequests: any[] = [];
           });
         });
   }
-  
-  showOptions: number | null = null;  // Store the ID of the request whose options are visible
 
-  toggleOptions(requestId: number) {
-    // If the clicked request is the one that already has visible options, hide them
-    if (this.showOptions === requestId) {
-      this.showOptions = null;
-    } else {
-      this.showOptions = requestId;
-    }
+  
+  toggleMenu(requestId: number) {
+    this.requestId = this.requestId === requestId ? 0 : requestId;
   }
   fetchAdoptionRequests() {
     this.adoptionRequestService.getReceivedAdoptionRequest(this.userId).subscribe(async requests => {

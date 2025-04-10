@@ -23,5 +23,10 @@ export class AdoptionRequestService {
   }
   deleteAdoptionRequest(id: number): Observable<any> {
     return this.http.delete(`${this.apiUrl}/${id}`);
+  
+  }
+  confirmAdoptionRequest(id: number): Observable<any> {
+    return this.http.put(`${this.apiUrl}/confirm/${id}`, {});
   }
 }
+
