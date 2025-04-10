@@ -151,4 +151,7 @@ export class BlogComponentComponent implements OnInit {
       this.filteredPosts = this.paginatePosts();
     }
   }
+
+  scrollToTop(): void { 
+    window.scrollTo({ top: 0, behavior: "smooth" });}
 }

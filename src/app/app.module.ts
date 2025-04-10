@@ -3,18 +3,21 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { AboutComponentComponent } from './Components/about-component/about-component.component';
-import { BlogComponentComponent } from './Components/blog-component/blog-component.component';
+import { AboutComponentComponent } from './Components/FrontOffice/about-component/about-component.component';
+import { BlogComponentComponent } from './Components/FrontOffice/blog-component/blog-component.component';
 import { HomeComponentComponent } from './Components/home-component/home-component.component';
 import { VetComponentComponent } from './Components/vet-component/vet-component.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import {HttpClientModule} from '@angular/common/http';
-import { FooterComponentComponent } from './Components/footer-component/footer-component.component';
+import { FooterComponentComponent } from './Components/FrontOffice/footer-component/footer-component.component';
 import { NavbarComponent } from './Components/navbar/navbar.component';
-import { ContactInfoComponent } from './Components/contact-info/contact-info.component';
-import { PostDetailComponent } from './post-detail/post-detail.component';
-import { AddPostComponent } from './add-post/add-post.component';
-import { ModifyPostComponent } from './modify-post/modify-post.component';
+import { ContactInfoComponent } from './Components/FrontOffice/contact-info/contact-info.component';
+import { PostDetailComponent } from './Components/FrontOffice/post-detail/post-detail.component';
+import { AddPostComponent } from './Components/FrontOffice/add-post/add-post.component';
+import { ModifyPostComponent } from './Components/FrontOffice/modify-post/modify-post.component';
+import { DashboardComponent } from './Components/BackOffice/dashboard/dashboard.component';
+import { HeaderComponent } from './Components/BackOffice/header/header.component';
+import { SidebarComponent } from './Components/BackOffice/sidebar/sidebar.component';
 
 @NgModule({
   declarations: [
@@ -28,7 +31,10 @@ import { ModifyPostComponent } from './modify-post/modify-post.component';
     ContactInfoComponent,
     PostDetailComponent,
     AddPostComponent,
-    ModifyPostComponent
+    ModifyPostComponent,
+    DashboardComponent,
+    HeaderComponent,
+    SidebarComponent
   ],
   imports: [
     BrowserModule,
