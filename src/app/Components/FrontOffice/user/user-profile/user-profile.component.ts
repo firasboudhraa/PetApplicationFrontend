@@ -1,4 +1,3 @@
-// user-profile.component.ts
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from '../auth/auth.service';
@@ -16,7 +15,7 @@ export class UserProfileComponent implements OnInit {
     firstName: '',
     lastName: '',
     email: '',
-    roles: []
+    roles: [],  // Role is a single string based on your registration JSON
   };
 
   isLoading = true;
@@ -57,27 +56,56 @@ export class UserProfileComponent implements OnInit {
   }
 
   getRolesAsString(): string {
-    return this.user.roles
-      .map(role => this.formatRoleName(role.name))
-      .join(', ');
+    if (!this.user.roles) return 'No roles assigned';
+    
+    // Handle string case
+    if (typeof this.user.roles === 'string') {
+      return this.formatRoleName(this.user.roles);
+    }
+    
+    // Handle array case
+    if (Array.isArray(this.user.roles)) {
+      // Handle both Role objects and strings
+      return this.user.roles
+        .map(role => typeof role === 'string' ? role : role.name)
+        .map(role => this.formatRoleName(role))
+        .join(', ');
+    }
+    
+    return 'Unknown role format';
   }
 
-  private formatRoleName(role: string): string {
+private formatRoleName(role: string): string {
     return role.toLowerCase()
-      .replace(/_/g, ' ')
-      .replace(/\b\w/g, l => l.toUpperCase());
-  }
+        .replace(/_/g, ' ')  // Replace underscores with spaces
+        .replace(/\b\w/g, (l) => l.toUpperCase());  // Capitalize each word
+}
+
 
   logout() {
     this.authService.logout().subscribe({
       next: () => {
-        this.router.navigate(['/home']);
+        this.authService.clearToken();  // Ensure token is cleared
+        this.router.navigate(['/login']);  // Redirect user to login page after logout
       },
       error: (err) => {
         console.error('Logout failed:', err);
-        this.authService.clearToken(); // Force clear token if logout failed
-        this.router.navigate(['/home']);
+        this.authService.clearToken();  // Force clear token if logout failed
+        this.router.navigate(['/login']);  // Redirect on error as well
       }
     });
   }
+
+  // Edit profile if the logged-in user is the same as the profile user
+  editProfile() {
+    const tokenData = this.authService.getDecodedToken();
+    console.log('Token:', tokenData, 'User:', this.user); // Debug log
+  
+    if (tokenData && tokenData.userId === this.user.id) {
+      this.router.navigate(['/editProfile', this.user.id]);
+    } else {
+      this.errorMessage = 'You can only edit your own profile';
+    }
+  }
+  
 }

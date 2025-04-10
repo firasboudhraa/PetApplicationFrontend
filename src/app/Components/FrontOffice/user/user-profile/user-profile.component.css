@@ -1,10 +1,112 @@
-.user-pic{
+
+.user-profile {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    max-width: 600px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.loading-spinner {
+    text-align: center;
+    font-size: 1.5rem;
+}
+
+.alert {
+    text-align: center;
+    max-width: 100%;
+    margin-bottom: 20px;
+}
+
+.profile-details {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 20px;
+    padding: 15px;
+    background-color: #c4f6d5;
+    border-radius: 8px;
+    width: 100%;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.user-pic {
     width: 150px;
     height: 150px;
     border-radius: 50%;
     object-fit: cover;
     border: 3px solid #4CAF50;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    margin: 20px auto;
-    display: block;
+    margin-bottom: 15px;
+}
+
+.user-info {
+    text-align: center;
+    margin-top: 15px;
+    width: 100%;
+    color: #122d13;
+}
+
+.user-info p {
+    font-size: 1rem;
+    margin: 8px 0;
+}
+
+.profile-actions {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+    gap: 10px;
+    width: 100%;
+}
+
+.profile-actions button {
+    padding: 10px 20px;
+    font-size: 1rem;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.3s;
+}
+
+.profile-actions button:hover {
+    transform: translateY(-2px);
+}
+
+.profile-actions .btn-primary {
+    background-color: #007bff;
+    color: white;
+    border: none;
+}
+
+.profile-actions .btn-primary:hover {
+    background-color: #0056b3;
+}
+
+.profile-actions .btn-danger {
+    background-color: #dc3545;
+    color: white;
+    border: none;
+}
+
+.profile-actions .btn-danger:hover {
+    background-color: #c82333;
+}
+
+.profile-actions .btn-secondary {
+    background-color: #6c757d;
+    color: white;
+    border: none;
+}
+
+.profile-actions .btn-secondary:hover {
+    background-color: #5a6268;
+}
+
+h1 {
+    font-size: 2.5rem;
+    font-weight: bold;
+    margin-bottom: 20px;
 }

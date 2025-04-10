@@ -1,0 +1,78 @@
+<div class="edit-profile">
+    <div *ngIf="isLoading" class="loading-spinner">
+      <p>Loading...</p>
+    </div>
+  
+    <div *ngIf="!isLoading">
+      <h1>Edit Profile</h1>
+  
+      <div *ngIf="errorMessage" class="alert alert-danger">
+        {{ errorMessage }}
+      </div>
+  
+      <div *ngIf="successMessage" class="alert alert-success">
+        {{ successMessage }}
+      </div>
+  
+      <form (ngSubmit)="updateProfile()" #profileForm="ngForm">
+        <div class="form-group">
+          <label for="firstName">First Name</label>
+          <input
+            type="text"
+            id="firstName"
+            class="form-control"
+            [(ngModel)]="user.firstName"
+            name="firstName"
+            required
+          />
+        </div>
+  
+        <div class="form-group">
+          <label for="lastName">Last Name</label>
+          <input
+            type="text"
+            id="lastName"
+            class="form-control"
+            [(ngModel)]="user.lastName"
+            name="lastName"
+            required
+          />
+        </div>
+  
+        <div class="form-group">
+          <label for="email">Email</label>
+          <input
+            type="email"
+            id="email"
+            class="form-control"
+            [(ngModel)]="user.email"
+            name="email"
+            required
+          />
+        </div>
+  
+        <div class="form-group">
+            <label for="roles">Roles</label>
+            <select
+              id="roles"
+              class="form-control"
+              [(ngModel)]="selectedRole"
+              name="roles"
+              required
+            >
+              <option *ngFor="let role of availableRoles" [value]="role">
+                {{ role }}
+              </option>
+            </select>
+          </div>
+          
+          
+          
+  
+        <button type="submit" class="btn btn-primary" [disabled]="profileForm.invalid">
+          Save Changes
+        </button>
+      </form>
+    </div>
+  </div>
+  

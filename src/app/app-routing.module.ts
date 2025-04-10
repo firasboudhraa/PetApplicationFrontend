@@ -7,7 +7,7 @@ import { DetailServiceComponent } from './Components/FrontOffice/detail-service/
 import { LoginComponent } from './Components/FrontOffice/user/login/login.component';
 import { UserProfileComponent } from './Components/FrontOffice/user/user-profile/user-profile.component';
 import { RegisterComponent } from './Components/FrontOffice/user/register/register.component';
-import { ActivateAccountComponent } from './Components/FrontOffice/user/activate-account/activate-account.component';
+import { EditProfileComponent } from './Components/FrontOffice/user/edit-profile/edit-profile.component';
 
 const routes: Routes = [
   { path: 'home', component: HomeComponent },
@@ -20,7 +20,9 @@ const routes: Routes = [
   {path:'login',component:LoginComponent},
   {path:'register',component:RegisterComponent},
   {path:'profile',component:UserProfileComponent}, 
-  { path: 'activate-account', component: ActivateAccountComponent },
+  {path:'profile',component:UserProfileComponent}, 
+  {path : 'editProfile/:id' , component : EditProfileComponent},
+
   { path: '**', redirectTo: 'home', pathMatch: 'full' }
 
 
