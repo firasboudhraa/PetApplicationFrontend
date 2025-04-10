@@ -15,7 +15,20 @@
     align-items: center;
     flex-direction: column; /* Optional, if not already set */
     min-height: 80vh;
-}   
+  } 
+  
+  .title {
+    font-size: 2rem;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    gap: 10px;  /* Adjusts the space between the icon and the text */
+  }
+  
+  .title i {
+    font-size: 2rem; /* Size of the icon */
+    color: var(--primary); /* Optional: use your theme's color */
+  }
   
   .search-bar input {
     padding: 12px 16px;
