@@ -51,12 +51,8 @@
               "src/assets/js/jquery.animateNumber.min.js",
               "src/assets/js/bootstrap-datepicker.js",
               "src/assets/js/scrollax.min.js",
-<<<<<<< HEAD
-              "src/assets/js/main.js"
-=======
               "src/assets/js/main.js",
               "src/assets/js/plugin/webfont/webfont.min.js"
->>>>>>> origin/main
             ]
           },
           "configurations": {
@@ -124,11 +120,8 @@
         }
       }
     }
-<<<<<<< HEAD
   },
   "cli": {
     "analytics": "ff8ed56e-5bb9-4b2c-866f-47b9474257c4"
-=======
->>>>>>> origin/main
   }
 }

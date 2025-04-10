@@ -18,11 +18,8 @@
     "@angular/platform-browser": "^16.2.0",
     "@angular/platform-browser-dynamic": "^16.2.0",
     "@angular/router": "^16.2.0",
-<<<<<<< HEAD
     "@stripe/stripe-js": "^7.0.0",
     "angularx-qrcode": "^16.0.0",
-=======
->>>>>>> origin/main
     "aos": "^2.3.4",
     "bootstrap": "^5.3.3",
     "flaticon": "^0.1.0",
@@ -34,11 +31,7 @@
     "zone.js": "~0.13.0"
   },
   "devDependencies": {
-<<<<<<< HEAD
     "@angular-builders/custom-webpack": "^16.0.1",
-=======
-    "@angular-builders/custom-webpack": "^19.0.0",
->>>>>>> origin/main
     "@angular-devkit/build-angular": "^16.2.16",
     "@angular/cli": "^16.2.16",
     "@angular/compiler-cli": "^16.2.0",
