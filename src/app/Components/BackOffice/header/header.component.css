@@ -400,6 +400,7 @@ body {
   min-height: 60px;
   width: calc(100% - 250px);
   position: fixed;
+  margin-left: 250px;
   z-index: 1001;
 }
 .main-header .navbar-header {
@@ -661,7 +662,7 @@ body {
 }
 .footer .container,
 .footer .container-fluid {
-  display: flex;
+  display: realtive;
   align-items: center;
 }
 .sidebar,

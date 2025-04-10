@@ -34,9 +34,7 @@
               "src/assets/css/magnific-popup.css",
               "src/assets/css/owl.carousel.min.css",
               "src/assets/css/owl.theme.default.min.css",
-              "src/assets/css/style.css",
-              "src/assets/css/kaiadmin.min.css",
-              "src/assets/css/plugins.min.css"
+              "src/assets/css/style.css"
             ],
             "scripts": [
               "node_modules/aos/dist/aos.js",
