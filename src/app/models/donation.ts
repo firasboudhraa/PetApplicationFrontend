@@ -1,16 +1,18 @@
 export interface Donation {
     id: number;
     amount: number;
-    date: string; // ou LocalDateTime si tu veux gérer en tant que Date
+    date: string; 
     eventId: number;
     status: String;
   }
 
 export interface FullEventResponse {
+    id: number;
     nameEvent: string;
     description: string;
-    dateEvent: string;  // ou Date, si tu veux utiliser le type Date natif
+    dateEvent: string;
     location: string;
+    goalAmount: number;
     donations: Donation[];
   }
   

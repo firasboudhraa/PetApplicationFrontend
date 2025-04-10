@@ -14,6 +14,7 @@ import { AddDonationComponent } from './Components/FrontOffice/EventDonation/add
 import { EventComponent } from './Components/FrontOffice/EventDonation/event/event.component';
 import { EventDetailComponent } from './Components/FrontOffice/EventDonation/event-detail/event-detail.component';
 import { AddEventComponent } from './Components/FrontOffice/EventDonation/add-event/add-event.component';
+import { RangePipe } from './Components/FrontOffice/EventDonation/event/range.pipe';
 @NgModule({
   declarations: [
     AppComponent,
@@ -27,6 +28,7 @@ import { AddEventComponent } from './Components/FrontOffice/EventDonation/add-ev
     EventComponent,
     EventDetailComponent,
     AddEventComponent,
+    RangePipe
   ],
   imports: [
     BrowserModule,

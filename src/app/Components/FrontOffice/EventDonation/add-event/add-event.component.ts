@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Event as AppEvent } from 'src/app/models/event'; // Utilisation d'un alias
+import { Event as AppEvent } from 'src/app/models/event';
 import { EventService } from 'src/app/Services/event-service.service';
 
 @Component({
@@ -20,7 +20,8 @@ export class AddEventComponent {
       nameEvent: ['', [Validators.required, Validators.minLength(3)]],
       description: ['', [Validators.required, Validators.minLength(10)]],
       dateEvent: ['', [Validators.required]],
-      location: ['', [Validators.required]]
+      location: ['', [Validators.required]],
+      goalAmount: ['', [Validators.required, Validators.min(1)]]
     });
   }
 
@@ -33,12 +34,13 @@ export class AddEventComponent {
       return;
     }
 
-    const newEvent: AppEvent = { // Utilisation de l'alias AppEvent ici
-      idEvent: 0, // L'ID sera généré par le backend
+    const newEvent: AppEvent = {
+      idEvent: 0,
       nameEvent: this.eventForm.value.nameEvent,
       description: this.eventForm.value.description,
       dateEvent: this.eventForm.value.dateEvent,
-      location: this.eventForm.value.location
+      location: this.eventForm.value.location,
+      goalAmount: parseFloat(this.eventForm.value.goalAmount)
     };
 
     this.eventService.addEvent(newEvent).subscribe(
