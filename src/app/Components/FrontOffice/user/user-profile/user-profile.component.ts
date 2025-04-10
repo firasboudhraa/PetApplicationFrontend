@@ -107,5 +107,23 @@ private formatRoleName(role: string): string {
       this.errorMessage = 'You can only edit your own profile';
     }
   }
+
+  supp(id: number): void {
+    this.userService.deleteUser(id).subscribe({
+      next: (response) => {
+        console.log('User deleted successfully:', response);
+        alert('User deleted successfully'); 
+        this.router.navigate(['/home']);
+      },
+      error: (err) => {
+        console.error('Error deleting user:', err);
+        console.log('Error status:', err.status);
+        console.log('Error response:', err.error);
+        this.errorMessage = 'Failed to delete user'; 
+      }
+    });
+  }
+  
+  
   
 }
