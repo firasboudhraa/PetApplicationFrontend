@@ -1,47 +1,81 @@
-import { Component } from '@angular/core';
-import { AuthService } from '../service_user/auth.service';
+// user-profile.component.ts
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { AuthService } from '../auth/auth.service';
+import { UserService } from '../service_user/user.service';
+import { User } from '../models/user_model';
 
 @Component({
   selector: 'app-user-profile',
   templateUrl: './user-profile.component.html',
   styleUrls: ['./user-profile.component.css']
 })
-export class UserProfileComponent {
+export class UserProfileComponent implements OnInit {
+  user: User = {
+    id: 0,
+    firstName: '',
+    lastName: '',
+    email: '',
+    roles: []
+  };
+
+  isLoading = true;
+  errorMessage = '';
+
   constructor(
     private authService: AuthService,
     private router: Router,
-    private http: HttpClient
+    private userService: UserService
   ) {}
-  private apiUrl = 'http://localhost:8081/auth'; // without /logout
+
+  ngOnInit(): void {
+    // Get user ID from token
+    const tokenData = this.authService.getDecodedToken();
+    
+    if (tokenData) {
+      const userId = tokenData.userId; 
+      this.loadUserProfile(userId);
+    } else {
+      this.errorMessage = 'User not authenticated';
+      this.isLoading = false;
+      this.router.navigate(['/login']);
+    }
+  }
+
+  private loadUserProfile(userId: number): void {
+    this.userService.getUserById(userId).subscribe({
+      next: (data: User) => {
+        this.user = { ...data }; // Merge user data with API response
+        this.isLoading = false;
+      },
+      error: (err) => {
+        console.error('Failed to load user:', err);
+        this.errorMessage = 'Failed to load user profile';
+        this.isLoading = false;
+      }
+    });
+  }
+
+  getRolesAsString(): string {
+    return this.user.roles
+      .map(role => this.formatRoleName(role.name))
+      .join(', ');
+  }
+
+  private formatRoleName(role: string): string {
+    return role.toLowerCase()
+      .replace(/_/g, ' ')
+      .replace(/\b\w/g, l => l.toUpperCase());
+  }
 
   logout() {
-    const token = this.authService.getToken();
-    
-    if (!token) {
-      this.router.navigate(['/login']);
-      return;
-    }
-
-    // Use full URL to ensure correct endpoint
-    const logoutUrl = `${this.apiUrl}/logout`;
-    
-    // Include both the auth token and cache-control headers
-    const headers = new HttpHeaders({
-      'Authorization': `Bearer ${token}`,
-      'Cache-Control': 'no-cache',
-      'Pragma': 'no-cache'
-    });
-
-    this.http.post(logoutUrl, {}, { headers }).subscribe({
+    this.authService.logout().subscribe({
       next: () => {
-        this.authService.clearToken();
         this.router.navigate(['/home']);
       },
       error: (err) => {
         console.error('Logout failed:', err);
-        this.authService.clearToken();
+        this.authService.clearToken(); // Force clear token if logout failed
         this.router.navigate(['/home']);
       }
     });
