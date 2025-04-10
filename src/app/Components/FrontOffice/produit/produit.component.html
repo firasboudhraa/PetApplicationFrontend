@@ -1,0 +1,30 @@
+<div class="container mt-5">
+
+  <!-- Bouton pour ajouter un nouveau produit -->
+  <a [routerLink]="['/formproduit']">
+    <button class="btn btn-primary mb-4">
+      Ajouter un produit
+    </button>
+  </a>
+
+  <!-- Affichage des produits -->
+  <div class="row">
+    <div class="col-md-4 mb-4" *ngFor="let product of products">
+      <div class="card product-card">
+        <img [src]="product.imageUrl" class="card-img-top" alt="{{product.nom}}">
+        <div class="card-body">
+          <h5 class="card-title">{{product.nom}}</h5>
+          <p class="card-text">{{product.description}}</p>
+          <p class="card-text"><strong>{{product.prix}} TND</strong></p>
+
+          <!-- Affichage des actions CRUD -->
+          <div class="btn-group">
+            <button class="btn btn-edit" [routerLink]="['/edit-product', product.id_Product]">Modifier</button>
+            <button class="btn btn-delete" (click)="deleteProduct(product.id_Product)">Supprimer</button>
+            <button class="btn btn-add-to-cart">Ajouter au panier</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
