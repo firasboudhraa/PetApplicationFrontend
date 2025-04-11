@@ -11,6 +11,8 @@ import { AddServiceComponent } from './Components/FrontOffice/add-service/add-se
 import { DetailServiceComponent } from './Components/FrontOffice/detail-service/detail-service.component';
 import { DashboardComponent } from './Components/BackOffice/dashboard/dashboard.component';
 import { UsersComponent } from './Components/BackOffice/dashboard/users/users.component';
+import { EventbackComponent } from './Components/BackOffice/dashboard/eventback/eventback.component';
+import { UpdateEventComponent } from './Components/BackOffice/dashboard/update-event/update-event.component';
 
 const routes: Routes = [
   { path: 'home', component: HomeComponent },
@@ -22,6 +24,8 @@ const routes: Routes = [
   {path:'add-donation/:id', component:AddDonationComponent},
   {path:'add-event', component:AddEventComponent},
   {path:'serviceDetail/:id', component:DetailServiceComponent},
+  {path:'eventback', component:EventbackComponent},
+  {path:'update-event/:id', component:UpdateEventComponent},
   {path:'dashboard', component:DashboardComponent,
     children:[
       {path:'users', component:UsersComponent},

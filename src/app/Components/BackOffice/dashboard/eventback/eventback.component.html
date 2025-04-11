@@ -5,9 +5,9 @@
         <div class="pb-5 col-md-9">
           <p class="breadcrumbs mb-2">
             <span class="mr-2"><a routerLink="/">Home <i class="fas fa-chevron-right"></i></a></span> 
-            <span>Events <i class="fas fa-chevron-right"></i></span>
+            <span>Events Management <i class="fas fa-chevron-right"></i></span>
           </p>
-          <h1 class="mb-0 bread">Events</h1>
+          <h1 class="mb-0 bread">Events Dashboard</h1>
         </div>
       </div>
     </div>
@@ -84,7 +84,13 @@
 
         <div class="row align-items-center pb-5 mb-3">
             <div class="col-12 text-center position-relative">
-                <h2 class="heading-section ftco-animate mb-4">Trending Events</h2>
+                <h2 class="heading-section ftco-animate mb-4">Events Management</h2>
+                
+                <div class="add-event-btn-container">
+                    <button class="btn btn-primary" [routerLink]="['/add-event']">
+                        <i class="fas fa-plus mr-2"></i>Add New Event
+                    </button>
+                </div>
             </div>
         </div>
 
@@ -113,12 +119,14 @@
                             <small class="text-muted d-block text-center mt-2">Progress</small>
                         </div>
 
-                        <button class="btn btn-info mt-3" [routerLink]="['/event-detail', event.idEvent]">
-                            <i class="fas fa-info-circle mr-2"></i>View Details
-                        </button>
-                        <button class="btn btn-success mt-3" [routerLink]="['/add-donation', event.idEvent]">
-                            <i class="fas fa-donate mr-2"></i>Donate Now
-                        </button>                               
+                        <div class="event-actions">
+                            <button class="btn btn-warning" [routerLink]="['/update-event', event.idEvent]">
+                              <i class="fas fa-edit mr-2"></i>Update
+                            </button>
+                            <button class="btn btn-danger" (click)="deleteEvent(event.idEvent)">
+                              <i class="fas fa-trash-alt mr-2"></i>Delete
+                            </button>
+                          </div>                               
                     </div>
                 </div>
             </div>

@@ -22,6 +22,8 @@ import { DashboardComponent } from './Components/BackOffice/dashboard/dashboard.
 import { UsersComponent } from './Components/BackOffice/dashboard/users/users.component';
 import { SidebarComponent } from './Components/BackOffice/sidebar/sidebar.component';
 import { HeaderComponent } from './Components/BackOffice/header/header.component';
+import { EventbackComponent } from './Components/BackOffice/dashboard/eventback/eventback.component';
+import { UpdateEventComponent } from './Components/BackOffice/dashboard/update-event/update-event.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -42,7 +44,9 @@ import { HeaderComponent } from './Components/BackOffice/header/header.component
     DashboardComponent,
     UsersComponent,
     SidebarComponent,
-    HeaderComponent
+    HeaderComponent,
+    EventbackComponent,
+    UpdateEventComponent
   ],
   imports: [
     BrowserModule,
