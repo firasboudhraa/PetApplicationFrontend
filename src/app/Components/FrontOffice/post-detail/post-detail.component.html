@@ -9,7 +9,7 @@
     <p class="post-author"><strong>Posted By :</strong> {{ authorName || 'Utilisateur inconnu' }} </p>
   </div>
   <time [attr.datetime]="post.createdAt">
-    <i class="fas fa-calendar-alt mr-2"></i> Posted At : {{ post.createdAt | date:'EEE, MMM d, y' }} ,
+    <i class="fas fa-calendar-alt mr-2"></i> Posted At :{{ post.createdAt | date: 'medium' }} ,
 Category : {{ formatCategory(post.type) }}
   </time>
 
@@ -50,6 +50,8 @@ Category : {{ formatCategory(post.type) }}
         <strong><i class="fa fa-user"></i> {{ commentAuthors.get(comment.userId) || 'Utilisateur inconnu' }}:</strong>
       </p>
       <p class="comment-content">{{ comment.content }}</p>
+      <p class="comment-date">
+        <i class="fa fa-calendar-alt"></i> {{ comment.createdAt | date: 'medium' }}
 
       <!-- Likes Section for each Comment -->
       <div class="comment-likes-section">

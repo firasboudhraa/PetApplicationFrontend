@@ -82,9 +82,8 @@
 }
 
 .post-author {
-  font-size: 1rem;
-  font-weight: 600;
-  color: #000000; /* Vert professionnel */
+  font-size: 0.9rem;
+  color: #8a8787; /* Vert professionnel */
 }
 
 /* Date du post */
