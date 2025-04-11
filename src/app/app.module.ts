@@ -12,7 +12,11 @@ import { DashboardComponent } from './Components/BackOffice/dashboard/dashboard.
 import { UsersComponent } from './Components/BackOffice/dashboard/users/users.component';
 import { SidebarComponent } from './Components/BackOffice/sidebar/sidebar.component';
 import { HeaderComponent } from './Components/BackOffice/header/header.component';
-import { UserProfileComponent } from './Components/FrontOffice/UserService/user-profile/user-profile.component';
+import { EditProfileComponent } from './Components/FrontOffice/user/edit-profile/edit-profile.component';
+import { RegisterComponent } from './Components/FrontOffice/user/register/register.component';
+import { UserProfileComponent } from './Components/FrontOffice/user/user-profile/user-profile.component';
+import { LoginComponent } from './Components/FrontOffice/user/login/login.component';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -25,6 +29,14 @@ import { UserProfileComponent } from './Components/FrontOffice/UserService/user-
     UsersComponent,
     SidebarComponent,
     HeaderComponent,
+    //user components
+    EditProfileComponent,
+    RegisterComponent,
+    UserProfileComponent,
+    LoginComponent,
+
+
+
     
     
   ],

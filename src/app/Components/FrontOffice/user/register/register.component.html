@@ -1,0 +1,75 @@
+<!-- register.component.html -->
+<div class="container mt-5" id="register">
+  <div class="row justify-content-center">
+    <div class="col-md-6">
+      <div class="card">
+        <div class="card-header">
+          <h3 class="text-center">Register</h3>
+        </div>
+        <div class="card-body">
+          <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+            <div *ngIf="errorMessage" class="alert alert-danger">
+              {{ errorMessage }}
+            </div>
+            <div *ngIf="successMessage" class="alert alert-success">
+              {{ successMessage }}
+            </div>
+            
+            <div class="mb-3">
+              <label for="firstName" class="form-label">First Name</label>
+              <input type="text" class="form-control" id="firstName" formControlName="firstName">
+              <div *ngIf="registerForm.get('firstName')?.invalid && registerForm.get('firstName')?.touched" 
+                   class="text-danger">
+                First name is required
+              </div>
+            </div>
+            
+            <div class="mb-3">
+              <label for="lastName" class="form-label">Last Name</label>
+              <input type="text" class="form-control" id="lastName" formControlName="lastName">
+              <div *ngIf="registerForm.get('lastName')?.invalid && registerForm.get('lastName')?.touched" 
+                   class="text-danger">
+                Last name is required
+              </div>
+            </div>
+            
+            <div class="mb-3">
+              <label for="email" class="form-label">Email</label>
+              <input type="email" class="form-control" id="email" formControlName="email">
+              <div *ngIf="registerForm.get('email')?.invalid && registerForm.get('email')?.touched" 
+                   class="text-danger">
+                Valid email is required
+              </div>
+            </div>
+            
+            <div class="mb-3">
+              <label for="password" class="form-label">Password</label>
+              <input type="password" class="form-control" id="password" formControlName="password">
+              <div *ngIf="registerForm.get('password')?.invalid && registerForm.get('password')?.touched" 
+                   class="text-danger">
+                Password must be at least 6 characters
+              </div>
+            </div>
+            
+            <div class="mb-3">
+              <label for="role" class="form-label">Role</label>
+              <select class="form-control" id="role" formControlName="role">
+                <option value="PET_OWNER">Pet Owner</option>
+                <option value="VETERINARIAN">Veterinarian</option>
+                <option value="SERVICE_PROVIDER">Service Provider</option>
+              </select>
+            </div>
+            
+            <button type="submit" class="btn btn-primary w-100" [disabled]="registerForm.invalid" >
+              Register
+            </button>
+          </form>
+          
+          <div class="mt-3 text-center">
+            <p>Already have an account? <a routerLink="/login">Login here</a></p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

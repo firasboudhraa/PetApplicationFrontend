@@ -1,52 +1,63 @@
-/* Form styling */
-form {
+/* Register Form Styling */
+.register-form {
     display: flex;
     flex-direction: column;
     align-items: center;
-    max-width: 400px;
+    max-width: 200px;
     margin: 0 auto;
-    padding: 20px;
+    padding: 5px;
     border-radius: 15px;
-    background-color: #f8f9fa;
+    background-color: #d8f1d5;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     border: none;
     overflow: hidden;
 }
 
 /* Image inside the form */
-form img {
+.register-form img {
     width: 100%;
     height: 180px;
     object-fit: cover;
     border-radius: 15px 15px 0 0;
 }
 
-/* Form elements */
-form .form-group {
+/* Header style */
+.register-form h3 {
+    color: #36c864;
+    font-weight: bold;
+}
+
+/* Form group styling */
+.register-form .form-group {
     width: 100%;
+    margin-bottom: 15px;
     text-align: left;
 }
 
-form input.form-control {
+/* Input styling */
+.register-form input.form-control {
     padding: 12px;
     border: 1px solid #ccc;
     border-radius: 5px;
     font-size: 14px;
 }
 
-/* Error message styling */
-.alert.alert-danger {
+/* Error messages */
+.register-form .alert.alert-danger {
     color: red;
     font-size: 12px;
     margin-top: 5px;
     padding: 5px;
+    background: transparent;
+    border: none;
 }
 
 /* Button styling */
-form .btn-primary {
+.register-form .btn-primary {
     background-color: #36c864;
     color: white;
     padding: 12px;
+    width: 100%;
     border: none;
     border-radius: 8px;
     cursor: pointer;
@@ -54,20 +65,20 @@ form .btn-primary {
     transition: background 0.3s ease-in-out;
 }
 
-form .btn-primary:hover {
+.register-form .btn-primary:hover {
     background-color: #2ea853;
 }
 
 /* Links styling */
-a.link {
+.register-form a.link {
     color: #36c864;
     text-decoration: none;
     font-weight: bold;
     display: block;
-    margin-top: 10px;
+    margin-top: 5px;
     text-align: center;
 }
 
-a.link:hover {
+.register-form a.link:hover {
     text-decoration: underline;
 }
