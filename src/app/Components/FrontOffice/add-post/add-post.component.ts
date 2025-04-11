@@ -15,7 +15,7 @@ export class AddPostComponent {
   isSubmitting: boolean = false;
   errorMessage: string = '';
 
-  userId: number = 2; // Replace this with dynamic user ID (e.g., from JWT)
+  userId: number = 1; // Replace this with dynamic user ID (e.g., from JWT)
 
   types = [
     { label: 'Success Story', value: 'success_stories' },

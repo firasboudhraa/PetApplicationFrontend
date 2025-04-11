@@ -16,7 +16,8 @@ export class PostsComponent implements OnInit {
   authors: { [key: number]: UserDTO } = {};
   commentCounts: { [key: number]: number } = {};
   likeCounts: { [key: number]: number } = {};
-  userNames: Map<number, string> = new Map();  // Declare userNames to store usernames by userId
+  userNames: Map<number, string> = new Map();
+  postComments: { [key: number]: Comment[] } = {}; // stocker les commentaires par post
 
   constructor(
     private postsService: PostsService,
@@ -33,19 +34,20 @@ export class PostsComponent implements OnInit {
       this.posts = posts;
 
       posts.forEach(post => {
-        // Load the post author
+        // Charger auteur
         this.userService.getUserById(post.userId).subscribe(user => {
           this.authors[post.id] = user;
-          this.userNames.set(post.userId, user.name);  // Set the username in the map
+          this.userNames.set(post.userId, user.name);
         });
 
-        // Load the number of comments for each post
+        // Charger les commentaires
         this.commentService.getCommentsByPostId(post.id).subscribe(comments => {
           this.commentCounts[post.id] = comments.length;
+          this.postComments[post.id] = comments;
         });
 
-        // Load the like count for each post
-        this.likeCounts[post.id] = post.likedBy.length;  // You can safely use post.likedBy.length now
+        // Compter les likes
+        this.likeCounts[post.id] = post.likedBy?.length || 0;
       });
     });
   }
@@ -54,6 +56,17 @@ export class PostsComponent implements OnInit {
     if (confirm('Êtes-vous sûr de vouloir supprimer ce post ?')) {
       this.postsService.deletePost(postId).subscribe(() => {
         this.posts = this.posts.filter(p => p.id !== postId);
+        delete this.postComments[postId];
+        delete this.commentCounts[postId];
+      });
+    }
+  }
+
+  deleteComment(commentId: number, postId: number): void {
+    if (confirm('Êtes-vous sûr de vouloir supprimer ce commentaire ?')) {
+      this.commentService.deleteComment(commentId).subscribe(() => {
+        this.postComments[postId] = this.postComments[postId].filter(c => c.id !== commentId);
+        this.commentCounts[postId] = this.postComments[postId].length;
       });
     }
   }
