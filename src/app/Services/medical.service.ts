@@ -19,6 +19,11 @@ export class MedicalService {
     return this.http.get<Carnet[]>(`${this.baseUrl}/retrieve-all-carnets`);
   }
 
+
+  getAllRecords(): Observable<Record<string, any>[]> {
+    return this.http.get<Record<string, any>[]>(`${this.baseUrl1}/retrieve-all-medicalRecords`);
+  }
+
   // 🔹 Récupère les records d’un carnet spécifique
   getMedicalRecordsByCarnetId(carnetId: number): Observable<Record<string, any>[]> {
     return this.http.get<Record<string, any>[]>(`${this.baseUrl}/${carnetId}/medical-records`);

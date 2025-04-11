@@ -8,6 +8,7 @@ import { MedicalnotebookComponent } from './medicalnotebook/medicalnotebook.comp
 import { MedicalnotebookFormComponent } from './medicalnotebook-form/medicalnotebook-form.component';
 import { DashboardComponent } from './Components/BackOffice/dashboard/dashboard.component';
 import { UsersComponent } from './Components/BackOffice/dashboard/users/users.component';
+import { RecordsComponent } from './Components/BackOffice/dashboard/records/records.component';
 
 const routes: Routes = [
   { path: 'home', component: HomeComponent },
@@ -19,6 +20,7 @@ const routes: Routes = [
   {path:'dashboard', component:DashboardComponent,
     children:[
       {path:'users', component:UsersComponent},
+      {path:'records', component:RecordsComponent}
     ]
   },
   {path:'',redirectTo:'home',pathMatch:'full'},
