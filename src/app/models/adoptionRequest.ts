@@ -12,4 +12,5 @@ export interface AdoptionRequest {
     isChangedByRequestOwner: boolean;
     date: Date;  // Using Date type
     time: string;
+    rejectionReason: string;
 }

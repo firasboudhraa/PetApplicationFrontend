@@ -8,6 +8,8 @@ import { UserPetsComponent } from './Components/Pets/user-pets/user-pets.compone
 import { PublicPetsComponent } from './Components/Pets/public-pets/public-pets.component';
 import { AdoptionRequestComponent } from './Components/AdoptionRequest/adoption-request/adoption-request.component';
 import { AdoptionRequestDashbordComponent } from './Components/AdoptionRequest/adoption-request-dashbord/adoption-request-dashbord.component';
+import { DashboardComponent } from './Components/BackOffice/dashboard/dashboard.component';
+import { UsersComponent } from './Components/BackOffice/dashboard/users/users.component';
 
   
   const routes: Routes = [
@@ -18,6 +20,13 @@ import { AdoptionRequestDashbordComponent } from './Components/AdoptionRequest/a
   {path:'add-service',component:AddServiceComponent},
   {path:'serviceDetail/:id', component:DetailServiceComponent},
   {path:'adoptionRequestDashboard', component:AdoptionRequestDashbordComponent},
+  {path:'dashboard', component:DashboardComponent,
+    children:[
+      {path:'users', component:UsersComponent},
+      {path:'my-pets', component:UserPetsComponent},
+      {path:'adoption-request', component:AdoptionRequestDashbordComponent},
+    ]
+  },
   {path:'',redirectTo:'home',pathMatch:'full'},
   { path: 'adoption-request', component: AdoptionRequestComponent }
 

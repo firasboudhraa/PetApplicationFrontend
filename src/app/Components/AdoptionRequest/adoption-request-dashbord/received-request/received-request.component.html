@@ -99,7 +99,7 @@
                       </button>
 
                       <!-- Reject Button (Red) -->
-                      <button mat-mini-fab class="left" color="warn" matTooltip="Reject" matTooltipPosition="right" style="background-color: #dc3545; color: #fff;">
+                      <button mat-mini-fab class="left" color="warn" (click)="rejectRequest()" matTooltip="Reject" matTooltipPosition="right" style="background-color: #dc3545; color: #fff;">
                         <mat-icon>cancel</mat-icon>
                       </button>
 
@@ -156,10 +156,10 @@
                   <td>{{ request.time }}</td>
                   <td>
                     <button
-                      class="btn btn-danger"
-                      (click)="deleteRequest(request.id)"
+                      class="btn btn-warning"
+                      
                     >
-                      Delete
+                      Show progress
                     </button>
                   </td>
                 </tr>
@@ -190,7 +190,7 @@
                   <th scope="col">Message</th>
                   <th scope="col">Date</th>
                   <th scope="col">Time</th>
-                  <th scope="col">Actions</th>
+                  <th scope="col">Reason of rejection</th>
                 </tr>
               </thead>
               <tbody>
@@ -208,13 +208,7 @@
                   <td>{{ request.date }}</td>
                   <td>{{ request.time }}</td>
                   <td>
-                    <button class="btn btn-success">Confirm</button>
-                    <button
-                      class="btn btn-danger"
-                      (click)="deleteRequest(request.id)"
-                    >
-                      Reject
-                    </button>
+                      {{ request.rejectionReason }}
                   </td>
                 </tr>
               </tbody>

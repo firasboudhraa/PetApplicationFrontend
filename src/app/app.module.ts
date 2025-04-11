@@ -12,6 +12,10 @@ import { HomeComponent } from './Components/FrontOffice/home/home.component';
 import { ServiceComponent } from './Components/FrontOffice/service/service.component';
 import { AddServiceComponent } from './Components/FrontOffice/add-service/add-service.component';
 import { DetailServiceComponent } from './Components/FrontOffice/detail-service/detail-service.component';
+import { DashboardComponent } from './Components/BackOffice/dashboard/dashboard.component';
+import { UsersComponent } from './Components/BackOffice/dashboard/users/users.component';
+import { SidebarComponent } from './Components/BackOffice/sidebar/sidebar.component';
+import { HeaderComponent } from './Components/BackOffice/header/header.component';
 import { PetCardComponent } from './Components/Pets/user-pets/pet-card/pet-card.component';
 import { AddPetModalComponent } from './Components/Pets/user-pets/add-pet-modal/add-pet-modal.component';
 import { PetDetailModalComponent } from './Components/Pets/user-pets/pet-detail-modal/pet-detail-modal.component';
@@ -55,7 +59,11 @@ import { MatTooltipModule } from '@angular/material/tooltip';
     AdoptionRequestComponent,
     AdoptionRequestDashbordComponent,
     SentRequestComponent,
-    ReceivedRequestComponent
+    ReceivedRequestComponent,
+    DashboardComponent,
+    UsersComponent,
+    SidebarComponent,
+    HeaderComponent
   ],
   imports: [
     BrowserModule,
@@ -67,6 +75,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
     MatButtonModule,
     MatIconModule,
     MatTooltipModule
+
 
 
   ],

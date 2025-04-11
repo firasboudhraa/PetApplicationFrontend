@@ -12,6 +12,9 @@ export class AdoptionRequestService {
 
   constructor(private http: HttpClient) {}
 
+  rejectAdoptionRequest(id: number, reason: string): Observable<any> {
+    return this.http.put(`${this.apiUrl}/reject/${id}`,  reason );
+  }
   saveAdoptionRequest(adoptionRequest: AdoptionRequest): Observable<AdoptionRequest> {
     return this.http.post<AdoptionRequest>(`${this.apiUrl}`, adoptionRequest);
   }

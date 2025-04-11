@@ -38,6 +38,7 @@
               "src/assets/css/style.css"
             ],
             "scripts": [
+              "node_modules/bootstrap/dist/js/bootstrap.bundle.min.js",
               "node_modules/aos/dist/aos.js",
               "node_modules/timepicker/jquery.timepicker.min.js",
               "node_modules/popper.js/dist/umd/popper.min.js",
@@ -51,7 +52,8 @@
               "src/assets/js/jquery.animateNumber.min.js",
               "src/assets/js/bootstrap-datepicker.js",
               "src/assets/js/scrollax.min.js",
-              "src/assets/js/main.js"
+              "src/assets/js/main.js",
+              "src/assets/js/plugin/webfont/webfont.min.js"
             ]
           },
           "configurations": {

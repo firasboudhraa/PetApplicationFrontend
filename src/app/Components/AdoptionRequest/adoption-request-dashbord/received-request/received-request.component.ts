@@ -36,26 +36,73 @@ pendingRequests: any[] = [];
   getImageUrl(filename: string): string {
     return `${this.imageApiUrl}/${filename}`;
   }
+  rejectRequest(){
+    Swal.fire({
+      icon: 'warning',
+      title: 'Tell him why you rejected the request',
+      input: 'textarea',
+      inputPlaceholder: 'Enter the reason for rejection',
+      inputAttributes: {
+        autocapitalize: 'off'
+      },
+      showCancelButton: true,
+      confirmButtonText: 'Send',
+      cancelButtonText: 'Cancel',
+      showLoaderOnConfirm: true,
+      preConfirm: (reason) => {
+        return   this.adoptionRequestService.rejectAdoptionRequest(this.requestId, reason).subscribe(() => {
+          Swal.fire({
+            icon: 'success',
+            title: 'Request rejected',
+            text: '✅ The Request was rejected successfully!',
+          });
+          this.fetchAdoptionRequests();
+        }, error => {
+          Swal.fire({
+            icon: 'error',
+            title: 'Error',
+            text: '❌ Failed to reject request.',
+          });
+        });
+      },
+      position: 'top',
+      showConfirmButton: true,
+      toast: true
+    });
+  }
   confirmRequest(requestId: number): void {
-    this.adoptionRequestService.confirmAdoptionRequest(requestId).subscribe(() => {
-      Swal.fire({
-        icon: 'success',
-        title: 'Request confirmed',
-        text: '✅ The Request was confirmed successfully!',
-        position: 'top',
-        timer: 3000,
-        toast: true
-      });
-      this.fetchAdoptionRequests(); 
-    }, error => {
-      Swal.fire({
-        icon: 'error',
-        title: 'Error',
-        text: '❌ Failed to confirm request.',
-        position: 'top',
-        timer: 3000,
-        toast: true
-      });
+    Swal.fire({
+      title: 'Are you sure?',
+      text: "You won't be able to revert this!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Yes, confirm it!',
+      cancelButtonText: 'No, cancel!',
+      position: 'top',
+      toast: true
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.adoptionRequestService.confirmAdoptionRequest(requestId).subscribe(() => {
+          Swal.fire({
+            icon: 'success',
+            title: 'Request confirmed',
+            text: '✅ The Request was confirmed successfully!',
+            position: 'top',
+            timer: 3000,
+            toast: true
+          });
+          this.fetchAdoptionRequests(); 
+        }, error => {
+          Swal.fire({
+            icon: 'error',
+            title: 'Error',
+            text: '❌ Failed to confirm request.',
+            position: 'top',
+            timer: 3000,
+            toast: true
+          });
+        });
+      }
     });
   }
   deleteRequest(requestId: number): void {
@@ -98,14 +145,14 @@ pendingRequests: any[] = [];
           return request;
         });
 
-      this.pendingRequests = (await Promise.all(pendingRequestsPromises)).filter(request =>! request.isConfirmed);
+      this.pendingRequests = (await Promise.all(pendingRequestsPromises)).filter(request =>! request.isConfirmed && !request.isRejected);
       console.log('Pending Requests:', this.pendingRequests);
 
-      this.confirmedRequests = requests.filter(request => request.isConfirmed === true);
+      this.confirmedRequests = requests.filter(request => request.isConfirmed && !request.isRejected);
       console.log('Confirmed Requests:', this.confirmedRequests);
 
-      this.rejectedRequests = requests.filter(request => request.isRejected === false);
-      console.log('Rejected Requests:', this.rejectedRequests);
+      this.rejectedRequests = requests.filter(request => request.isRejected && !request.isConfirmed );
+      console.log('Rejected Requests:', this.rejectedRequests );
     });
   }
   

@@ -4,7 +4,10 @@
     align-items: center;
     position: relative;
 }
+.modal{
+  overflow-y: auto;
 
+}
 .info-container{
     display: flex;
     align-items: center;

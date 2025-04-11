@@ -118,8 +118,7 @@
                     <td>{{ request.date }}</td>
                     <td>{{ request.time }}</td>
                     <td>
-                      <button class="btn btn-success" >Confirm</button>
-                      <button class="btn btn-danger" >Reject</button>
+
                     </td>
                   </tr>
                 </tbody>
@@ -149,7 +148,7 @@
                     <th scope="col">Message</th>
                     <th scope="col">Date</th>
                     <th scope="col">Time</th>
-                    <th scope="col">Actions</th>
+                    <th scope="col">Reson of Rejection</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -161,8 +160,7 @@
                     <td>{{ request.date }}</td>
                     <td>{{ request.time }}</td>
                     <td>
-                      <button class="btn btn-success" >Confirm</button>
-                      <button class="btn btn-danger" >Reject</button>
+                      {{ request.rejectionReason }}
                     </td>
                   </tr>
                 </tbody>

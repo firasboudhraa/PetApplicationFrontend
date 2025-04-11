@@ -65,20 +65,22 @@ export class SentRequestComponent {
     this.adoptionRequestService.getAdoptionRequests(this.userId).subscribe(async requests => {
       console.log('All Requests:', requests);
 
-      const pendingRequestsPromises = requests
+
+
+      const allRequestsPromises = requests
         .map(async request => {
           request.adoptedPet.imagePath = this.getImageUrl(request.adoptedPet.imagePath);
-    //      request.location = await this.mapsLoader.getLocationInLetters(request.location); // Use the service
+         // request.location = await this.mapsLoader.getLocationInLetters(request.location); // Use the service
           return request;
         });
 
-      this.pendingRequests = (await Promise.all(pendingRequestsPromises)).filter(request =>! request.isConfirmed);
+      this.pendingRequests = (await Promise.all(allRequestsPromises)).filter(request =>! request.isConfirmed && !request.isRejected);
       console.log('Pending Requests:', this.pendingRequests);
 
-      this.confirmedRequests = requests.filter(request => request.isConfirmed === true);
+      this.confirmedRequests = requests.filter(request => request.isConfirmed && !request.isRejected);
       console.log('Confirmed Requests:', this.confirmedRequests);
 
-      this.rejectedRequests = requests.filter(request => request.isRejected === false);
+      this.rejectedRequests = requests.filter(request => request.isRejected && !request.isConfirmed );
       console.log('Rejected Requests:', this.rejectedRequests);
     });
   }
