@@ -49,7 +49,7 @@ export class UserProfileComponent implements OnInit {
       },
       error: (err) => {
         console.error('Failed to load user:', err);
-        this.errorMessage = 'Failed to load user profile';
+        this.errorMessage = 'aleh';
         this.isLoading = false;
       }
     });

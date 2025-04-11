@@ -7,20 +7,31 @@ import { LoginComponent } from './Components/FrontOffice/user/login/login.compon
 import { RegisterComponent } from './Components/FrontOffice/user/register/register.component';
 import { UserProfileComponent } from './Components/FrontOffice/user/user-profile/user-profile.component';
 import { EditProfileComponent } from './Components/FrontOffice/user/edit-profile/edit-profile.component';
+import { AuthGuard } from './Components/FrontOffice/user/auth/auth.guard';
 
 const routes: Routes = [
   { path: 'home', component: HomeComponent },
   {path:'dashboard', component:DashboardComponent,
+    canActivate: [AuthGuard],
+    data: { adminOnly: true },
     children:[
       {path:'users', component:UsersComponent},
     ]
   },
+
   {path:'',redirectTo:'home',pathMatch:'full'},
   /*user routes */
   {path:'login',component:LoginComponent},
   {path:'register',component:RegisterComponent},
   {path:'profile',component:UserProfileComponent}, 
   {path : 'editProfile/:id' , component : EditProfileComponent},
+
+  { 
+    path: 'admin', 
+    component: UsersComponent,
+    canActivate: [AuthGuard],
+    data: { adminOnly: true }  
+  }
 ];
 
 

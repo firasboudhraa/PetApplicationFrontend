@@ -98,5 +98,16 @@ export class AuthService {
   activateAccount(token: string): Observable<any> {
     return this.http.post(`${this.apiUrl}/activate-account`, { token });
   }
+
+  // admin check
+isAdmin(): boolean {
+  const roles = this.getUserRoles();
+  return roles.includes('ROLE_ADMIN') || roles.includes('ADMIN');
+}
+
+hasAdminPermission(permission: string): boolean {
+  const roles = this.getUserRoles();
+  return this.isAdmin() && roles.includes(permission);
+}
   
 }

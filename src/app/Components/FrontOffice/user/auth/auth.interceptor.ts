@@ -14,6 +14,8 @@ export class AuthInterceptor implements HttpInterceptor {
   constructor(private authService: AuthService) {}
 
   intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
+    console.log('JWT Interceptor triggered:', request.url); 
+
     // Skip token for specific endpoints only
     const skipAuth = [
       '/auth/login',

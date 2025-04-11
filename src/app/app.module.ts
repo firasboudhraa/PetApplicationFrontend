@@ -3,7 +3,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import {HttpClientModule} from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { FooterComponent } from './Components/FrontOffice/footer/footer.component';
 import { ContactInfoComponent } from './Components/FrontOffice/contact-info/contact-info.component';
 import { NavbarComponent } from './Components/FrontOffice/navbar/navbar.component';
@@ -16,6 +16,7 @@ import { EditProfileComponent } from './Components/FrontOffice/user/edit-profile
 import { RegisterComponent } from './Components/FrontOffice/user/register/register.component';
 import { UserProfileComponent } from './Components/FrontOffice/user/user-profile/user-profile.component';
 import { LoginComponent } from './Components/FrontOffice/user/login/login.component';
+import { AuthInterceptor } from './Components/FrontOffice/user/auth/auth.interceptor';
 
 @NgModule({
   declarations: [
@@ -24,21 +25,15 @@ import { LoginComponent } from './Components/FrontOffice/user/login/login.compon
     NavbarComponent,
     ContactInfoComponent,
     FooterComponent,
-    HomeComponent,
     DashboardComponent,
     UsersComponent,
     SidebarComponent,
     HeaderComponent,
-    //user components
+    // User components
     EditProfileComponent,
     RegisterComponent,
     UserProfileComponent,
     LoginComponent,
-
-
-
-    
-    
   ],
   imports: [
     BrowserModule,
@@ -46,9 +41,14 @@ import { LoginComponent } from './Components/FrontOffice/user/login/login.compon
     HttpClientModule,
     FormsModule,
     ReactiveFormsModule,
-
   ],
-  providers: [],
+  providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthInterceptor,
+      multi: true
+    }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
