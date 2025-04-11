@@ -18,6 +18,9 @@ export class AdoptionRequestService {
   saveAdoptionRequest(adoptionRequest: AdoptionRequest): Observable<AdoptionRequest> {
     return this.http.post<AdoptionRequest>(`${this.apiUrl}`, adoptionRequest);
   }
+  getAdoptionRequestById(id: number): Observable<AdoptionRequest> {
+    return this.http.get<AdoptionRequest>(`${this.apiUrl}/${id}`);
+  }
   getAdoptionRequests(requesterUserId:number): Observable<AdoptionRequest[]> {
     return this.http.get<AdoptionRequest[]>(`${this.apiUrl}/requester/${requesterUserId}`);
   }

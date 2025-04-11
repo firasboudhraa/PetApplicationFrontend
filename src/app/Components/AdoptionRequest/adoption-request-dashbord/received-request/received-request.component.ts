@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { AdoptionRequestService } from 'src/app/Services/adoption-request.service';
 import { GoogleMapsLoaderService } from 'src/app/Services/google-maps-loader.service';
 import Swal from 'sweetalert2';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-received-request',
@@ -22,7 +23,8 @@ pendingRequests: any[] = [];
   }  
   constructor(
     private adoptionRequestService: AdoptionRequestService,
-    private mapsLoader: GoogleMapsLoaderService
+    private mapsLoader: GoogleMapsLoaderService,
+    private router: Router 
   ) {}
 
   ngOnInit(): void {
@@ -104,6 +106,9 @@ pendingRequests: any[] = [];
         });
       }
     });
+  }
+  redirectToEdit(requestId: number): void {
+    this.router.navigate(['/edit-adoption-request'], { queryParams: { requestId: requestId } });
   }
   deleteRequest(requestId: number): void {
     this.adoptionRequestService.deleteAdoptionRequest(requestId).subscribe(() => {

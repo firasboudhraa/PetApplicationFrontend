@@ -51,6 +51,5 @@
 .page-container{
   display: flex ;
   flex-direction: column;
-  padding-top: 5vh;
-  padding-left: 10vw;
+
 }

@@ -32,6 +32,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { EditAdoptionRequestComponent } from './Components/AdoptionRequest/edit-adoption-request/edit-adoption-request.component';
 
 
 @NgModule({
@@ -63,7 +64,8 @@ import { MatTooltipModule } from '@angular/material/tooltip';
     DashboardComponent,
     UsersComponent,
     SidebarComponent,
-    HeaderComponent
+    HeaderComponent,
+    EditAdoptionRequestComponent
   ],
   imports: [
     BrowserModule,

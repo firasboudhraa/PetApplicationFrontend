@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { AdoptionRequest } from 'src/app/models/adoptionRequest';
 import { Pet } from 'src/app/models/pet';
 import { AdoptionRequestService } from 'src/app/Services/adoption-request.service';
 import { GoogleMapsLoaderService } from 'src/app/Services/google-maps-loader.service';
@@ -8,12 +9,12 @@ import { PetdataServiceService } from 'src/app/Services/petdata-service.service'
 import Swal from 'sweetalert2';
 
 @Component({
-  selector: 'app-adoption-request',
-  templateUrl: './adoption-request.component.html',
-  styleUrls: ['./adoption-request.component.css']
+  selector: 'app-edit-adoption-request',
+  templateUrl: './edit-adoption-request.component.html',
+  styleUrls: ['./edit-adoption-request.component.css']
 })
-export class AdoptionRequestComponent implements OnInit {
-  adoptionForm!: FormGroup;
+export class EditAdoptionRequestComponent {
+ adoptionForm!: FormGroup;
   map: any;
   marker: any;
   isMapReady = false;
@@ -22,6 +23,8 @@ export class AdoptionRequestComponent implements OnInit {
   petId!:number ;
   adoptedPet!:Pet ;
   minDate: string = '';
+  requestId!: number;
+  adoptionRequest!: AdoptionRequest ;
 
   constructor(
     private fb: FormBuilder,
@@ -42,19 +45,24 @@ export class AdoptionRequestComponent implements OnInit {
       time: ['',Validators.required],
       date: ['',Validators.required],
       message: [''],
-      adoptedPet: [this.adoptedPet],
-      requesterUserId: [this.requesterUserId]
+      adoptedPet: [],
+      requesterUserId: [this.requesterUserId],
       
     });
 
-    this.requesterUserId = Number(this.route.snapshot.queryParamMap.get('userId'));
-    this.petId = Number(this.route.snapshot.queryParamMap.get('petId'));
-    this.petdataService.getPetById(this.petId).subscribe((data) => {
-      this.adoptedPet = data;
+    this.requestId = Number(this.route.snapshot.queryParamMap.get('requestId'));
+    this.adoptionRequestService.getAdoptionRequestById(this.requestId).subscribe((data) => {
+      this.adoptedPet = data.adoptedPet;
+      this.adoptionRequest = data;
       this.adoptionForm.patchValue({
-        adoptedPet: this.adoptedPet,
-        requesterUserId: this.requesterUserId,
+        location: data.location,
+        time: data.time,
+        date: data.date,
+        adoptedPet: data.adoptedPet,
+        message: data.message,
+        requesterUserId: data.requesterUserId,
       });
+
       this.mapsLoader.load().then(() => {
         this.initMap();
       }).catch(err => {
@@ -151,26 +159,39 @@ export class AdoptionRequestComponent implements OnInit {
       this.adoptionForm.controls['location'].setValue(latlng);
     });
   
-    // Pin pet's location if pet.location is available
     if (this.adoptedPet.location) {
-      const petLocation = this.adoptedPet.location.split(','); // Assuming location format is "lat, lng"
+      const petLocation = this.adoptedPet.location.split(','); 
       const petLat = parseFloat(petLocation[0].trim());
       const petLng = parseFloat(petLocation[1].trim());
   
       const petPosition = new google.maps.LatLng(petLat, petLng);
   
-      // Place the pet's marker
       new google.maps.Marker({
         map,
         position: petPosition,
-        label: 'Actual Pet Location', // Custom label for pet's location
+        label: 'Actual Pet Location',
       });
   
-      map.setCenter(petPosition); // Center map on pet's location
-      map.setZoom(14); // Optional: Adjust zoom level for pet's location
+      map.setCenter(petPosition); 
+      map.setZoom(14); 
+    }
+    if (this.adoptionRequest.location) {
+      const meetLocation = this.adoptionRequest.location.split(','); 
+      const meetLat = parseFloat(meetLocation[0].trim());
+      const meetLng = parseFloat(meetLocation[1].trim());
+  
+      const meetPostion = new google.maps.LatLng(meetLat, meetLng);
+  
+      new google.maps.Marker({
+        map,
+        position: meetPostion,
+        label: 'Actual Meet Location', 
+      });
+  
+      map.setCenter(meetPostion);
+      map.setZoom(14); 
     }
   }
-  
   
   
 }

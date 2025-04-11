@@ -10,6 +10,7 @@ import { AdoptionRequestComponent } from './Components/AdoptionRequest/adoption-
 import { AdoptionRequestDashbordComponent } from './Components/AdoptionRequest/adoption-request-dashbord/adoption-request-dashbord.component';
 import { DashboardComponent } from './Components/BackOffice/dashboard/dashboard.component';
 import { UsersComponent } from './Components/BackOffice/dashboard/users/users.component';
+import { EditAdoptionRequestComponent } from './Components/AdoptionRequest/edit-adoption-request/edit-adoption-request.component';
 
   
   const routes: Routes = [
@@ -28,7 +29,8 @@ import { UsersComponent } from './Components/BackOffice/dashboard/users/users.co
     ]
   },
   {path:'',redirectTo:'home',pathMatch:'full'},
-  { path: 'adoption-request', component: AdoptionRequestComponent }
+  { path: 'adoption-request', component: AdoptionRequestComponent },
+  { path: 'edit-adoption-request', component: EditAdoptionRequestComponent }
 
 
 ];

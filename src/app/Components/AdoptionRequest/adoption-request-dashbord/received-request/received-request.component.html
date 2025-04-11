@@ -94,7 +94,7 @@
                     <!-- FAB Menu -->
                     <div *ngIf="request.id == requestId" class="fab-menu">
                       <!-- Edit Button (Yellow) -->
-                      <button mat-mini-fab class="right" color="accent" matTooltip="Edit" matTooltipPosition="right" style="background-color: #ffc107; color: #000;">
+                      <button mat-mini-fab class="right" color="accent" matTooltip="Edit" (click)="redirectToEdit(request.id)" matTooltipPosition="right" style="background-color: #ffc107; color: #000;">
                         <mat-icon>edit</mat-icon>
                       </button>
 
