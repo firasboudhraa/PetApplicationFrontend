@@ -13,4 +13,5 @@ export interface AdoptionRequest {
     date: Date;  // Using Date type
     time: string;
     rejectionReason: string;
+    changedFields: string[];
 }

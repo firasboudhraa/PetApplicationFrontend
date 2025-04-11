@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 import { AdoptionRequestService } from 'src/app/Services/adoption-request.service';
 import { GoogleMapsLoaderService } from 'src/app/Services/google-maps-loader.service';
 import Swal from 'sweetalert2';
@@ -21,7 +22,8 @@ export class SentRequestComponent {
   }  
   constructor(
     private adoptionRequestService: AdoptionRequestService,
-    private mapsLoader: GoogleMapsLoaderService
+    private mapsLoader: GoogleMapsLoaderService,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -31,7 +33,9 @@ export class SentRequestComponent {
       console.error('Google Maps failed to load:', err);
     });
   }
-
+  redirectToEdit(requestId: number): void {
+    this.router.navigate(['/edit-adoption-request'], { queryParams: { requestId: requestId } });
+  }
   getImageUrl(filename: string): string {
     return `${this.imageApiUrl}/${filename}`;
   }
@@ -70,7 +74,7 @@ export class SentRequestComponent {
       const allRequestsPromises = requests
         .map(async request => {
           request.adoptedPet.imagePath = this.getImageUrl(request.adoptedPet.imagePath);
-         // request.location = await this.mapsLoader.getLocationInLetters(request.location); // Use the service
+          request.location = await this.mapsLoader.getLocationInLetters(request.location); // Use the service
           return request;
         });
 

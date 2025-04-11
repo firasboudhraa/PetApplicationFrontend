@@ -24,7 +24,8 @@ export class EditAdoptionRequestComponent {
   adoptedPet!:Pet ;
   minDate: string = '';
   requestId!: number;
-  adoptionRequest!: AdoptionRequest ;
+  originalAdoptionRequest!: AdoptionRequest ;
+  userId : number = 1;
 
   constructor(
     private fb: FormBuilder,
@@ -36,6 +37,8 @@ export class EditAdoptionRequestComponent {
   ) {}
 
   ngOnInit(): void {
+    this.requestId = Number(this.route.snapshot.queryParamMap.get('requestId'));
+
     //min date start from tomorow
     const currentDate = new Date();
     currentDate.setDate(currentDate.getDate() + 1);
@@ -47,13 +50,17 @@ export class EditAdoptionRequestComponent {
       message: [''],
       adoptedPet: [],
       requesterUserId: [this.requesterUserId],
+      changedFields: [],
+      id: [this.requestId],
+      isChangedByPetOwner: [false],
+      isChangedByRequestOwner: [false],
+  
       
     });
 
-    this.requestId = Number(this.route.snapshot.queryParamMap.get('requestId'));
     this.adoptionRequestService.getAdoptionRequestById(this.requestId).subscribe((data) => {
       this.adoptedPet = data.adoptedPet;
-      this.adoptionRequest = data;
+      this.originalAdoptionRequest = data;
       this.adoptionForm.patchValue({
         location: data.location,
         time: data.time,
@@ -75,7 +82,35 @@ export class EditAdoptionRequestComponent {
   submitAdoptionRequest() {
     if (this.adoptionForm.valid) { 
       console.log(this.adoptionForm.value);
-      this.adoptionRequestService.saveAdoptionRequest(this.adoptionForm.value).subscribe(
+      const changedFields: string[] = [];
+
+      for (const key in this.adoptionForm.value) {
+
+        if (
+          this.adoptionForm.value[key] !== (this.originalAdoptionRequest as any)[key] &&
+          !['changedFields', 'isChangedByPetOwner', 'isChangedByRequestOwner'].includes(key)
+        ) {
+          changedFields.push(key);
+        }
+      }
+      this.adoptionForm.patchValue({
+        changedFields: changedFields 
+         });
+      if (this.userId == this.adoptedPet.ownerId) {
+        this.adoptionForm.patchValue({
+          isChangedByPetOwner: true,
+          isChangedByRequestOwner: false,
+        });
+      } else if(this.userId == this.requesterUserId) {
+        this.adoptionForm.patchValue({
+          isChangedByPetOwner: false,
+          isChangedByRequestOwner: true,
+        });
+      }
+      console.log(this.adoptionForm.value);
+      console.log('Changed fields:', changedFields);
+
+     this.adoptionRequestService.editAdoptionRequest(this.adoptionForm.value).subscribe(
         (response) => {
             Swal.fire({
               icon: 'success',
@@ -91,7 +126,7 @@ export class EditAdoptionRequestComponent {
               }
               
             });
-        });
+        }); 
     }
   }
   
@@ -175,8 +210,8 @@ export class EditAdoptionRequestComponent {
       map.setCenter(petPosition); 
       map.setZoom(14); 
     }
-    if (this.adoptionRequest.location) {
-      const meetLocation = this.adoptionRequest.location.split(','); 
+    if (this.originalAdoptionRequest.location) {
+      const meetLocation = this.originalAdoptionRequest.location.split(','); 
       const meetLat = parseFloat(meetLocation[0].trim());
       const meetLng = parseFloat(meetLocation[1].trim());
   

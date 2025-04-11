@@ -79,12 +79,32 @@
                       alt="Avatar"
                       class="avatar-img"
                     />
+                    <span *ngIf="request.isChangedByPetOwner" class="badge-gold" title="Change Requested">
+                      ✨By owner
+                    </span>
+                    <span *ngIf="request.isChangedByRequestOwner" class="badge-gold" title="Change Requested">
+                      ✨By Requester
+                    </span>
                   </td>
-                  <td>{{ request.adoptedPet.name }}</td>
-                  <td>{{ request.location }}</td>
-                  <td>{{ request.message }}</td>
-                  <td>{{ request.date }}</td>
-                  <td>{{ request.time }}</td>
+                  <td [ngClass]="{'highlight-changed': request.changedFields?.includes('adoptedPet')}">
+                    {{ request.adoptedPet.name }}
+                  </td>
+              
+                  <td [ngClass]="{'highlight-changed': request.changedFields?.includes('location')}">
+                    {{ request.location }}
+                  </td>
+              
+                  <td [ngClass]="{'highlight-changed': request.changedFields?.includes('message')}">
+                    {{ request.message }}
+                  </td>
+              
+                  <td [ngClass]="{'highlight-changed': request.changedFields?.includes('date')}">
+                    {{ request.date }}
+                  </td>
+              
+                  <td [ngClass]="{'highlight-changed': request.changedFields?.includes('time')}">
+                    {{ request.time }}
+                  </td>
                   <td>
                     <!-- FAB Button -->
                     <button mat-fab color="primary" (click)=" toggleMenu(request.id)" matTooltip="Actions" matTooltipPosition="right">
@@ -148,6 +168,7 @@
                       alt="Avatar"
                       class="avatar-img"
                     />
+                    
                   </td>
                   <td>{{ request.adoptedPet.name }}</td>
                   <td>{{ request.location }}</td>

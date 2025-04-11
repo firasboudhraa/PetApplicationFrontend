@@ -69,17 +69,45 @@
                 </thead>
                 <tbody>
                   <tr *ngFor="let request of pendingRequests">
-                    <td><img [src]="request.adoptedPet.imagePath" alt="Avatar" class="avatar-img"></td>
-                    <td>{{ request.adoptedPet.name }}</td>
-                    <td>{{ request.location }}</td>
-                    <td>{{ request.message }}</td>
-                    <td>{{ request.date }}</td>
-                    <td>{{ request.time }}</td>
+                    <td ><img [src]="request.adoptedPet.imagePath" alt="Avatar" class="avatar-img">
+                      <span *ngIf="request.isChangedByPetOwner" class="badge-gold" title="Change Requested">
+                        ✨By owner
+                      </span>
+                      <span *ngIf="request.isChangedByRequestOwner" class="badge-gold" title="Change Requested">
+                        ✨By Requester
+                      </span>
+                    </td>
+                
+                    <td [ngClass]="{'highlight-changed': request.changedFields?.includes('adoptedPet')}">
+                      {{ request.adoptedPet.name }}
+                    </td>
+                
+                    <td [ngClass]="{'highlight-changed': request.changedFields?.includes('location')}">
+                      {{ request.location }}
+                    </td>
+                
+                    <td [ngClass]="{'highlight-changed': request.changedFields?.includes('message')}">
+                      {{ request.message }}
+                    </td>
+                
+                    <td [ngClass]="{'highlight-changed': request.changedFields?.includes('date')}">
+                      {{ request.date }}
+                    </td>
+                
+                    <td [ngClass]="{'highlight-changed': request.changedFields?.includes('time')}">
+                      {{ request.time }}
+                    </td>
+                
                     <td>
-                      <button class="btn btn-danger" (click)="deleteRequest(request.id)">Delete</button>
+                      <div class="d-flex justify-content-between" >
+
+                        <button class="btn btn-warning" *ngIf="request.isChangedByPetOwner" (click)="redirectToEdit(request.id)">Edit</button>
+                        <button class="btn btn-danger" (click)="deleteRequest(request.id)">Delete</button>
+                      </div>
                     </td>
                   </tr>
                 </tbody>
+                
               </table>
             </div>
             <ng-template #noPending>

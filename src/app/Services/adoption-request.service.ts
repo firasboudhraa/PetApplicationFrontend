@@ -18,6 +18,9 @@ export class AdoptionRequestService {
   saveAdoptionRequest(adoptionRequest: AdoptionRequest): Observable<AdoptionRequest> {
     return this.http.post<AdoptionRequest>(`${this.apiUrl}`, adoptionRequest);
   }
+  editAdoptionRequest(adoptionRequest: AdoptionRequest): Observable<AdoptionRequest> {
+    return this.http.put<AdoptionRequest>(`${this.apiUrl}`, adoptionRequest);
+  }
   getAdoptionRequestById(id: number): Observable<AdoptionRequest> {
     return this.http.get<AdoptionRequest>(`${this.apiUrl}/${id}`);
   }
@@ -34,5 +37,6 @@ export class AdoptionRequestService {
   confirmAdoptionRequest(id: number): Observable<any> {
     return this.http.put(`${this.apiUrl}/confirm/${id}`, {});
   }
+
 }
 

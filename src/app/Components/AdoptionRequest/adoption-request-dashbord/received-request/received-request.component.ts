@@ -146,7 +146,7 @@ pendingRequests: any[] = [];
       const pendingRequestsPromises = requests
         .map(async request => {
           request.adoptedPet.imagePath = this.getImageUrl(request.adoptedPet.imagePath);
-        //  request.location = await this.mapsLoader.getLocationInLetters(request.location); // Use the service
+         request.location = await this.mapsLoader.getLocationInLetters(request.location); // Use the service
           return request;
         });
 
