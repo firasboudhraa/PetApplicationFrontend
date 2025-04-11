@@ -5,7 +5,7 @@ import { DonationComponent } from './Components/FrontOffice/EventDonation/donati
 import { EventComponent } from './Components/FrontOffice/EventDonation/event/event.component';
 import { EventDetailComponent } from './Components/FrontOffice/EventDonation/event-detail/event-detail.component';
 import { AddDonationComponent } from './Components/FrontOffice/EventDonation/add-donation/add-donation.component';
-import { AddEventComponent } from './Components/FrontOffice/EventDonation/add-event/add-event.component';
+import { AddEventComponent } from './Components/BackOffice/dashboard/add-event/add-event.component';
 import { ServiceComponent } from './Components/FrontOffice/service/service.component';
 import { AddServiceComponent } from './Components/FrontOffice/add-service/add-service.component';
 import { DetailServiceComponent } from './Components/FrontOffice/detail-service/detail-service.component';
@@ -22,13 +22,13 @@ const routes: Routes = [
   {path:'event', component:EventComponent},
   {path:'event-detail/:id', component:EventDetailComponent},
   {path:'add-donation/:id', component:AddDonationComponent},
-  {path:'add-event', component:AddEventComponent},
   {path:'serviceDetail/:id', component:DetailServiceComponent},
-  {path:'eventback', component:EventbackComponent},
-  {path:'update-event/:id', component:UpdateEventComponent},
   {path:'dashboard', component:DashboardComponent,
     children:[
       {path:'users', component:UsersComponent},
+      {path:'eventback', component:EventbackComponent},
+      {path:'update-event/:id', component:UpdateEventComponent},
+      {path:'add-event', component:AddEventComponent},
     ]
   },
   {path:'',redirectTo:'home',pathMatch:'full'},

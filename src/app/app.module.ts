@@ -13,7 +13,6 @@ import { DonationComponent } from './Components/FrontOffice/EventDonation/donati
 import { AddDonationComponent } from './Components/FrontOffice/EventDonation/add-donation/add-donation.component';
 import { EventComponent } from './Components/FrontOffice/EventDonation/event/event.component';
 import { EventDetailComponent } from './Components/FrontOffice/EventDonation/event-detail/event-detail.component';
-import { AddEventComponent } from './Components/FrontOffice/EventDonation/add-event/add-event.component';
 import { RangePipe } from './Components/FrontOffice/EventDonation/event/range.pipe';
 import { ServiceComponent } from './Components/FrontOffice/service/service.component';
 import { AddServiceComponent } from './Components/FrontOffice/add-service/add-service.component';
@@ -24,6 +23,7 @@ import { SidebarComponent } from './Components/BackOffice/sidebar/sidebar.compon
 import { HeaderComponent } from './Components/BackOffice/header/header.component';
 import { EventbackComponent } from './Components/BackOffice/dashboard/eventback/eventback.component';
 import { UpdateEventComponent } from './Components/BackOffice/dashboard/update-event/update-event.component';
+import { AddEventComponent } from './Components/BackOffice/dashboard/add-event/add-event.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -36,7 +36,6 @@ import { UpdateEventComponent } from './Components/BackOffice/dashboard/update-e
     AddDonationComponent,
     EventComponent,
     EventDetailComponent,
-    AddEventComponent,
     RangePipe,
     ServiceComponent,
     AddServiceComponent,
@@ -46,7 +45,8 @@ import { UpdateEventComponent } from './Components/BackOffice/dashboard/update-e
     SidebarComponent,
     HeaderComponent,
     EventbackComponent,
-    UpdateEventComponent
+    UpdateEventComponent,
+    AddEventComponent
   ],
   imports: [
     BrowserModule,

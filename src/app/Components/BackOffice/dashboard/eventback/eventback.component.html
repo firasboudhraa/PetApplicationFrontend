@@ -1,167 +1,157 @@
-<section class="hero-wrap hero-wrap-2" style="background-image: url('assets/images/bg_2.jpg'); background-attachment: fixed;" data-stellar-background-ratio="0.5">
-    <div class="overlay"></div>
-    <div class="container">
-      <div class="row no-gutters slider-text align-items-end">
-        <div class="pb-5 col-md-9">
-          <p class="breadcrumbs mb-2">
-            <span class="mr-2"><a routerLink="/">Home <i class="fas fa-chevron-right"></i></a></span> 
-            <span>Events Management <i class="fas fa-chevron-right"></i></span>
-          </p>
-          <h1 class="mb-0 bread">Events Dashboard</h1>
-        </div>
-      </div>
-    </div>
-</section>
 
-<section class="ftco-section bg-light">
-    <div class="container">
-        <!-- Advanced Search Section -->
-        <div class="row mb-5">
-            <div class="col-md-12">
-                <div class="card search-card shadow-sm">
-                    <div class="card-body">
-                        <h4 class="card-title mb-4"><i class="fas fa-search mr-2"></i>Advanced Search</h4>
-                        
-                        <div class="row">
-                            <div class="col-md-4 mb-3">
-                                <label for="searchName" class="form-label">Event Name</label>
-                                <input type="text" class="form-control" id="searchName" 
-                                       [(ngModel)]="searchParams.name" 
-                                       placeholder="Search by name...">
-                            </div>
-                            
-                            <div class="col-md-4 mb-3">
-                                <label for="searchLocation" class="form-label">Location</label>
-                                <input type="text" class="form-control" id="searchLocation" 
-                                       [(ngModel)]="searchParams.location" 
-                                       placeholder="Search by location...">
-                            </div>
-                            
-                            <div class="col-md-4 mb-3">
-                                <label for="searchDate" class="form-label">Date</label>
-                                <input type="date" class="form-control" id="searchDate" 
-                                       [(ngModel)]="searchParams.date">
-                            </div>
-                        </div>
-                        
-                        <div class="row">
-                            <div class="col-md-4 mb-3">
-                                <label class="form-label">Donation Progress</label>
-                                <select class="form-select" [(ngModel)]="searchParams.progress">
-                                    <option value="">All</option>
-                                    <option value="low">Low (0-25%)</option>
-                                    <option value="medium">Medium (25-75%)</option>
-                                    <option value="high">High (75-100%)</option>
-                                    <option value="completed">Completed (100%+)</option>
-                                </select>
-                            </div>
-                            
-                            <div class="col-md-4 mb-3">
-                                <label class="form-label">Sort By</label>
-                                <select class="form-select" [(ngModel)]="searchParams.sortBy">
-                                    <option value="date_asc">Date (Oldest First)</option>
-                                    <option value="date_desc">Date (Newest First)</option>
-                                    <option value="name_asc">Name (A-Z)</option>
-                                    <option value="name_desc">Name (Z-A)</option>
-                                    <option value="progress_asc">Progress (Low to High)</option>
-                                    <option value="progress_desc">Progress (High to Low)</option>
-                                </select>
-                            </div>
-                            
-                            <div class="col-md-4 mb-3 d-flex align-items-end">
-                                <button class="btn btn-primary me-2" (click)="applyFilters()">
-                                    <i class="fas fa-filter mr-2"></i>Apply Filters
-                                </button>
-                                <button class="btn btn-outline-secondary" (click)="resetFilters()">
-                                    <i class="fas fa-undo mr-2"></i>Reset
-                                </button>
-                            </div>
-                        </div>
-                    </div>
+<div class="eventback-container">
+    <!-- Header Section -->
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2>Events Management</h2>
+        <button class="btn btn-primary" [routerLink]="['/dashboard/add-event']">
+            <i class="fas fa-plus mr-2"></i>Add New Event
+        </button>
+    </div>
+
+    <!-- Advanced Search Section -->
+    <div class="card search-card mb-4">
+        <div class="card-body">
+            <h4 class="card-title mb-4"><i class="fas fa-search mr-2"></i>Advanced Search</h4>
+            
+            <div class="row">
+                <div class="col-md-4 mb-3">
+                    <label for="searchName" class="form-label">Event Name</label>
+                    <input type="text" class="form-control" id="searchName" 
+                           [(ngModel)]="searchParams.name" 
+                           placeholder="Search by name...">
+                </div>
+                
+                <div class="col-md-4 mb-3">
+                    <label for="searchLocation" class="form-label">Location</label>
+                    <input type="text" class="form-control" id="searchLocation" 
+                           [(ngModel)]="searchParams.location" 
+                           placeholder="Search by location...">
+                </div>
+                
+                <div class="col-md-4 mb-3">
+                    <label for="searchDate" class="form-label">Date</label>
+                    <input type="date" class="form-control" id="searchDate" 
+                           [(ngModel)]="searchParams.date">
                 </div>
             </div>
-        </div>
-
-        <div class="row align-items-center pb-5 mb-3">
-            <div class="col-12 text-center position-relative">
-                <h2 class="heading-section ftco-animate mb-4">Events Management</h2>
+            
+            <div class="row">
+                <div class="col-md-4 mb-3">
+                    <label class="form-label">Donation Progress</label>
+                    <select class="form-select" [(ngModel)]="searchParams.progress">
+                        <option value="">All</option>
+                        <option value="low">Low (0-25%)</option>
+                        <option value="medium">Medium (25-75%)</option>
+                        <option value="high">High (75-100%)</option>
+                        <option value="completed">Completed (100%+)</option>
+                    </select>
+                </div>
                 
-                <div class="add-event-btn-container">
-                    <button class="btn btn-primary" [routerLink]="['/add-event']">
-                        <i class="fas fa-plus mr-2"></i>Add New Event
+                <div class="col-md-4 mb-3">
+                    <label class="form-label">Sort By</label>
+                    <select class="form-select" [(ngModel)]="searchParams.sortBy">
+                        <option value="date_asc">Date (Oldest First)</option>
+                        <option value="date_desc">Date (Newest First)</option>
+                        <option value="name_asc">Name (A-Z)</option>
+                        <option value="name_desc">Name (Z-A)</option>
+                        <option value="progress_asc">Progress (Low to High)</option>
+                        <option value="progress_desc">Progress (High to Low)</option>
+                    </select>
+                </div>
+                
+                <div class="col-md-4 mb-3 d-flex align-items-end">
+                    <button class="btn btn-primary me-2" (click)="applyFilters()">
+                        <i class="fas fa-filter mr-2"></i>Apply Filters
+                    </button>
+                    <button class="btn btn-outline-secondary" (click)="resetFilters()">
+                        <i class="fas fa-undo mr-2"></i>Reset
                     </button>
                 </div>
             </div>
         </div>
+    </div>
 
-        <div class="row">
-            <div *ngFor="let event of paginatedEvents" class="col-md-4 d-flex align-items-stretch">
-                <div class="block-7 event-card">
-                    <div class="img" style="background-image: url('assets/images/pricing-1.jpg');"></div>
-                    <div class="text-center p-4">
-                        <h2 class="event-title">{{ event.nameEvent }}</h2>
-                        <p class="event-date">{{ event.dateEvent | date: 'mediumDate' }} at {{ event.dateEvent | date: 'shortTime' }}</p>
-                        <p class="event-description">{{ event.description }}</p>
-                        <p class="event-location"><i class="fas fa-map-marker-alt mr-2"></i>{{ event.location }}</p>
-
-                        <div class="progress-container mb-3">
-                            <div class="d-flex justify-content-between mb-2">
-                                <span class="font-weight-bold">${{ getTotalDonationsForEvent(event.idEvent) | number:'1.2-2' }}</span>
-                                <span class="font-weight-bold">${{ event.goalAmount | number:'1.2-2' }}</span>
-                            </div>
-                            <div class="progress" style="height: 25px;">
-                                <div class="progress-bar bg-success progress-bar-striped progress-bar-animated" 
-                                     role="progressbar" 
-                                     [style.width]="getDonationPercentage(event.idEvent) + '%'">
-                                    {{ getDonationPercentage(event.idEvent) | number:'1.0-0' }}%
-                                </div>
-                            </div>
-                            <small class="text-muted d-block text-center mt-2">Progress</small>
+    <!-- Events Grid -->
+    <div class="row">
+        <div *ngFor="let event of paginatedEvents" class="col-md-4 mb-4">
+            <div class="card event-card h-100">
+                <div class="event-image" 
+                    style="background-image: url('assets/images/pricing-1.jpg');">
+                </div>
+                
+                <div class="card-body">
+                    <h3 class="event-title">{{ event.nameEvent }}</h3>
+                    <p class="event-meta">
+                        <i class="fas fa-calendar-alt mr-2"></i>
+                        {{ event.dateEvent | date: 'mediumDate' }} at {{ event.dateEvent | date: 'shortTime' }}
+                        <br>
+                        <i class="fas fa-map-marker-alt mr-2"></i>{{ event.location }}
+                    </p>
+                    <p class="event-description">{{ event.description }}</p>
+                    
+                    <div class="progress-container">
+                        <div class="d-flex justify-content-between mb-2">
+                            <span class="font-weight-bold">${{ getTotalDonationsForEvent(event.idEvent) | number:'1.2-2' }}</span>
+                            <span class="font-weight-bold">${{ event.goalAmount | number:'1.2-2' }}</span>
                         </div>
-
-                        <div class="event-actions">
-                            <button class="btn btn-warning" [routerLink]="['/update-event', event.idEvent]">
-                              <i class="fas fa-edit mr-2"></i>Update
-                            </button>
-                            <button class="btn btn-danger" (click)="deleteEvent(event.idEvent)">
-                              <i class="fas fa-trash-alt mr-2"></i>Delete
-                            </button>
-                          </div>                               
+                        <div class="progress">
+                            <div class="progress-bar" 
+                                 role="progressbar" 
+                                 [style.width]="getDonationPercentage(event.idEvent) + '%'">
+                            </div>
+                        </div>
+                        <small class="d-block text-center mt-2 text-muted">
+                            {{ getDonationPercentage(event.idEvent) | number:'1.0-0' }}% Funded
+                        </small>
+                    </div>
+                </div>
+                
+                <div class="card-footer bg-white border-top-0">
+                    <div class="d-flex justify-content-between">
+                        <button class="btn btn-sm btn-warning" 
+                                [routerLink]="['/dashboard/update-event', event.idEvent]">
+                            <i class="fas fa-edit mr-1"></i>Edit
+                        </button>
+                        <button class="btn btn-sm btn-danger" 
+                                (click)="deleteEvent(event.idEvent)">
+                            <i class="fas fa-trash-alt mr-1"></i>Delete
+                        </button>
                     </div>
                 </div>
             </div>
+        </div>
 
-            <div *ngIf="filteredEvents.length === 0" class="col-12 text-center py-5">
-                <div class="alert alert-info">
-                    No events found matching your search criteria.
-                </div>
+        <div *ngIf="filteredEvents.length === 0" class="col-12">
+            <div class="alert alert-info text-center py-4">
+                <i class="fas fa-info-circle fa-2x mb-3"></i>
+                <h4>No events found matching your search criteria</h4>
                 <button class="btn btn-primary mt-3" (click)="resetFilters()">
                     <i class="fas fa-undo mr-2"></i>Reset Filters
                 </button>
             </div>
         </div>
+    </div>
 
-        <!-- Pagination -->
-        <div class="row mt-5" *ngIf="filteredEvents.length > 0">
-            <div class="col-12">
-                <nav aria-label="Page navigation">
-                    <ul class="pagination justify-content-center">
-                        <li class="page-item" [class.disabled]="currentPage === 1">
-                            <a class="page-link" (click)="changePage(currentPage - 1)" aria-label="Previous">
-                                <span aria-hidden="true">&laquo;</span>
-                            </a>
-                        </li>
-                        <li *ngFor="let page of totalPages | range:1" class="page-item" [class.active]="page === currentPage">
-                            <a class="page-link" (click)="changePage(page)">{{ page }}</a>
-                        </li>
-                        <li class="page-item" [class.disabled]="currentPage === totalPages">
-                            <a class="page-link" (click)="changePage(currentPage + 1)" aria-label="Next">
-                                <span aria-hidden="true">&raquo;</span>
-                            </a>
-                        </li>
-                    </ul>
-                </nav>
-            </div>
+    <!-- Pagination -->
+    <div class="row mt-5" *ngIf="filteredEvents.length > 0">
+        <div class="col-12">
+            <nav aria-label="Page navigation">
+                <ul class="pagination justify-content-center">
+                    <li class="page-item" [class.disabled]="currentPage === 1">
+                        <a class="page-link" (click)="changePage(currentPage - 1)" aria-label="Previous">
+                            <span aria-hidden="true">&laquo;</span>
+                        </a>
+                    </li>
+                    <li *ngFor="let page of totalPages | range:1" class="page-item" [class.active]="page === currentPage">
+                        <a class="page-link" (click)="changePage(page)">{{ page }}</a>
+                    </li>
+                    <li class="page-item" [class.disabled]="currentPage === totalPages">
+                        <a class="page-link" (click)="changePage(currentPage + 1)" aria-label="Next">
+                            <span aria-hidden="true">&raquo;</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
         </div>
     </div>
-</section>
+</div>  

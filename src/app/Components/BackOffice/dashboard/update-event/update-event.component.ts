@@ -73,7 +73,7 @@ export class UpdateEventComponent implements OnInit {
 
     this.eventService.updateEvent(this.eventId, updatedEvent).subscribe(
       () => {
-        this.router.navigate(['/eventback']);
+        this.router.navigate(['/dashboard/eventback']);
       },
       error => {
         this.errorMessage = 'Failed to update event';
@@ -84,6 +84,6 @@ export class UpdateEventComponent implements OnInit {
   }
 
   onCancel(): void {
-    this.router.navigate(['/eventback']);
+    this.router.navigate(['/dashboard/eventback']);
   }
 }
