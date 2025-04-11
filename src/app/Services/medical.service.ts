@@ -30,6 +30,8 @@ export class MedicalService {
   createMedicalRecord(record: any): Observable<any> {
     return this.http.post<any>(`${this.baseUrl1}/add-medicalRecord`, record);
   }
+
+  
   
   /*getCarnetsWithRecords(): Observable<Carnet[]> {
     return this.getAllCarnets().pipe(
@@ -80,12 +82,12 @@ export class MedicalService {
   
  
   
-   
+  deleteCarnet(id: number): Observable<any> {
+    return this.http.delete(`${this.baseUrl}/remove-carnet/${id}`);
+  }
   
-    // Supprimer un carnet médical
-    deleteCarnet(id: number): Observable<any> {
-      return this.http.delete(`${this.baseUrl}/carnet/${id}`);
-    }
+  
+  
 
   /*constructor(private http : HttpClient) { }
   private carnets: any[] = [];  // Stockage des carnets

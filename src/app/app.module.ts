@@ -14,6 +14,10 @@ import { AddServiceComponent } from './Components/FrontOffice/add-service/add-se
 import { DetailServiceComponent } from './Components/FrontOffice/detail-service/detail-service.component';
 import { MedicalnotebookComponent } from './medicalnotebook/medicalnotebook.component';
 import { MedicalnotebookFormComponent } from './medicalnotebook-form/medicalnotebook-form.component';
+import { DashboardComponent } from './Components/BackOffice/dashboard/dashboard.component';
+import { UsersComponent } from './Components/BackOffice/dashboard/users/users.component';
+import { SidebarComponent } from './Components/BackOffice/sidebar/sidebar.component';
+import { HeaderComponent } from './Components/BackOffice/header/header.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -27,6 +31,10 @@ import { MedicalnotebookFormComponent } from './medicalnotebook-form/medicalnote
     DetailServiceComponent,
     MedicalnotebookComponent,
     MedicalnotebookFormComponent,
+    DashboardComponent,
+    UsersComponent,
+    SidebarComponent,
+    HeaderComponent
   ],
   imports: [
     BrowserModule,
@@ -34,6 +42,7 @@ import { MedicalnotebookFormComponent } from './medicalnotebook-form/medicalnote
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
+
   ],
   providers: [],
   bootstrap: [AppComponent]

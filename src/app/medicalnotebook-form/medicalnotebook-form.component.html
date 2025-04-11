@@ -79,8 +79,9 @@
         <label>Choisir un carnet</label>
         <select class="form-select" formControlName="carnet_id">
           <option *ngFor="let carnet of carnets" [value]="carnet.id">
-            {{ carnet.pet_id }} (Carnet ID: {{ carnet.id }})
+            {{ carnet.name }}
           </option>
+          
         </select>
         <div *ngIf="recordForm.controls['carnet_id'].invalid && recordForm.controls['carnet_id'].touched" class="text-danger">
           Veuillez sélectionner un carnet.

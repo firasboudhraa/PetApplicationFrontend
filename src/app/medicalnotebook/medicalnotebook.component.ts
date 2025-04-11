@@ -14,57 +14,7 @@ import { forkJoin, map, catchError, of } from 'rxjs';
 })
 export class MedicalnotebookComponent implements OnInit {
   constructor(private router: Router,private medicalService: MedicalService,private act:ActivatedRoute) {}
-/*
-  carnets_test = [
-    { medicalHistory: 'Historique Médical 1', pet_name: 'hhgff1234' },
-    { medicalHistory: 'Historique Médical 2', pet_name: 'vvvvv5678' },
-    { medicalHistory: 'Historique Médical 3', pet_name: 'aaaaa91011' }
-  ];
 
-  carnets: Carnet[] = [
-    {
-      id: '1',
-      pet_id: '325',
-      medicalHistory: [
-        {
-          id: 'rec1',
-          name: 'Carnet Médical Médor',
-          date: new Date('2024-03-01'),
-          type: RecordTypeEnum.VACCINATION, 
-          description: 'Vaccination annuelle',
-          veterinarian_id: 'vet001',
-          next_due_date: new Date('2025-03-01'),
-          carnet_id: '1'
-        },
-        {
-          id: 'rec2',
-          name: 'Carnet Médical Médor',
-          date: new Date('2024-06-15'),
-          type: RecordTypeEnum.CHECKUP, 
-          description: 'Contrôle général',
-          veterinarian_id: 'vet002',
-          next_due_date: new Date('2024-12-15'),
-          carnet_id: '1'
-        }
-      ]
-    },
-    {
-      id: '2',
-      pet_id: '123',
-      medicalHistory: [
-        {
-          id: 'rec3',
-          name: 'Carnet Médical Bella',
-          date: new Date('2023-09-10'),
-          type: RecordTypeEnum.SURGERY, 
-          description: 'Opération des ligaments croisés',
-          veterinarian_id: 'vet003',
-          next_due_date: new Date('2024-09-10'),
-          carnet_id: '2'
-        }
-      ]
-    }
-  ];*/
   carnets !: any[] 
   id!:number
   /*
@@ -85,12 +35,15 @@ export class MedicalnotebookComponent implements OnInit {
     console.log(this.id)
 
     this.loadCarnets();
+    this.loadCarnets_test();
   }
 
   // Charger la liste des carnets médicaux
   loadCarnets(): void {
     this.medicalService.getAllCarnets().subscribe({
       next: (data) => {
+        console.log('Carnets récupérés:', data);  // Vérifie la structure ici
+        
         this.carnets = []; // Réinitialise la liste des carnets
         const carnetRequests = data.map(carnet => {  
           return this.medicalService.getMedicalRecordsByCarnetId(carnet.id).pipe(
@@ -141,47 +94,88 @@ export class MedicalnotebookComponent implements OnInit {
 
   
   
-  
-
-  // Supprimer un carnet
-  
-  deleteCarnet(id: number): void {
-    if (!id) {
-      console.error('ID du carnet manquant');
-      return;
-    }
-    
-    this.medicalService.deleteCarnet(id).subscribe({
-      next: () => {
-        // Supprimer le carnet localement
-        this.carnets = this.carnets.filter(carnet => carnet.id !== id);
+  loadCarnets_test(): void {
+    this.medicalService.getAllCarnets().subscribe({
+      next: (data) => {
+        this.carnets = data;
+        console.log('Carnets récupérés:', this.carnets);
       },
       error: (err) => {
-        console.error('Erreur lors de la suppression du carnet', err);
+        console.error('Erreur lors du chargement des carnets', err);
+      }
+    });
+  }
+ 
+  
+  deleteCarnet(carnet: any) {
+    console.log('Carnet reçu pour suppression:', carnet);  // Log de l'objet complet
+  
+ 
+  
+    console.log('ID reçu pour suppression:', carnet.id);
+  
+    // Si tu veux t'assurer que les carnets sont récupérés avant de procéder à la suppression
+    this.medicalService.getAllCarnets().subscribe({
+      next: (data) => {
+        this.carnets = data;
+        console.log('Carnets récupérés:', this.carnets);
+  
+        // Vérifie si le carnet existe dans la liste des carnets
+        const carnetToDelete = this.carnets.find(c => c.id === carnet.id);
+        if (carnetToDelete) {
+          console.log('Carnet trouvé pour suppression:', carnetToDelete); // Log le carnet à supprimer
+          // Effectuer la suppression avec l'ID du carnet
+          this.medicalService.deleteCarnet(carnetToDelete.id).subscribe({
+            next: () => {
+              console.log('Suppression réussie pour le carnet avec ID:', carnetToDelete.id);
+              this.loadCarnets(); // Recharge la liste des carnets après suppression
+            },
+            error: err => {
+              console.error('Erreur lors de la suppression du carnet', err);
+            }
+          });
+        } else {
+          console.error('Carnet non trouvé dans la liste');
+        }
+      },
+      error: (err) => {
+        console.error('Erreur lors de la récupération des carnets', err);
       }
     });
   }
   
   
-
-  // Navigation vers le formulaire d'ajout d'un carnet
+  
   navigateToMedicalNotebookForm(): void {
     this.router.navigate(['/medicalnotebookform']);
   }
   
-  /*
-
-  Carnets: any[] = [];
-  records: any[] = [];
-
-
-  ngOnInit(): void {
-    
+  searchText: string = '';
+  searchDate: string = '';
+  
+  // ✅ Getter pour filtrer dynamiquement les carnets selon le nom et la date
+  get filteredCarnets(): any[] {
+    return this.carnets.filter(carnet => {
+      const matchesName =
+        !this.searchText || carnet.name?.toLowerCase().includes(this.searchText.toLowerCase());
+  
+      const matchesDate =
+        !this.searchDate ||
+        (carnet.medicalRecords &&
+          carnet.medicalRecords.some((record: { dateTime: string | number | Date; }) => {
+            const recordDate = new Date(record.dateTime).toISOString().split('T ')[0];
+            return recordDate === this.searchDate;
+          })
+        );
+  
+      return matchesName && matchesDate;
+    });
   }
-
   
 
-  navigateToMedicalNotebookForm(): void {
-    this.router.navigate(['/medicalnotebookform']);
-  }*/
+  searchText1: string = '';
+  searchDate1: string = '';
+  searchType: string = '';
+  searchVet: string = '';
+  
 }
