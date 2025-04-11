@@ -1,0 +1,60 @@
+import { Component, OnInit } from '@angular/core';
+import { PostsService } from 'src/app/services/posts.service';
+import { UserService } from 'src/app/services/user.service';
+import { CommentService } from 'src/app/services/comments.service';
+import { Post } from 'src/app/models/Post';
+import { UserDTO } from 'src/app/models/userDTO';
+import { Comment } from 'src/app/models/Comment';
+
+@Component({
+  selector: 'app-posts',
+  templateUrl: './posts.component.html',
+  styleUrls: ['./posts.component.css']
+})
+export class PostsComponent implements OnInit {
+  posts: Post[] = [];
+  authors: { [key: number]: UserDTO } = {};
+  commentCounts: { [key: number]: number } = {};
+  likeCounts: { [key: number]: number } = {};
+  userNames: Map<number, string> = new Map();  // Declare userNames to store usernames by userId
+
+  constructor(
+    private postsService: PostsService,
+    private userService: UserService,
+    private commentService: CommentService
+  ) {}
+
+  ngOnInit(): void {
+    this.loadPosts();
+  }
+
+  loadPosts(): void {
+    this.postsService.getPosts().subscribe(posts => {
+      this.posts = posts;
+
+      posts.forEach(post => {
+        // Load the post author
+        this.userService.getUserById(post.userId).subscribe(user => {
+          this.authors[post.id] = user;
+          this.userNames.set(post.userId, user.name);  // Set the username in the map
+        });
+
+        // Load the number of comments for each post
+        this.commentService.getCommentsByPostId(post.id).subscribe(comments => {
+          this.commentCounts[post.id] = comments.length;
+        });
+
+        // Load the like count for each post
+        this.likeCounts[post.id] = post.likedBy.length;  // You can safely use post.likedBy.length now
+      });
+    });
+  }
+
+  deletePost(postId: number): void {
+    if (confirm('Êtes-vous sûr de vouloir supprimer ce post ?')) {
+      this.postsService.deletePost(postId).subscribe(() => {
+        this.posts = this.posts.filter(p => p.id !== postId);
+      });
+    }
+  }
+}

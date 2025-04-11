@@ -28,5 +28,11 @@ likeComment(commentId: number, userId: number): Observable<void> {
   return this.http.put<void>(`${this.apiUrl}/${commentId}/like/${userId}`, {});
 }
 
+// comment.service.ts
+
+deleteComment(commentId: number): Observable<void> {
+  return this.http.delete<void>(`${this.apiUrl}/${commentId}`);
+}
+
 }
 

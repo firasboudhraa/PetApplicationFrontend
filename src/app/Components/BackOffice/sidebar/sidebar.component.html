@@ -1,6 +1,7 @@
 <div class="sidebar" data-background-color="dark">
   <div class="sidebar-logo">
     <!-- Logo Header -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
     <div class="logo-header" data-background-color="dark">
       <a routerLink="/home" class="logo">
         <img
@@ -63,11 +64,13 @@
           </a>
         </li>
         <li class="nav-item">
-          <a data-bs-toggle="collapse" href="#tables">
-            <i class="fas  fa-newspaper"></i>
+          <a class="nav-link" routerLink="/dashboard/posts" routerLinkActive="active">
+            <i class="fas fa-newspaper"></i>
             <p>Posts</p>
           </a>
+          
         </li>
+             
         <li class="nav-item">
           <a data-bs-toggle="collapse" href="#maps">
             <i class="fas fa-cube"></i>

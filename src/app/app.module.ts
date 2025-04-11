@@ -9,7 +9,7 @@ import { HomeComponentComponent } from './Components/home-component/home-compone
 import { VetComponentComponent } from './Components/vet-component/vet-component.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import {HttpClientModule} from '@angular/common/http';
-import { FooterComponentComponent } from './Components/FrontOffice/footer-component/footer-component.component';
+import { FooterComponentComponent } from './Components/FrontOffice/footer/footer-component.component';
 import { NavbarComponent } from './Components/navbar/navbar.component';
 import { ContactInfoComponent } from './Components/FrontOffice/contact-info/contact-info.component';
 import { PostDetailComponent } from './Components/FrontOffice/post-detail/post-detail.component';
@@ -18,6 +18,7 @@ import { ModifyPostComponent } from './Components/FrontOffice/modify-post/modify
 import { DashboardComponent } from './Components/BackOffice/dashboard/dashboard.component';
 import { HeaderComponent } from './Components/BackOffice/header/header.component';
 import { SidebarComponent } from './Components/BackOffice/sidebar/sidebar.component';
+import { PostsComponent } from './Components/BackOffice/dashboard/posts/posts.component';
 
 @NgModule({
   declarations: [
@@ -34,7 +35,8 @@ import { SidebarComponent } from './Components/BackOffice/sidebar/sidebar.compon
     ModifyPostComponent,
     DashboardComponent,
     HeaderComponent,
-    SidebarComponent
+    SidebarComponent,
+    PostsComponent
   ],
   imports: [
     BrowserModule,

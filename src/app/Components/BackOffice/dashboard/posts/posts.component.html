@@ -1,0 +1,39 @@
+<div class="container mt-4">
+    <h2 class="mb-3">Posts List</h2>
+  
+    <table class="table table-striped">
+      <thead class="thead-dark">
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">Image</th>
+          <th scope="col">Title</th>
+          <th scope="col">Author</th>
+          <th scope="col">Type</th>
+          <th scope="col">Likes</th>
+          <th scope="col">Comments</th>
+          <th scope="col">Created At</th>
+          <th scope="col">Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let post of posts; let i = index">
+          <th scope="row">{{ i + 1 }}</th>
+          <td>
+            <img [src]="'http://localhost:8082/posts/images/' + post.imageUrl"
+                 alt="Post Image"
+                 style="width: 60px; height: 60px; object-fit: cover; border-radius: 5px;">
+          </td>
+          <td>{{ post.title }}</td>
+          <td>{{ userNames.get(post.userId) }}/</td>
+          <td>{{ post.type }}</td>
+          <td>{{ post.likedBy?.length || 0 }}</td>
+          <td>{{ commentCounts[post.id] || 0 }}</td> <!-- Comment count -->
+          <td>{{ post.createdAt | date: 'medium' }}</td>
+          <td>
+            <button class="btn btn-danger btn-sm" (click)="deletePost(post.id)">Delete</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  

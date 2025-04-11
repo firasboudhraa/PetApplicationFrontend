@@ -99,34 +99,7 @@ time i {
   margin-right: 5px;
 }
 
-/* Section des likes du post */
-.likes-section {
-  margin-top: 20px;
-  display: flex;
-  justify-content: flex-start;
-  align-items: center;
-}
 
-.like-icon, .likes-button {
-  background-color: #2e7d32; /* Vert moyen */
-  color: white;
-  padding: 6px 12px; /* Smaller padding */
-  border: none;
-  border-radius: 4px; /* Smaller radius */
-  font-size: 14px; /* Smaller font size */
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  margin-right: 12px;
-}
-
-.like-icon i, .likes-button i {
-  margin-right: 5px;
-}
-
-.like-icon:hover, .likes-button:hover {
-  background-color: #1e4d2b; /* Vert foncé */
-}
 
 /* Section des commentaires */
 .comments-section {
@@ -318,4 +291,33 @@ button:hover {
   bottom: unset;
   /* transform: translateY(-30px); */
   transition-duration: 0.3s;
+}
+
+
+
+
+
+#heart {
+  display: none;
+}
+
+
+
+.delete-comment-button {
+  background-color: transparent;
+  border: 2px solid #f44336; /* Red border */
+  color: #f44336; /* Red text */
+  padding: 5px 10px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.delete-comment-button:hover {
+  background-color: #f44336; /* Red background on hover */
+  color: white; /* White text on hover */
+}
+
+.red-button {
+  /* Optional: Additional styling for the red button if needed */
 }

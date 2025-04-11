@@ -8,6 +8,7 @@ import { BlogComponentComponent } from './Components/FrontOffice/blog-component/
 import { AddPostComponent } from './Components/FrontOffice/add-post/add-post.component';
 import { ModifyPostComponent } from './Components/FrontOffice/modify-post/modify-post.component';
 import { DashboardComponent } from './Components/BackOffice/dashboard/dashboard.component';
+import { PostsComponent } from './Components/BackOffice/dashboard/posts/posts.component';
 
 
 const routes: Routes = [
@@ -18,8 +19,15 @@ const routes: Routes = [
   { path: 'post/:id', component: PostDetailComponent },
   { path: 'add-post', component: AddPostComponent }, 
   {path:'',redirectTo:'home',pathMatch:'full'},
-  {path:'dashboard',component:DashboardComponent},
-    { path: 'modify-post/:id', component: ModifyPostComponent },  // Add route for modifying post
+    { path: 'modify-post/:id', component: ModifyPostComponent },
+    {
+      path: 'dashboard',
+      component: DashboardComponent,
+      children: [
+        { path: 'posts', component: PostsComponent }
+      ]
+    }
+    
 
 
 ];

@@ -1,0 +1,10 @@
+.container {
+    padding: 20px;
+  }
+  .img-thumbnail {
+    border-radius: 8px;
+  }
+  .table th, .table td {
+    vertical-align: middle;
+  }
+  

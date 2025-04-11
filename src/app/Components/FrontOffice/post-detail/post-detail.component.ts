@@ -191,4 +191,21 @@ export class PostDetailComponent implements OnInit {
     }
   }
   
+  scrollToTop(): void { 
+    window.scrollTo({ top: 0, behavior: "smooth" });}
+
+    deleteComment(commentId: number): void {
+      if (confirm("Are you sure you want to delete this comment?")) {
+        this.commentService.deleteComment(commentId).subscribe(
+          () => {
+            console.log('Comment deleted successfully');
+            // Remove the comment from the local list after successful deletion
+            this.comments = this.comments.filter(comment => comment.id !== commentId);
+          },
+          (error) => console.error('Error deleting comment:', error)
+        );
+      }
+    }
+    
 }
+
