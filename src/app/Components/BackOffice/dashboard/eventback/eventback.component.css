@@ -6,6 +6,7 @@
   min-height: 100vh;
   background-color: #f5f7fa;
   transition: all 0.3s ease;
+  margin-top: 60px; /* Ajouté pour laisser de l'espace pour le header */
 }
 
 /* Style de header cohérent avec le dashboard */
@@ -189,4 +190,25 @@
 
 .eventback-container > * {
   animation: fadeIn 0.4s ease forwards;
+}
+
+/* Style personnalisé pour SweetAlert2 */
+.custom-swal-popup {
+  border-radius: 12px !important;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1) !important;
+}
+
+.swal2-title {
+  font-size: 1.5rem !important;
+  color: #2c3e50 !important;
+}
+
+.swal2-confirm {
+  font-weight: 600 !important;
+  padding: 10px 24px !important;
+}
+
+.swal2-cancel {
+  font-weight: 500 !important;
+  padding: 10px 24px !important;
 }

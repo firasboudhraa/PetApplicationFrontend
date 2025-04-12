@@ -5,6 +5,7 @@ import { EventService } from 'src/app/Services/event-service.service';
 import { Event } from 'src/app/models/event';
 import { DonationService } from 'src/app/Services/donation-service.service';
 import { Donation } from 'src/app/models/donation';
+import Swal from 'sweetalert2'; // Import SweetAlert2
 
 interface SearchParams {
   name?: string;
@@ -17,21 +18,21 @@ interface SearchParams {
 @Component({
   selector: 'app-eventback',
   templateUrl: './eventback.component.html',
-  styleUrls: ['./eventback.component.css'] 
+  styleUrls: ['./eventback.component.css']
 })
 export class EventbackComponent implements OnInit {
   events: Event[] = [];
   filteredEvents: Event[] = [];
   donations: Donation[] = [];
   currentPage: number = 1;
-  itemsPerPage: number = 6; // Plus d'éléments par page pour le backoffice
+  itemsPerPage: number = 6;
   totalItems: number = 0;
   searchParams: SearchParams = {};
 
   constructor(
-    private eventService: EventService, 
+    private eventService: EventService,
     private donationService: DonationService,
-    private router: Router, 
+    private router: Router,
     private http: HttpClient
   ) {}
 
@@ -81,21 +82,18 @@ export class EventbackComponent implements OnInit {
   applyFilters(): void {
     let results = [...this.events];
 
-    // Filter by name
     if (this.searchParams.name) {
       results = results.filter(event => 
         event.nameEvent.toLowerCase().includes(this.searchParams.name!.toLowerCase())
       );
     }
 
-    // Filter by location
     if (this.searchParams.location) {
       results = results.filter(event => 
         event.location.toLowerCase().includes(this.searchParams.location!.toLowerCase())
       );
     }
 
-    // Filter by date
     if (this.searchParams.date) {
       const searchDate = new Date(this.searchParams.date);
       results = results.filter(event => {
@@ -104,7 +102,6 @@ export class EventbackComponent implements OnInit {
       });
     }
 
-    // Filter by progress
     if (this.searchParams.progress) {
       results = results.filter(event => {
         const progress = this.getDonationPercentage(event.idEvent);
@@ -118,7 +115,6 @@ export class EventbackComponent implements OnInit {
       });
     }
 
-    // Sort results
     if (this.searchParams.sortBy) {
       switch(this.searchParams.sortBy) {
         case 'date_asc':
@@ -155,22 +151,47 @@ export class EventbackComponent implements OnInit {
   }
 
   deleteEvent(eventId: number): void {
-    if (confirm('Are you sure you want to delete this event? This action cannot be undone.')) {
-      this.eventService.deleteEvent(eventId).subscribe(
-        () => {
-          // Show success message
-          alert('Event deleted successfully');
-          
-          // Reload data
-          this.loadEvents();
-          this.loadDonations();
-        },
-        (error) => {
-          console.error('Error deleting event', error);
-          alert('Failed to delete event. Please try again.');
-        }
-      );
-    }
+    Swal.fire({
+      title: 'Are you sure?',
+      text: 'This will permanently delete the event!',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#4361ee',
+      cancelButtonColor: '#e7515a',
+      confirmButtonText: 'Yes, delete it!',
+      cancelButtonText: 'No, cancel',
+      reverseButtons: true,
+      customClass: {
+        popup: 'custom-swal-popup', // Classe CSS personnalisée
+      }
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.eventService.deleteEvent(eventId).subscribe(
+          () => {
+            Swal.fire({
+              title: 'Deleted!',
+              text: 'The event has been deleted.',
+              icon: 'success',
+              confirmButtonColor: '#4361ee',
+              timer: 2000,
+              timerProgressBar: true,
+            });
+            
+            this.loadEvents();
+            this.loadDonations();
+          },
+          (error) => {
+            console.error('Error deleting event', error);
+            Swal.fire({
+              title: 'Error!',
+              text: 'Failed to delete event. Please try again.',
+              icon: 'error',
+              confirmButtonColor: '#e7515a',
+            });
+          }
+        );
+      }
+    });
   }
 
   get paginatedEvents(): Event[] {

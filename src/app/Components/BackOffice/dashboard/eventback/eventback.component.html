@@ -75,9 +75,10 @@
     <div class="row">
         <div *ngFor="let event of paginatedEvents" class="col-md-4 mb-4">
             <div class="card event-card h-100">
-                <div class="event-image" 
-                    style="background-image: url('assets/images/pricing-1.jpg');">
-                </div>
+                <div class="card-body text-center p-5">
+                    <div class="event-icon mb-4">
+                      <i class="fas fa-calendar-alt fa-3x text-primary"></i>
+                    </div>
                 
                 <div class="card-body">
                     <h3 class="event-title">{{ event.nameEvent }}</h3>
@@ -91,8 +92,8 @@
                     
                     <div class="progress-container">
                         <div class="d-flex justify-content-between mb-2">
-                            <span class="font-weight-bold">${{ getTotalDonationsForEvent(event.idEvent) | number:'1.2-2' }}</span>
-                            <span class="font-weight-bold">${{ event.goalAmount | number:'1.2-2' }}</span>
+                            <span class="font-weight-bold">{{ getTotalDonationsForEvent(event.idEvent) | number:'1.2-2' }}DT</span>
+                            <span class="font-weight-bold">{{ event.goalAmount | number:'1.2-2' }}DT</span>
                         </div>
                         <div class="progress">
                             <div class="progress-bar" 

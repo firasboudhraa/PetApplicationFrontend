@@ -4,6 +4,8 @@ export interface Event {
     description: string;
     dateEvent: string;
     location: string;
+    latitude?: number;
+    longitude?: number;
     goalAmount: number; 
   }
   

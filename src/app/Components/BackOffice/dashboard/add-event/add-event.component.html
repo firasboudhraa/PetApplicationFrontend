@@ -1,56 +1,89 @@
-<div class="eventback-container">
-    <h2>Add New Event</h2>
-    <form [formGroup]="eventForm" (ngSubmit)="onSubmit()">
-      <div class="form-group">
-        <label for="nameEvent">Nom de l'événement</label>
-        <input type="text" class="form-control" id="nameEvent" formControlName="nameEvent">
-        <div *ngIf="submitted && eventForm.get('nameEvent')?.errors" class="text-danger">
-          <div *ngIf="eventForm.get('nameEvent')?.errors?.['required']">Le nom est requis</div>
-          <div *ngIf="eventForm.get('nameEvent')?.errors?.['minlength']">Le nom doit avoir au moins 3 caractères</div>
-        </div>
-      </div>
-  
-      <div class="form-group">
-        <label for="description">Description</label>
-        <textarea class="form-control" id="description" formControlName="description" rows="3"></textarea>
-        <div *ngIf="submitted && eventForm.get('description')?.errors" class="text-danger">
-          <div *ngIf="eventForm.get('description')?.errors?.['required']">La description est requise</div>
-          <div *ngIf="eventForm.get('description')?.errors?.['minlength']">La description doit avoir au moins 10 caractères</div>
-        </div>
-      </div>
-  
-      <div class="form-group">
-        <label for="dateEvent">Date de l'événement</label>
-        <input type="datetime-local" class="form-control" id="dateEvent" formControlName="dateEvent">
-        <div *ngIf="submitted && eventForm.get('dateEvent')?.errors" class="text-danger">
-          <div *ngIf="eventForm.get('dateEvent')?.errors?.['required']">La date est requise</div>
-        </div>
-      </div>
-  
-      <div class="form-group">
-        <label for="location">Lieu</label>
-        <input type="text" class="form-control" id="location" formControlName="location">
-        <div *ngIf="submitted && eventForm.get('location')?.errors" class="text-danger">
-          <div *ngIf="eventForm.get('location')?.errors?.['required']">Le lieu est requis</div>
-        </div>
-      </div>
+<div class="container">
+  <div class="row justify-content-center">
+    <div class="col-lg-8">
+      <div class="card">
+        <div class="card-body">
+          <h3 class="card-title">Add New Event</h3>
+          <form [formGroup]="eventForm" (ngSubmit)="onSubmit()">
+            <div *ngIf="errorMessage" class="alert alert-danger mb-4">
+              <i class="fas fa-exclamation-circle mr-2"></i>{{ errorMessage }}
+            </div>
 
-      <div class="form-group">
-        <label for="goalAmount">Goal Amount (USD)</label>
-        <input type="number" class="form-control" id="goalAmount" formControlName="goalAmount" min="1" step="0.01">
-        <div *ngIf="submitted && eventForm.get('goalAmount')?.errors" class="text-danger">
-            <div *ngIf="eventForm.get('goalAmount')?.errors?.['required']">Le montant objectif est requis</div>
-            <div *ngIf="eventForm.get('goalAmount')?.errors?.['min']">Le montant doit être au moins $1</div>
+            <!-- Name Field -->
+            <div class="mb-4">
+              <label for="nameEvent" class="form-label">Event Name</label>
+              <input type="text" class="form-control" id="nameEvent" formControlName="nameEvent">
+              <div *ngIf="eventForm.get('nameEvent')?.invalid && (eventForm.get('nameEvent')?.dirty || eventForm.get('nameEvent')?.touched)" class="text-danger mt-2">
+                <small *ngIf="eventForm.get('nameEvent')?.errors?.['required']"><i class="fas fa-exclamation-circle mr-1"></i>Event name is required</small>
+                <small *ngIf="eventForm.get('nameEvent')?.errors?.['minlength']"><i class="fas fa-exclamation-circle mr-1"></i>Minimum 3 characters required</small>
+              </div>
+            </div>
+
+            <!-- Description Field -->
+            <div class="mb-4">
+              <label for="description" class="form-label">Description</label>
+              <textarea class="form-control" id="description" rows="4" formControlName="description"></textarea>
+              <div *ngIf="eventForm.get('description')?.invalid && (eventForm.get('description')?.dirty || eventForm.get('description')?.touched)" class="text-danger mt-2">
+                <small *ngIf="eventForm.get('description')?.errors?.['required']"><i class="fas fa-exclamation-circle mr-1"></i>Description is required</small>
+                <small *ngIf="eventForm.get('description')?.errors?.['minlength']"><i class="fas fa-exclamation-circle mr-1"></i>Minimum 10 characters required</small>
+              </div>
+            </div>
+
+            <!-- Date Field -->
+            <div class="mb-4">
+              <label for="dateEvent" class="form-label">Event Date & Time</label>
+              <input type="datetime-local" class="form-control" id="dateEvent" formControlName="dateEvent">
+              <div *ngIf="eventForm.get('dateEvent')?.invalid && (eventForm.get('dateEvent')?.dirty || eventForm.get('dateEvent')?.touched)" class="text-danger mt-2">
+                <small *ngIf="eventForm.get('dateEvent')?.errors?.['required']"><i class="fas fa-exclamation-circle mr-1"></i>Event date is required</small>
+              </div>
+            </div>
+
+            <!-- Location Field -->
+            <div class="mb-4">
+              <label class="form-label">Location</label>
+              <div class="input-group mb-3">
+                <input type="text" 
+                       class="form-control" 
+                       id="location" 
+                       formControlName="location"
+                       placeholder="Search location or click on map"
+                       #locationSearch>
+                <button class="btn btn-outline-secondary" 
+                        type="button"
+                        (click)="openMapModal()">
+                  <i class="fas fa-map-marker-alt"></i> Pick on Map
+                </button>
+              </div>
+              <div id="map" style="height: 300px; width: 100%; margin-top: 10px;"></div>
+              <div *ngIf="eventForm.get('location')?.invalid && (eventForm.get('location')?.dirty || eventForm.get('location')?.touched)" class="text-danger mt-2">
+                <small *ngIf="eventForm.get('location')?.errors?.['required']"><i class="fas fa-exclamation-circle mr-1"></i>Location is required</small>
+              </div>
+            </div>
+
+            <!-- Goal Amount Field -->
+            <div class="mb-4">
+              <label for="goalAmount" class="form-label">Goal Amount (DT)</label>
+              <input type="number" class="form-control" id="goalAmount" formControlName="goalAmount" min="1" step="0.01">
+              <div *ngIf="eventForm.get('goalAmount')?.invalid && (eventForm.get('goalAmount')?.dirty || eventForm.get('goalAmount')?.touched)" class="text-danger mt-2">
+                <small *ngIf="eventForm.get('goalAmount')?.errors?.['required']"><i class="fas fa-exclamation-circle mr-1"></i>Goal amount is required</small>
+                <small *ngIf="eventForm.get('goalAmount')?.errors?.['min']"><i class="fas fa-exclamation-circle mr-1"></i>Minimum amount is 1 DT</small>
+              </div>
+            </div>
+
+            <!-- Form Buttons -->
+            <div class="d-flex justify-content-between mt-4">
+              <button type="button" class="btn btn-secondary" (click)="onCancel()" [disabled]="isSubmitting">
+                <i class="fas fa-times mr-2"></i>Cancel
+              </button>
+              <button type="submit" class="btn btn-primary" [disabled]="eventForm.invalid || isSubmitting">
+                <i class="fas fa-save mr-2"></i>
+                <span *ngIf="!isSubmitting">Add Event</span>
+                <span *ngIf="isSubmitting">Adding...</span>
+              </button>
+            </div>
+          </form>
         </div>
       </div>
-  
-      <div class="button-group text-center mt-4">
-        <button type="submit" class="btn btn-success mr-3">
-          <i class="fas fa-check"></i> Add
-        </button>
-        <button type="button" class="btn btn-outline-primary" [routerLink]="['/dashboard/eventback']">
-          <i class="fas fa-arrow-left"></i> Back To Events
-        </button>
-      </div>
-    </form>
+    </div>
   </div>
+</div>

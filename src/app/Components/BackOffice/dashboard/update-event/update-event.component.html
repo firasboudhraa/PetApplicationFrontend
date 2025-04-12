@@ -15,8 +15,12 @@
               <input type="text" class="form-control" id="nameEvent" formControlName="nameEvent">
               <div *ngIf="eventForm.get('nameEvent')?.invalid && (eventForm.get('nameEvent')?.dirty || eventForm.get('nameEvent')?.touched)"
                    class="text-danger mt-2">
-                <small *ngIf="eventForm.get('nameEvent')?.errors?.['required']"><i class="fas fa-exclamation-circle mr-1"></i>Event name is required</small>
-                <small *ngIf="eventForm.get('nameEvent')?.errors?.['minlength']"><i class="fas fa-exclamation-circle mr-1"></i>Minimum 3 characters required</small>
+                <small *ngIf="eventForm.get('nameEvent')?.errors?.['required']">
+                  <i class="fas fa-exclamation-circle mr-1"></i>Event name is required
+                </small>
+                <small *ngIf="eventForm.get('nameEvent')?.errors?.['minlength']">
+                  <i class="fas fa-exclamation-circle mr-1"></i>Minimum 3 characters required
+                </small>
               </div>
             </div>
 
@@ -25,8 +29,12 @@
               <textarea class="form-control" id="description" rows="4" formControlName="description"></textarea>
               <div *ngIf="eventForm.get('description')?.invalid && (eventForm.get('description')?.dirty || eventForm.get('description')?.touched)"
                    class="text-danger mt-2">
-                <small *ngIf="eventForm.get('description')?.errors?.['required']"><i class="fas fa-exclamation-circle mr-1"></i>Description is required</small>
-                <small *ngIf="eventForm.get('description')?.errors?.['minlength']"><i class="fas fa-exclamation-circle mr-1"></i>Minimum 10 characters required</small>
+                <small *ngIf="eventForm.get('description')?.errors?.['required']">
+                  <i class="fas fa-exclamation-circle mr-1"></i>Description is required
+                </small>
+                <small *ngIf="eventForm.get('description')?.errors?.['minlength']">
+                  <i class="fas fa-exclamation-circle mr-1"></i>Minimum 10 characters required
+                </small>
               </div>
             </div>
 
@@ -35,26 +43,47 @@
               <input type="datetime-local" class="form-control" id="dateEvent" formControlName="dateEvent">
               <div *ngIf="eventForm.get('dateEvent')?.invalid && (eventForm.get('dateEvent')?.dirty || eventForm.get('dateEvent')?.touched)"
                    class="text-danger mt-2">
-                <small *ngIf="eventForm.get('dateEvent')?.errors?.['required']"><i class="fas fa-exclamation-circle mr-1"></i>Event date is required</small>
+                <small *ngIf="eventForm.get('dateEvent')?.errors?.['required']">
+                  <i class="fas fa-exclamation-circle mr-1"></i>Event date is required
+                </small>
               </div>
             </div>
 
             <div class="mb-4">
-              <label for="location" class="form-label">Location</label>
-              <input type="text" class="form-control" id="location" formControlName="location">
+              <label class="form-label">Location</label>
+              <div class="input-group mb-3">
+                <input type="text" 
+                       class="form-control" 
+                       id="location" 
+                       formControlName="location"
+                       placeholder="Search location or click on map"
+                       #locationSearch>
+                <button class="btn btn-outline-secondary" 
+                        type="button"
+                        (click)="openMapModal()">
+                  <i class="fas fa-map-marker-alt"></i> Pick on Map
+                </button>
+              </div>
+              <div id="map" style="height: 300px; width: 100%; margin-top: 10px;"></div>
               <div *ngIf="eventForm.get('location')?.invalid && (eventForm.get('location')?.dirty || eventForm.get('location')?.touched)"
                    class="text-danger mt-2">
-                <small *ngIf="eventForm.get('location')?.errors?.['required']"><i class="fas fa-exclamation-circle mr-1"></i>Location is required</small>
+                <small *ngIf="eventForm.get('location')?.errors?.['required']">
+                  <i class="fas fa-exclamation-circle mr-1"></i>Location is required
+                </small>
               </div>
             </div>
 
             <div class="mb-4">
-              <label for="goalAmount" class="form-label">Goal Amount ($)</label>
+              <label for="goalAmount" class="form-label">Goal Amount (DT)</label>
               <input type="number" class="form-control" id="goalAmount" formControlName="goalAmount" min="1" step="0.01">
               <div *ngIf="eventForm.get('goalAmount')?.invalid && (eventForm.get('goalAmount')?.dirty || eventForm.get('goalAmount')?.touched)"
                    class="text-danger mt-2">
-                <small *ngIf="eventForm.get('goalAmount')?.errors?.['required']"><i class="fas fa-exclamation-circle mr-1"></i>Goal amount is required</small>
-                <small *ngIf="eventForm.get('goalAmount')?.errors?.['min']"><i class="fas fa-exclamation-circle mr-1"></i>Minimum amount is $1</small>
+                <small *ngIf="eventForm.get('goalAmount')?.errors?.['required']">
+                  <i class="fas fa-exclamation-circle mr-1"></i>Goal amount is required
+                </small>
+                <small *ngIf="eventForm.get('goalAmount')?.errors?.['min']">
+                  <i class="fas fa-exclamation-circle mr-1"></i>Minimum amount is 1 DT
+                </small>
               </div>
             </div>
 

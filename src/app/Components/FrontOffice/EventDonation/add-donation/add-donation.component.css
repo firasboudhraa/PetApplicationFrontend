@@ -83,3 +83,24 @@
   .btn-secondary i {
     margin-right: 0.5rem;
   }
+
+  /* Style pour SweetAlert2 */
+.swal2-popup {
+    border-radius: 12px !important;
+    font-family: inherit !important;
+  }
+  
+  .swal2-title {
+    font-size: 1.3rem !important;
+    color: #2c3e50 !important;
+  }
+  
+  .swal2-confirm {
+    background-color: #4361ee !important;
+    padding: 8px 20px !important;
+  }
+  
+  .swal2-error {
+    border-color: #e7515a !important;
+    color: #e7515a !important;
+  }

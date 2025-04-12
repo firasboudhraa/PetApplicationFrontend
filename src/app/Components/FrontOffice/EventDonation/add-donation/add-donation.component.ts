@@ -1,6 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
+import Swal from 'sweetalert2';
 
 declare var paypal: any;
 
@@ -24,18 +25,18 @@ export class AddDonationComponent implements OnInit, OnDestroy {
 
   constructor(
     private http: HttpClient,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
     this.route.paramMap.subscribe(params => {
-      const id = params.get('id'); // ou 'eventId' selon votre route
+      const id = params.get('id');
       if (id) {
         this.eventId = +id;
         this.loadPayPalScript();
       } else {
-        console.error('Event ID is missing from route parameters');
-        this.error = 'Event information is missing. Please try again.';
+        this.showErrorAlert('Event information is missing. Please try again.');
       }
     });
   }
@@ -44,6 +45,26 @@ export class AddDonationComponent implements OnInit, OnDestroy {
     if (this.paypalButtons) {
       this.paypalButtons.close();
     }
+  }
+
+  private showErrorAlert(message: string): void {
+    Swal.fire({
+      title: 'Error!',
+      text: message,
+      icon: 'error',
+      confirmButtonColor: '#e7515a',
+    });
+  }
+
+  private showSuccessAlert(message: string): Promise<any> {
+    return Swal.fire({
+      title: 'Success!',
+      text: message,
+      icon: 'success',
+      confirmButtonColor: '#4361ee',
+      timer: 3000,
+      timerProgressBar: true,
+    });
   }
 
   public loadPayPalScript(): void {
@@ -64,7 +85,7 @@ export class AddDonationComponent implements OnInit, OnDestroy {
     };
     script.onerror = () => {
       this.loading = false;
-      this.error = 'Failed to load PayPal SDK. Please refresh the page.';
+      this.showErrorAlert('Failed to load PayPal SDK. Please refresh the page.');
     };
     document.body.appendChild(script);
   }
@@ -91,14 +112,14 @@ export class AddDonationComponent implements OnInit, OnDestroy {
         },
         onError: (err: any) => {
           console.error('PayPal error:', err);
-          this.error = 'An error occurred with PayPal. Please try another payment method.';
+          this.showErrorAlert('An error occurred with PayPal. Please try another payment method.');
         }
       });
 
       this.paypalButtons.render('#paypal-button-container');
     } catch (error) {
       console.error('PayPal init error:', error);
-      this.error = 'Failed to initialize PayPal. Please refresh the page.';
+      this.showErrorAlert('Failed to initialize PayPal. Please refresh the page.');
     }
   }
 
@@ -126,7 +147,7 @@ export class AddDonationComponent implements OnInit, OnDestroy {
       return response.orderId;
     } catch (error) {
       console.error('Create order error:', error);
-      this.error = 'Failed to create payment order';
+      this.showErrorAlert('Failed to create payment order');
       throw error;
     }
   }
@@ -153,10 +174,11 @@ export class AddDonationComponent implements OnInit, OnDestroy {
 
       this.paymentCompleted = true;
       this.error = null;
-      alert('Payment successful! Thank you for your donation.');
+      
+      this.router.navigate(['/event-details', this.eventId]);
     } catch (error) {
       console.error('Capture error:', error);
-      this.error = 'Payment processing failed. Please try again.';
+      this.showErrorAlert('Payment processing failed. Please try again.');
       this.paymentCompleted = false;
     }
   }

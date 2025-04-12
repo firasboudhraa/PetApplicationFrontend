@@ -1,193 +1,175 @@
-/* Layout principal - Aligné avec le dashboard */
-.eventback-container {
-  margin-left: 250px;
+/* Main container */
+.container {
   padding: 30px;
+  margin-left: 250px;
   width: calc(100% - 250px);
-  min-height: 100vh;
-  background-color: #f5f7fa;
   transition: all 0.3s ease;
+  margin-top: 60px;
 }
 
-/* Style de header cohérent avec le dashboard */
-.eventback-container h2 {
-  color: #2c3e50;
-  font-weight: 600;
-  margin-bottom: 25px;
-  padding-bottom: 15px;
-  border-bottom: 1px solid #e0e6ed;
-}
-
-/* Cartes modernes comme le dashboard */
-.event-card {
-  background: #ffffff;
-  border: none;
+/* Card styling */
+.card {
   border-radius: 10px;
+  border: none;
   box-shadow: 0 0 40px 0 rgba(94, 92, 154, 0.06);
   transition: all 0.3s ease;
-  margin-bottom: 25px;
-  overflow: hidden;
 }
 
-.event-card:hover {
-  transform: translateY(-5px);
+.card:hover {
   box-shadow: 0 5px 20px 0 rgba(94, 92, 154, 0.1);
 }
 
-.event-image {
-  height: 180px;
-  background-size: cover;
-  background-position: center;
-}
-
-/* Style du texte dans les cartes */
-.event-title {
-  font-size: 1.3rem;
+.card-title {
   font-weight: 600;
   color: #3b3f5c;
-  margin-bottom: 10px;
+  position: relative;
+  padding-bottom: 15px;
+  text-align: center;
+  margin-bottom: 25px;
 }
 
-.event-meta {
-  color: #888ea8;
-  font-size: 0.9rem;
-  margin-bottom: 15px;
+.card-title:after {
+  content: '';
+  position: absolute;
+  width: 50px;
+  height: 3px;
+  background: #4361ee;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
 }
 
-.event-description {
-  color: #515365;
-  font-size: 0.95rem;
-  line-height: 1.5;
-  margin-bottom: 20px;
+/* Form elements */
+.form-control, .form-select {
+  border-radius: 6px;
+  padding: 10px 15px;
+  border: 1px solid #e0e6ed;
+  transition: all 0.3s;
+  background-color: #f5f7fa;
 }
 
-/* Barre de progression améliorée */
-.progress-container {
-  background: #f1f2f3;
-  padding: 15px;
-  border-radius: 8px;
-  margin-bottom: 20px;
+.form-control:focus, .form-select:focus {
+  border-color: #4361ee;
+  box-shadow: 0 0 0 0.2rem rgba(67, 97, 238, 0.25);
+  background-color: #fff;
 }
 
-.progress {
-  height: 12px;
-  border-radius: 20px;
-  background-color: #ebedf2;
-}
-
-.progress-bar {
-  border-radius: 20px;
-  background-color: #00ab55;
-}
-
-/* Boutons modernes */
+/* Buttons */
 .btn {
+  padding: 10px 25px;
   border-radius: 6px;
   font-weight: 500;
-  padding: 8px 20px;
-  font-size: 0.85rem;
-  transition: all 0.3s ease;
+  transition: all 0.3s;
+  border: none;
 }
 
 .btn-primary {
   background-color: #4361ee;
-  border-color: #4361ee;
 }
 
-.btn-warning {
-  background-color: #e2a03f;
-  border-color: #e2a03f;
-  color: #fff;
+.btn-primary:hover {
+  background-color: #3a56d4;
+  transform: translateY(-2px);
 }
 
-.btn-danger {
-  background-color: #e7515a;
-  border-color: #e7515a;
+.btn-secondary {
+  background-color: #888ea8;
 }
 
-/* Section de recherche */
-.search-card {
-  border: none;
-  border-radius: 10px;
-  box-shadow: 0 0 40px 0 rgba(94, 92, 154, 0.06);
-  margin-bottom: 30px;
+.btn-secondary:hover {
+  background-color: #6c757d;
+  transform: translateY(-2px);
 }
 
-.search-card .card-title {
+.btn-outline-secondary {
+  border-color: #e0e6ed;
   color: #3b3f5c;
-  font-weight: 600;
-  font-size: 1.2rem;
 }
 
-/* Pagination moderne */
-.pagination {
-  margin-top: 30px;
+.btn-outline-secondary:hover {
+  background-color: #f5f7fa;
 }
 
-.page-item.active .page-link {
-  background-color: #4361ee;
-  border-color: #4361ee;
+/* Error messages */
+.text-danger small {
+  font-size: 0.85rem;
+  color: #e7515a;
 }
 
-.page-link {
-  color: #4361ee;
-  border-radius: 6px !important;
-  margin: 0 5px;
-  border: none;
-}
-
-/* Alertes */
 .alert {
   border-radius: 8px;
   border: none;
 }
 
-.alert-info {
-  background-color: #eaf1ff;
-  color: #4361ee;
+.alert-danger {
+  background-color: #fff5f5;
+  color: #e7515a;
 }
 
-/* Responsive Design */
+/* Map styling */
+#map {
+  border-radius: 8px;
+  border: 1px solid #e0e6ed;
+  margin-bottom: 15px;
+}
+
+/* Autocomplete dropdown */
+.pac-container {
+  z-index: 1051 !important;
+  border-radius: 8px;
+  box-shadow: 0 5px 10px rgba(0,0,0,0.1);
+  border: none;
+}
+
+.pac-item {
+  padding: 8px 10px;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.pac-item:hover {
+  background-color: #f5f7fa;
+}
+
+.pac-icon {
+  display: none;
+}
+
+/* Responsive design */
 @media (max-width: 992px) {
-  .eventback-container {
+  .container {
     margin-left: 80px;
     width: calc(100% - 80px);
     padding: 20px;
   }
-  
-  .sidebar.expanded ~ .eventback-container {
-    margin-left: 250px;
-    width: calc(100% - 250px);
-  }
 }
 
 @media (max-width: 768px) {
-  .eventback-container {
+  .container {
     margin-left: 0;
     width: 100%;
     padding: 15px;
   }
   
-  .event-card {
-    margin-bottom: 20px;
+  .d-flex {
+    flex-direction: column;
+    gap: 10px;
   }
   
-  .event-actions .btn {
-    margin-bottom: 10px;
+  .btn {
     width: 100%;
   }
-  
-  .search-card .card-body {
-    padding: 15px;
+
+  #map {
+    height: 250px;
   }
 }
 
-/* Animation douce */
+/* Animation */
 @keyframes fadeIn {
   from { opacity: 0; transform: translateY(10px); }
   to { opacity: 1; transform: translateY(0); }
 }
 
-.eventback-container > * {
+.card {
   animation: fadeIn 0.4s ease forwards;
 }
-
