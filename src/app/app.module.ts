@@ -1,4 +1,4 @@
-import { NgModule, Component } from '@angular/core';
+import { NgModule, Component, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -33,6 +33,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { EditAdoptionRequestComponent } from './Components/AdoptionRequest/edit-adoption-request/edit-adoption-request.component';
+import { ChatPopupComponent } from './Components/chat-popup/chat-popup.component';
 
 
 @NgModule({
@@ -65,7 +66,8 @@ import { EditAdoptionRequestComponent } from './Components/AdoptionRequest/edit-
     UsersComponent,
     SidebarComponent,
     HeaderComponent,
-    EditAdoptionRequestComponent
+    EditAdoptionRequestComponent,
+    ChatPopupComponent
   ],
   imports: [
     BrowserModule,
@@ -81,6 +83,7 @@ import { EditAdoptionRequestComponent } from './Components/AdoptionRequest/edit-
 
 
   ],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
   providers: [],
   bootstrap: [AppComponent]
 })

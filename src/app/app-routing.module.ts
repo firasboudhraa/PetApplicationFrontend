@@ -11,6 +11,7 @@ import { AdoptionRequestDashbordComponent } from './Components/AdoptionRequest/a
 import { DashboardComponent } from './Components/BackOffice/dashboard/dashboard.component';
 import { UsersComponent } from './Components/BackOffice/dashboard/users/users.component';
 import { EditAdoptionRequestComponent } from './Components/AdoptionRequest/edit-adoption-request/edit-adoption-request.component';
+import { ChatPopupComponent } from './Components/chat-popup/chat-popup.component';
 
   
   const routes: Routes = [
@@ -30,7 +31,8 @@ import { EditAdoptionRequestComponent } from './Components/AdoptionRequest/edit-
   },
   {path:'',redirectTo:'home',pathMatch:'full'},
   { path: 'adoption-request', component: AdoptionRequestComponent },
-  { path: 'edit-adoption-request', component: EditAdoptionRequestComponent }
+  { path: 'edit-adoption-request', component: EditAdoptionRequestComponent },
+  { path: 'chat', component: ChatPopupComponent }
 
 
 ];
