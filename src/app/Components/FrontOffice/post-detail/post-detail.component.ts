@@ -137,7 +137,6 @@ export class PostDetailComponent implements OnInit {
       this.commentService.addComment(this.post?.id ?? 0, this.userId, commentData).subscribe(
         (response) => {
           this.comments.push(response); // Ajouter le commentaire filtré
-          this.commentAuthors.set(response.userId, "Vous"); // Afficher l'auteur comme "Vous"
           this.newCommentContent = '';  // Réinitialiser le champ de saisie
         },
         (error) => console.error("Erreur lors de l'ajout du commentaire:", error)

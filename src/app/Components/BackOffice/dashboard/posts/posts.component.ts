@@ -74,4 +74,14 @@ export class PostsComponent implements OnInit {
       });
     }
   }
+  selectedPostId: number | null = null;
+
+openCommentsPopup(postId: number): void {
+  this.selectedPostId = postId;
+}
+
+closePopup(): void {
+  this.selectedPostId = null;
+}
+
 }

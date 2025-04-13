@@ -1,13 +1,14 @@
 <section class="home-blog bg-sand">
   <div class="container-fluid px-0">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
 
     <!-- Section Title -->
     <div class="row justify-content-md-center">
       <div class="col-xl-5 col-lg-6 col-md-8">
         <div class="section-title text-center title-ex1">
           <h2>Welcome to Our Community</h2>
-          <p>Explore a variety of topics such as Help & Advice, Success Stories, and more. Interact with fellow members, share ideas, and stay connected!</p>
+          <p>
+            Explore a variety of topics such as Help & Advice, Success Stories, and more. Interact with fellow members, share ideas, and stay connected!
+          </p>
         </div>
       </div>
     </div>
@@ -17,15 +18,15 @@
     <div class="row justify-content-md-center">
       <div class="col-md-4">
         <a [routerLink]="'/add-post'" class="btn btn-add-post btn-lg btn-block shining-btn">
-          <i class="fas fa-plus-circle"></i> Add Post
+          ➕ Add Post
         </a>
       </div>
     </div>
-
     <br>
 
-    <!-- Search Filter Section (Left) -->
+    <!-- Search Filter Section (Left) + Search Bar (Right) -->
     <div class="row">
+      <!-- Filter -->
       <div class="col-md-5">
         <form id="category-search-form">
           <div class="form-group">
@@ -44,7 +45,7 @@
                 </div>
               </div>
             </div>
-            <div class="row">
+            <div class="row mt-2">
               <div class="col-6">
                 <div class="form-check">
                   <input class="form-check-input" type="checkbox" value="SUCCESS_STORIES" id="successStories" (change)="updateSelectedCategories($event)">
@@ -56,13 +57,11 @@
         </form>
       </div>
 
-      <!-- Search Bar Section (Right) -->
+      <!-- Search + Sort -->
       <div class="col-md-7">
-        <div class="search-bar">
-          <input type="text" class="form-control" placeholder="Search for posts, topics, or updates..." [(ngModel)]="searchText" (input)="applyFilters()">
-          <button class="btn btn-refresh" (click)="refreshPosts()">
-            <i class="fas fa-sync-alt"></i> Refresh
-          </button>
+        <div class="search-bar d-flex flex-wrap gap-2">
+          <input type="text" class="form-control flex-grow-1" placeholder="Search for posts, topics, or updates..." [(ngModel)]="searchText" (input)="applyFilters()">
+          <button class="btn btn-refresh" (click)="refreshPosts()">🔄 Refresh</button>
           <button class="btn btn-sort" (click)="sortByDate('latest')">Latest</button>
           <button class="btn btn-sort" (click)="sortByDate('oldest')">Oldest</button>
           <button class="btn btn-sort" (click)="sortByNumber('mostLiked')">Most Liked</button>
@@ -71,9 +70,10 @@
       </div>
     </div>
 
-    <!-- Blog Posts Section -->
+    <!-- Posts -->
     <section class="dark">
       <div class="container py-4">
+
         <article *ngFor="let post of filteredPosts; let i = index" class="postcard dark" [ngClass]="getCardColor(i)">
           <a class="postcard__img_link" [routerLink]="['/post', post.id]">
             <img [src]="'http://localhost:8082/posts/images/' + post.imageUrl" alt="Post Image" class="post-image" />
@@ -82,51 +82,51 @@
             <h1 class="postcard__title"><a [routerLink]="['/post', post.id]">{{ post.title }}</a></h1>
             <div class="postcard__subtitle small">
               <time [attr.datetime]="post.createdAt">
-                <i class="fas fa-calendar-alt mr-2"></i>{{ post.createdAt | date:'EEE, MMM d, y' }}
+                📅 {{ post.createdAt | date:'EEE, MMM d, y' }}
               </time>
             </div>
             <div class="postcard__bar"></div>
             <div class="postcard__preview-txt">{{ post.content | slice:0:200 }}...</div>
             <ul class="postcard__tagbox">
-              <li class="tag__item"><i class="fas fa-user mr-2"></i>{{ userNames.get(post.userId) }}</li>
-              <li class="tag__item"><i class="fas fa-tag mr-2"></i>{{ formatCategory(post.type) }}</li>
-              <li class="tag__item"><i class="fas fa-comments mr-2"></i>{{ post.comments }} Comments</li>
-              <li class="tag__item">
-                <i class="fas fa-thumbs-up mr-2" ></i> {{ post.likes }} Likes
-              </li>
+              <li class="tag__item">👤 {{ userNames.get(post.userId) }}</li>
+              <li class="tag__item">🏷️ {{ formatCategory(post.type) }}</li>
+              <li class="tag__item">💬 {{ post.comments }} Comments</li>
+              <li class="tag__item">👍 {{ post.likes }} Likes</li>
             </ul>
           </div>
         </article>
-<!-- Pagination -->
-<div class="pagination">
-  <button (click)="goToPage(1)" [disabled]="currentPage === 1" class="pagination__button pagination__first">
-    <i class="fas fa-angle-double-left"></i>
-  </button>
-  <button (click)="goToPage(currentPage - 1)" [disabled]="currentPage === 1" class="pagination__button pagination__prev">
-    <i class="fas fa-angle-left"></i>
-  </button>
-  <span class="pagination__page-info">{{ currentPage }} / {{ totalPages }}</span>
-  <button (click)="goToPage(currentPage + 1)" [disabled]="currentPage === totalPages" class="pagination__button pagination__next">
-    <i class="fas fa-angle-right"></i>
-  </button>
-  <button (click)="goToPage(totalPages)" [disabled]="currentPage === totalPages" class="pagination__button pagination__last">
-    <i class="fas fa-angle-double-right"></i>
-  </button>
-</div>
-<button class="button" (click)="scrollToTop()" title="Go to top">
-  <svg class="svgIcon" viewBox="0 0 384 512">
-    <path
-      d="M214.6 41.4c-12.5-12.5-32.8-12.5-45.3 0l-160 160c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L160 141.2V448c0 17.7 14.3 32 32 32s32-14.3 32-32V141.2L329.4 246.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3l-160-160z"
-    ></path>
-  </svg>
-</button>
 
-
-        <!-- No Posts Found Message -->
+        <!-- No Posts Message -->
         <div *ngIf="filteredPosts.length === 0" class="col-md-12 text-center">
           <p>No posts found matching your search.</p>
         </div>
+
+        <!-- Pagination -->
+        <div class="pagination d-flex justify-content-center mt-4 align-items-center">
+          <button (click)="goToPage(1)" [disabled]="currentPage === 1" class="pagination__button pagination__first">
+            «
+          </button>
+          <button (click)="goToPage(currentPage - 1)" [disabled]="currentPage === 1" class="pagination__button pagination__prev">
+            ‹
+          </button>
+          <span class="pagination__page-info mx-3">{{ currentPage }} / {{ totalPages }}</span>
+          <button (click)="goToPage(currentPage + 1)" [disabled]="currentPage === totalPages" class="pagination__button pagination__next">
+            ›
+          </button>
+          <button (click)="goToPage(totalPages)" [disabled]="currentPage === totalPages" class="pagination__button pagination__last">
+            »
+          </button>
+        </div>
+
+        <!-- Scroll to Top -->
+        <button class="button scroll-top-btn" (click)="scrollToTop()" title="Go to top">
+          <svg class="svgIcon" viewBox="0 0 384 512">
+            <path d="M214.6 41.4c-12.5-12.5-32.8-12.5-45.3 0l-160 160c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L160 141.2V448c0 17.7 14.3 32 32 32s32-14.3 32-32V141.2L329.4 246.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3l-160-160z"></path>
+          </svg>
+        </button>
+
       </div>
     </section>
+
   </div>
 </section>

@@ -249,9 +249,11 @@ button:hover {
   cursor: pointer;
   transition-duration: 0.3s;
   overflow: hidden;
-  position: relative;
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  z-index: 999;
 }
-
 .svgIcon {
   width: 12px;
   transition-duration: 0.3s;

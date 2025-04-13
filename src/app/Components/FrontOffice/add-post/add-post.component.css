@@ -196,3 +196,32 @@ form {
   .custum-file-upload input {
     display: none;
   }
+
+  .cancel-button {
+    background-color: #f44336; /* Red background */
+    color: white; /* White text */
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px; /* Space between icon and text */
+    transition: background-color 0.3s ease, transform 0.2s;
+  }
+  
+  .cancel-button:hover {
+    background-color: #e53935; /* Darker red on hover */
+    transform: scale(1.05); /* Slight scale effect */
+  }
+  
+  .cancel-button:focus {
+    outline: none;
+  }
+  
+  .cancel-icon {
+    fill: white; /* White color for the icon */
+  }
+  

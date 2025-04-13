@@ -36,7 +36,7 @@ import { PostsComponent } from './Components/BackOffice/dashboard/posts/posts.co
     DashboardComponent,
     HeaderComponent,
     SidebarComponent,
-    PostsComponent
+    PostsComponent,
   ],
   imports: [
     BrowserModule,
