@@ -49,7 +49,7 @@
       <ul class="comments-list">
         <li *ngFor="let comment of postComments[selectedPostId]">
           <strong>{{ userNames.get(comment.userId) || 'Inconnu' }}</strong> : {{ comment.content }}
-          <button class="btn btn-small-red" (click)="deleteComment(comment.id, selectedPostId)">✖</button>
+          <button class="btn btn-small-red" (click)="deleteComment(comment.id, selectedPostId)">✖ Delete</button>
         </li>
       </ul>
     </div>
