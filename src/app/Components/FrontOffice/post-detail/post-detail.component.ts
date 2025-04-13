@@ -22,6 +22,8 @@ export class PostDetailComponent implements OnInit {
   userNames: Map<number, string> = new Map();
   showLikesPopup: boolean = false;
   newCommentContent: string = ''; 
+  reportedComments: Set<Comment> = new Set<Comment>();
+
   userId: number = 2; // Remplacer par la récupération dynamique de l'ID utilisateur
 
   constructor(
@@ -29,7 +31,7 @@ export class PostDetailComponent implements OnInit {
     private postService: PostsService,
     private userService: UserService,
     private commentService: CommentService,
-    private Router: Router
+    private Router: Router,
 
   ) {}
 
@@ -125,21 +127,24 @@ export class PostDetailComponent implements OnInit {
    * Ajoute un nouveau commentaire au post.
    */
   addComment(): void {
-    if (this.newCommentContent.trim()) {
-      const commentData = { content: this.newCommentContent };
-
+    const trimmedContent = this.newCommentContent.trim();
+    
+    if (trimmedContent) {
+      const commentData = { content: trimmedContent };
+  
       console.log("Ajout du commentaire:", commentData);
-
+  
       this.commentService.addComment(this.post?.id ?? 0, this.userId, commentData).subscribe(
         (response) => {
-          this.comments.push(response); // Ajouter le commentaire à la liste
-          this.commentAuthors.set(response.userId, "Vous"); // Afficher directement l'auteur
-          this.newCommentContent = '';  // Réinitialiser l'input
+          this.comments.push(response); // Ajouter le commentaire filtré
+          this.commentAuthors.set(response.userId, "Vous"); // Afficher l'auteur comme "Vous"
+          this.newCommentContent = '';  // Réinitialiser le champ de saisie
         },
-        (error) => console.error('Erreur lors de l\'ajout du commentaire:', error)
+        (error) => console.error("Erreur lors de l'ajout du commentaire:", error)
       );
-    } 
+    }
   }
+  
 
   /**
    * Like un commentaire.
@@ -207,5 +212,9 @@ export class PostDetailComponent implements OnInit {
       }
     }
     
+
+    
+   
+  
 }
 

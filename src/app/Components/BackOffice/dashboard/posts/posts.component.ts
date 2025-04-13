@@ -17,30 +17,31 @@ export class PostsComponent implements OnInit {
   commentCounts: { [key: number]: number } = {};
   likeCounts: { [key: number]: number } = {};
   userNames: Map<number, string> = new Map();
-  postComments: { [key: number]: Comment[] } = {}; // stocker les commentaires par post
+  postComments: { [key: number]: Comment[] } = {}; // Stocker les commentaires par post
 
   constructor(
     private postsService: PostsService,
     private userService: UserService,
-    private commentService: CommentService
+    private commentService: CommentService,
   ) {}
 
   ngOnInit(): void {
     this.loadPosts();
   }
 
+  // Chargement des posts et de leurs données associées
   loadPosts(): void {
     this.postsService.getPosts().subscribe(posts => {
       this.posts = posts;
 
       posts.forEach(post => {
-        // Charger auteur
+        // Charger l'auteur
         this.userService.getUserById(post.userId).subscribe(user => {
           this.authors[post.id] = user;
           this.userNames.set(post.userId, user.name);
         });
 
-        // Charger les commentaires
+        // Charger les commentaires pour chaque post
         this.commentService.getCommentsByPostId(post.id).subscribe(comments => {
           this.commentCounts[post.id] = comments.length;
           this.postComments[post.id] = comments;
@@ -52,16 +53,19 @@ export class PostsComponent implements OnInit {
     });
   }
 
+  // Méthode pour supprimer un post
   deletePost(postId: number): void {
     if (confirm('Êtes-vous sûr de vouloir supprimer ce post ?')) {
       this.postsService.deletePost(postId).subscribe(() => {
         this.posts = this.posts.filter(p => p.id !== postId);
         delete this.postComments[postId];
         delete this.commentCounts[postId];
+        delete this.likeCounts[postId];  // Ne pas oublier de supprimer les likes également
       });
     }
   }
 
+  // Méthode pour supprimer un commentaire
   deleteComment(commentId: number, postId: number): void {
     if (confirm('Êtes-vous sûr de vouloir supprimer ce commentaire ?')) {
       this.commentService.deleteComment(commentId).subscribe(() => {
