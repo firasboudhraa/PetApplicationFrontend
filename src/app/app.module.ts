@@ -24,6 +24,9 @@ import { SidebarComponent } from './Components/BackOffice/sidebar/sidebar.compon
 import { HeaderComponent } from './Components/BackOffice/header/header.component';
 import { ServicesComponent } from './Components/BackOffice/dashboard/services/services.component';
 import { ModifyServiceComponent } from './Components/FrontOffice/PetService/modify-service/modify-service.component';
+import { AppointmentDashboardComponent } from './Components/FrontOffice/PetService/appointment-dashboard/appointment-dashboard.component';
+import { SentAppointmentComponent } from './Components/FrontOffice/PetService/appointment-dashboard/sent-appointment/sent-appointment.component';
+import { ReceivedAppointmentComponent } from './Components/FrontOffice/PetService/appointment-dashboard/received-appointment/received-appointment.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -45,7 +48,10 @@ import { ModifyServiceComponent } from './Components/FrontOffice/PetService/modi
     SidebarComponent,
     HeaderComponent,
     ServicesComponent,
-    ModifyServiceComponent
+    ModifyServiceComponent,
+    AppointmentDashboardComponent,
+    SentAppointmentComponent,
+    ReceivedAppointmentComponent
   ],
   imports: [
     BrowserModule,

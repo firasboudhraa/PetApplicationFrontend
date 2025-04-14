@@ -1,0 +1,49 @@
+<div class="container d-flex justify-content-center align-items-center col-10 ">
+    <div class="card shadow-lg">
+      <div class="card-header text-center bg-primary text-white">
+        <h4 class="card-title mb-0">View your related Appointments</h4>
+      </div>
+      <div class="card-body">
+        <div class="row">
+          <!-- Navigation Tabs -->
+          <div class="col-2 col-md-1 p-0">
+            <div class="nav flex-column nav-pills" id="v-pills-tab-with-icon" role="tablist" aria-orientation="vertical">
+              <a
+                class="nav-link"
+                [class.bg-primary]="activeTab === 'Sent'"
+                [class.text-white]="activeTab === 'Sent'"
+                (click)="setActiveTab('Sent')"
+                role="tab"
+                aria-controls="v-pills-home-icons"
+                aria-selected="true"
+              >
+                <i class="flaticon-home"></i> Sent
+              </a>
+              <a
+                class="nav-link"
+                [class.bg-primary]="activeTab === 'Received'"
+                [class.text-white]="activeTab === 'Received'"
+                (click)="setActiveTab('Received')"
+                role="tab"
+                aria-controls="v-pills-Received-icons"
+                aria-selected="false"
+              >
+                <i class="flaticon-user-4"></i> Received
+              </a>
+            </div>
+          </div>
+  
+          <!-- Tab Content -->
+          <div class="col-12 col-md-11 p-0"> <!-- Make content larger, reduced sidebar width -->
+            <div *ngIf="activeTab === 'Sent'" class="tab-content">
+              <app-sent-appointment></app-sent-appointment>
+            </div>
+  
+            <div *ngIf="activeTab === 'Received'" class="tab-content">
+              <app-received-appointment></app-received-appointment>  
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>

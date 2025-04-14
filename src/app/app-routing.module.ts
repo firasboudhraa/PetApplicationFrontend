@@ -10,6 +10,7 @@ import { DashboardComponent } from './Components/BackOffice/dashboard/dashboard.
 import { UsersComponent } from './Components/BackOffice/dashboard/users/users.component';
 import { ServicesComponent } from './Components/BackOffice/dashboard/services/services.component';
 import { ModifyServiceComponent } from './Components/FrontOffice/PetService/modify-service/modify-service.component';
+import { AppointmentDashboardComponent } from './Components/FrontOffice/PetService/appointment-dashboard/appointment-dashboard.component';
 
 const routes: Routes = [
   { path: 'home', component: HomeComponent },
@@ -18,6 +19,7 @@ const routes: Routes = [
   {path:'update-service/:id',component:ModifyServiceComponent},
   {path:'full-calendar/:id',component:AvailableSlotsComponent},
   {path:'serviceDetail/:id', component:DetailServiceComponent},
+  {path:'appointment-Dashboard',component:AppointmentDashboardComponent},
   {path:'appointment/:id',component:AppointmentComponent},
   {path:'dashboard',component:DashboardComponent,
     children:[

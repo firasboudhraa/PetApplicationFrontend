@@ -1,36 +1,51 @@
 <div class="page-center">
-    <h1 class="title">
-        <i class="fa fa-home"></i>  >  Services
-      </h1>
-<div class="services-container">
-    <div *ngFor="let service of services.slice((currentPage - 1) * pageSize, currentPage * pageSize)" class="service-card">
-      <div class="icon-container">
-        <div class="icon"><i class="fa fa-cogs"></i></div>
-      </div>
-  
-      <div class="text-content">
-        <h3 class="title">{{ service.name }}</h3>
-  
-        <div class="info">
-          <p><i class="fa fa-dollar-sign"></i> <strong>Price:</strong> {{ service.price | currency }}</p>
-          <p><i class="fa fa-clock"></i> <strong>Duration:</strong> {{ service.durationInMinutes }} min</p>
-          <p *ngIf="service.address"><i class="fa fa-map-marker-alt"></i> <strong>Location:</strong> {{ service.address }}</p>
-        </div>
-      </div>
-    </div>
+  <!-- Title section -->
+  <h1 class="title">
+    <i class="fa fa-home"></i> > Services
+  </h1>
+
+  <!-- Services Table -->
+  <div class="services-container">
+    <table class="services-table">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Price</th>
+          <th>Duration</th>
+          <th>Location</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let service of services.slice((currentPage - 1) * pageSize, currentPage * pageSize)">
+          <td><i class="fa fa-paw"></i> {{ service.name }}</td>
+          <td>{{ service.price | currency }}</td>
+          <td>{{ service.durationInMinutes }} min</td>
+          <td>
+            <span *ngIf="service.address">
+              <i class="fa fa-map-marker-alt"></i> {{ service.address }}
+            </span>
+            <span *ngIf="!service.address">-</span>
+          </td>
+          <td>
+            <button *ngIf="service.address" class="btn-map" (click)="serviceClicked(service)">
+              <i class="fa fa-map"></i>
+            </button>
+          </td>
+        </tr>
+      </tbody>
+      
+    </table>
   </div>
 </div>
-  
-  <div class="pagination">
-    <button
-      *ngFor="let page of getPagesArray()"
-      class="pagination-button"
-      [ngClass]="{ 'active': currentPage === page }"
-      (click)="onPageChange(page)"
-    >
-      {{ page }}
-    </button>
-  </div>
 
-
-  
+<!-- Pagination -->
+<div class="pagination">
+  <button
+    *ngFor="let page of getPagesArray()"
+    class="pagination-button"
+    [ngClass]="{ 'active': currentPage === page }"
+    (click)="onPageChange(page)"
+  >
+    {{ page }}
+  </button>
+</div>

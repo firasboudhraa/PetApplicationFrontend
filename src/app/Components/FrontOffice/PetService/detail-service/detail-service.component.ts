@@ -87,7 +87,10 @@ export class DetailServiceComponent {
 
   deleteService(id :number){
     this.ps.deleteService(id).subscribe(
-      ()=> this.ngOnInit()
+      ()=> {
+        this.ngOnInit()
+        this.router.navigate(['/services'])
+      }
     )
   }
 

@@ -35,4 +35,16 @@ export class PetServiceService {
     return this.http.delete<void>(this.apiUrl + 'delete-service/' + id);
   }
 
+  getServiceWithAppointments(id: number): Observable<any> {
+    return this.http.get<any>(this.apiUrl + 'with-appoitments/' + id);
+  }
+
+  confirmAppointment(id: number, reason: string): Observable<void> {
+    return this.http.put<void>(`${this.apiUrl}/with-appointments/${id}/accept`, { reason});
+  }
+
+  rejectAppointment(id: number, reason: string): Observable<void> {
+    return this.http.put<void>(`${this.apiUrl}/with-appointments/${id}/reject`, { reason });
+  }
+
 }

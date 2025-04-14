@@ -1,0 +1,173 @@
+<div class="container col-12 ">
+    <div class="card">
+      <div class="card-header">
+        <ul class="nav nav-tabs card-header-tabs" id="adoptionRequestTabs" role="tablist">
+          <li class="nav-item" role="presentation">
+            <a
+              class="nav-link"
+              [class.active]="activeTab === 'pending'"
+              (click)="setActiveTab('pending')"
+              id="pending-tab"
+              role="tab"
+              aria-controls="pending"
+              aria-selected="true"
+            >
+              Pending
+            </a>
+          </li>
+          <li class="nav-item" role="presentation">
+            <a
+              class="nav-link"
+              [class.active]="activeTab === 'confirmed'"
+              (click)="setActiveTab('confirmed')"
+              id="confirmed-tab"
+              role="tab"
+              aria-controls="confirmed"
+              aria-selected="false"
+            >
+              Confirmed
+            </a>
+          </li>
+          <li class="nav-item" role="presentation">
+            <a
+              class="nav-link"
+              [class.active]="activeTab === 'rejected'"
+              (click)="setActiveTab('rejected')"
+              id="rejected-tab"
+              role="tab"
+              aria-controls="rejected"
+              aria-selected="false"
+            >
+              Rejected
+            </a>
+          </li>
+        </ul>
+      </div>
+      <div class="card-body">
+        <div class="tab-content" id="adoptionRequestTabsContent">
+          <!-- Pending Tab -->
+          <div
+            class="tab-pane fade"
+            [class.show]="activeTab === 'pending'"
+            [class.active]="activeTab === 'pending'"
+            id="pending"
+            role="tabpanel"
+            aria-labelledby="pending-tab"
+          >
+            <div *ngIf="pendingAppointments.length > 0; else noPending">
+              <table class="table table-striped">
+                <thead>
+                  <tr>
+                    <th scope="col">Service Name</th>
+                    <th scope="col">Location</th>
+                    <th scope="col">Description</th>
+                    <th scope="col">Actions</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let request of pendingAppointments">
+                    <td [ngClass]="{'highlight-changed': request.changedFields?.includes('adoptedPet')}">
+                      {{ request.name }}
+                    </td>
+                
+                    <td [ngClass]="{'highlight-changed': request.changedFields?.includes('location')}">
+                      {{ request.address }}
+                    </td>
+                
+                    <td [ngClass]="{'highlight-changed': request.changedFields?.includes('description')}">
+                      {{ request.description }}
+                    </td>
+                
+                    <td>
+                      <div class="d-flex justify-content-between" >
+
+                        <button class="btn btn-danger" (click)="deleteAppointment(request.id)">Delete</button>
+                      </div>
+                    </td>
+                  </tr>
+                </tbody>
+                
+              </table>
+            </div>
+            <ng-template #noPending>
+              <p>No pending adoption requests</p>
+            </ng-template>
+          </div>
+  
+          <!-- Confirmed Tab -->
+          <div
+            class="tab-pane fade"
+            [class.show]="activeTab === 'confirmed'"
+            [class.active]="activeTab === 'confirmed'"
+            id="confirmed"
+            role="tabpanel"
+            aria-labelledby="confirmed-tab"
+          >
+            <div *ngIf="confirmedAppointments.length > 0; else noConfirmed">
+              <table class="table table-striped">
+                <thead>
+                  <tr>
+                    <th scope="col">Service Name</th>
+                    <th scope="col">Location</th>
+                    <th scope="col">Description</th>
+                    <th scope="col">Actions</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let request of confirmedAppointments">
+                    <td>{{ request.name }}</td>
+                    <td>{{ request.location }}</td>
+                    <td>{{ request.description }}</td>
+                    <td>
+
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <ng-template #noConfirmed>
+              <p>No confirmed adoption requests</p>
+            </ng-template>
+          </div>
+  
+          <!-- Rejected Tab -->
+          <div
+            class="tab-pane fade"
+            [class.show]="activeTab === 'rejected'"
+            [class.active]="activeTab === 'rejected'"
+            id="rejected"
+            role="tabpanel"
+            aria-labelledby="rejected-tab"
+          >
+            <div *ngIf="rejectedAppointments.length > 0; else noRejected">
+              <table class="table table-striped">
+                <thead>
+                  <tr>
+                    <th scope="col">Service Name</th>
+                    <th scope="col">Location</th>
+                    <th scope="col">Description</th>
+                    <th scope="col">Reson of Rejection</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let request of rejectedAppointments">
+                    <td>{{ request.address }}</td>
+                    <td>{{ request.message }}</td>
+                    <td>{{ request.date }}</td>
+                    <td>{{ request.time }}</td>
+                    <td>
+                      {{ request.reason }}
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <ng-template #noRejected>
+              <p>No rejected adoption requests</p>
+            </ng-template>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
