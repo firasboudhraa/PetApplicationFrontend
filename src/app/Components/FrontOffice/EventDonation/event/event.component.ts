@@ -5,6 +5,7 @@ import { EventService } from 'src/app/Services/event-service.service';
 import { Event } from 'src/app/models/event';
 import { DonationService } from 'src/app/Services/donation-service.service';
 import { Donation } from 'src/app/models/donation';
+import { UserService } from 'src/app/Services/user.service';
 
 interface SearchParams {
   name?: string;
@@ -32,7 +33,8 @@ export class EventComponent implements OnInit {
     private eventService: EventService, 
     private donationService: DonationService,
     private router: Router, 
-    private http: HttpClient
+    private http: HttpClient,
+    private userService: UserService
   ) {}
 
   ngOnInit(): void {

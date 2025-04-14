@@ -24,6 +24,8 @@ import { HeaderComponent } from './Components/BackOffice/header/header.component
 import { EventbackComponent } from './Components/BackOffice/dashboard/eventback/eventback.component';
 import { UpdateEventComponent } from './Components/BackOffice/dashboard/update-event/update-event.component';
 import { AddEventComponent } from './Components/BackOffice/dashboard/add-event/add-event.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -46,7 +48,7 @@ import { AddEventComponent } from './Components/BackOffice/dashboard/add-event/a
     HeaderComponent,
     EventbackComponent,
     UpdateEventComponent,
-    AddEventComponent
+    AddEventComponent,
   ],
   imports: [
     BrowserModule,
@@ -54,7 +56,7 @@ import { AddEventComponent } from './Components/BackOffice/dashboard/add-event/a
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
-
+    BrowserAnimationsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

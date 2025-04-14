@@ -82,3 +82,24 @@
       font-size: 0.9rem;
     }
   }
+
+  .user-donations-card {
+    border-left: 4px solid #4361ee;
+  }
+  
+  .donation-item {
+    transition: all 0.3s ease;
+  }
+  
+  .donation-item:hover {
+    background-color: #f8f9fa;
+    transform: translateX(5px);
+  }
+  
+  .total-donations {
+    font-size: 1.1rem;
+  }
+
+  .total-donations span {
+    margin-left: 0.5rem;
+  }

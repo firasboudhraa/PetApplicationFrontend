@@ -3,7 +3,9 @@ export interface Donation {
     amount: number;
     date: string; 
     eventId: number;
+    userId: number;
     status: String;
+    paymentMethod: String;
   }
 
 export interface FullEventResponse {

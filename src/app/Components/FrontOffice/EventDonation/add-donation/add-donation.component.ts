@@ -2,6 +2,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { ActivatedRoute, Router } from '@angular/router';
 import Swal from 'sweetalert2';
+import { UserService } from 'src/app/Services/user.service';
 
 declare var paypal: any;
 
@@ -20,13 +21,13 @@ export class AddDonationComponent implements OnInit, OnDestroy {
   private paypalButtons: any;
 
   private readonly paypalClientId = 'YOUR_CLIENT_ID';
-  //private readonly paypalClientId = 'AcRNmlTOelCjXZB_LhOBQdj4nuEprFipRanFAPL7oe4TQuxaQHau7Zgh_wAB76TpkqbuqNL1OSpqxIzp';
   private readonly apiBaseUrl = 'http://localhost:8010';
 
   constructor(
     private http: HttpClient,
     private route: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    private userService: UserService
   ) {}
 
   ngOnInit(): void {
@@ -123,7 +124,12 @@ export class AddDonationComponent implements OnInit, OnDestroy {
     }
   }
 
+  private getCurrentUserId(): number {
+    return this.userService.getCurrentUserId();
+  }
+
   private async createOrder(): Promise<string> {
+    const userId = this.userService.getCurrentUserId();
     if (!this.eventId) {
       throw new Error('Event ID is required');
     }
@@ -133,7 +139,8 @@ export class AddDonationComponent implements OnInit, OnDestroy {
         `${this.apiBaseUrl}/payment/create-order`,
         {
           amount: this.amount,
-          eventId: this.eventId
+          eventId: this.eventId,
+          userId: userId // Assurez-vous que cette propriété est bien envoyée
         },
         { 
           headers: { 
@@ -150,7 +157,7 @@ export class AddDonationComponent implements OnInit, OnDestroy {
       this.showErrorAlert('Failed to create payment order');
       throw error;
     }
-  }
+}
 
   private async captureOrder(orderId: string): Promise<void> {
     try {
@@ -175,7 +182,7 @@ export class AddDonationComponent implements OnInit, OnDestroy {
       this.paymentCompleted = true;
       this.error = null;
       
-      this.router.navigate(['/event-details', this.eventId]);
+      this.router.navigate(['/event-detail', this.eventId]);
     } catch (error) {
       console.error('Capture error:', error);
       this.showErrorAlert('Payment processing failed. Please try again.');

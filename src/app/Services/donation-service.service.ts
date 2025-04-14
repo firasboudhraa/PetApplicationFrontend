@@ -31,4 +31,8 @@ export class DonationService {
     return this.http.delete<void>(this.apiUrl + 'remove-donation/' + id);
   }
 
+  getDonationsByUserAndEvent(userId: number, eventId: number): Observable<any> {
+    return this.http.get<any>(this.apiUrl + 'user/' + userId + '/event/' + eventId);
+  }
+
 }
