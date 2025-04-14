@@ -29,7 +29,8 @@ export class RecordsComponent implements OnInit {
           description: item.description,
           next_due_date: item.next_due_date,
           carnet_id: item.carnet_id,
-          poids: item.poids
+          poids: item.poids,
+          nextDate: item.next_due_date // Map 'next_due_date' to 'nextDate'
         })); // Stocker la réponse dans la variable
       },
       (error) => {

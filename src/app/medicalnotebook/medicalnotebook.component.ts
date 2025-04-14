@@ -130,6 +130,7 @@ navigateToMedicalNotebookStats() {
           next_due_date: item.next_due_date,
           carnet_id: item.carnet_id,
           poids: item.poids,
+          nextDate: item.next_due_date ? new Date(item.next_due_date).toISOString() : '', // Add 'nextDate' property
         })); // Stocker la réponse dans la variable
         console.log('Records médicaux récupérés testest:', this.medicalRecords); // Vérifiez que vous recevez la liste correcte
       },
@@ -190,6 +191,12 @@ navigateToMedicalNotebookStats() {
   
   searchText: string = '';
   searchDate: string = '';
+  searchType: string = '';
+searchVet: string = '';
+searchMonth: string = '';
+searchStartDate: string = '';
+searchEndDate: string = '';
+
   
   // ✅ Getter pour filtrer dynamiquement les carnets selon le nom et la date
   get filteredCarnets(): any[] {
@@ -200,21 +207,61 @@ navigateToMedicalNotebookStats() {
       const matchesDate =
         !this.searchDate ||
         (carnet.medicalRecords &&
-          carnet.medicalRecords.some((record: { dateTime: string | number | Date; }) => {
-            const recordDate = new Date(record.dateTime).toISOString().split('T ')[0];
-            return recordDate === this.searchDate;
-          })
-        );
+          carnet.medicalRecords.some((record: any) =>
+            new Date(record.dateTime).toISOString().split('T')[0] === this.searchDate
+          ));
   
-      return matchesName && matchesDate;
+      const matchesType =
+        !this.searchType ||
+        (carnet.medicalRecords &&
+          carnet.medicalRecords.some((record: any) =>
+            record.type?.toLowerCase() === this.searchType.toLowerCase()
+          ));
+  
+      const matchesVet =
+        !this.searchVet ||
+        (carnet.medicalRecords &&
+          carnet.medicalRecords.some((record: any) =>
+            record.veterinarian_id?.toLowerCase().includes(this.searchVet.toLowerCase())
+          ));
+  
+      const matchesMonth =
+        !this.searchMonth ||
+        (carnet.medicalRecords &&
+          carnet.medicalRecords.some((record: any) => {
+            const recordMonth = new Date(record.dateTime).toISOString().slice(0, 7); // format YYYY-MM
+            return recordMonth === this.searchMonth;
+          }));
+  
+      const matchesPeriod =
+        (!this.searchStartDate && !this.searchEndDate) ||
+        (carnet.medicalRecords &&
+          carnet.medicalRecords.some((record: any) => {
+            const recordDate = new Date(record.dateTime);
+            const startDate = this.searchStartDate ? new Date(this.searchStartDate) : null;
+            const endDate = this.searchEndDate ? new Date(this.searchEndDate) : null;
+            return (!startDate || recordDate >= startDate) &&
+                   (!endDate || recordDate <= endDate);
+          }));
+  
+      return matchesName && matchesDate && matchesType && matchesVet && matchesMonth && matchesPeriod;
     });
   }
   
 
+  resetFilters(): void {
+    this.searchText = '';
+    this.searchDate = '';
+    this.searchType = '';
+    this.searchVet = '';
+    this.searchMonth = '';
+  }
+  
+  
+
   searchText1: string = '';
   searchDate1: string = '';
-  searchType: string = '';
-  searchVet: string = '';
+  
   
 
 // Dictionnaire pour garder l’état par carnet

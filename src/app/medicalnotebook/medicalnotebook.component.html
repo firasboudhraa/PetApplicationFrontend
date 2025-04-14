@@ -1,23 +1,43 @@
 <div class="container mt-5">
   <h2 class="mb-4 text-center" style="color: #4e73df;">Liste des Carnets Médicaux</h2>
+
   <div class="d-flex justify-content-between mt-3">
-    <button class="btn btn-primary" (click)="navigateToMedicalNotebookForm()">
-      ➕ Ajouter un Carnet
-    </button>
-    <button class="btn btn-primary" (click)="navigateToMedicalNotebookStats()">      
-      📊 Stats
-    </button>
+    <button class="btn btn-primary" (click)="navigateToMedicalNotebookForm()">➕ Ajouter un Carnet</button>
+    <button class="btn btn-primary" (click)="navigateToMedicalNotebookStats()">📊 Stats</button>
   </div>
+
   <br>
-  <!-- 🔍 Champs de recherche -->
+
+  <!-- 🔍 Filtres de recherche -->
+  <div class="row mb-4">
+    <div class="col-md-4">
+      <input type="text" class="form-control" placeholder="🔎 Rechercher par nom..." [(ngModel)]="searchText" />
+    </div>
+    <div class="col-md-4">
+      <input type="date" class="form-control" [(ngModel)]="searchDate" />
+    </div>
+    <div class="col-md-4">
+      <select class="form-select" [(ngModel)]="searchType">
+        <option value="">📂 Tous les types de soins</option>
+        <option value="VACCINATION">VACCINATION</option>
+        <option value="SURGERY">SURGERY</option>
+        <option value="CHECKUP">CHECKUP</option>
+        <option value="MEDICATION">MEDICATION</option>
+        <option value="OTHER">OTHER</option>
+     
+      </select>
+    </div>
+  </div>
+
   <div class="row mb-4">
     <div class="col-md-6">
-      <input type="text" class="form-control" placeholder="🔎 Rechercher par nom..."
-             [(ngModel)]="searchText">
+      <input type="text" class="form-control" placeholder="🧑‍⚕️ Rechercher par vétérinaire..." [(ngModel)]="searchVet" />
     </div>
-    <div class="col-md-6">
-      <input type="date" class="form-control" placeholder="📅 Filtrer par date"
-             [(ngModel)]="searchDate">
+    <div class="col-md-3">
+      <input type="month" class="form-control" [(ngModel)]="searchMonth" />
+    </div>
+    <div class="col-md-3">
+      <button class="btn btn-secondary w-100" (click)="resetFilters()">🔄 Réinitialiser</button>
     </div>
   </div>
 
@@ -46,12 +66,11 @@
           <div *ngIf="expandedIndex[i]" class="card-text">
             <p><strong>Historique Médical :</strong></p>
             <div *ngFor="let record of carnet.medicalRecords" class="mb-4 border-top pt-3">
-              <p><i class="bi bi-calendar-check me-2"></i><strong>type :</strong> {{ record.type }}</p>
+              <p><i class="bi bi-calendar-check me-2"></i><strong>Type :</strong> {{ record.type }}</p>
               <p><strong>Date :</strong> {{ record.dateTime | date: 'dd/MM/yyyy' }}</p>
               <p><strong>Description :</strong> {{ record.description }}</p>
               <p><strong>Vétérinaire :</strong> {{ record.veterinarian_id || 'Non spécifié' }}</p>
-              <p><strong>poids :</strong> {{ record.poids || 'Non spécifié' }}</p>
-
+              <p><strong>Poids :</strong> {{ record.poids || 'Non spécifié' }}</p>
             </div>
           </div>
 
@@ -67,5 +86,4 @@
       </div>
     </div>
   </div>
-
-  
+</div>

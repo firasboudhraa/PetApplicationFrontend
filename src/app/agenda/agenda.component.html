@@ -1,0 +1,16 @@
+<div class="container mt-4">
+    <h3 class="text-center text-primary mb-4">🗓️ Agenda des Soins Médicaux</h3>
+  
+    <div class="mb-3">
+      <label for="carnetSelect">Sélectionnez un carnet :</label>
+      <select id="carnetSelect" class="form-select" [(ngModel)]="selectedCarnetId" (change)="onCarnetSelected()">
+        <option [ngValue]="null" disabled>-- Choisir un carnet --</option>
+        <option *ngFor="let carnet of carnets" [ngValue]="carnet.id">
+          {{ carnet.name }}
+        </option>
+      </select>
+    </div>
+  
+    <full-calendar [options]="calendarOptions"></full-calendar>
+  </div>
+  

@@ -1,6 +1,7 @@
 import { RecordTypeEnum } from './recordtypeEnum';
 
 export interface Record {
+  nextDate: string;
 date: string|number|Date;
   dateTime: string; 
    type: RecordTypeEnum;

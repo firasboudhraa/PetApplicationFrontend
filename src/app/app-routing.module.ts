@@ -10,6 +10,7 @@ import { DashboardComponent } from './Components/BackOffice/dashboard/dashboard.
 import { UsersComponent } from './Components/BackOffice/dashboard/users/users.component';
 import { RecordsComponent } from './Components/BackOffice/dashboard/records/records.component';
 import { StatsComponent } from './stats/stats.component';
+import { AgendaComponent } from './agenda/agenda.component';
 
 const routes: Routes = [
   { path: 'home', component: HomeComponent },
@@ -19,6 +20,8 @@ const routes: Routes = [
   {path:'medicalnotebookform', component:MedicalnotebookFormComponent},
   {path:'add-service',component:AddServiceComponent},
   {path:'serviceDetail/:id', component:DetailServiceComponent},
+  { path: 'agenda', component:AgendaComponent },
+
   {path:'dashboard', component:DashboardComponent,
     children:[
       {path:'users', component:UsersComponent},

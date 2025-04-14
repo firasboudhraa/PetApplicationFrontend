@@ -21,6 +21,8 @@ import { HeaderComponent } from './Components/BackOffice/header/header.component
 import { RecordsComponent } from './Components/BackOffice/dashboard/records/records.component';
 import { StatsComponent } from './stats/stats.component';
 import { NgChartsModule } from 'ng2-charts';
+import { AgendaComponent } from './agenda/agenda.component';
+import { FullCalendarModule } from '@fullcalendar/angular';
 @NgModule({
   declarations: [
     AppComponent,
@@ -39,7 +41,8 @@ import { NgChartsModule } from 'ng2-charts';
     SidebarComponent,
     HeaderComponent,
     RecordsComponent,
-    StatsComponent
+    StatsComponent,
+    AgendaComponent
   ],
   imports: [
     BrowserModule,
@@ -47,7 +50,9 @@ import { NgChartsModule } from 'ng2-charts';
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
-    NgChartsModule 
+    NgChartsModule ,
+    FullCalendarModule
+
 
   ],
   providers: [],
