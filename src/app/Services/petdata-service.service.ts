@@ -8,6 +8,7 @@ import { Pet } from '../models/pet';
 })
 export class PetdataServiceService {
   private apiUrl = 'http://localhost:8222/api/v1/pet'; 
+  private iModelUrl = 'http://localhost:8052'; 
 
   constructor(private http: HttpClient) {}
   
@@ -28,5 +29,9 @@ export class PetdataServiceService {
   }
   updatePet(id: number, pet: FormData): Observable<any> {
     return this.http.put(`${this.apiUrl}/modify-pet?id=${id}`, pet);
+  }
+
+  discoverBreed(imageUrl:string): Observable<any> {
+    return this.http.post<any>(`${this.iModelUrl}/predict-from-url`, { image_url: imageUrl });
   }
 }

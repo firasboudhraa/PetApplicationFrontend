@@ -53,3 +53,53 @@
   flex-direction: column;
 
 }
+.filter-dropdown{
+  margin:5vh 10vw 0px 20vw ;
+}
+
+.filter-dropdown .btn {
+  display: flex;
+  align-items: center;
+  gap: 8px; /* Space between the icon and text */
+  background-color: #007bff; /* Primary blue background to match the UI */
+  border: none; /* Remove border for a cleaner look */
+  border-radius: 25px; /* Rounded pill-shaped button */
+  padding: 8px 20px; /* Adjust padding for better spacing */
+  font-size: 14px;
+  font-weight: bold; /* Make the text bold for emphasis */
+  color: #fff; /* White text for contrast */
+  cursor: pointer;
+  transition: all 0.3s ease; /* Smooth transition for hover effects */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+}
+
+.filter-dropdown .btn:hover {
+  background-color: #0056b3; /* Darker blue on hover */
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2); /* Enhanced shadow on hover */
+}
+
+.filter-dropdown .dropdown-menu {
+  border-radius: 10px; /* Rounded corners for the dropdown */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+  background-color: #fff; /* White background for contrast */
+  border: none; /* Remove border for a cleaner look */
+  padding: 5px 0; /* Add padding for dropdown items */
+}
+
+.filter-dropdown .dropdown-item {
+  padding: 10px 20px; /* Adjust padding for better spacing */
+  font-size: 14px;
+  color: #333; /* Neutral text color */
+  transition: background-color 0.3s ease, color 0.3s ease; /* Smooth hover effects */
+  cursor: pointer;
+}
+
+.filter-dropdown .dropdown-item:hover {
+  background-color: #f0f2f5; /* Light gray on hover */
+  color: #007bff; /* Primary blue text on hover */
+}
+
+.filter-dropdown .dropdown-item.active {
+  background-color: #007bff; /* Highlight active item */
+  color: #fff; /* White text for active item */
+}

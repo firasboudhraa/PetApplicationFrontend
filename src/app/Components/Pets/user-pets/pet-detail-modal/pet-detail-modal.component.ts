@@ -159,4 +159,37 @@ export class PetDetailModalComponent {
     });
     this.hideConfirmButton();
   }
+  isCatOrDog(specie: string): boolean {
+    return specie.toLowerCase() === 'cat' || specie.toLowerCase() === 'dog';  
+  }
+  discoverBreed(imageUrl: string): void {
+    this.petDataService.discoverBreed(imageUrl).subscribe(
+      (response) => {
+        console.log('Breed discovered successfully:', response);
+        const breed = response.breed; // Adjust based on the actual response structure
+
+        Swal.fire({
+          icon: 'success',
+          title: '✨ Breed Discovered ✨',
+          html: `<strong>✅ Your pet breed is:</strong> <span style="color: #6a11cb; font-weight: bold;">${breed}</span>`,
+          position: 'top',
+          showConfirmButton: true,
+          toast: false,
+
+        });
+      },
+      (error) => {
+        console.error('Error discovering breed:', error);
+        Swal.fire({
+          icon: 'error',
+          title: 'Error',
+          text: '❌ Failed to discover breed.',
+          position: 'top',
+          showConfirmButton: true,
+          toast: true,
+        });
+      }
+    );
+  }
 }
+

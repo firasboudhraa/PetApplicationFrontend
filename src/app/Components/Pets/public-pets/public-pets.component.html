@@ -1,5 +1,15 @@
 <section class="ftco-section" >
   <div class="container ">
+    <div>
+      <label for="speciesFilter" class="me-2">Filter by Species:</label>
+      <select id="speciesFilter" class="form-select d-inline-block w-auto" [(ngModel)]="selectedSpecies" (change)="filterPets()">
+        <option value="">All</option>
+        <option value="cat">Cat</option>
+        <option value="dog">Dog</option>
+        <option value="bird">Bird</option>
+        <option value="other">Other</option>
+      </select>
+    </div>
     <div class="card-container">
       <ng-container  *ngFor="let pet of pets">
         <div >

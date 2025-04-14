@@ -1,6 +1,7 @@
 import { Component, Renderer2 } from '@angular/core';
 import { Pet } from 'src/app/models/pet';
 import { PetdataServiceService } from 'src/app/Services/petdata-service.service';
+import { PetsSpeciesService } from 'src/app/Services/shared/pets-species.service';
 
 @Component({
   selector: 'app-user-pets',
@@ -8,9 +9,12 @@ import { PetdataServiceService } from 'src/app/Services/petdata-service.service'
   styleUrls: ['./user-pets.component.css']
 })
 export class UserPetsComponent {
- pets: Pet[] = []; // Current page pets
-
+  pets: Pet[] = []; // Current page pets
+  filteredPets: Pet[] = [];
+  selectedSpecies: string = '';
   allPets: Pet[] = []; 
+  petSpecies : any[] = [] ;
+
   selectedPet!: Pet;
   currentPage: number = 1;
   itemsPerPage: number = 3;
@@ -20,7 +24,7 @@ export class UserPetsComponent {
   showDetail: boolean = false;
   showEditModal: boolean = false;
   userId:number = 1 ; 
-  constructor(private petDataService: PetdataServiceService ,private renderer: Renderer2 ) {}
+  constructor(private petDataService: PetdataServiceService ,private renderer: Renderer2 , private ps : PetsSpeciesService ) {}
 
   openModal() {
     this.showModal = true;
@@ -63,7 +67,18 @@ export class UserPetsComponent {
     this.renderer.removeClass(document.querySelector('app-navbar'), 'blur-effect');
     this.renderer.removeClass(document.querySelector('app-footer'), 'blur-effect');
   }
-
+  filterPets(): void {
+    if (this.selectedSpecies != '') {
+      this.filteredPets = this.allPets.filter((pet) =>
+        pet.species.toLowerCase() === this.selectedSpecies.toLowerCase()
+      );
+    } else {
+      this.filteredPets = [...this.allPets];
+    }
+    this.totalItems = this.filteredPets.length;
+    this.currentPage = 1;
+    this.loadPets()
+  }
   get totalPages(): number {
     return Math.ceil(this.totalItems / this.itemsPerPage);
   }
@@ -72,22 +87,24 @@ export class UserPetsComponent {
     this.petDataService.getPetsByOwnerId(this.userId).subscribe((data) => {
       this.allPets = data;
       this.totalItems = this.allPets.length;
-      this.loadPets();
+      this.filterPets();
+      
     }); 
+    this.petSpecies = this.ps.speciesOption ;
   }
 
   loadPets(): void {
     const startIndex = (this.currentPage - 1) * this.itemsPerPage;
     const endIndex = startIndex + this.itemsPerPage;
     
-    this.pets = this.allPets.slice(startIndex, endIndex);
+    this.pets = this.filteredPets.slice(startIndex, endIndex);
   }
   loadPetsAfterChange(): void {
 
     this.petDataService.getPets().subscribe((data) => {
       this.allPets = data;
       this.totalItems = this.allPets.length;
-      this.loadPets();
+      this.filterPets();
     }); 
 
   }
@@ -107,4 +124,8 @@ export class UserPetsComponent {
     this.loadPetsAfterChange(); 
   }
   
+  applyFilter(species: string): void {
+    this.selectedSpecies = species; // Update the selected species
+    this.filterPets(); // Apply the filter
+  }
 }

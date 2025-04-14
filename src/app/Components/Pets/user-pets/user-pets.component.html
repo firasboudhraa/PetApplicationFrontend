@@ -1,18 +1,38 @@
 <div class="page-container">
-  <div class="d-flex justify-content-end mb-3">
+  <div class="d-flex justify-content-between align-items-center mb-3">
+    <div class="dropdown filter-dropdown">
+      <button
+        class="btn btn-light dropdown-toggle"
+        type="button"
+        id="filterDropdown"
+        data-bs-toggle="dropdown"
+        aria-expanded="false"
+      >
+        <i class="fas fa-filter"></i> Filter
+      </button>
+      <ul class="dropdown-menu" aria-labelledby="filterDropdown">
+        <li>
+          <a class="dropdown-item" (click)="applyFilter('')">All</a>
+        </li>
+        <li *ngFor="let option of petSpecies">
+          <a class="dropdown-item" (click)="applyFilter(option.value)">{{ option.label }}</a>
+        </li>
+      </ul>
+    </div>
     <button type="button" class="btn btn-primary modal-btn" (click)="openModal()">
       Add a Pet
     </button>
   </div>
-  <section class="ftco-section pt-5" >
-  <div class="container ">
-    <div class="card-container">
-      <ng-container  *ngFor="let pet of pets">
-        <div >
-          <app-pet-card [pet]="pet" (click)="openDetailModal(pet)"></app-pet-card>
-                </div>
-            </ng-container>
-        </div>        
+
+  <section class="ftco-section pt-5">
+    <div class="container">
+      <div class="card-container">
+        <ng-container *ngFor="let pet of pets">
+          <div>
+            <app-pet-card [pet]="pet" (click)="openDetailModal(pet)"></app-pet-card>
+          </div>
+        </ng-container>
+      </div>      
 
 
       <!--Pagination -->  

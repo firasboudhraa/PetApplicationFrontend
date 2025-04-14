@@ -8,7 +8,9 @@ import { PetdataServiceService } from 'src/app/Services/petdata-service.service'
   styleUrls: ['./public-pets.component.css']
 })
 export class PublicPetsComponent {
- pets: Pet[] = []; // Current page pets
+ pets: Pet[] = []; 
+ filteredPets: Pet[] = [];
+ selectedSpecies: string = '';
 
   allPets: Pet[] = []; 
   selectedPet!: Pet;
@@ -73,22 +75,34 @@ export class PublicPetsComponent {
     this.petDataService.getPets().subscribe((data) => {
       this.allPets = data;
       this.totalItems = this.allPets.length;
-      this.loadPets();
+      this.filterPets();
     }); 
+  }
+  filterPets(): void {
+    if (this.selectedSpecies) {
+      this.filteredPets = this.allPets.filter((pet) =>
+        pet.species.toLowerCase() === this.selectedSpecies.toLowerCase()
+      );
+    } else {
+      this.filteredPets = [...this.allPets];
+    }
+    this.totalItems = this.filteredPets.length;
+    this.currentPage = 1;
+    this.loadPets()
   }
 
   loadPets(): void {
     const startIndex = (this.currentPage - 1) * this.itemsPerPage;
     const endIndex = startIndex + this.itemsPerPage;
     
-    this.pets = this.allPets.slice(startIndex, endIndex);
+    this.pets = this.filteredPets.slice(startIndex, endIndex);
   }
   loadPetsAfterChange(): void {
 
     this.petDataService.getPets().subscribe((data) => {
       this.allPets = data;
       this.totalItems = this.allPets.length;
-      this.loadPets();
+      this.filterPets();
     }); 
 
   }
