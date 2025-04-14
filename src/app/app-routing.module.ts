@@ -9,11 +9,13 @@ import { MedicalnotebookFormComponent } from './medicalnotebook-form/medicalnote
 import { DashboardComponent } from './Components/BackOffice/dashboard/dashboard.component';
 import { UsersComponent } from './Components/BackOffice/dashboard/users/users.component';
 import { RecordsComponent } from './Components/BackOffice/dashboard/records/records.component';
+import { StatsComponent } from './stats/stats.component';
 
 const routes: Routes = [
   { path: 'home', component: HomeComponent },
   {path:'service', component:ServiceComponent},
   {path:'medicalnotebook', component:MedicalnotebookComponent},
+  {path:'stats', component:StatsComponent},
   {path:'medicalnotebookform', component:MedicalnotebookFormComponent},
   {path:'add-service',component:AddServiceComponent},
   {path:'serviceDetail/:id', component:DetailServiceComponent},

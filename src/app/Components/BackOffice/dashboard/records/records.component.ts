@@ -23,11 +23,13 @@ export class RecordsComponent implements OnInit {
     this.medicalRecordService.getAllRecords().subscribe(
       (response) => {
         this.medicalRecords = response.map((item: any) => ({
-          date: item.date,
+          date: item.date, // Add 'date' property
+          dateTime: item.date, // Map 'date' to 'dateTime'
           type: item.type,
           description: item.description,
           next_due_date: item.next_due_date,
-          carnet_id: item.carnet_id
+          carnet_id: item.carnet_id,
+          poids: item.poids
         })); // Stocker la réponse dans la variable
       },
       (error) => {

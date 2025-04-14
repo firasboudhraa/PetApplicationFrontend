@@ -5,6 +5,8 @@ import { Carnet } from '../models/carnet';
 import { RecordTypeEnum } from '../models/recordtypeEnum';
 import { MedicalService } from '../Services/medical.service';
 import { forkJoin, map, catchError, of } from 'rxjs';
+import { FullCarnetResponse } from '../models/records';
+import { Record } from 'src/app/models/records';  // Assure-toi d'importer le bon modèle
 
 
 @Component({
@@ -13,6 +15,9 @@ import { forkJoin, map, catchError, of } from 'rxjs';
   styleUrls: ['./medicalnotebook.component.css']
 })
 export class MedicalnotebookComponent implements OnInit {
+navigateToMedicalNotebookStats() {
+  this.router.navigate(['/stats']);
+}
   constructor(private router: Router,private medicalService: MedicalService,private act:ActivatedRoute) {}
 
   carnets !: any[] 
@@ -37,6 +42,13 @@ export class MedicalnotebookComponent implements OnInit {
     this.loadCarnets();
     this.loadCarnets_test();
   }
+  
+  filtered_Carnets: FullCarnetResponse[] = [];
+  allCarnets: FullCarnetResponse[] = [];
+
+  currentRecordIndex: { [carnetName: string]: number } = {};
+
+ 
 
   // Charger la liste des carnets médicaux
   loadCarnets(): void {
@@ -48,18 +60,17 @@ export class MedicalnotebookComponent implements OnInit {
         const carnetRequests = data.map(carnet => {  
           return this.medicalService.getMedicalRecordsByCarnetId(carnet.id).pipe(
             map(response => {
-              console.log('Réponse des records pour le carnet', carnet.id, response);  // Affiche la réponse pour vérifier la structure
+              console.log('Réponse des records pour le carnet test test', carnet.id, response);  // Affiche la réponse pour vérifier la structure
               
               // Vérifier si 'medicalRecords' existe et est un tableau
               if (Array.isArray(response)) {
-                carnet.medicalHistory = response.map(record => ({
-                  
-                  // Assurer que 'name' existe dans la réponse
+                carnet.medicalRecords = response.map(record => ({
                   date: new Date(record['dateTime']),
-                  type: record['type'],  // Assurer que 'type' existe dans la réponse
+                  type: record['type'],
                   description: record['description'],
-                  next_due_date: record['next_due_date'] ? new Date(record['next_due_date']) : new Date(0), // Date par défaut si pas de next_due_date
-                  carnet_id: record['carnetId']  // Vérifie que 'carnetId' est bien une clé
+                  next_due_date: record['next_due_date'] ? new Date(record['next_due_date']) : new Date(0),
+                  carnet_id: record['carnetId'],
+                  poids:record['poids'],
                 }));
               } else {
                 carnet.medicalHistory = []; // Si 'response' n'est pas un tableau, initialiser avec un tableau vide
@@ -105,6 +116,33 @@ export class MedicalnotebookComponent implements OnInit {
       }
     });
   }
+
+    medicalRecords: Record[] = [];  // Utilisation du modèle Record explicite
+  
+  loadMedicalRecords(): void {
+    this.medicalService.getAllRecords().subscribe(
+      (response) => {
+        this.medicalRecords = response.map((item: any) => ({
+          date: item.date, // Add 'date' property
+          dateTime: item.date, // Renamed 'date' to 'dateTime'
+          type: item.type,
+          description: item.description,
+          next_due_date: item.next_due_date,
+          carnet_id: item.carnet_id,
+          poids: item.poids,
+        })); // Stocker la réponse dans la variable
+        console.log('Records médicaux récupérés testest:', this.medicalRecords); // Vérifiez que vous recevez la liste correcte
+      },
+      (error) => {
+        console.error('Erreur lors de la récupération des carnets médicaux', error);
+      }
+    );
+  }
+
+
+
+
+
  
   
   deleteCarnet(carnet: any) {
@@ -178,4 +216,24 @@ export class MedicalnotebookComponent implements OnInit {
   searchType: string = '';
   searchVet: string = '';
   
+
+// Dictionnaire pour garder l’état par carnet
+expandedCarnets: { [id: string]: boolean } = {};
+
+// Toggle d’un carnet spécifique
+toggleExpanded(id: string) {
+  this.expandedCarnets[id] = !this.expandedCarnets[id];
+}
+
+// Vérifie si un carnet est développé
+isExpanded(id: string): boolean {
+  return !!this.expandedCarnets[id];
+}
+expandedIndex: boolean[] = [];
+
+toggle(index: number): void {
+  this.expandedIndex[index] = !this.expandedIndex[index];
+}
+  
+
 }

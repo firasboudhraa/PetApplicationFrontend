@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { forkJoin, map, Observable, switchMap } from 'rxjs';
 import { Carnet } from '../models/carnet';
+import { FullCarnetResponse } from '../models/records';
 
 @Injectable({
   providedIn: 'root'
@@ -25,9 +26,10 @@ export class MedicalService {
   }
 
   // 🔹 Récupère les records d’un carnet spécifique
-  getMedicalRecordsByCarnetId(carnetId: number): Observable<Record<string, any>[]> {
-    return this.http.get<Record<string, any>[]>(`${this.baseUrl}/${carnetId}/medical-records`);
+  getMedicalRecordsByCarnetId(carnetId: number): Observable<FullCarnetResponse> {
+    return this.http.get<FullCarnetResponse>(`${this.baseUrl}/${carnetId}/medical-records`);
   }
+  
     // 🔹 Crée un nouveau carnet
   createCarnet(carnet: any): Observable<any> {
     return this.http.post<any>(`${this.baseUrl}/add-carnet`, carnet);

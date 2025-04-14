@@ -19,6 +19,8 @@ import { UsersComponent } from './Components/BackOffice/dashboard/users/users.co
 import { SidebarComponent } from './Components/BackOffice/sidebar/sidebar.component';
 import { HeaderComponent } from './Components/BackOffice/header/header.component';
 import { RecordsComponent } from './Components/BackOffice/dashboard/records/records.component';
+import { StatsComponent } from './stats/stats.component';
+import { NgChartsModule } from 'ng2-charts';
 @NgModule({
   declarations: [
     AppComponent,
@@ -36,7 +38,8 @@ import { RecordsComponent } from './Components/BackOffice/dashboard/records/reco
     UsersComponent,
     SidebarComponent,
     HeaderComponent,
-    RecordsComponent
+    RecordsComponent,
+    StatsComponent
   ],
   imports: [
     BrowserModule,
@@ -44,6 +47,7 @@ import { RecordsComponent } from './Components/BackOffice/dashboard/records/reco
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
+    NgChartsModule 
 
   ],
   providers: [],

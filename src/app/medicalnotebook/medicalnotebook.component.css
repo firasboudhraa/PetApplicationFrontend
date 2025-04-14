@@ -10,4 +10,20 @@
   .card-text {
     font-size: 1rem;
   }
+  .card:hover {
+    transform: scale(1.05);
+    box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+  }
+  
+  .card-body {
+    background-color: #f9fafb;
+  }
+  
+  button {
+    font-size: 0.875rem;
+  }
+  
+  button:hover {
+    opacity: 0.8;
+  }
   
