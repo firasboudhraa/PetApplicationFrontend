@@ -11,6 +11,7 @@
     📅 Posted At :{{ post.createdAt | date: 'medium' }} ,
     Category : {{ formatCategory(post.type) }}
   </time>
+  <div id="map" class="map-container"></div>
 
   <!-- Modify Post Button -->
   <button class="modify-post-button" [routerLink]="['/modify-post', post.id]">
@@ -59,6 +60,7 @@
         🗑️ Delete Comment
       </button>
     </div>
+    
 
     <!-- Add Comment Section -->
     <div class="add-comment">

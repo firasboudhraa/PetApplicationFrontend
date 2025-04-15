@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { PostsService } from 'src/app/services/posts.service';
 import { Router } from '@angular/router';
@@ -8,14 +8,19 @@ import { Router } from '@angular/router';
   templateUrl: './add-post.component.html',
   styleUrls: ['./add-post.component.css']
 })
-export class AddPostComponent {
+export class AddPostComponent implements OnInit, AfterViewInit {
   postForm: FormGroup;
   selectedFile: File | null = null;
   imageError: string | null = null;
   isSubmitting: boolean = false;
   errorMessage: string = '';
+  userId: number = 1; // TODO: récupérer depuis JWT
+  map!: google.maps.Map;
+  marker!: google.maps.Marker;
 
-  userId: number = 1; // Replace this with dynamic user ID (e.g., from JWT)
+  // Coordonnées par défaut (ex. Tunis)
+  latitude: number = 36.8065;
+  longitude: number = 10.1815;
 
   types = [
     { label: 'Success Story', value: 'success_stories' },
@@ -32,16 +37,46 @@ export class AddPostComponent {
       title: ['', Validators.required],
       content: ['', Validators.required],
       type: ['', Validators.required],
-      image: [null, Validators.required] // Ensure image is required
+      image: [null, Validators.required],
+      latitude: [this.latitude],
+      longitude: [this.longitude]
+    });
+    
+  }
+
+  ngOnInit(): void {}
+
+  ngAfterViewInit(): void {
+    this.initMap();
+  }
+
+  initMap(): void {
+    this.map = new google.maps.Map(document.getElementById('map') as HTMLElement, {
+      center: { lat: this.latitude, lng: this.longitude },
+      zoom: 12
+    });
+
+    this.marker = new google.maps.Marker({
+      position: { lat: this.latitude, lng: this.longitude },
+      map: this.map,
+      draggable: true,
+      title: 'Position du post'
+    });
+
+    // Mettre à jour les coordonnées quand le marqueur est déplacé
+    this.marker.addListener('dragend', () => {
+      const position = this.marker.getPosition();
+      if (position) {
+        this.latitude = position.lat();
+        this.longitude = position.lng();
+      }
     });
   }
 
   onFileSelected(event: Event): void {
     const input = event.target as HTMLInputElement;
-
     if (input.files && input.files[0]) {
       const file = input.files[0];
-
       if (!file.type.startsWith('image/')) {
         this.imageError = 'Seules les images sont autorisées.';
         this.selectedFile = null;
@@ -55,31 +90,26 @@ export class AddPostComponent {
   }
 
   onSubmit(): void {
-    if (this.postForm.valid && this.selectedFile) {
-      this.isSubmitting = true;
+    if (this.postForm.invalid || !this.selectedFile) return;
+    console.log('Latitude:', this.latitude);
+    console.log('Longitude:', this.longitude);
 
-      // Ideally, the user ID should be dynamically fetched (e.g., from JWT)
-      const userId = this.userId;
+    this.isSubmitting = true;
+    const formData = new FormData();
+    formData.append('title', this.postForm.value.title);
+    formData.append('content', this.postForm.value.content);
+    formData.append('type', this.postForm.value.type);
+    formData.append('image', this.selectedFile);
+    formData.append('latitude', this.latitude.toString());
+    formData.append('longitude', this.longitude.toString());
 
-      const formData = new FormData();
-      formData.append('title', this.postForm.get('title')?.value);
-      formData.append('content', this.postForm.get('content')?.value);
-      formData.append('type', this.mapTypeToEnum(this.postForm.get('type')?.value));
-      formData.append('image', this.selectedFile);
-
-      this.postService.addPost(formData, userId).subscribe(
-        () => {
-          this.isSubmitting = false;
-          this.router.navigate(['/blog']);
-          this.postForm.reset(); // Optionally reset form after successful post
-        },
-        (error) => {
-          this.isSubmitting = false;
-          this.errorMessage = 'Erreur lors de la publication du post. Veuillez réessayer.';
-          console.error('Error uploading post:', error);
-        }
-      );
-    }
+    this.postService.addPost(formData, this.userId).subscribe({
+      next: () => this.router.navigate(['/blog']),
+      error: (err) => {
+        this.errorMessage = 'Erreur lors de la publication.';
+        this.isSubmitting = false;
+      }
+    });
   }
 
   mapTypeToEnum(type: string): string {

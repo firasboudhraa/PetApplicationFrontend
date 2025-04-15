@@ -8,8 +8,10 @@ export class Post {
   type: string;
   userId: number;
   likedBy: any[];
-  comments: number;  // Nombre de commentaires
-  commentList: Comment[];  // Liste des commentaires
+  comments: number;
+  commentList: Comment[] = [];
+  latitude: number;  // Latitude pour la carte
+  longitude: number; // Longitude pour la carte
 
   constructor(
     id: number,
@@ -21,7 +23,9 @@ export class Post {
     userId: number,
     likedBy: any[],
     comments: number,
-    commentList: Comment[] = []  // Initialisation de la liste des commentaires
+    commentList: Comment[] = [],
+    latitude: number,  // Latitude pour la carte
+    longitude: number  // Longitude pour la carte
   ) {
     this.id = id;
     this.title = title;
@@ -32,6 +36,8 @@ export class Post {
     this.userId = userId;
     this.likedBy = likedBy;
     this.comments = comments;
-    this.commentList = commentList;  // Initialisation de la liste des commentaires
+    this.commentList = commentList;
+    this.latitude = latitude;
+    this.longitude = longitude;
   }
 }
