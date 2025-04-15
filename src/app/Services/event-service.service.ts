@@ -31,11 +31,15 @@ export class EventService {
     return this.http.delete(`${this.apiUrl}remove-event/${id}`);
   }
 
-  rateEvent(eventId: number, rating: number, feedback: string): Observable<Event> {
+  rateEvent(eventId: number, rating: number, feedback: string, userId: number): Observable<Event> {
     return this.http.post<Event>(
-      `${this.apiUrl}${eventId}/rate?rating=${rating}&feedback=${encodeURIComponent(feedback)}`, 
+      `${this.apiUrl}${eventId}/rate?rating=${rating}&feedback=${encodeURIComponent(feedback)}&userId=${userId}`,
       {}
     );
+  }
+  
+  getUserRating(eventId: number, userId: number): Observable<number | null> {
+    return this.http.get<number | null>(`${this.apiUrl}${eventId}/user/${userId}/rating`);
   }
 
   getAverageRating(eventId: number): Observable<number> {

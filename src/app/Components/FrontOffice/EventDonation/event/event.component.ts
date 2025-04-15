@@ -86,30 +86,47 @@ export class EventComponent implements OnInit {
 
   openRatingModal(eventId: number): void {
     this.selectedEventId = eventId;
-    this.newRating = { value: 0, feedback: '' };
-    this.showRatingModal = true;
+    const userId = this.userService.getCurrentUserId();
+    
+    this.eventService.getUserRating(eventId, userId).subscribe({
+      next: (rating) => {
+        this.newRating = {
+          value: rating || 0,
+          feedback: ''
+        };
+        this.showRatingModal = true;
+      },
+      error: (err) => {
+        console.error('Error getting user rating:', err);
+        this.newRating = { value: 0, feedback: '' };
+        this.showRatingModal = true;
+      }
+    });
   }
-
+  
   submitRating(): void {
     if (!this.selectedEventId || this.newRating.value <= 0) {
       alert('Please provide a valid rating');
       return;
     }
-
+  
+    const userId = this.userService.getCurrentUserId();
+    
     this.eventService.rateEvent(
-      this.selectedEventId, 
-      this.newRating.value, 
-      this.newRating.feedback
-    ).subscribe(
-      (event) => {
-        this.loadEvents(); // Refresh events to get updated ratings
+      this.selectedEventId,
+      this.newRating.value,
+      this.newRating.feedback,
+      userId
+    ).subscribe({
+      next: (event) => {
+        this.loadEvents();
         this.showRatingModal = false;
       },
-      (error) => {
-        console.error('Error saving rating:', error);
+      error: (err) => {
+        console.error('Error saving rating:', err);
         alert('Failed to save rating. Please try again.');
       }
-    );
+    });
   }
 
   updateAverageRating(eventId: number): void {

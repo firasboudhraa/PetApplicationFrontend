@@ -7,6 +7,11 @@ export interface Event {
   latitude?: number;
   longitude?: number;
   goalAmount: number;
-  ratings?: number[];
-  feedbacks?: string[];
+  ratings?: EventRating[];
+}
+
+export interface EventRating {
+  value: number;
+  feedback: string;
+  userId: number;
 }

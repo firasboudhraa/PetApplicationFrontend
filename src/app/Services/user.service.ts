@@ -13,7 +13,7 @@ private currentUsers = [
   { id: 4, name: 'Roronoa Zoro' }
 ];
 
-private currentUser = this.currentUsers[2]; 
+private currentUser = this.currentUsers[0]; 
 
 getCurrentUser() {
   return this.currentUser;
