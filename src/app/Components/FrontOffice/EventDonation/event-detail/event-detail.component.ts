@@ -6,6 +6,7 @@ import { Donation } from 'src/app/models/donation';
 import { DonationService } from 'src/app/Services/donation-service.service';
 import { UserService } from 'src/app/Services/user.service';
 import { ChangeDetectorRef } from '@angular/core';
+import { BadgeService } from 'src/app/Services/badge.service';
 
 @Component({
   selector: 'app-event-detail',
@@ -17,6 +18,10 @@ export class EventDetailComponent implements OnInit {
   event: FullEventResponse | null = null;
   userDonations: Donation[] = [];
   availableUsers: any[] = [];
+  badgeLevels: string[] = [];
+  badgeThresholds: number[] = [];
+  userTopBadge: string = '';
+  nextBadge: {level: string, amountNeeded: number} | null = null;
 
   constructor(
     private es: EventService, 
@@ -24,6 +29,7 @@ export class EventDetailComponent implements OnInit {
     private router: Router,
     private donationService: DonationService,
     private userService: UserService,
+    private badgeService: BadgeService,
     private cdr: ChangeDetectorRef
   ) {}
 
@@ -31,43 +37,73 @@ export class EventDetailComponent implements OnInit {
     this.availableUsers = this.userService.getAllUsers();
     this.id = this.Act.snapshot.params['id'];    
     this.loadEventData();
-  }
-
-  switchUser(event: any): void {
-    const userId = Number(event.target.value);
-    this.userService.switchUser(userId);
-    this.loadUserDonations(this.id); // Recharger les dons après changement d'utilisateur
+    this.loadBadgeLevels();
   }
 
   private loadEventData(): void {
     this.es.getEventById(this.id).subscribe(
       (data) => {
         this.event = data;
-        this.loadUserDonations(this.id); // Utilisez this.id au lieu de event.id pour plus de fiabilité
+        this.loadUserDonations(this.id);
       },
       (error) => {
         console.error('Error loading event:', error);
       }
     );
   }
-  
+
   private loadUserDonations(eventId: number): void {
     const userId = this.userService.getCurrentUserId();
-    console.log('Loading donations for user:', userId, 'event:', eventId);
     
     this.donationService.getDonationsByUserAndEvent(userId, eventId)
       .subscribe({
         next: (donations) => {
-          console.log('Donations received:', donations);
-          this.userDonations = donations || [];
+          this.userDonations = (donations || []).map((d: any) => {
+            if (!d.badgeLevel) {
+              d.badgeLevel = this.getBadgeForAmount(d.amount);
+            }
+            return d;
+          });
+          this.calculateUserTopBadge(); // Add this line
           this.cdr.detectChanges();
         },
         error: (err) => {
           console.error('Error loading donations:', err);
           this.userDonations = [];
+          this.userTopBadge = 'New Donor';
           this.cdr.detectChanges();
         }
       });
+  }
+
+  private loadBadgeLevels(): void {
+    this.donationService.getBadgeLevels().subscribe({
+      next: (data: any) => {
+        this.badgeLevels = data.levels;
+        this.badgeThresholds = data.thresholds;
+      },
+      error: (err) => console.error('Error loading badge levels:', err)
+    });
+  }
+
+  private calculateUserTopBadge(): void {
+    const total = this.getUserTotalDonations();
+    this.userTopBadge = this.getBadgeForAmount(total);
+    this.calculateNextBadge();
+  }
+  
+  private getBadgeForAmount(amount: number): string {
+    if (amount >= 2000) return 'Diamond';
+    if (amount >= 1000) return 'Platinum';
+    if (amount >= 500) return 'Gold';
+    if (amount >= 200) return 'Silver';
+    if (amount >= 50) return 'Bronze';
+    return 'New Donor';
+  }
+
+  private calculateNextBadge(): void {
+    const total = this.getUserTotalDonations();
+    this.nextBadge = this.badgeService.getNextBadge(total);
   }
 
   getTotalDonations(): number {
@@ -87,15 +123,20 @@ export class EventDetailComponent implements OnInit {
   }
 
   hasUserDonated(): boolean {
-    const hasDonations = this.userDonations.length > 0;
-    console.log('Has user donated:', hasDonations); // Ajouté
-    return hasDonations;
+    return this.userDonations.length > 0;
   }
 
-  // Nouvelle méthode pour obtenir le montant total des dons de l'utilisateur
   getUserTotalDonations(): number {
     return this.userDonations
       .filter(d => d.status === 'COMPLETED')
       .reduce((sum, current) => sum + current.amount, 0);
+  }
+
+  getBadgeColor(badgeLevel: string): string {
+    return this.badgeService.getBadgeColor(badgeLevel);
+  }
+
+  getBadgeIcon(badgeLevel: string): string {
+    return this.badgeService.getBadgeIcon(badgeLevel);
   }
 }

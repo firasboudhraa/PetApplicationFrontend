@@ -6,6 +6,7 @@ export interface Donation {
     userId: number;
     status: String;
     paymentMethod: String;
+    badgeLevel: String;
   }
 
 export interface FullEventResponse {

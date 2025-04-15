@@ -1,6 +1,6 @@
 import  { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import  { Observable } from 'rxjs';
+import  { catchError, Observable, of, tap } from 'rxjs';
 import type { Donation } from '../models/donation';
 
 @Injectable({
@@ -9,6 +9,8 @@ import type { Donation } from '../models/donation';
 export class DonationService {
 
   private apiUrl = 'http://localhost:8010/donation/';
+  private badgeCache = new Map<number, string>();
+  
   constructor( private http:HttpClient) { }
 
   getDonations() : Observable<Donation[]>{
@@ -34,5 +36,25 @@ export class DonationService {
   getDonationsByUserAndEvent(userId: number, eventId: number): Observable<any> {
     return this.http.get<any>(this.apiUrl + 'user/' + userId + '/event/' + eventId);
   }
+
+  getBadgeLevels(): Observable<any> {
+    return this.http.get(`${this.apiUrl}badge-levels`);
+  }
+
+getUserTopBadge(userId: number): Observable<string> {
+  if (this.badgeCache.has(userId)) {
+    return of(this.badgeCache.get(userId)!);
+  }
+
+  return this.http.get(`${this.apiUrl}user/${userId}/top-badge`, { 
+    responseType: 'text' 
+  }).pipe(
+    catchError(error => {
+      console.error('Error getting top badge:', error);
+      return of('New Donor');
+    }),
+    tap(badge => this.badgeCache.set(userId, badge))
+  );
+}
 
 }

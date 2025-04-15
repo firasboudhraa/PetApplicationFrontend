@@ -10,7 +10,6 @@
             </div>
             <h1 class="event-title mb-3">{{ event?.nameEvent }}</h1>
             <p class="event-description lead text-muted mb-4">{{ event?.description }}</p>
-            
             <div class="event-meta d-flex justify-content-center flex-wrap">
               <div class="meta-item mx-3 mb-2">
                 <i class="fas fa-calendar-day text-secondary mr-2"></i>
@@ -27,53 +26,74 @@
             </div>
           </div>
         </div>
-
+        <!-- Badge Section Card -->
+        <div class="card badge-section-card mb-4 border-0 shadow-sm">
+          <div class="card-body text-center p-5">
+            <div *ngIf="userTopBadge" class="badge-display d-flex align-items-center justify-content-center">
+              <div class="badge-icon mr-3" [ngClass]="'badge-' + userTopBadge.toLowerCase()">
+                <i [class]="'fas ' + getBadgeIcon(userTopBadge)"></i>
+              </div>
+              <div class="text-center">
+                <h4 class="mb-0">{{ userTopBadge }}</h4>
+                <small class="text-muted">Your current status</small>
+              </div>
+            </div>
+          </div>
+        </div>
         <!-- Donation Progress Card -->
         <div class="card donation-progress-card mb-4 border-0 shadow-sm">
           <div class="card-body p-4">
             <h3 class="card-title text-center mb-4">
               <i class="fas fa-donate mr-2 text-primary"></i>Donation Progress
             </h3>
-            
             <div class="progress-container mb-3">
               <div class="d-flex justify-content-between mb-2">
                 <span class="font-weight-bold">{{ getTotalDonations() | number:'1.2-2' }}DT</span>
                 <span class="font-weight-bold">{{ event?.goalAmount | number:'1.2-2' }}DT</span>
               </div>
               <div class="progress" style="height: 25px;">
-                <div class="progress-bar bg-success progress-bar-striped progress-bar-animated" 
-                     role="progressbar" 
-                     [style.width]="getDonationPercentage() + '%'">
+                <div class="progress-bar bg-success progress-bar-striped progress-bar-animated" role="progressbar" [style.width]="getDonationPercentage() + '%'">
                   {{ getDonationPercentage() | number:'1.0-0' }}%
                 </div>
               </div>
               <small class="text-muted d-block text-center mt-2">Amount raised of target goal</small>
             </div>
+            <!-- Next Badge Progress -->
+            <div *ngIf="nextBadge && nextBadge.level !== 'Max'" class="next-badge-container mt-4 pt-3 border-top">
+              <h5 class="text-center mb-3">
+                <i class="fas fa-arrow-up mr-2"></i>
+                Next Level: {{ nextBadge.level }} ({{ nextBadge.amountNeeded | number:'1.2-2' }} DT needed)
+              </h5>
+              <div class="progress" style="height: 15px;">
+                <div class="progress-bar bg-info" role="progressbar" [style.width]="(getUserTotalDonations() / badgeThresholds[badgeLevels.indexOf(nextBadge.level)]) * 100 + '%'">
+                </div>
+              </div>
+            </div>
           </div>
         </div>
-
         <!-- Donations List Card -->
         <div class="card donations-list-card border-0 shadow-sm">
           <div class="card-body p-4">
             <h3 class="card-title text-center mb-4">
               <i class="fas fa-list-ul mr-2 text-primary"></i>Recent Donations
             </h3>
-            
             <div *ngIf="!hasCompletedDonations()" class="alert alert-info text-center">
               No donations yet. Be the first to contribute!
             </div>
-
             <div *ngIf="event?.donations">
               <div *ngFor="let donation of event?.donations">
                 <div *ngIf="donation.status !== 'PENDING'" class="media align-items-center p-3 mb-3 bg-light rounded">
                   <div class="media-body">
                     <div class="d-flex justify-content-between align-items-center">
-                      <h5 class="mb-0 font-weight-bold text-success">
-                        {{ donation.amount | number:'1.2-2' }}DT
-                      </h5>
-                      <span class="badge" 
-                            [class.badge-success]="donation.status === 'COMPLETED'"
-                            [class.badge-warning]="donation.status === 'FAILED'">
+                      <div>
+                        <h5 class="mb-0 font-weight-bold text-success">
+                          {{ donation.amount | number:'1.2-2' }}DT
+                        </h5>
+                        <span class="badge ml-2" [ngClass]="'badge-' + (donation.badgeLevel || 'new').toLowerCase()">
+                          {{ donation.badgeLevel }}
+                        </span>
+                      </div>
+                      <span class="badge" [class.badge-success]="donation.status === 'COMPLETED'" [class.badge-warning]="donation.status === 'FAILED'">
                         {{ donation.status }}
                       </span>
                     </div>
@@ -87,34 +107,26 @@
             </div>
           </div>
         </div>
-
-        <div class="col-md-4 mb-3">
-          <label class="form-label">Switch User</label>
-          <select class="form-select" (change)="switchUser($event)">
-            <option value="" selected disabled>Select a user...</option>
-            <option *ngFor="let user of availableUsers" [value]="user.id">
-              {{ user.name }} (ID: {{ user.id }})
-            </option>
-          </select>
-        </div>
-
+        <!-- User Donations Section -->
         <div *ngIf="userDonations === null" class="alert alert-info mt-4">
           <i class="fas fa-spinner fa-spin mr-2"></i>Loading your donations...
         </div>
-        
         <div *ngIf="userDonations !== null && userDonations.length === 0" class="alert alert-info mt-4">
           <i class="fas fa-info-circle mr-2"></i>You haven't donated to this event yet.
         </div>
-        
         <div *ngIf="userDonations !== null && userDonations.length > 0" class="card user-donations-card mt-4">
           <div class="card-body">
             <h4 class="card-title">
               <i class="fas fa-user mr-2"></i>Your Donations
             </h4>
-            
             <div *ngFor="let donation of userDonations" class="donation-item mb-3 p-3 border rounded">
               <div class="d-flex justify-content-between align-items-center">
-                <span class="font-weight-bold text-primary">{{ donation.amount | number:'1.2-2' }} DT</span>
+                <div>
+                  <span class="font-weight-bold text-primary">{{ donation.amount | number:'1.2-2' }} DT</span>
+                  <span class="badge ml-2" [ngClass]="'badge-' + donation.badgeLevel.toLowerCase()">
+                    {{ donation.badgeLevel }}
+                  </span>
+                </div>
                 <span class="badge" [ngClass]="{
                   'badge-success': donation.status === 'COMPLETED',
                   'badge-warning': donation.status === 'PENDING',
@@ -128,18 +140,16 @@
                 {{ donation.date | date:'mediumDate' }}
                 <span *ngIf="donation.paymentMethod" class="ml-2">
                   <i class="fas fa-credit-card mr-1"></i>
-                  {{ donation.paymentMethod}}
+                  {{ donation.paymentMethod }}
                 </span>
               </div>
             </div>
-            
             <div class="total-donations mt-3 bg-light p-2 rounded">
-              <strong>Your Total Donations:</strong> 
+              <strong>Your Total Donations:</strong>
               <span class="font-weight-bold text-success">{{ getUserTotalDonations() | number:'1.2-2' }} DT</span>
             </div>
           </div>
         </div>
-
         <!-- Action Buttons -->
         <div class="text-center mt-4">
           <button class="btn btn-primary btn-lg mr-3" [routerLink]="['/add-donation', id]">
