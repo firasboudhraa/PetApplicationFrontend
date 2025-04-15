@@ -1,21 +1,23 @@
 export interface Donation {
-    id: number;
-    amount: number;
-    date: string; 
-    eventId: number;
-    userId: number;
-    status: String;
-    paymentMethod: String;
-    badgeLevel: String;
-  }
+  id: number;
+  amount: number;
+  date: string; 
+  eventId: number;
+  userId: number;
+  status: string;
+  paymentMethod: string;
+  badgeLevel: string;
+}
 
 export interface FullEventResponse {
-    id: number;
-    nameEvent: string;
-    description: string;
-    dateEvent: string;
-    location: string;
-    goalAmount: number;
-    donations: Donation[];
-  }
-  
+  idEvent: number;
+  nameEvent: string;
+  description: string;
+  dateEvent: string;
+  location: string;
+  goalAmount: number;
+  donations: Donation[];
+  ratings?: number[];
+  feedbacks?: string[];
+  averageRating?: number;
+}

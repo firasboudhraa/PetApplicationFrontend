@@ -42,8 +42,14 @@ export class EventDetailComponent implements OnInit {
 
   private loadEventData(): void {
     this.es.getEventById(this.id).subscribe(
-      (data) => {
-        this.event = data;
+      (data: FullEventResponse) => {
+        this.event = {
+          ...data,
+          donations: data.donations || [],
+          ratings: data.ratings || [],
+          feedbacks: data.feedbacks || [],
+          averageRating: data.averageRating || 0
+        };
         this.loadUserDonations(this.id);
       },
       (error) => {

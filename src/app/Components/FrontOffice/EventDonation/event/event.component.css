@@ -428,3 +428,149 @@
     max-width: 100%;
   }
 }
+
+/* Rating Modal Styles - Updated */
+.modal-backdrop {
+  background-color: rgba(0, 0, 0, 0.6);
+}
+
+.modal {
+  display: block !important; /* Force display when shown */
+}
+
+.modal-dialog {
+  max-width: 500px;
+  margin: 1.75rem auto;
+}
+
+.modal-content {
+  border-radius: 12px;
+  border: none;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+  background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);
+  overflow: hidden;
+}
+
+.modal-header {
+  border-bottom: none;
+  padding: 20px 25px 0;
+  background: linear-gradient(135deg, #4361ee, #3a0ca3);
+  color: white;
+}
+
+.modal-title {
+  font-weight: 600;
+  font-size: 1.25rem;
+}
+
+.modal-body {
+  padding: 25px;
+}
+
+.modal-footer {
+  border-top: none;
+  padding: 15px 25px 25px;
+  justify-content: flex-end;
+}
+
+/* Rating Stars - Enhanced */
+.rating-container {
+  margin-bottom: 20px;
+}
+
+.rating-label {
+  display: block;
+  margin-bottom: 10px;
+  font-weight: 600;
+  color: #2c3e50;
+}
+
+.rating-stars {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  margin-bottom: 15px;
+}
+
+.rating-stars .fa-star {
+  color: #e0e0e0;
+  font-size: 2.5rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.rating-stars .fa-star:hover,
+.rating-stars .fa-star.active {
+  color: #ffc107;
+  transform: scale(1.1);
+}
+
+/* Feedback Input - Improved */
+.feedback-container {
+  margin-top: 20px;
+}
+
+.feedback-label {
+  display: block;
+  margin-bottom: 10px;
+  font-weight: 600;
+  color: #2c3e50;
+}
+
+.feedback-input {
+  width: 100%;
+  padding: 12px 15px;
+  border-radius: 8px;
+  border: 1px solid #ced4da;
+  transition: all 0.3s;
+  min-height: 100px;
+  resize: vertical;
+}
+
+.feedback-input:focus {
+  border-color: #4361ee;
+  box-shadow: 0 0 0 0.25rem rgba(67, 97, 238, 0.25);
+  outline: none;
+}
+
+/* Modal Buttons - Consistent with theme */
+.modal-btn {
+  padding: 10px 20px;
+  border-radius: 50px;
+  font-weight: 600;
+  transition: all 0.3s;
+  border: none;
+}
+
+.modal-btn-secondary {
+  background: #f8f9fa;
+  color: #4361ee;
+  margin-right: 10px;
+}
+
+.modal-btn-secondary:hover {
+  background: #e9ecef;
+}
+
+.modal-btn-primary {
+  background: linear-gradient(135deg, #4361ee, #3a0ca3);
+  color: white;
+  box-shadow: 0 5px 20px rgba(67, 97, 238, 0.3);
+}
+
+.modal-btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(67, 97, 238, 0.4);
+}
+
+/* Close Button */
+.btn-close {
+  filter: invert(1);
+  opacity: 0.8;
+  transition: all 0.2s;
+}
+
+.btn-close:hover {
+  opacity: 1;
+  transform: rotate(90deg);
+}

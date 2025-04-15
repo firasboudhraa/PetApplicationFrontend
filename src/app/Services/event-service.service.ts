@@ -31,4 +31,15 @@ export class EventService {
     return this.http.delete(`${this.apiUrl}remove-event/${id}`);
   }
 
+  rateEvent(eventId: number, rating: number, feedback: string): Observable<Event> {
+    return this.http.post<Event>(
+      `${this.apiUrl}${eventId}/rate?rating=${rating}&feedback=${encodeURIComponent(feedback)}`, 
+      {}
+    );
+  }
+
+  getAverageRating(eventId: number): Observable<number> {
+    return this.http.get<number>(`${this.apiUrl}${eventId}/average-rating`);
+  }
+
 }

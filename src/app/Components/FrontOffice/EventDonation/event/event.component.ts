@@ -28,6 +28,13 @@ export class EventComponent implements OnInit {
   itemsPerPage: number = 3;
   totalItems: number = 0;
   searchParams: SearchParams = {};
+  showRatingModal: boolean = false;
+  selectedEventId: number | null = null;
+  newRating = {
+    value: 0,
+    feedback: ''
+  };
+  averageRatings: { [key: number]: number } = {};
 
   constructor(
     private eventService: EventService, 
@@ -48,6 +55,7 @@ export class EventComponent implements OnInit {
         this.events = data;
         this.filteredEvents = [...data];
         this.totalItems = data.length;
+        this.loadAverageRatings();
       },
       (error) => {
         console.error('Error loading events', error);
@@ -62,6 +70,52 @@ export class EventComponent implements OnInit {
       },
       (error) => {
         console.error('Error loading donations', error);
+      }
+    );
+  }
+
+  loadAverageRatings(): void {
+    this.events.forEach(event => {
+      this.eventService.getAverageRating(event.idEvent).subscribe(
+        average => {
+          this.averageRatings[event.idEvent] = average;
+        }
+      );
+    });
+  }
+
+  openRatingModal(eventId: number): void {
+    this.selectedEventId = eventId;
+    this.newRating = { value: 0, feedback: '' };
+    this.showRatingModal = true;
+  }
+
+  submitRating(): void {
+    if (!this.selectedEventId || this.newRating.value <= 0) {
+      alert('Please provide a valid rating');
+      return;
+    }
+
+    this.eventService.rateEvent(
+      this.selectedEventId, 
+      this.newRating.value, 
+      this.newRating.feedback
+    ).subscribe(
+      (event) => {
+        this.loadEvents(); // Refresh events to get updated ratings
+        this.showRatingModal = false;
+      },
+      (error) => {
+        console.error('Error saving rating:', error);
+        alert('Failed to save rating. Please try again.');
+      }
+    );
+  }
+
+  updateAverageRating(eventId: number): void {
+    this.eventService.getAverageRating(eventId).subscribe(
+      average => {
+        this.averageRatings[eventId] = average;
       }
     );
   }
