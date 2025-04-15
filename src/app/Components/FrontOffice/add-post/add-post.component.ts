@@ -47,9 +47,18 @@ export class AddPostComponent implements OnInit, AfterViewInit {
   ngOnInit(): void {}
 
   ngAfterViewInit(): void {
-    this.initMap();
+    this.postForm.get('type')?.valueChanges.subscribe(value => {
+      if (value === 'lost_found') {
+        setTimeout(() => this.initMap(), 0); // attendre que le DOM rende le div *ngIf
+      }
+    });
+  
+    // Si le type est déjà sélectionné à lost_found au chargement
+    if (this.postForm.get('type')?.value === 'lost_found') {
+      setTimeout(() => this.initMap(), 0);
+    }
   }
-
+  
   initMap(): void {
     this.map = new google.maps.Map(document.getElementById('map') as HTMLElement, {
       center: { lat: this.latitude, lng: this.longitude },
