@@ -27,7 +27,7 @@ export class AddDonationComponent implements OnInit, OnDestroy {
     private http: HttpClient,
     private route: ActivatedRoute,
     private router: Router,
-    private userService: UserService
+    private userService: UserService,
   ) {}
 
   ngOnInit(): void {
@@ -159,36 +159,36 @@ export class AddDonationComponent implements OnInit, OnDestroy {
     }
 }
 
-  private async captureOrder(orderId: string): Promise<void> {
-    try {
-      if (!this.donationId) {
-        throw new Error('Donation ID not found');
-      }
-
-      const response = await this.http.post<any>(
-        `${this.apiBaseUrl}/payment/capture-order`,
-        {
-          orderId: orderId,
-          donationId: this.donationId
-        },
-        {
-          headers: {
-            'Content-Type': 'application/json',
-            'Accept': 'application/json'
-          }
-        }
-      ).toPromise();
-
-      this.paymentCompleted = true;
-      this.error = null;
-      
-      this.router.navigate(['/event-detail', this.eventId]);
-    } catch (error) {
-      console.error('Capture error:', error);
-      this.showErrorAlert('Payment processing failed. Please try again.');
-      this.paymentCompleted = false;
+private async captureOrder(orderId: string): Promise<void> {
+  try {
+    if (!this.donationId) {
+      throw new Error('Donation ID not found');
     }
+
+    const response = await this.http.post<any>(
+      `${this.apiBaseUrl}/payment/capture-order`,
+      {
+        orderId: orderId,
+        donationId: this.donationId
+      },
+      {
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        }
+      }
+    ).toPromise();
+
+    this.paymentCompleted = true;
+    this.error = null;
+    
+    this.router.navigate(['/event-detail', this.eventId]);
+  } catch (error) {
+    console.error('Capture error:', error);
+    this.showErrorAlert('Payment processing failed. Please try again.');
+    this.paymentCompleted = false;
   }
+}
 
   public onAmountChange(): void {
     this.error = null;

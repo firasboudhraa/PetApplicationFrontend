@@ -407,3 +407,24 @@
   50% { transform: translateY(-10px); }
   100% { transform: translateY(0px); }
 }
+
+/* Leaderboard Card Styles */
+.leaderboard-card {
+  background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);
+  border-radius: 12px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+  transition: all 0.3s ease;
+  margin: 0 auto 20px;
+  max-width: 400px;
+}
+
+.leaderboard-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.12);
+}
+
+@media (max-width: 768px) {
+  .leaderboard-card {
+    max-width: 100%;
+  }
+}

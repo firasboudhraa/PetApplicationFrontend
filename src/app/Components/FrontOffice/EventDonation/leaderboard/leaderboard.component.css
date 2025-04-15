@@ -1,0 +1,107 @@
+.leaderboard-card {
+  border-radius: 12px;
+  overflow: hidden;
+  transition: all 0.3s ease;
+}
+
+.leaderboard-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+}
+
+.donor-item {
+  display: flex;
+  align-items: center;
+  padding: 12px;
+  margin-bottom: 10px;
+  background-color: rgba(0, 123, 255, 0.05);
+  border-radius: 8px;
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+.donor-item:hover {
+  background-color: rgba(0, 123, 255, 0.1);
+  transform: translateX(5px);
+}
+
+.donor-rank {
+  width: 30px;
+  height: 30px;
+  background-color: #4361ee;
+  color: white;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  margin-right: 15px;
+  flex-shrink: 0;
+}
+
+.donor-avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: #f8f9fa;
+  color: #4361ee;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 15px;
+  font-size: 20px;
+}
+
+.donor-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.donor-name {
+  font-weight: 600;
+  margin-bottom: 2px;
+  color: #2c3e50;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.donor-amount {
+  font-size: 0.9rem;
+  color: #28a745;
+  font-weight: 500;
+}
+
+.donor-badge {
+  margin-left: 15px;
+  font-size: 20px;
+}
+
+.donor-badge .gold {
+  color: #ffd700;
+}
+
+.donor-badge .silver {
+  color: #c0c0c0;
+}
+
+.donor-badge .bronze {
+  color: #cd7f32;
+}
+
+@media (max-width: 768px) {
+  .donor-item {
+    padding: 10px;
+  }
+  
+  .donor-avatar {
+    width: 36px;
+    height: 36px;
+    font-size: 18px;
+    margin-right: 10px;
+  }
+  
+  .donor-name {
+    font-size: 0.95rem;
+  }
+}

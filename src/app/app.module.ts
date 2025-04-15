@@ -25,6 +25,7 @@ import { EventbackComponent } from './Components/BackOffice/dashboard/eventback/
 import { UpdateEventComponent } from './Components/BackOffice/dashboard/update-event/update-event.component';
 import { AddEventComponent } from './Components/BackOffice/dashboard/add-event/add-event.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { LeaderboardComponent } from './Components/FrontOffice/EventDonation/leaderboard/leaderboard.component';
 
 @NgModule({
   declarations: [
@@ -49,6 +50,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     EventbackComponent,
     UpdateEventComponent,
     AddEventComponent,
+    LeaderboardComponent,
   ],
   imports: [
     BrowserModule,
