@@ -11,8 +11,11 @@
     📅 Posted At :{{ post.createdAt | date: 'medium' }} ,
     Category : {{ formatCategory(post.type) }}
   </time>
+ <!-- Map Section: Display only if latitude and longitude are not the default values -->
+ <div *ngIf="latitude !== 36.8065 || longitude !== 10.1815">
+  <h2 class="post-title">Last Seen in </h2>
   <div id="map" class="map-container"></div>
-
+</div>
   <!-- Modify Post Button -->
   <button class="modify-post-button" [routerLink]="['/modify-post', post.id]">
     ✏️ Modify Post
