@@ -48,3 +48,4 @@ Thumbs.db
 .env.development.local
 /src/assets/environment.ts
 /src/environments/environment.ts
+src/environments/

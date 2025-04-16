@@ -159,13 +159,12 @@ export class PetDetailModalComponent {
     });
     this.hideConfirmButton();
   }
-  isCatOrDog(specie: string): boolean {
-    return specie.toLowerCase() === 'cat' || specie.toLowerCase() === 'dog';  
+  isPredictable(specie: string): boolean {
+    return specie.toLowerCase() === 'cat' || specie.toLowerCase() === 'dog' || specie.toLowerCase() === 'bird';  
   }
-  discoverBreed(imageUrl: string): void {
-    this.petDataService.discoverBreed(imageUrl).subscribe(
+  discoverBreed(imageUrl: string,specie:string): void {
+    this.petDataService.discoverBreed(imageUrl,specie).subscribe(
       (response) => {
-        console.log('Breed discovered successfully:', response);
         const breed = response.breed; // Adjust based on the actual response structure
 
         Swal.fire({

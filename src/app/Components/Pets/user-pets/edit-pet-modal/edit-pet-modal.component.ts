@@ -29,7 +29,7 @@ export class EditPetModalComponent {
   closeModal() {
     this.close.emit();
     this.humanReadableLocation='';
-    this.petForm.reset(); // R
+    this.petForm.reset(); 
   }
 
 
@@ -40,7 +40,7 @@ export class EditPetModalComponent {
   ngOnInit() {
     this.petForm = new FormGroup({
       name: new FormControl('', Validators.required),
-      imagePath: new FormControl('', ),
+      imagePath: new FormControl(null),
       species: new FormControl('', Validators.required),
       age: new FormControl('', [Validators.required, Validators.min(0)]),
       color: new FormControl('', Validators.required),
@@ -60,7 +60,8 @@ export class EditPetModalComponent {
         color: this.pet.color,
         sex: this.pet.sex,
         location: this.pet.location,
-        description: this.pet.description
+        description: this.pet.description ,
+        forAdoption : this.pet.forAdoption
       });    
     }
     
@@ -161,6 +162,7 @@ export class EditPetModalComponent {
   }
 
   onSubmit() {
+    console.log("submited");
     if (this.petForm.valid) {
       const formData = new FormData();
       formData.append('name', this.petForm.get('name')?.value);
@@ -173,17 +175,15 @@ export class EditPetModalComponent {
       formData.append('forAdoption', this.petForm.get('forAdoption')?.value );
       formData.append('ownerId', '1');
 
-      // Append the file if it exists
-
+      console.log('Selected image:', this.selectedImage);
       if (this.selectedImage) {
         formData.append('image', this.selectedImage);
       }
 
-      // Call the updatePet method with the pet ID
       this.petDataService.updatePet(this.pet.id, formData).subscribe(
         (response) => {
           console.log('Pet updated successfully:', response);
-          this.petEdited.emit(); // Emit the success event
+          this.petEdited.emit();
           this.closeModal();
           Swal.fire({
             icon: 'success',
@@ -207,7 +207,10 @@ export class EditPetModalComponent {
             toast: true
           });
         }
-      );
+      ); 
+      formData.forEach((value, key) => {
+        console.log(key, value); // Log each key-value pair in the FormData object  
+      });
       this.hideConfirmButton();
     }
   }
@@ -225,7 +228,7 @@ export class EditPetModalComponent {
       } else {
         this.imageError = null;
         this.selectedImage = file;
-        this.petForm.get('imagePath')?.setValue(file); // Set the file object in the form control
+        this.petForm.get('imagePath')?.setValue(file.name); 
       }
     }
   }

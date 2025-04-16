@@ -8,7 +8,9 @@ import { Pet } from '../models/pet';
 })
 export class PetdataServiceService {
   private apiUrl = 'http://localhost:8222/api/v1/pet'; 
-  private iModelUrl = 'http://localhost:8052'; 
+  private catDogsModelUrl = 'http://localhost:8052'; 
+  private birdsModelUrl = 'http://localhost:8053'; 
+  private  aiUrl!:string ; 
 
   constructor(private http: HttpClient) {}
   
@@ -31,7 +33,9 @@ export class PetdataServiceService {
     return this.http.put(`${this.apiUrl}/modify-pet?id=${id}`, pet);
   }
 
-  discoverBreed(imageUrl:string): Observable<any> {
-    return this.http.post<any>(`${this.iModelUrl}/predict-from-url`, { image_url: imageUrl });
+  discoverBreed(imageUrl:string, specie:string): Observable<any> {
+    if (specie.toLowerCase() == 'cat' || specie.toLowerCase() == 'dog') this.aiUrl= this.catDogsModelUrl ;
+    else if (specie.toLowerCase() == 'bird') this.aiUrl = this.birdsModelUrl;
+    return this.http.post<any>(`${this.aiUrl}/predict-from-url`, { image_url: imageUrl });
   }
 }
