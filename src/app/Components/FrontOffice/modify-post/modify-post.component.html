@@ -1,59 +1,106 @@
 <div class="form-container shadow p-4 rounded">
-    <div class="alert alert-info" role="alert">
-      <strong>Important! <br></strong> Merci de respecter les autres membres et d’utiliser un langage courtois. Toute publication inappropriée sera modérée.
+  <div class="alert alert-info" role="alert">
+    <strong>Important! <br></strong> Please respect other members and use polite language. Any inappropriate content will be moderated.
+  </div>
+
+  <form [formGroup]="postForm" (ngSubmit)="onSubmit()">
+    <div class="form-group">
+      <label for="postTitle">Post Title</label>
+      <input
+        type="text"
+        class="form-control"
+        id="postTitle"
+        formControlName="title"
+        placeholder="Enter a title"
+        required
+      />
+      <div
+        *ngIf="postForm.get('title')?.invalid && postForm.get('title')?.touched"
+        class="text-danger"
+      >
+        Title is required.
+      </div>
     </div>
-  
-    <form [formGroup]="postForm" (ngSubmit)="onSubmit()">
-      <div class="form-group">
-        <label for="postTitle">Titre du Post</label>
-        <input type="text" class="form-control" id="postTitle" formControlName="title" placeholder="Entrez un titre" required>
-        <div *ngIf="postForm.get('title')?.invalid && postForm.get('title')?.touched" class="text-danger">
-          Le titre est requis.
-        </div>
+
+    <div class="form-group">
+      <label for="image">Image</label>
+      <input
+        type="file"
+        class="form-control-file"
+        (change)="onFileSelected($event)"
+      />
+      <div *ngIf="imageError" class="text-danger">
+        {{ imageError }}
       </div>
-  
-      <div class="form-group">
-        <label for="image">Image</label>
-        <input type="file" class="form-control-file" (change)="onFileSelected($event)">
-        <div *ngIf="imageError" class="text-danger">
-          {{ imageError }}
-        </div>
+    </div>
+
+    <div class="form-group">
+      <label for="postContent">Content</label>
+      <textarea
+        class="form-control"
+        id="postContent"
+        formControlName="content"
+        rows="6"
+        placeholder="Write your post here..."
+        required
+      ></textarea>
+      <div
+        *ngIf="postForm.get('content')?.invalid && postForm.get('content')?.touched"
+        class="text-danger"
+      >
+        Content is required.
       </div>
-  
-      <div class="form-group">
-        <label for="postContent">Contenu</label>
-        <textarea class="form-control" id="postContent" formControlName="content" rows="6" placeholder="Rédigez votre post ici..." required></textarea>
-        <div *ngIf="postForm.get('content')?.invalid && postForm.get('content')?.touched" class="text-danger">
-          Le contenu est requis.
-        </div>
+    </div>
+
+    <div class="form-group">
+      <label>Type</label>
+      <div class="form-check" *ngFor="let type of types">
+        <input
+          class="form-check-input"
+          type="radio"
+          [value]="type.value"
+          formControlName="type"
+          [id]="type.value"
+        />
+        <label class="form-check-label" [for]="type.value">
+          {{ type.label }}
+        </label>
       </div>
-  
-      <div class="form-group">
-        <label>Type</label>
-        <div class="form-check" *ngFor="let type of types">
-          <input class="form-check-input" type="radio" [value]="type.value" formControlName="type" [id]="type.value">
-          <label class="form-check-label" [for]="type.value">{{ type.label }}</label>
-        </div>
-        <div *ngIf="postForm.get('type')?.invalid && postForm.get('type')?.touched" class="text-danger">
-          Veuillez sélectionner un type.
-        </div>
+      <div
+        *ngIf="postForm.get('type')?.invalid && postForm.get('type')?.touched"
+        class="text-danger"
+      >
+        Please select a type.
       </div>
-  
-      <button type="submit" class="btn btn-success btn-block" [disabled]="postForm.invalid || isSubmitting">
-        <span *ngIf="isSubmitting">En cours...</span>
-        <span *ngIf="!isSubmitting">Modifier</span>
-      </button>
-  
-      <div *ngIf="errorMessage" class="alert alert-danger mt-2">
-        {{ errorMessage }}
-      </div>
-    </form>
-  
-    <button class="cancel-button" (click)="router.navigate(['/blog'])">
-      <svg class="cancel-icon" viewBox="0 0 24 24" width="18" height="18">
-        <path d="M12 10.293l4.707-4.707 1.414 1.414L13.414 11.707 18.121 16.414l-1.414 1.414L12 13.414l-4.707 4.707-1.414-1.414L10.586 12 5.879 7.293l1.414-1.414L12 10.293z" fill="currentColor"/>
-      </svg>
-      Annuler
+    </div>
+    <label for="postLocation" *ngIf="postForm.get('type')?.value === 'lost_found'">
+      Where did you last see it?
+    </label>
+    
+    <div id="map" class="map-container" *ngIf="postForm.get('type')?.value === 'lost_found'"></div>
+    
+
+    <button
+      type="submit"
+      class="btn btn-success btn-block"
+      [disabled]="postForm.invalid || isSubmitting"
+    >
+      <span *ngIf="isSubmitting">Submitting...</span>
+      <span *ngIf="!isSubmitting">Update</span>
     </button>
-      </div>
-  
+
+    <div *ngIf="errorMessage" class="alert alert-danger mt-2">
+      {{ errorMessage }}
+    </div>
+  </form>
+
+  <button class="cancel-button" (click)="router.navigate(['/blog'])">
+    <svg class="cancel-icon" viewBox="0 0 24 24" width="18" height="18">
+      <path
+        d="M12 10.293l4.707-4.707 1.414 1.414L13.414 11.707 18.121 16.414l-1.414 1.414L12 13.414l-4.707 4.707-1.414-1.414L10.586 12 5.879 7.293l1.414-1.414L12 10.293z"
+        fill="currentColor"
+      />
+    </svg>
+    Cancel
+  </button>
+</div>

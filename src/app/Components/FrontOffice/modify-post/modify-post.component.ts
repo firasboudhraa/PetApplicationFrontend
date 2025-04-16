@@ -19,6 +19,11 @@ export class ModifyPostComponent implements OnInit {
   errorMessage: string = '';
   postId: number = -1; // Default value
   post: Post | null = null;
+  map!: google.maps.Map;
+marker!: google.maps.Marker;
+latitude: number = 36.8065;
+longitude: number = 10.1815;
+
   userId: number = 2; // Dynamically fetched user ID, like JWT token
 
   types = [
@@ -38,17 +43,59 @@ export class ModifyPostComponent implements OnInit {
       title: ['', Validators.required],
       content: ['', Validators.required],
       type: ['', Validators.required],
-      image: [null]
+      image: [null],
+      latitude: [this.latitude],
+      longitude: [this.longitude]
+    });
+    
+  }
+  ngOnInit(): void {
+    this.route.paramMap.subscribe(params => {
+      const id = params.get('id');
+      if (id) {
+        this.postId = +id;
+        this.loadPostDetails(this.postId);
+      }
     });
   }
+  
 
-  ngOnInit(): void {
-    this.postId = Number(this.route.snapshot.paramMap.get('id')); // Ensure it's properly set
-    if (this.postId) {
-      this.loadPostDetails(this.postId);
+  ngAfterViewInit(): void {
+    this.postForm.get('type')?.valueChanges.subscribe(value => {
+      if (value === 'lost_found') {
+        setTimeout(() => this.initMap(), 0);
+      }
+    });
+  
+    if (this.postForm.get('type')?.value === 'lost_found') {
+      setTimeout(() => this.initMap(), 0);
     }
   }
+  initMap(): void {
+    const mapDiv = document.getElementById('map');
+    if (!mapDiv) return;
   
+    this.map = new google.maps.Map(mapDiv, {
+      center: { lat: this.latitude, lng: this.longitude },
+      zoom: 12
+    });
+  
+    this.marker = new google.maps.Marker({
+      position: { lat: this.latitude, lng: this.longitude },
+      map: this.map,
+      draggable: true,
+      title: 'Post location'
+    });
+  
+    this.marker.addListener('dragend', () => {
+      const position = this.marker.getPosition();
+      if (position) {
+        this.latitude = position.lat();
+        this.longitude = position.lng();
+      }
+    });
+  }
+    
 
   // Fetch post details by ID
   private loadPostDetails(postId: number): void {
@@ -94,6 +141,9 @@ export class ModifyPostComponent implements OnInit {
       formData.append('title', this.postForm.get('title')?.value);
       formData.append('content', this.postForm.get('content')?.value);
       formData.append('type', this.mapTypeToEnum(this.postForm.get('type')?.value));
+      formData.append('latitude', this.latitude.toString());
+formData.append('longitude', this.longitude.toString());
+
 
       if (this.selectedFile) {
         formData.append('image', this.selectedFile);
