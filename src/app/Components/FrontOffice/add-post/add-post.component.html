@@ -14,7 +14,7 @@
 
     <div class="form-group">
       <label for="postImage">Post Image</label>
-
+    
       <label class="custum-file-upload" for="file">
         <div class="icon">
           <!-- SVG icon -->
@@ -24,7 +24,18 @@
         </div>
         <input type="file" id="file" class="form-control-file" (change)="onFileSelected($event)">
       </label>
+    
+      <!-- Afficher l'erreur -->
+      <div *ngIf="imageError" class="text-danger mt-2">
+        {{ imageError }}
+      </div>
+    
+      <!-- Afficher le nom du fichier s'il a été sélectionné -->
+      <div *ngIf="fileName" class="mt-2">
+        <strong>Fichier sélectionné :</strong> {{ fileName }}
+      </div>
     </div>
+    
 
     <div class="form-group">
       <label for="postContent">Content</label>

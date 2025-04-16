@@ -23,6 +23,8 @@ export class ModifyPostComponent implements OnInit {
 marker!: google.maps.Marker;
 latitude: number = 36.8065;
 longitude: number = 10.1815;
+fileName: string | null = null;  // Pour stocker le nom du fichier
+
 
   userId: number = 2; // Dynamically fetched user ID, like JWT token
 
@@ -125,13 +127,16 @@ longitude: number = 10.1815;
         this.imageError = 'Seules les images sont autorisées.';
         this.selectedFile = null;
         this.postForm.get('image')?.setValue(null);
+        this.fileName = null;  // Réinitialiser le nom du fichier en cas d'erreur
       } else {
         this.imageError = null;
         this.selectedFile = file;
+        this.fileName = file.name;  // Stocker le nom du fichier
         this.postForm.get('image')?.setValue(file);
       }
     }
   }
+  
 
   onSubmit(): void {
     if (this.postForm.valid) {

@@ -17,6 +17,8 @@ export class AddPostComponent implements OnInit, AfterViewInit {
   userId: number = 2; // TODO: récupérer depuis JWT
   map!: google.maps.Map;
   marker!: google.maps.Marker;
+  fileName: string | null = null;  // Pour stocker le nom du fichier
+
 
   // Coordonnées par défaut (ex. Tunis)
   latitude: number = 36.8065;
@@ -90,13 +92,16 @@ export class AddPostComponent implements OnInit, AfterViewInit {
         this.imageError = 'Seules les images sont autorisées.';
         this.selectedFile = null;
         this.postForm.get('image')?.setValue(null);
+        this.fileName = null;  // Réinitialiser le nom du fichier en cas d'erreur
       } else {
         this.imageError = null;
         this.selectedFile = file;
+        this.fileName = file.name;  // Stocker le nom du fichier
         this.postForm.get('image')?.setValue(file);
       }
     }
   }
+  
 
   onSubmit(): void {
     if (this.postForm.invalid || !this.selectedFile) return;
