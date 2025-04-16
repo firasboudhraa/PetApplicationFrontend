@@ -30,22 +30,16 @@ export class RegisterComponent {
 
   onSubmit(): void {
     if (this.registerForm.valid) {
-      this.authService.register(this.registerForm.value).subscribe({
-        next: () => {
-          this.successMessage = 'Registration successful! proceed to login';
-          this.errorMessage = '';
-          this.registerForm.reset();
-          
-          // Redirect to login page after 3 seconds
-          setTimeout(() => {
-            this.router.navigate(['/login']);
-          }, 3000);
-        },
-        error: (err) => {
-          this.errorMessage = err.error || 'Registration failed. Please try again.';
-          this.successMessage = '';
-        }
-      });
+// In register.component.ts
+this.authService.register(this.registerForm.value).subscribe({
+  next: (response) => {
+    if (response.success) {
+      this.successMessage = response.message; // Use backend message
     }
   }
+});
+    }
+  }
+
+  
 }

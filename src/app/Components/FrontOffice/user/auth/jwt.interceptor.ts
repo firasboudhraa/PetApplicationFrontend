@@ -16,9 +16,9 @@ export class AuthInterceptor implements HttpInterceptor {
   intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
     // Skip token for specific endpoints only
     const skipAuth = [
-      '/auth/login',
-      '/auth/register',
-      '/auth/activate-account'
+      '/api/auth/login', 
+  '/api/auth/register',
+  '/api/auth/activate'
     ].some(url => request.url.includes(url));
 
     if (skipAuth) {

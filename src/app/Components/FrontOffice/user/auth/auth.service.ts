@@ -37,14 +37,11 @@ interface DecodedToken {
   providedIn: 'root'
 })
 export class AuthService {
-  private apiUrl = 'http://localhost:8081/auth';
+  private apiUrl = 'http://localhost:8081/api/auth';
   private tokenKey = 'auth_token';
 
   constructor(private http: HttpClient, private router: Router) { }
 
-  register(userData: RegisterRequest): Observable<any> {
-    return this.http.post(`${this.apiUrl}/register`, userData);
-  }
 
   login(credentials: LoginRequest): Observable<AuthResponse> {
     return this.http.post<AuthResponse>(`${this.apiUrl}/login`, credentials).pipe(
@@ -95,8 +92,32 @@ export class AuthService {
     localStorage.removeItem(this.tokenKey);
   }
 
-  activateAccount(token: string): Observable<any> {
-    return this.http.post(`${this.apiUrl}/activate-account`, { token });
+  activateAccount(code: string): Observable<any> {
+    return this.http.post(`${this.apiUrl}/activate`, { code });
   }
+private pendingEmailKey = 'pending_email';
+
+setPendingEmail(email: string): void {
+  localStorage.setItem(this.pendingEmailKey, email);
+}
+
+getPendingEmail(): string | null {
+  return localStorage.getItem(this.pendingEmailKey);
+}
+
+clearPendingEmail(): void {
+  localStorage.removeItem(this.pendingEmailKey);
+}
+
+// Update your register method to store the pending email
+register(userData: RegisterRequest): Observable<any> {
+  this.setPendingEmail(userData.email);
+  return this.http.post(`${this.apiUrl}/register`, userData);
+}
+
+// Add a proper resendCode method
+resendVerificationCode(email: string): Observable<any> {
+  return this.http.post(`${this.apiUrl}/resend-code`, { email });
+}
   
 }

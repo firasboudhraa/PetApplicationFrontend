@@ -19,6 +19,7 @@ import { RegisterComponent } from './Components/FrontOffice/user/register/regist
 import { NotFoundComponent } from './not-found/not-found.component';
 import { AuthInterceptor } from './Components/FrontOffice/user/auth/jwt.interceptor';
 import { EditProfileComponent } from './Components/FrontOffice/user/edit-profile/edit-profile.component';
+import { ActivateAccountComponent } from './Components/FrontOffice/user/activate-account/activate-account.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -29,12 +30,13 @@ import { EditProfileComponent } from './Components/FrontOffice/user/edit-profile
     HomeComponent,
     ServiceComponent,
     AddServiceComponent,
-    DetailServiceComponent,
+      DetailServiceComponent,
     LoginComponent,
     UserProfileComponent,
     RegisterComponent,
     NotFoundComponent,
     EditProfileComponent,
+    ActivateAccountComponent,
     
     
   ],

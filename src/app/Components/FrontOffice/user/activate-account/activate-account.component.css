@@ -1,0 +1,85 @@
+.verification-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 50vh;
+    padding: 0.5rem;
+    background-color: #e8f5e9;
+  }
+  
+  .verification-card {
+    background-color: #ffffff;
+    padding: 2rem;
+    width: 100%;
+    max-width: 420px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    border-radius: 12px;
+    text-align: center;
+  }
+  
+  .code-group {
+    display: flex;
+    justify-content: space-between;
+    margin: 1.5rem 0;
+    gap: 0.5rem;
+  }
+  
+  .code-box {
+    width: 2.5rem;
+    height: 3rem;
+    font-size: 1.5rem;
+    text-align: center;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+  }
+  
+  .confirm-btn {
+    width: 100%;
+    padding: 0.8rem;
+    font-size: 1rem;
+    background-color: #66bb6a;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    margin-bottom: 1rem;
+    cursor: pointer;
+  }
+  
+  .link-row {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 1rem;
+  }
+  
+  .text-link {
+    color: #388e3c;
+    cursor: pointer;
+    text-decoration: underline;
+  }
+  
+  .bottom-links {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    margin-top: 1rem;
+  }
+  
+  .underline-link {
+    color: #2e7d32;
+    cursor: pointer;
+    text-decoration: underline;
+    font-size: 0.9rem;
+  }
+  
+  @media (max-width: 500px) {
+    .code-group {
+      gap: 0.3rem;
+    }
+  
+    .code-box {
+      width: 2rem;
+      height: 2.5rem;
+      font-size: 1.2rem;
+    }
+  }
+  

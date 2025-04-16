@@ -8,6 +8,7 @@ import { LoginComponent } from './Components/FrontOffice/user/login/login.compon
 import { UserProfileComponent } from './Components/FrontOffice/user/user-profile/user-profile.component';
 import { RegisterComponent } from './Components/FrontOffice/user/register/register.component';
 import { EditProfileComponent } from './Components/FrontOffice/user/edit-profile/edit-profile.component';
+import { ActivateAccountComponent } from './Components/FrontOffice/user/activate-account/activate-account.component';
 
 const routes: Routes = [
   { path: 'home', component: HomeComponent },
@@ -22,6 +23,11 @@ const routes: Routes = [
   {path:'profile',component:UserProfileComponent}, 
   {path:'profile',component:UserProfileComponent}, 
   {path : 'editProfile/:id' , component : EditProfileComponent},
+  { 
+    path: 'activate_account', 
+    component: ActivateAccountComponent,
+    data: { title: 'Account Activation' } 
+  },
 
   { path: '**', redirectTo: 'home', pathMatch: 'full' }
 
