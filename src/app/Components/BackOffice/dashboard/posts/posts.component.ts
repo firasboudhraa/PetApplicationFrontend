@@ -5,6 +5,7 @@ import { CommentService } from 'src/app/services/comments.service';
 import { Post } from 'src/app/models/Post';
 import { UserDTO } from 'src/app/models/userDTO';
 import { Comment } from 'src/app/models/Comment';
+import { EmailService } from 'src/app/services/email.service'; // Importer correctement le service Email
 
 @Component({
   selector: 'app-posts',
@@ -23,6 +24,7 @@ export class PostsComponent implements OnInit {
     private postsService: PostsService,
     private userService: UserService,
     private commentService: CommentService,
+    private emailService: EmailService,  // Correction ici pour utiliser le service email avec une minuscule
   ) {}
 
   ngOnInit(): void {
@@ -56,14 +58,22 @@ export class PostsComponent implements OnInit {
   // Méthode pour supprimer un post
   deletePost(postId: number): void {
     if (confirm('Êtes-vous sûr de vouloir supprimer ce post ?')) {
+      // Delete the post first
       this.postsService.deletePost(postId).subscribe(() => {
+        console.log('Post deleted');
         this.posts = this.posts.filter(p => p.id !== postId);
         delete this.postComments[postId];
         delete this.commentCounts[postId];
-        delete this.likeCounts[postId];  // Ne pas oublier de supprimer les likes également
+        delete this.likeCounts[postId];
+  
+        // Now send the email after the post is deleted
+        this.emailService.sendDeletionEmail(postId).subscribe(() => {
+          console.log('E-mail envoyé après suppression du post.');
+        });
       });
     }
   }
+  
 
   // Méthode pour supprimer un commentaire
   deleteComment(commentId: number, postId: number): void {
@@ -74,14 +84,14 @@ export class PostsComponent implements OnInit {
       });
     }
   }
+
   selectedPostId: number | null = null;
 
-openCommentsPopup(postId: number): void {
-  this.selectedPostId = postId;
-}
+  openCommentsPopup(postId: number): void {
+    this.selectedPostId = postId;
+  }
 
-closePopup(): void {
-  this.selectedPostId = null;
-}
-
+  closePopup(): void {
+    this.selectedPostId = null;
+  }
 }

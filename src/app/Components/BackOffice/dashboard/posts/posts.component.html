@@ -1,4 +1,4 @@
-<div class="container" >
+<div class="container">
   <h2>Liste des Posts</h2>
 
   <table class="posts-table">
@@ -20,9 +20,7 @@
         <tr>
           <td>{{ i + 1 }}</td>
           <td>
-            <img [src]="'http://localhost:8082/posts/images/' + post.imageUrl"
-                 alt="Post Image"
-                 class="post-img">
+            <img [src]="'http://localhost:8082/posts/images/' + post.imageUrl" alt="Post Image" class="post-img">
           </td>
           <td>{{ post.title }}</td>
           <td>{{ userNames.get(post.userId) }}</td>
@@ -40,24 +38,24 @@
   </table>
 
   <!-- Modal Commentaires -->
-<div class="modal" *ngIf="selectedPostId !== null">
-  <div class="modal-content">
-    <span class="close" (click)="closePopup()">&times;</span>
-    <h3>Commentaires du post</h3>
+  <div class="modal" *ngIf="selectedPostId !== null">
+    <div class="modal-content">
+      <span class="close" (click)="closePopup()">&times;</span>
+      <h3>Commentaires du post</h3>
 
-    <div *ngIf="selectedPostId !== null && postComments[selectedPostId] && postComments[selectedPostId].length > 0; else noComments">
-      <ul class="comments-list">
-        <li *ngFor="let comment of postComments[selectedPostId]">
-          <strong>{{ userNames.get(comment.userId) || 'Inconnu' }}</strong> : {{ comment.content }}
-          <button class="btn btn-small-red" (click)="deleteComment(comment.id, selectedPostId)">✖ Delete</button>
-        </li>
-      </ul>
+      <div *ngIf="selectedPostId !== null && postComments[selectedPostId] && postComments[selectedPostId].length > 0; else noComments">
+        <ul class="comments-list">
+          <li *ngFor="let comment of postComments[selectedPostId]">
+            <strong>{{ userNames.get(comment.userId) || 'Inconnu' }}</strong> : {{ comment.content }}
+            <button class="btn btn-small-red" (click)="deleteComment(comment.id, selectedPostId)">✖ Delete</button>
+          </li>
+        </ul>
+      </div>
+
+      <ng-template #noComments>
+        <p>Aucun commentaire pour ce post.</p>
+      </ng-template>
     </div>
-
-    <ng-template #noComments>
-      <p>Aucun commentaire pour ce post.</p>
-    </ng-template>
   </div>
-</div>
 
 </div>
