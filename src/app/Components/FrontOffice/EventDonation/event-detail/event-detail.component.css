@@ -537,3 +537,54 @@
     margin-right: 0 !important;
   }
 }
+
+/* PDF Button Styles */
+.btn-pdf {
+  background: linear-gradient(135deg, #4361ee, #3a0ca3);
+  color: white;
+  border: none;
+  padding: 8px 15px;
+  border-radius: 50px;
+  font-size: 0.85rem;
+  transition: all 0.3s ease;
+  box-shadow: 0 3px 10px rgba(230, 57, 70, 0.2);
+}
+
+.btn-pdf:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(230, 57, 70, 0.3);
+  color: white;
+}
+
+.btn-pdf-sm {
+  padding: 5px 10px;
+  font-size: 0.75rem;
+  min-width: 30px;
+}
+
+/* PDF Loading State */
+.btn-spinner {
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* PDF Button Enhancements */
+.btn-pdf {
+  position: relative;
+  overflow: hidden;
+}
+
+.btn-pdf-loading::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(255, 255, 255, 0.5);
+  z-index: 1;
+}

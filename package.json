@@ -27,6 +27,8 @@
     "flaticon": "^0.1.0",
     "gsap": "^3.12.7",
     "jquery": "^3.7.1",
+    "jspdf": "^2.5.1",
+    "jspdf-autotable": "^3.5.28",
     "popper.js": "^1.16.1",
     "rxjs": "~7.8.0",
     "sweetalert2": "^11.17.2",

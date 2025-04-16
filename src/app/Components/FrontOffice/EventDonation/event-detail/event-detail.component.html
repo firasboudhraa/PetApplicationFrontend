@@ -26,6 +26,7 @@
             </div>
           </div>
         </div>
+
         <!-- Badge Section Card -->
         <div class="card badge-section-card mb-4 border-0 shadow-sm">
           <div class="card-body text-center p-5">
@@ -40,6 +41,7 @@
             </div>
           </div>
         </div>
+
         <!-- Donation Progress Card -->
         <div class="card donation-progress-card mb-4 border-0 shadow-sm">
           <div class="card-body p-4">
@@ -52,12 +54,15 @@
                 <span class="font-weight-bold">{{ event?.goalAmount | number:'1.2-2' }}DT</span>
               </div>
               <div class="progress" style="height: 25px;">
-                <div class="progress-bar bg-success progress-bar-striped progress-bar-animated" role="progressbar" [style.width]="getDonationPercentage() + '%'">
+                <div class="progress-bar bg-success progress-bar-striped progress-bar-animated" 
+                     role="progressbar" 
+                     [style.width]="getDonationPercentage() + '%'">
                   {{ getDonationPercentage() | number:'1.0-0' }}%
                 </div>
               </div>
               <small class="text-muted d-block text-center mt-2">Amount raised of target goal</small>
             </div>
+            
             <!-- Next Badge Progress -->
             <div *ngIf="nextBadge && nextBadge.level !== 'Max'" class="next-badge-container mt-4 pt-3 border-top">
               <h5 class="text-center mb-3">
@@ -65,12 +70,15 @@
                 Next Level: {{ nextBadge.level }} ({{ nextBadge.amountNeeded | number:'1.2-2' }} DT needed)
               </h5>
               <div class="progress" style="height: 15px;">
-                <div class="progress-bar bg-info" role="progressbar" [style.width]="(getUserTotalDonations() / badgeThresholds[badgeLevels.indexOf(nextBadge.level)]) * 100 + '%'">
+                <div class="progress-bar bg-info" 
+                     role="progressbar" 
+                     [style.width]="(getUserTotalDonations() / badgeThresholds[badgeLevels.indexOf(nextBadge.level)]) * 100 + '%'">
                 </div>
               </div>
             </div>
           </div>
         </div>
+
         <!-- Donations List Card -->
         <div class="card donations-list-card border-0 shadow-sm">
           <div class="card-body p-4">
@@ -93,7 +101,9 @@
                           {{ donation.badgeLevel }}
                         </span>
                       </div>
-                      <span class="badge" [class.badge-success]="donation.status === 'COMPLETED'" [class.badge-warning]="donation.status === 'FAILED'">
+                      <span class="badge" 
+                            [class.badge-success]="donation.status === 'COMPLETED'" 
+                            [class.badge-warning]="donation.status === 'FAILED'">
                         {{ donation.status }}
                       </span>
                     </div>
@@ -107,18 +117,34 @@
             </div>
           </div>
         </div>
+
         <!-- User Donations Section -->
         <div *ngIf="userDonations === null" class="alert alert-info mt-4">
           <i class="fas fa-spinner fa-spin mr-2"></i>Loading your donations...
         </div>
+        
         <div *ngIf="userDonations !== null && userDonations.length === 0" class="alert alert-info mt-4">
           <i class="fas fa-info-circle mr-2"></i>You haven't donated to this event yet.
         </div>
+        
         <div *ngIf="userDonations !== null && userDonations.length > 0" class="card user-donations-card mt-4">
           <div class="card-body">
-            <h4 class="card-title">
-              <i class="fas fa-user mr-2"></i>Your Donations
-            </h4>
+            <div class="d-flex justify-content-between align-items-center mb-3">
+              <h4 class="card-title mb-0">
+                <i class="fas fa-user mr-2"></i>Your Donations
+              </h4>
+              <button class="btn btn-sm btn-pdf" 
+                      (click)="generateAllDonationsPDF()"
+                      [disabled]="isGeneratingPDF">
+                <span *ngIf="!isGeneratingPDF">
+                  <i class="fas fa-file-pdf mr-1"></i> Export All
+                </span>
+                <span *ngIf="isGeneratingPDF">
+                  <i class="fas fa-spinner fa-spin"></i>
+                </span>
+              </button>
+            </div>
+            
             <div *ngFor="let donation of userDonations" class="donation-item mb-3 p-3 border rounded">
               <div class="d-flex justify-content-between align-items-center">
                 <div>
@@ -127,14 +153,27 @@
                     {{ donation.badgeLevel }}
                   </span>
                 </div>
-                <span class="badge" [ngClass]="{
-                  'badge-success': donation.status === 'COMPLETED',
-                  'badge-warning': donation.status === 'PENDING',
-                  'badge-danger': donation.status === 'FAILED'
-                }">
-                  {{ donation.status }}
-                </span>
+                <div>
+                  <span class="badge mr-2" [ngClass]="{
+                    'badge-success': donation.status === 'COMPLETED',
+                    'badge-warning': donation.status === 'PENDING',
+                    'badge-danger': donation.status === 'FAILED'
+                  }">
+                    {{ donation.status }}
+                  </span>
+                  <button class="btn btn-sm btn-pdf" 
+                          (click)="generateDonationPDF(donation)"
+                          [disabled]="isGeneratingPDF">
+                    <span *ngIf="!isGeneratingPDF">
+                      <i class="fas fa-print"></i>
+                    </span>
+                    <span *ngIf="isGeneratingPDF">
+                      <i class="fas fa-spinner fa-spin"></i>
+                    </span>
+                  </button>
+                </div>
               </div>
+              
               <div class="text-muted small mt-2">
                 <i class="far fa-clock mr-1"></i>
                 {{ donation.date | date:'mediumDate' }}
@@ -144,12 +183,14 @@
                 </span>
               </div>
             </div>
+            
             <div class="total-donations mt-3 bg-light p-2 rounded">
               <strong>Your Total Donations:</strong>
               <span class="font-weight-bold text-success">{{ getUserTotalDonations() | number:'1.2-2' }} DT</span>
             </div>
           </div>
         </div>
+
         <!-- Action Buttons -->
         <div class="text-center mt-4">
           <button class="btn btn-primary btn-lg mr-3" [routerLink]="['/add-donation', id]">
