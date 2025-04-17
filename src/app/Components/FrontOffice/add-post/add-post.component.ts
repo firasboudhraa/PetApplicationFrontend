@@ -2,6 +2,8 @@ import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { PostsService } from 'src/app/services/posts.service';
 import { Router } from '@angular/router';
+import { HttpClient } from '@angular/common/http';
+import { environment } from 'src/environments/environment';  // Ensure you have the environment set correctly
 
 @Component({
   selector: 'app-add-post',
@@ -19,7 +21,6 @@ export class AddPostComponent implements OnInit, AfterViewInit {
   marker!: google.maps.Marker;
   fileName: string | null = null;  // Pour stocker le nom du fichier
 
-
   // Coordonnées par défaut (ex. Tunis)
   latitude: number = 36.8065;
   longitude: number = 10.1815;
@@ -33,7 +34,8 @@ export class AddPostComponent implements OnInit, AfterViewInit {
   constructor(
     private fb: FormBuilder,
     private postService: PostsService,
-    public router: Router
+    public router: Router,
+    private http: HttpClient  // Inject HttpClient for API calls
   ) {
     this.postForm = this.fb.group({
       title: ['', Validators.required],
@@ -43,7 +45,6 @@ export class AddPostComponent implements OnInit, AfterViewInit {
       latitude: [this.latitude],
       longitude: [this.longitude]
     });
-    
   }
 
   ngOnInit(): void {}
@@ -54,13 +55,13 @@ export class AddPostComponent implements OnInit, AfterViewInit {
         setTimeout(() => this.initMap(), 0); // attendre que le DOM rende le div *ngIf
       }
     });
-  
+
     // Si le type est déjà sélectionné à lost_found au chargement
     if (this.postForm.get('type')?.value === 'lost_found') {
       setTimeout(() => this.initMap(), 0);
     }
   }
-  
+
   initMap(): void {
     this.map = new google.maps.Map(document.getElementById('map') as HTMLElement, {
       center: { lat: this.latitude, lng: this.longitude },
@@ -101,7 +102,6 @@ export class AddPostComponent implements OnInit, AfterViewInit {
       }
     }
   }
-  
 
   onSubmit(): void {
     if (this.postForm.invalid || !this.selectedFile) return;
@@ -136,6 +136,25 @@ export class AddPostComponent implements OnInit, AfterViewInit {
         return 'HELP_ADVICE';
       default:
         return '';
+    }
+  }
+
+  // Enhance content method
+  enhanceContent(): void {
+    const currentContent = this.postForm.get('content')?.value;
+
+    if (currentContent) {
+      // Call the Flask backend to enhance the content
+      this.http.post<{ enhanced_text: string }>(`${environment.apiBaseUrl}/enhance`, { text: currentContent }).subscribe({
+        next: (response) => {
+          this.postForm.get('content')?.setValue(response.enhanced_text);  // Set the enhanced content back
+        },
+        error: (err) => {
+          this.errorMessage = "Error enhancing content. Please try again.";
+        }
+      });
+    } else {
+      this.errorMessage = "Content is empty and can't be enhanced.";
     }
   }
 }
