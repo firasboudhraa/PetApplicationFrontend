@@ -23,18 +23,15 @@ getCurrentUserId(): number {
   return this.currentUser.id;
 }
 
-// Nouvelle méthode pour obtenir tous les utilisateurs
 getAllUsers() {
   return this.currentUsers;
 }
 
-// Nouvelle méthode pour récupérer un utilisateur par son ID
 getUserById(id: number): Observable<{id: number, name: string}> {
   const user = this.currentUsers.find(u => u.id === id);
   return of(user || {id, name: `User ${id}`});
 }
 
-// Nouvelle méthode pour récupérer plusieurs utilisateurs
 getUsersByIds(ids: number[]): Observable<{id: number, name: string}[]> {
   const users = this.currentUsers.filter(user => ids.includes(user.id));
   // Compléter avec des utilisateurs par défaut si certains ne sont pas trouvés

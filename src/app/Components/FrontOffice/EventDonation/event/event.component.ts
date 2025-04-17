@@ -35,7 +35,7 @@ export class EventComponent implements OnInit {
     feedback: ''
   };
   averageRatings: { [key: number]: number } = {};
-
+  
   constructor(
     private eventService: EventService, 
     private donationService: DonationService,

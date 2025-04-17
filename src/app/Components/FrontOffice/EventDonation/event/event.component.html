@@ -103,16 +103,17 @@
               <i class="fas fa-donate mr-2"></i>Donate Now
             </button>
 
-            <div class="rating-section mt-3">
-              <div class="average-rating mb-2">
-                <span *ngIf="averageRatings[event.idEvent] > 0">
-                  <i *ngFor="let star of [1,2,3,4,5]" 
-                     class="fas fa-star" 
-                     [class.text-warning]="star <= averageRatings[event.idEvent]"></i>
-                  <small class="ms-2">({{ averageRatings[event.idEvent] | number:'1.1-1' }})</small>
-                </span>
-                <span *ngIf="!averageRatings[event.idEvent] || averageRatings[event.idEvent] === 0">No ratings yet</span>
-              </div>
+            <div class="average-rating mb-2">
+              <span *ngIf="averageRatings[event.idEvent] > 0">
+                <i *ngFor="let star of [1,2,3,4,5]" 
+                   class="fas" 
+                   [class.fa-star]="star <= averageRatings[event.idEvent]"
+                   [class.fa-star-half-alt]="star > averageRatings[event.idEvent] && star - 0.5 <= averageRatings[event.idEvent]"
+                   [class.text-warning]="star <= averageRatings[event.idEvent]"></i>
+                <small class="ms-2">({{ averageRatings[event.idEvent] | number:'1.1-1' }})</small>
+              </span>
+              <span *ngIf="!averageRatings[event.idEvent] || averageRatings[event.idEvent] === 0">No ratings yet</span>
+            </div>
               <button class="btn btn-sm btn-outline-primary" (click)="openRatingModal(event.idEvent)">
                 <i class="fas fa-star me-1"></i>
                 Rate This Event

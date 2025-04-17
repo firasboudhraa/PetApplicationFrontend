@@ -505,6 +505,18 @@
   transform: scale(1.1);
 }
 
+/* Ajout pour les étoiles de notation moyenne */
+.average-rating .fa-star,
+.average-rating .fa-star-half-alt {
+  color: #ffc107;
+}
+
+.average-rating .fa-star:not(.text-warning),
+.average-rating .fa-star-half-alt:not(.text-warning) {
+  color: #ffc107 !important;
+}
+
+
 /* Feedback Input - Improved */
 .feedback-container {
   margin-top: 20px;

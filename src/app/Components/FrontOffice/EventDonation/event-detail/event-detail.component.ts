@@ -141,6 +141,10 @@ export class EventDetailComponent implements OnInit {
       .reduce((sum, current) => sum + current.amount, 0);
   }
 
+  getCompletedUserDonations(): Donation[] {
+    return this.userDonations?.filter(d => d.status === 'COMPLETED') || [];
+  }
+
   getBadgeColor(badgeLevel: string): string {
     return this.badgeService.getBadgeColor(badgeLevel);
   }
@@ -237,7 +241,7 @@ export class EventDetailComponent implements OnInit {
   }
 
   async generateAllDonationsPDF(): Promise<void> {
-    if (!this.userDonations || this.userDonations.length === 0) return;
+    if (!this. userDonations || this.userDonations.length === 0) return;
     
     this.isGeneratingPDF = true;
     try {
