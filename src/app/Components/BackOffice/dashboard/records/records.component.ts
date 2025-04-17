@@ -23,6 +23,7 @@ export class RecordsComponent implements OnInit {
     this.medicalRecordService.getAllRecords().subscribe(
       (response) => {
         this.medicalRecords = response.map((item: any) => ({
+          id: item.id, // Add 'id' property
           date: item.date, // Add 'date' property
           dateTime: item.date, // Map 'date' to 'dateTime'
           type: item.type,

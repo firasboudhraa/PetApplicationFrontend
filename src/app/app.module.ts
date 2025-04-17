@@ -23,6 +23,9 @@ import { StatsComponent } from './stats/stats.component';
 import { NgChartsModule } from 'ng2-charts';
 import { AgendaComponent } from './agenda/agenda.component';
 import { FullCalendarModule } from '@fullcalendar/angular';
+import { EditrecordComponent } from './editrecord/editrecord.component';
+import { DetailComponent } from './detail/detail.component';
+import { RouterModule } from '@angular/router';
 @NgModule({
   declarations: [
     AppComponent,
@@ -42,7 +45,9 @@ import { FullCalendarModule } from '@fullcalendar/angular';
     HeaderComponent,
     RecordsComponent,
     StatsComponent,
-    AgendaComponent
+    AgendaComponent,
+    EditrecordComponent,
+    DetailComponent
   ],
   imports: [
     BrowserModule,
@@ -51,8 +56,7 @@ import { FullCalendarModule } from '@fullcalendar/angular';
     ReactiveFormsModule,
     HttpClientModule,
     NgChartsModule ,
-    FullCalendarModule
-
+    FullCalendarModule, 
 
   ],
   providers: [],

@@ -11,6 +11,8 @@ import { UsersComponent } from './Components/BackOffice/dashboard/users/users.co
 import { RecordsComponent } from './Components/BackOffice/dashboard/records/records.component';
 import { StatsComponent } from './stats/stats.component';
 import { AgendaComponent } from './agenda/agenda.component';
+import { EditrecordComponent } from './editrecord/editrecord.component';
+import { DetailComponent } from './detail/detail.component';
 
 const routes: Routes = [
   { path: 'home', component: HomeComponent },
@@ -21,6 +23,8 @@ const routes: Routes = [
   {path:'add-service',component:AddServiceComponent},
   {path:'serviceDetail/:id', component:DetailServiceComponent},
   { path: 'agenda', component:AgendaComponent },
+  {path :"editrecord/:id",component:EditrecordComponent},
+  {path :"details/:id",component:DetailComponent},
 
   {path:'dashboard', component:DashboardComponent,
     children:[

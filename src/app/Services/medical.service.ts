@@ -80,6 +80,13 @@ export class MedicalService {
     return this.http.put(`${this.baseUrl}/carnets/${id}`, carnet);
   }
 
+  updateMedicalRecord(record: any): Observable<any> {
+    return this.http.put('http://localhost:8071/api/medicalrecord/modify-medicalRecord', record);
+  }
+  getMedicalRecordById(id: number): Observable<any> {
+    return this.http.get<any>(`http://localhost:8070/api/carnet/record/${id}`);
+  }
+
   /** 🔹 Ajouter un record */
   addRecord(record: any): Observable<any> {
     return this.http.post(`${this.baseUrl}/records`, record);

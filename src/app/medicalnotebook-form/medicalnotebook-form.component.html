@@ -2,32 +2,26 @@
   <h2 class="mb-3">📝 Gestion des Carnets Médicaux</h2>
 
   <!-- FORMULAIRE CARNET -->
-<!-- FORMULAIRE CARNET -->
-<form [formGroup]="carnetForm" class="mb-4" (ngSubmit)="saveCarnet()">
-  <fieldset class="border p-3 rounded">
-    <legend>🩺 Ajouter un Carnet</legend>
+  <form [formGroup]="carnetForm" class="mb-4" (ngSubmit)="saveCarnet()">
+    <fieldset class="border p-3 rounded">
+      <legend>🩺 Ajouter un Carnet</legend>
 
-    <!-- Sélection d'un animal -->
-    <div class="mb-3">
-      <label for="petSelect">🐶 Choisir un animal</label>
-      <select id="petSelect" class="form-select" formControlName="pet_id">
-        <option value="" disabled selected>-- Sélectionner un animal --</option>
-        <option *ngFor="let pet of pets" [value]="pet.id">{{ pet.name }}</option>
-      </select>
-      <div *ngIf="carnetForm.controls['pet_id'].invalid && carnetForm.controls['pet_id'].touched" class="text-danger">
-        Veuillez sélectionner un animal.
+      <!-- Sélection d'un animal -->
+      <div class="mb-3">
+        <label for="petSelect">🐶 Choisir un animal</label>
+        <select id="petSelect" class="form-select" formControlName="pet_id">
+          <option value="" disabled selected>-- Sélectionner un animal --</option>
+          <option *ngFor="let pet of pets" [value]="pet.id">{{ pet.name }}</option>
+        </select>
+        <div *ngIf="carnetForm.controls['pet_id'].invalid && carnetForm.controls['pet_id'].touched" class="text-danger">
+          Veuillez sélectionner un animal.
+        </div>
       </div>
-    </div>
 
-    <!-- Bouton de soumission -->
-    <button type="submit" class="btn btn-primary" [disabled]="carnetForm.invalid">➕ Ajouter Carnet</button>
-  </fieldset>
-</form>
-
-
-
-
-  
+      <!-- Bouton de soumission -->
+      <button type="submit" class="btn btn-primary" [disabled]="carnetForm.invalid">➕ Ajouter Carnet</button>
+    </fieldset>
+  </form>
 
   <!-- FORMULAIRE RECORD -->
   <h2 class="mb-3">📂 Gestion des Records Médicaux</h2>
@@ -81,15 +75,19 @@
           <option *ngFor="let carnet of carnets" [value]="carnet.id">
             {{ carnet.name }}
           </option>
-          
         </select>
         <div *ngIf="recordForm.controls['carnet_id'].invalid && recordForm.controls['carnet_id'].touched" class="text-danger">
           Veuillez sélectionner un carnet.
         </div>
       </div>
 
+      <!-- Champ pour télécharger des fichiers -->
+      <div class="mb-3">
+        <label>Ajouter une image (facultatif)</label>
+        <input class="form-control" type="file" (change)="onFileChange($event)" multiple />
+      </div>
+
       <button type="submit" class="btn btn-primary" [disabled]="recordForm.invalid">➕ Ajouter Record</button>
     </fieldset>
   </form>
-
- 
+</div>

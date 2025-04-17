@@ -1,0 +1,41 @@
+<div class="container mt-5">
+    <h2 class="mb-4 text-center text-primary">✏️ Modifier le Record Médical</h2>
+  
+    <form (ngSubmit)="submitUpdate()" *ngIf="record">
+      <div class="mb-3">
+        <label for="type" class="form-label">Type de soin</label>
+        <select id="type" class="form-select" [(ngModel)]="record.type" name="type" required>
+          <option value="VACCINATION">VACCINATION</option>
+          <option value="SURGERY">SURGERY</option>
+          <option value="CHECKUP">CHECKUP</option>
+          <option value="MEDICATION">MEDICATION</option>
+          <option value="OTHER">OTHER</option>
+        </select>
+      </div>
+  
+      <div class="mb-3">
+        <label for="dateTime" class="form-label">Date de soin</label>
+        <input type="date" class="form-control" id="dateTime" name="dateTime" [(ngModel)]="record.dateTime" required>
+      </div>
+  
+      <div class="mb-3">
+        <label for="next_due_date" class="form-label">Prochaine consultation</label>
+        <input type="date" class="form-control" id="next_due_date" name="next_due_date" [(ngModel)]="record.next_due_date">
+      </div>
+  
+      <div class="mb-3">
+        <label for="description" class="form-label">Description</label>
+        <textarea class="form-control" id="description" name="description" rows="3" [(ngModel)]="record.description"></textarea>
+      </div>
+  
+      <div class="mb-3">
+        <label for="poids" class="form-label">Poids</label>
+        <input type="number" class="form-control" id="poids" name="poids" [(ngModel)]="record.poids">
+      </div>
+  
+      
+  
+      <button type="submit" class="btn btn-success w-100">💾 Mettre à jour</button>
+    </form>
+  </div>
+  

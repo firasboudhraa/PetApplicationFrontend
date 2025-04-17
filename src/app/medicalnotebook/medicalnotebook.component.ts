@@ -15,6 +15,20 @@ import { Record } from 'src/app/models/records';  // Assure-toi d'importer le bo
   styleUrls: ['./medicalnotebook.component.css']
 })
 export class MedicalnotebookComponent implements OnInit {
+navigateToagenda() {
+  this.router.navigate(['/agenda']);
+}
+record: any;
+editRecord(record: any): void {
+  if (record && record.id !== undefined && record.id !== null) {
+    console.log("✅ ID reçu :", record.id);
+    this.router.navigate(['/edit-record', record.id]);
+  } else {
+    console.error("❌ Record ID is missing:", record);
+    alert("Impossible d'éditer cet enregistrement : ID manquant.");
+  }
+}
+
 navigateToMedicalNotebookStats() {
   this.router.navigate(['/stats']);
 }
@@ -22,25 +36,44 @@ navigateToMedicalNotebookStats() {
 
   carnets !: any[] 
   id!:number
-  /*
-  ngOnInit(): void {
-    this.medicalService.getCarnetsWithRecords().subscribe({
-      next: (data: Carnet[]) => {
-        this.carnets = data;
-        console.log('Carnets avec historiques:', this.carnets);
-      },
-      error: (err: any) => {
-        console.error('Erreur chargement carnets/records', err);
-      }
-    });
-  }*/
-
+  
+ 
+  goToDetails(carnet: any) {
+    console.log('Carnet reçu :', carnet);  // Vérifie la structure de l'objet
+    if (carnet && carnet.name) {  // Vérifie si le carnet a un nom
+      // Récupère tous les carnets via getAllCarnets
+      this.medicalService.getAllCarnets().subscribe({
+        next: (data) => {
+          // Cherche l'ID du carnet dans la liste récupérée
+          const carnetTrouve = data.find((c) => c.name === carnet.name);
+          console.log('Carnet trouvé:', carnetTrouve);  // Vérifie la structure de l'objet trouvé
+          
+          if (carnetTrouve && carnetTrouve.id) {
+            // Si un carnet correspondant est trouvé avec un ID, navigue vers la page de détails
+            this.router.navigate(['/details', carnetTrouve.id]);
+          } else {
+            console.error('Carnet avec l\'ID introuvable pour le nom:', carnet.name);
+          }
+        },
+        error: (err) => {
+          console.error('Erreur lors de la récupération des carnets:', err);
+        }
+      });
+    } else {
+      console.error('Impossible de naviguer : le carnet n\'a pas de nom ou d\'ID');
+    }
+  }
+  
+  
+  
+  
   ngOnInit(): void {
     this.id=this.act.snapshot.params['id']
     console.log(this.id)
 
     this.loadCarnets();
     this.loadCarnets_test();
+    this.loadRecords();
   }
   
   filtered_Carnets: FullCarnetResponse[] = [];
@@ -48,7 +81,25 @@ navigateToMedicalNotebookStats() {
 
   currentRecordIndex: { [carnetName: string]: number } = {};
 
- 
+  loadRecords(): void {
+    this.medicalService.getAllRecords().subscribe({
+      next: (data) => {
+        this.record = data.map(record => ({
+          id: record['id'],
+          date: new Date(record['dateTime']),
+          type: record['type'],
+          description: record['description'],
+          poids: record['poids'],
+          next_due_date: record['next_due_date'] ? new Date(record['next_due_date']) : null,
+          carnet_id: record['carnet_id']
+        }));
+        console.log("Tous les records chargés :", this.record);
+      },
+      error: (err) => {
+        console.error("Erreur lors du chargement des records :", err);
+      }
+    });
+  }
 
   // Charger la liste des carnets médicaux
   loadCarnets(): void {
@@ -123,6 +174,7 @@ navigateToMedicalNotebookStats() {
     this.medicalService.getAllRecords().subscribe(
       (response) => {
         this.medicalRecords = response.map((item: any) => ({
+          id: item.id, // Include 'id' property
           date: item.date, // Add 'date' property
           dateTime: item.date, // Renamed 'date' to 'dateTime'
           type: item.type,
