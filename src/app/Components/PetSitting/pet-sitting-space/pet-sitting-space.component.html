@@ -1,0 +1,57 @@
+<div class="pet-sitting-space-container">
+  <h2 class="title">Find a Pet Sitting Offer</h2>
+
+  <!-- Search and Filter Section -->
+  <div class="search-filter-section">
+    <input
+      type="text"
+      class="search-bar"
+      placeholder="Search by location, pet type, or sitter name..."
+    />
+    <div class="filter-dropdown">
+      <button
+        class="btn btn-light dropdown-toggle"
+        type="button"
+        id="filterDropdown"
+        data-bs-toggle="dropdown"
+        aria-expanded="false"
+      >
+        <i class="fas fa-filter"></i> Filter
+      </button>
+      <ul class="dropdown-menu" aria-labelledby="filterDropdown">
+        <li><a class="dropdown-item" (click)="applyFilter('')">All</a></li>
+        <li><a class="dropdown-item" (click)="applyFilter('cat')">Cat</a></li>
+        <li><a class="dropdown-item" (click)="applyFilter('dog')">Dog</a></li>
+        <li><a class="dropdown-item" (click)="applyFilter('bird')">Bird</a></li>
+        <li><a class="dropdown-item" (click)="applyFilter('other')">Other</a></li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- Offers Section -->
+  <div class="offers-grid">
+    <div class="offer-card" *ngFor="let offer of offers" (click)="toggleFlip(offer.id)">
+      <div class="card-inner" [class.flipped]="offer.isFlipped">
+        <!-- Front Side -->
+        <div class="card-front" [style.backgroundImage]="'url(' + getImageUrl(offer.pet.imagePath) + ')'">
+          <!-- Tag for Number of Days -->
+          <div class="offer-tag">
+            {{ calculateDays(offer.startDate, offer.endDate) }} Days
+          </div>
+        </div>
+
+        <!-- Back Side -->
+        <div class="card-back">
+          <div class="offer-details">
+            <h3 class="offer-title">{{ offer.pet.name }}</h3>
+            <p class="offer-location"><i class="fas fa-map-marker-alt"></i> {{ offer.position }}</p>
+            <p class="offer-dates">
+              <i class="fas fa-calendar-alt"></i> {{ offer.startDate }} - {{ offer.endDate }}
+            </p>
+            <button class="btn btn-primary" (click)="viewOffer(offer)">View Details</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

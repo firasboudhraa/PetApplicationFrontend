@@ -12,6 +12,8 @@ import { DashboardComponent } from './Components/BackOffice/dashboard/dashboard.
 import { UsersComponent } from './Components/BackOffice/dashboard/users/users.component';
 import { EditAdoptionRequestComponent } from './Components/AdoptionRequest/edit-adoption-request/edit-adoption-request.component';
 import { ChatPopupComponent } from './Components/chat-popup/chat-popup.component';
+import { LookForASitterFormComponent } from './Components/PetSitting/look-for-asitter-form/look-for-asitter-form.component';
+import { PetSittingSpaceComponent } from './Components/PetSitting/pet-sitting-space/pet-sitting-space.component';
 
   
   const routes: Routes = [
@@ -22,6 +24,8 @@ import { ChatPopupComponent } from './Components/chat-popup/chat-popup.component
   {path:'add-service',component:AddServiceComponent},
   {path:'serviceDetail/:id', component:DetailServiceComponent},
   {path:'adoptionRequestDashboard', component:AdoptionRequestDashbordComponent},
+  {path:'petSittingForm', component:LookForASitterFormComponent},
+  {path:'petSittingSpace', component:PetSittingSpaceComponent},
   {path:'dashboard', component:DashboardComponent,
     children:[
       {path:'users', component:UsersComponent},

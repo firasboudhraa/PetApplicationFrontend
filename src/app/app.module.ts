@@ -34,6 +34,8 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { EditAdoptionRequestComponent } from './Components/AdoptionRequest/edit-adoption-request/edit-adoption-request.component';
 import { ChatPopupComponent } from './Components/chat-popup/chat-popup.component';
+import { LookForASitterFormComponent } from './Components/PetSitting/look-for-asitter-form/look-for-asitter-form.component';
+import { PetSittingSpaceComponent } from './Components/PetSitting/pet-sitting-space/pet-sitting-space.component';
 
 
 @NgModule({
@@ -67,8 +69,10 @@ import { ChatPopupComponent } from './Components/chat-popup/chat-popup.component
     SidebarComponent,
     HeaderComponent,
     EditAdoptionRequestComponent,
-    ChatPopupComponent
-  ],
+    ChatPopupComponent,
+    LookForASitterFormComponent,
+    PetSittingSpaceComponent
+    ],
   imports: [
     BrowserModule,
     AppRoutingModule,
