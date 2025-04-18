@@ -16,8 +16,13 @@ export class SentAppointmentComponent implements OnInit {
   confirmedAppointments: any[] = [];
   rejectedAppointments: any[] = [];
   activeTab: string = 'pending';
-  idService: number = 1;
+  idProvider: number = 1;
   reason: string = '';
+  combinedPending : { appointment: any; service: any }[] = [];
+  combinedConfirmed : { appointment: any; service: any }[] = [];
+combinedRejected: { appointment: any; service: any }[] = [];
+allServices: any[] = [];
+
 
   constructor(
     private appointmentService: AppointmentService,
@@ -37,31 +42,69 @@ export class SentAppointmentComponent implements OnInit {
   }
 
   fetchAppointments(): void {
-    this.petService.getServiceWithAppointments(this.idService).subscribe(async (service: any) => {
-      console.log('Service:', service);
+    this.petService.getServicesWithAppointmentsByProviderId(this.idProvider).subscribe(async (services: any[]) => {
+      console.log('Services:', services);
   
-      // Convert address if needed
-      service.address = await this.mapsLoader.getLocationInLetters(service.address);
+      // Save services to use in findServiceByAppointment
+      this.allServices = services;
   
-      const allAppointments = service.appointments || [];
+      this.pendingAppointments = [];
+      this.confirmedAppointments = [];
+      this.rejectedAppointments = [];
   
-      // Normalize status values (in case they are uppercase)
-      this.pendingAppointments = allAppointments.filter(
-        (appointment: any) => appointment.status?.toLowerCase() === 'pending'
-      );
-      console.log('Pending Appointments:', this.pendingAppointments);
+      for (const service of services) {
+        // Convert address to string
+        service.address = await this.mapsLoader.getLocationInLetters(service.address);
   
-      this.confirmedAppointments = allAppointments.filter(
-        (appointment: any) => appointment.status?.toLowerCase() === 'confirmed'
-      );
-      console.log('Confirmed Appointments:', this.confirmedAppointments);
+        const appointments = service.appointments || [];
   
-      this.rejectedAppointments = allAppointments.filter(
-        (appointment: any) => appointment.status?.toLowerCase() === 'cancelled' || appointment.status?.toLowerCase() === 'rejected'
-      );
-      console.log('Rejected Appointments:', this.rejectedAppointments);
+        this.pendingAppointments.push(
+          ...appointments.filter((a: any) => a.status?.toLowerCase() === 'pending')
+        );
+  
+        this.confirmedAppointments.push(
+          ...appointments.filter((a: any) => a.status?.toLowerCase() === 'confirmed')
+        );
+  
+        this.rejectedAppointments.push(
+          ...appointments.filter((a: any) => {
+            const status = a.status?.toLowerCase();
+            return status === 'cancelled' || status === 'rejected';
+          })
+        );
+      }
+  
+      // Now build the combined arrays
+      this.combinedPending = this.pendingAppointments.map(app => ({
+        appointment: app,
+        service: this.findServiceByAppointment(app.idAppointment)
+      }));
+  
+      this.combinedConfirmed = this.confirmedAppointments.map(app => ({
+        appointment: app,
+        service: this.findServiceByAppointment(app.idAppointment)
+      }));
+  
+      this.combinedRejected = this.rejectedAppointments.map(app => ({
+        appointment: app,
+        service: this.findServiceByAppointment(app.idAppointment)
+      }));
+  
+      console.log('Combined Pending:', this.combinedPending);
     });
+
   }
+  
+  findServiceByAppointment(appointmentId: number): any {
+    for (const service of this.allServices) {
+      if (service.appointments?.some((a: any) => a.idAppointment === appointmentId)) {
+        return service;
+      }
+    }
+    return null;
+  }
+  
+  
   
   deleteAppointment(id: number): void {
     this.appointmentService.deleteAppointment(id).subscribe(() => {

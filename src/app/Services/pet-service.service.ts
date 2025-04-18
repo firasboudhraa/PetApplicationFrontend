@@ -47,4 +47,8 @@ export class PetServiceService {
     return this.http.put<void>(`${this.apiUrl}/with-appointments/${id}/reject`, { reason });
   }
 
+  getServicesWithAppointmentsByProviderId(id: number): Observable<any[]> {
+    return this.http.get<any[]>(`${this.apiUrl}with-appoitments/provider/${id}`);
+  }
+
 }
