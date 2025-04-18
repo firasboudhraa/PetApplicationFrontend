@@ -1,4 +1,5 @@
 /* Styles principaux du conteneur du post */
+@import "~@ctrl/ngx-emoji-mart/picker"; 
 .post-detail-container {
   font-family: Arial, sans-serif;
   max-width: 1200px;
@@ -321,4 +322,40 @@ button:hover {
 
 .red-button {
   /* Optional: Additional styling for the red button if needed */
+}
+/* Style for the emoji button */
+.btn-emoji {
+  background-color: #ffffff;
+  border: 1px solid #81c784;
+  border-radius: 50%;
+  font-size: 1.5rem;
+  padding: 8px;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.3s ease;
+}
+
+/* Style for the emoji picker popup */
+.emoji-picker-popup {
+  position: absolute;
+  z-index: 9999;
+  background-color: white;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  top: 100%; /* Places it just below the button */
+  left: 50%; /* Center horizontally */
+  transform: translateX(-50%); /* Correct horizontal alignment */
+  margin-top: 8px; /* Optional: add some space above the picker */
+  max-width: 320px; /* Limit width */
+  max-height: 350px; /* Limit height */
+  overflow-y: auto; /* Allow vertical scrolling */
+}
+
+/* You can adjust the dimensions of the emoji picker */
+.emoji-picker {
+  width: 100%; /* Make the picker take the full width of its container */
+  height: 100%; /* Make the picker take the full height of its container */
 }

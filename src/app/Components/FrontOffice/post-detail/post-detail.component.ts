@@ -1,4 +1,4 @@
-import { Component, OnInit, AfterViewInit } from '@angular/core';
+import { Component, OnInit, AfterViewInit, HostListener } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { PostsService } from 'src/app/services/posts.service';
 import { UserService } from 'src/app/services/user.service';
@@ -33,6 +33,8 @@ export class PostDetailComponent implements OnInit, AfterViewInit {
   zoom: number = 12;
   map!: google.maps.Map;
   marker!: google.maps.Marker;
+  showEmojiPicker = false;
+
 
   constructor(
     private route: ActivatedRoute,
@@ -205,4 +207,42 @@ export class PostDetailComponent implements OnInit, AfterViewInit {
       .replace(/_/g, ' ')
       .replace(/\b\w/g, char => char.toUpperCase());
   }
+
+
+  // Fonction pour basculer l'affichage du picker
+  toggleEmojiPicker() {
+    this.showEmojiPicker = !this.showEmojiPicker;
+  
+    // Get the position of the emoji button
+    const emojiButton = document.querySelector('.btn-emoji') as HTMLElement;
+    const rect = emojiButton.getBoundingClientRect();
+    
+    // If the emoji picker should be above the button
+    const popup = document.querySelector('.emoji-picker-popup') as HTMLElement;
+  
+    if (popup) {
+      // Adjust the position based on the button's position
+      popup.style.top = `${rect.top - popup.offsetHeight - 8}px`;  // 8px for margin
+      popup.style.left = `${rect.left + rect.width / 2 - popup.offsetWidth / 2}px`;  // Center horizontally
+    }
+  }
+  
+
+@HostListener('document:click', ['$event'])
+onClickOutside(event: Event) {
+    if (!(event.target as HTMLElement).closest('.emoji-picker-container') && 
+        !(event.target as HTMLElement).closest('.btn-emoji')) {
+        this.showEmojiPicker = false;
+    }
+}
+
+    showEmojis: boolean = false;// Ajoutez cette méthode pour gérer la sélection d'emoji
+
+    onSelectEmojis(event: any): void {
+      const emoji = event.emoji?.native;  // This should directly give you the emoji character
+      if (emoji) {
+        this.newCommentContent += emoji;  // Append the emoji to the comment content
+      }
+    }
+    
 }

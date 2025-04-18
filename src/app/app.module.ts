@@ -19,6 +19,8 @@ import { DashboardComponent } from './Components/BackOffice/dashboard/dashboard.
 import { HeaderComponent } from './Components/BackOffice/header/header.component';
 import { SidebarComponent } from './Components/BackOffice/sidebar/sidebar.component';
 import { PostsComponent } from './Components/BackOffice/dashboard/posts/posts.component';
+import { GeminiChatComponent } from './Components/FrontOffice/gemini-chat/gemini-chat.component';
+import { PickerModule } from '@ctrl/ngx-emoji-mart';
 
 @NgModule({
   declarations: [
@@ -37,6 +39,8 @@ import { PostsComponent } from './Components/BackOffice/dashboard/posts/posts.co
     HeaderComponent,
     SidebarComponent,
     PostsComponent,
+    GeminiChatComponent,
+
   ],
   imports: [
     BrowserModule,
@@ -44,6 +48,8 @@ import { PostsComponent } from './Components/BackOffice/dashboard/posts/posts.co
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
+    PickerModule,
+
   ],
   providers: [],
   bootstrap: [AppComponent]

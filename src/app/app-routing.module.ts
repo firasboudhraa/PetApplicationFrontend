@@ -9,6 +9,7 @@ import { AddPostComponent } from './Components/FrontOffice/add-post/add-post.com
 import { ModifyPostComponent } from './Components/FrontOffice/modify-post/modify-post.component';
 import { DashboardComponent } from './Components/BackOffice/dashboard/dashboard.component';
 import { PostsComponent } from './Components/BackOffice/dashboard/posts/posts.component';
+import { GeminiChatComponent } from './Components/FrontOffice/gemini-chat/gemini-chat.component';
 
 
 const routes: Routes = [
@@ -18,6 +19,7 @@ const routes: Routes = [
   { path: 'blog', component: BlogComponentComponent },
   { path: 'post/:id', component: PostDetailComponent },
   { path: 'add-post', component: AddPostComponent }, 
+  { path: 'gemini', component: GeminiChatComponent }, // Assuming GeminiChatComponent is part of BlogComponent
   {path:'',redirectTo:'home',pathMatch:'full'},
     { path: 'modify-post/:id', component: ModifyPostComponent },
     {
