@@ -36,19 +36,19 @@ export class PetServiceService {
   }
 
   getServiceWithAppointments(id: number): Observable<any> {
-    return this.http.get<any>(this.apiUrl + 'with-appoitments/' + id);
+    return this.http.get<any>(this.apiUrl + 'with-appointments/' + id);
   }
 
-  confirmAppointment(id: number, reason: string): Observable<void> {
-    return this.http.put<void>(`${this.apiUrl}/with-appointments/${id}/accept`, { reason});
+  confirmAppointment(id: number, body: { reason: string }): Observable<void> {
+    return this.http.put<void>(`${this.apiUrl}/with-appointments/${id}/accept`, body);
   }
 
-  rejectAppointment(id: number, reason: string): Observable<void> {
-    return this.http.put<void>(`${this.apiUrl}/with-appointments/${id}/reject`, { reason });
+  rejectAppointment(id: number, body: { reason: string }): Observable<void> {
+    return this.http.put<void>(`${this.apiUrl}/with-appointments/${id}/reject`, body);
   }
 
   getServicesWithAppointmentsByProviderId(id: number): Observable<any[]> {
-    return this.http.get<any[]>(`${this.apiUrl}with-appoitments/provider/${id}`);
+    return this.http.get<any[]>(`${this.apiUrl}with-appointments/provider/${id}`);
   }
 
 }

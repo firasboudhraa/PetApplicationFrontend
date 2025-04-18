@@ -26,4 +26,8 @@ private apiUrl = 'http://localhost:8222/api/appointments/';
     return this.http.delete<void>(this.apiUrl + 'deleteAppointment/' + id);
   }
 
+  getAppointmentsByUserId(idOwner: number): Observable<any[]> {
+    return this.http.get<any[]>(this.apiUrl + '/owner/' + idOwner);
+  }
+
 }

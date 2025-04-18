@@ -6,7 +6,7 @@ import { Component } from '@angular/core';
   styleUrls: ['./appointment-dashboard.component.css']
 })
 export class AppointmentDashboardComponent {
-  activeTab: string = 'Sent'; 
+  activeTab: string = 'Received'; 
 
   setActiveTab(tab: string): void {
     this.activeTab = tab;

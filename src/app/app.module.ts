@@ -5,6 +5,10 @@ import { AppComponent } from './app.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CarouselModule } from 'ngx-owl-carousel-o';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatMenuModule } from '@angular/material/menu'; // Import MatMenuModule
+import { MatButtonModule } from '@angular/material/button'; // Import MatButtonModule for buttons
+import { MatIconModule } from '@angular/material/icon'; 
 import {HttpClientModule} from '@angular/common/http';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { FooterComponent } from './Components/FrontOffice/footer/footer.component';
@@ -25,8 +29,9 @@ import { HeaderComponent } from './Components/BackOffice/header/header.component
 import { ServicesComponent } from './Components/BackOffice/dashboard/services/services.component';
 import { ModifyServiceComponent } from './Components/FrontOffice/PetService/modify-service/modify-service.component';
 import { AppointmentDashboardComponent } from './Components/FrontOffice/PetService/appointment-dashboard/appointment-dashboard.component';
-import { SentAppointmentComponent } from './Components/FrontOffice/PetService/appointment-dashboard/sent-appointment/sent-appointment.component';
 import { ReceivedAppointmentComponent } from './Components/FrontOffice/PetService/appointment-dashboard/received-appointment/received-appointment.component';
+import { UserAppointmentDashboardComponent } from './Components/FrontOffice/PetService/user-appointment-dashboard/user-appointment-dashboard.component';
+import { SentAppointmentComponent } from './Components/FrontOffice/PetService/user-appointment-dashboard/sent-appointment/sent-appointment.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -50,8 +55,9 @@ import { ReceivedAppointmentComponent } from './Components/FrontOffice/PetServic
     ServicesComponent,
     ModifyServiceComponent,
     AppointmentDashboardComponent,
-    SentAppointmentComponent,
-    ReceivedAppointmentComponent
+    ReceivedAppointmentComponent,
+    UserAppointmentDashboardComponent,
+    SentAppointmentComponent
   ],
   imports: [
     BrowserModule,
@@ -64,6 +70,10 @@ import { ReceivedAppointmentComponent } from './Components/FrontOffice/PetServic
     BrowserAnimationsModule,
     CarouselModule,
     NgxPaginationModule,
+    MatTooltipModule,
+    MatMenuModule, // Include MatMenuModule here
+    MatButtonModule, // Include MatButtonModule for buttons
+    MatIconModule, // Include MatIconModule for icons
 
   ],
 

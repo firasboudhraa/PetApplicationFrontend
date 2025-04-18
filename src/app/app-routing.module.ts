@@ -11,6 +11,7 @@ import { UsersComponent } from './Components/BackOffice/dashboard/users/users.co
 import { ServicesComponent } from './Components/BackOffice/dashboard/services/services.component';
 import { ModifyServiceComponent } from './Components/FrontOffice/PetService/modify-service/modify-service.component';
 import { AppointmentDashboardComponent } from './Components/FrontOffice/PetService/appointment-dashboard/appointment-dashboard.component';
+import { UserAppointmentDashboardComponent } from './Components/FrontOffice/PetService/user-appointment-dashboard/user-appointment-dashboard.component';
 
 const routes: Routes = [
   { path: 'home', component: HomeComponent },
@@ -20,6 +21,7 @@ const routes: Routes = [
   {path:'full-calendar/:id',component:AvailableSlotsComponent},
   {path:'serviceDetail/:id', component:DetailServiceComponent},
   {path:'appointment-Dashboard',component:AppointmentDashboardComponent},
+  {path:'user-appointment-dashboard',component:UserAppointmentDashboardComponent},
   {path:'appointment/:id',component:AppointmentComponent},
   {path:'dashboard',component:DashboardComponent,
     children:[

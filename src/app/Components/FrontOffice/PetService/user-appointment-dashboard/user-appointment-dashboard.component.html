@@ -11,22 +11,22 @@
 
               <a
                 class="nav-link"
-                [class.bg-primary]="activeTab === 'Received'"
-                [class.text-white]="activeTab === 'Received'"
-                (click)="setActiveTab('Received')"
+                [class.bg-primary]="activeTab === 'Sent'"
+                [class.text-white]="activeTab === 'Sent'"
+                (click)="setActiveTab('Sent')"
                 role="tab"
-                aria-controls="v-pills-Received-icons"
+                aria-controls="v-pills-Sent-icons"
                 aria-selected="false"
               >
-                <i class="flaticon-user-4"></i> Received
+                <i class="flaticon-user-4"></i> Sent
               </a>
             </div>
           </div>
   
           <!-- Tab Content -->
           <div class="col-12 col-md-11 p-0"> <!-- Make content larger, reduced sidebar width -->
-            <div *ngIf="activeTab === 'Received'" class="tab-content">
-              <app-received-appointment></app-received-appointment>  
+            <div *ngIf="activeTab === 'Sent'" class="tab-content">
+              <app-sent-appointment></app-sent-appointment>  
             </div>
           </div>
         </div>
