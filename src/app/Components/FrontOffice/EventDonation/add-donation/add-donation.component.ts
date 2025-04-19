@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { ActivatedRoute, Router } from '@angular/router';
 import Swal from 'sweetalert2';
 import { UserService } from 'src/app/Services/user.service';
+import { environment } from 'src/environments/environment';
 
 declare var paypal: any;
 
@@ -20,7 +21,7 @@ export class AddDonationComponent implements OnInit, OnDestroy {
   donationId: string | null = null;
   private paypalButtons: any;
 
-  private readonly paypalClientId = 'YOUR_CLIENT_ID';
+  private readonly paypalClientId = environment.paypalClientId;
   private readonly apiBaseUrl = 'http://localhost:8010';
 
   constructor(

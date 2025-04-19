@@ -173,3 +173,129 @@
 .card {
   animation: fadeIn 0.4s ease forwards;
 }
+
+/* AI Modal Styles */
+.modal {
+  display: block !important;
+  background-color: rgba(0,0,0,0.5);
+  z-index: 1050;
+}
+
+.modal-content {
+  border-radius: 10px;
+  border: none;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+  max-height: 80vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.modal-header {
+  background: linear-gradient(135deg, #4361ee, #3a0ca3);
+  color: white;
+  border-radius: 10px 10px 0 0;
+  padding: 15px 20px;
+  flex-shrink: 0;
+}
+
+.modal-title {
+  font-weight: 600;
+  font-size: 1.25rem;
+}
+
+.modal-body {
+  padding: 20px;
+  overflow-y: auto;
+  flex-grow: 1;
+}
+
+.modal-footer {
+  border-top: 1px solid #e0e6ed;
+  padding: 15px 20px;
+  flex-shrink: 0;
+}
+
+.btn-close-white {
+  filter: invert(1);
+}
+
+.ai-output {
+  line-height: 1.6;
+  color: #495057;
+  white-space: pre-line;
+  border: 1px solid #e0e6ed;
+  border-radius: 6px;
+  padding: 15px;
+  background-color: white;
+  max-height: 300px;
+  overflow-y: auto;
+}
+
+/* AI Button in form - Style unique */
+.btn-ai {
+  border: 1px solid #e0e6ed;
+  color: white;
+  background: linear-gradient(135deg, #4f46e5, #7c3aed);
+  padding: 8px 15px;
+  font-size: 0.875rem;
+  border-radius: 6px;
+  transition: all 0.3s;
+  box-shadow: 0 2px 10px rgba(79, 70, 229, 0.2);
+  display: inline-flex;
+  align-items: center;
+  margin-top: 8px;
+  margin-bottom: 12px;
+}
+
+.btn-ai:hover {
+  background: linear-gradient(135deg, #4338ca, #6d28d9);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(79, 70, 229, 0.3);
+  color: white;
+}
+
+.btn-ai:focus {
+  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.3);
+}
+
+.btn-ai i {
+  margin-right: 8px;
+  font-size: 1rem;
+}
+
+/* Additional space for description label */
+.description-label {
+  margin-bottom: 5px;
+  display: block;
+}
+
+/* Loading spinner */
+.fa-spinner {
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* Disabled state */
+.btn:disabled {
+  opacity: 0.65;
+  cursor: not-allowed;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .modal-dialog {
+    margin: 1rem auto;
+  }
+  
+  .modal-content {
+    margin: 0 10px;
+  }
+  
+  .ai-output {
+    max-height: 200px;
+  }
+}

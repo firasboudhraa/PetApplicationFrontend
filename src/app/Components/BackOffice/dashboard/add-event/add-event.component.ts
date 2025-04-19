@@ -3,6 +3,8 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Event as AppEvent } from 'src/app/models/event';
 import { EventService } from 'src/app/Services/event-service.service';
+import { HttpClient } from '@angular/common/http';
+import { environment } from 'src/environments/environment';
 import Swal from 'sweetalert2';
 
 declare var google: any;
@@ -24,10 +26,16 @@ export class AddEventComponent implements AfterViewInit {
   isSubmitting = false;
   errorMessage = '';
 
+  showAIModal: boolean = false;
+  aiPrompt: string = '';
+  isGeneratingDescription: boolean = false;
+  aiGeneratedDescription: string = '';
+
   constructor(
     private fb: FormBuilder,
     private eventService: EventService,
-    private router: Router
+    private router: Router,
+    private http: HttpClient,
   ) {
     this.eventForm = this.fb.group({
       nameEvent: ['', [Validators.required, Validators.minLength(3)]],
@@ -223,6 +231,75 @@ export class AddEventComponent implements AfterViewInit {
     }).then((result) => {
       if (result.isConfirmed) {
         this.router.navigate(['/dashboard/eventback']);
+      }
+    });
+  }
+
+  // New AI-related methods
+  openAIModal(): void {
+    this.showAIModal = true;
+    this.aiPrompt = '';
+    this.aiGeneratedDescription = '';
+  }
+
+  closeAIModal(): void {
+    this.showAIModal = false;
+  }
+
+  useGeneratedDescription(): void {
+    if (this.aiGeneratedDescription) {
+      this.eventForm.patchValue({
+        description: this.aiGeneratedDescription
+      });
+      this.closeAIModal();
+    }
+  }
+
+  generateDescription(): void {
+    if (!this.aiPrompt.trim()) {
+      Swal.fire('Error', 'Please enter a prompt for the AI', 'error');
+      return;
+    }
+
+    this.isGeneratingDescription = true;
+    this.aiGeneratedDescription = '';
+
+    const apiKey = environment.AiapiKey;
+    const siteUrl = 'http://localhost:4200/dashboard/add-event';
+    const siteName = 'PetApplication';
+
+    const prompt = `Generate a compelling event description based on the following information:
+    Event Name: ${this.eventForm.value.nameEvent || 'Charity Event'}
+    Event Type: Charity Fundraiser
+    Additional Details: ${this.aiPrompt}
+    
+    The description should be 2-3 paragraphs long, engaging, and encourage participation. Include details about the cause and potential impact.`;
+
+    this.http.post<any>('https://openrouter.ai/api/v1/chat/completions', {
+      model: "deepseek/deepseek-r1:free",
+      messages: [
+        {
+          role: "user",
+          content: prompt
+        }
+      ]
+    }, {
+      headers: {
+        "Authorization": `Bearer ${apiKey}`,
+        "HTTP-Referer": siteUrl,
+        "X-Title": siteName,
+        "Content-Type": "application/json"
+      }
+    }).subscribe({
+      next: (response) => {
+        this.aiGeneratedDescription = response.choices[0]?.message?.content || 'No description generated';
+        this.isGeneratingDescription = false;
+      },
+      error: (error) => {
+        console.error('AI generation error:', error);
+        this.aiGeneratedDescription = 'Failed to generate description. Please try again.';
+        this.isGeneratingDescription = false;
+        Swal.fire('Error', 'Failed to generate description', 'error');
       }
     });
   }

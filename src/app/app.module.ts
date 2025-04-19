@@ -26,6 +26,7 @@ import { UpdateEventComponent } from './Components/BackOffice/dashboard/update-e
 import { AddEventComponent } from './Components/BackOffice/dashboard/add-event/add-event.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { LeaderboardComponent } from './Components/FrontOffice/EventDonation/leaderboard/leaderboard.component';
+import { Nl2BrPipe } from './Components/BackOffice/dashboard/add-event/nl2br.pipe';
 
 @NgModule({
   declarations: [
@@ -51,6 +52,7 @@ import { LeaderboardComponent } from './Components/FrontOffice/EventDonation/lea
     UpdateEventComponent,
     AddEventComponent,
     LeaderboardComponent,
+    Nl2BrPipe
   ],
   imports: [
     BrowserModule,
@@ -58,7 +60,7 @@ import { LeaderboardComponent } from './Components/FrontOffice/EventDonation/lea
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

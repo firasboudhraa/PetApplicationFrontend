@@ -21,7 +21,10 @@
 
             <!-- Description Field -->
             <div class="mb-4">
-              <label for="description" class="form-label">Description</label>
+              <label for="description" class="form-label description-label">Description</label>
+              <button type="button" class="btn btn-ai" (click)="openAIModal()">
+                <i class="fas fa-magic"></i> Generate with AI
+              </button>
               <textarea class="form-control" id="description" rows="4" formControlName="description"></textarea>
               <div *ngIf="eventForm.get('description')?.invalid && (eventForm.get('description')?.dirty || eventForm.get('description')?.touched)" class="text-danger mt-2">
                 <small *ngIf="eventForm.get('description')?.errors?.['required']"><i class="fas fa-exclamation-circle mr-1"></i>Description is required</small>
@@ -83,6 +86,53 @@
             </div>
           </form>
         </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- AI Modal -->
+<div class="modal fade show" *ngIf="showAIModal" tabindex="-1" role="dialog" style="display: block; background: rgba(0,0,0,0.5);">
+  <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header" style="background: linear-gradient(135deg, #4361ee, #3a0ca3);">
+        <h5 class="modal-title text-white">AI Description Generator</h5>
+        <button type="button" class="btn-close btn-close-white" (click)="closeAIModal()" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="mb-4">
+          <label class="form-label fw-bold">Describe your event to the AI:</label>
+          <textarea class="form-control" 
+                    [(ngModel)]="aiPrompt"
+                    placeholder="E.g., 'A beach cleanup event to protect marine life in Miami on June 5th'"
+                    rows="3"></textarea>
+          <small class="text-muted">Provide as much detail as possible for better results</small>
+        </div>
+        
+        <button class="btn btn-primary" 
+                (click)="generateDescription()"
+                [disabled]="isGeneratingDescription || !aiPrompt.trim()">
+          <span *ngIf="!isGeneratingDescription">
+            <i class="fas fa-robot mr-2"></i>Generate Description
+          </span>
+          <span *ngIf="isGeneratingDescription">
+            <i class="fas fa-spinner fa-spin mr-2"></i>Generating...
+          </span>
+        </button>
+        
+        <div *ngIf="aiGeneratedDescription" class="mt-4">
+          <h6 class="mb-3 fw-bold">Generated Description:</h6>
+          <div class="ai-output">{{aiGeneratedDescription}}</div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" (click)="closeAIModal()">Cancel</button>
+        <button type="button" 
+                class="btn btn-primary" 
+                (click)="useGeneratedDescription()"
+                [disabled]="!aiGeneratedDescription">
+          Use This Description
+        </button>
       </div>
     </div>
   </div>
