@@ -1,5 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Renderer2 } from '@angular/core';
+import { Pet } from 'src/app/models/pet';
 import { PetSittingOffer } from 'src/app/models/petSittingOffer';
+import { GoogleMapsLoaderService } from 'src/app/Services/google-maps-loader.service';
 import { PetSittingOfferService } from 'src/app/Services/pet-sitting-offer.service';
 
 @Component({
@@ -10,20 +12,27 @@ import { PetSittingOfferService } from 'src/app/Services/pet-sitting-offer.servi
 export class PetSittingSpaceComponent implements OnInit {
   userId: number = 2;
   private imageServerUrl = 'http://localhost:8222/api/v1/pet/images';
-
+  showDetailModal: boolean = false;
   offers: (PetSittingOffer & { isFlipped: boolean })[] = []; // Add isFlipped dynamically
 
-  constructor(private petSittingOfferService: PetSittingOfferService) {}
+  constructor(private petSittingOfferService: PetSittingOfferService, private mapService: GoogleMapsLoaderService,private renderer: Renderer2) {}
 
   ngOnInit(): void {
-    this.petSittingOfferService.getAvailablePetSittingOffers(this.userId).subscribe(
-      (response) => {
-        this.offers = response.map((offer) => ({
+    this.petSittingOfferService.getAvailablePetSittingOffers(this.userId).subscribe(async (response) => {
+      this.offers = await Promise.all(
+        response.map(async (offer) => ({
           ...offer,
-          isFlipped: false, 
-        }));
-      }
-    );
+          locationInLetters: await this.mapService.getLocationInLetters(offer.pet.location), // Await the result
+          isFlipped: false,
+        }))
+      );
+    });
+  }
+  closeDetailModal(): void {
+    this.renderer.removeClass(document.querySelector('.pet-sitting-space-container'), 'blur-effect');
+    this.renderer.removeClass(document.querySelector('app-navbar'), 'blur-effect');
+    this.renderer.removeClass(document.querySelector('app-footer'), 'blur-effect');
+    this.showDetailModal = false;
   }
   calculateDays(startDate: string, endDate: string): number {
     const start = new Date(startDate);
@@ -46,8 +55,12 @@ export class PetSittingSpaceComponent implements OnInit {
   applyFilter(filter: string): void {
     console.log('Filter applied:', filter);
   }
-
-  viewOffer(offer: any): void {
-    console.log('Viewing offer:', offer);
+  selectedPet!: Pet ;
+  viewPetDetail(pet: Pet): void {
+    this.selectedPet = pet;
+    this.showDetailModal = true;
+    this.renderer.addClass(document.querySelector('.pet-sitting-space-container'), 'blur-effect');
+    this.renderer.addClass(document.querySelector('app-navbar'), 'blur-effect');
+    this.renderer.addClass(document.querySelector('app-footer'), 'blur-effect');
   }
 }

@@ -24,7 +24,7 @@
         </ul>
       </div>
     </div>
-
+    
     <!-- Start Date -->
     <div class="form-group">
       <label for="startDate">Start Date:</label>
@@ -51,31 +51,40 @@
       />
     </div>
 
-    <!-- Location -->
-    <div class="form-group mt-3 position-relative">
-        <label for="location">Where does your pet reside ? </label>
-      
-        <!-- Search input for autocomplete -->
-        <input
-        id="autocomplete"
-        #autocompleteInput
-        type="text"
-        class="form-control mb-2"
-        placeholder="Type a location"
-        autocomplete="off"
-        />
-      
-        <!-- Map display -->
-        <div id="map" #map style="height: 400px;"></div>
-        <!-- Hidden form field to store lat,lng -->
-        <input
-          type="text"
-          formControlName="location"
-          class="form-control mt-2"
-          placeholder="Location coordinates"
-          hidden
-        />
+    <!-- Offer Type (Free or Paid) -->
+    <div class="form-group">
+      <label for="offerType">Is the Offer Free or Paid?</label>
+      <div class="offer-type-options">
+        <div
+          class="offer-type-option"
+          [class.selected]="petSittingForm.get('offerType')?.value === 'Free'"
+          (click)="setOfferType('Free')"
+        >
+          Free
+        </div>
+        <div
+          class="offer-type-option"
+          [class.selected]="petSittingForm.get('offerType')?.value === 'Paid'"
+          (click)="setOfferType('Paid')"
+        >
+          Paid
+        </div>
       </div>
+    </div>
+
+    <!-- Amount Per Day (Visible only if Paid) -->
+    <div class="form-group" *ngIf="isPaid">
+      <label for="amountPerDay">Amount Per Day:</label>
+      <input
+        id="amountPerDay"
+        type="number"
+        class="form-control"
+        formControlName="amountPerDay"
+        placeholder="Enter amount in TND"
+        min="0"
+        required
+      />
+    </div>
 
     <!-- Submit Button -->
     <button type="submit" class="btn btn-primary submit-btn">Submit Request</button>

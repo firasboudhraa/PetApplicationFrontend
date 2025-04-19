@@ -133,3 +133,46 @@
   font-weight: bold;
   color: #333;
 }
+
+/* Offer Type Options Container */
+.offer-type-options {
+  display: flex;
+  gap: 0px;
+  margin-top: 10px;
+}
+
+/* Individual Option Styling */
+.offer-type-option {
+  flex: 1;
+  text-align: center;
+  padding: 10px 15px;
+  border: 2px solid #ccc;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-weight: bold;
+  color: #555;
+  background-color: #f9f9f9;
+}
+.offer-type-option:first-of-type
+{
+  border-top-left-radius: 8px;
+  border-bottom-left-radius: 8px;
+}
+.offer-type-option:last-of-type
+{
+  border-top-right-radius: 8px;
+  border-bottom-right-radius: 8px;
+}
+
+/* Hover Effect */
+.offer-type-option:hover {
+  border-color: #007bff;
+  color: #007bff;
+}
+
+/* Selected Option Styling */
+.offer-type-option.selected {
+  border-color: #007bff;
+  background-color: #007bff;
+  color: #fff;
+}

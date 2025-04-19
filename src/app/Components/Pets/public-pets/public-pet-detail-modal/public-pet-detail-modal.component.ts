@@ -13,10 +13,8 @@ import Swal from 'sweetalert2';
 export class PublicPetDetailModalComponent {
 @Input() isVisible: boolean = false;
   @Output() close = new EventEmitter<void>();
-  @Output() passToEdit = new EventEmitter<void>();
   @Input() pet!: Pet; 
   @Input() userId!:number;
-  @Output() petRemoved = new EventEmitter<void>(); 
 
   confirmationShowed: boolean = false;
   mapOpened: boolean = false;
@@ -117,11 +115,7 @@ export class PublicPetDetailModalComponent {
     
     
 
-  openEditModal(){
-    console.log("clicked") ;
-    this.close.emit();
-    this.passToEdit.emit() ;
-  }
+
   getImageUrl(filename: string): string {
     return `${this.apiUrl}/${filename}`;
   }
@@ -134,35 +128,7 @@ export class PublicPetDetailModalComponent {
   closeModal() {
     this.close.emit();
   }
-  removePet(id:number) {
-    this.petDataService.removePet(id).subscribe({
-      next: () => {
-        this.closeModal();
-        this.petRemoved.emit();
-        Swal.fire({
-          icon: 'success',
-          title: 'Pet deleted',
-          text: '✅ Pet was removed successfully!',
-          position: 'top',
-          timer: 3000,
-          showConfirmButton: false,
-          toast: true
-        });
-      },
-      error: () => {
-        Swal.fire({
-          icon: 'error',
-          title: 'Error',
-          text: '❌ Failed to delete pet.',
-          position: 'top',
-          timer: 3000,
-          showConfirmButton: false,
-          toast: true
-        });
-      }
-    });
-    this.hideConfirmButton();
-  }
+ 
   redirectToRequest(petId:number ,  ownerId:number , userId:number){
     this.closeModal();
     this.router.navigate(['/adoption-request'], {

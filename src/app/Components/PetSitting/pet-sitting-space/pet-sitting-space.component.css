@@ -184,8 +184,40 @@
   padding: 5px 10px;
   border-radius: 5px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-  animation: fadeIn 0.5s ease-in-out;
   z-index: 1;
+}
+
+/* Tag for Free or Paid */
+.offer-price-tag {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: #007bff; /* Blue for paid offers */
+  color: #fff;
+  font-size: 14px;
+  font-weight: bold;
+  padding: 5px 10px;
+  border-radius: 5px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  display: flex;
+  align-items: center;
+  gap: 5px; /* Space between icon and text */
+  z-index: 1;
+  transition: background-color 0.3s ease;
+}
+
+/* Styling for Free Offers */
+.offer-price-tag i.fa-gift {
+  color: #28a745; /* Green for free offers */
+}
+
+.offer-price-tag i.fa-coins {
+  color: #ffd700; /* Gold for paid offers */
+}
+
+/* Hover Effect */
+.offer-price-tag:hover {
+  background-color: #0056b3; /* Darker blue on hover */
 }
 
 /* Animation for the tag */
@@ -198,4 +230,25 @@
     opacity: 1;
     transform: translateY(0);
   }
+}
+
+/* Tag for Free or Paid */
+.offer-price-tag {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: #007bff; /* Blue for paid offers */
+  color: #fff;
+  font-size: 14px;
+  font-weight: bold;
+  padding: 5px 10px;
+  border-radius: 5px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  z-index: 1;
+  transition: background-color 0.3s ease;
+}
+
+/* Styling for Free Offers */
+.offer-price-tag:contains('Free') {
+  background: #28a745; /* Green for free offers */
 }

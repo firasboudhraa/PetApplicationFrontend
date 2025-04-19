@@ -16,31 +16,41 @@ export class LookForASitterFormComponent implements OnInit {
   selectedPet: number | null = null;
   selectedPetName: string | null = null;  startDate: string = '';
   petSittingForm!: FormGroup;
+  isPaid: boolean = false; 
 
   endDate: string = '';
-  position: string = '';
   userId: number = 1; 
   private apiUrl = 'http://localhost:8222/api/v1/pet/images';
 
   constructor(private fb: FormBuilder,private petDataService: PetdataServiceService,
-    private mapsLoader :GoogleMapsLoaderService, private petSittingOfferService:PetSittingOfferService) {}
+     private petSittingOfferService:PetSittingOfferService) {}
 
   ngOnInit(): void {
     this.petDataService.getPetsByOwnerId(this.userId).subscribe((data: Pet[]) => {
       this.pets = data;
       console.log(this.pets);
     });
-    this.mapsLoader.load().then(() => {
-      this.initMap();
-    }).catch(err => {
-      console.error('Google Maps failed to load', err);
-    });
+
+    // Initialize the form
     this.petSittingForm = this.fb.group({
       pet: [null, Validators.required],
       startDate: ['', Validators.required],
       endDate: ['', Validators.required],
-      position: ['', Validators.required],
+      offerType: ['Free', Validators.required], // Default to 'free'
+      amountPerDay: [null], // Only required if offerType is 'paid'
     });
+  }
+
+
+
+  setOfferType(type: string): void {
+    this.petSittingForm.get('offerType')?.setValue(type); // Update the form control value
+    this.isPaid = type === 'Paid'; 
+
+    const amountPerDayControl = this.petSittingForm.get('amountPerDay');
+    if (!this.isPaid) {
+      this.petSittingForm.get('amountPerDay')?.setValue(null);
+    } 
   }
 
   selectPet(pet: any): void {
@@ -51,62 +61,8 @@ export class LookForASitterFormComponent implements OnInit {
   getImageUrl(filename: string): string {
     return `${this.apiUrl}/${filename}`;
   }
-
-  initMap() {
-    const mapElement = document.getElementById('map');
-    const inputElement = document.getElementById('autocomplete') as HTMLInputElement;
-  
-    if (!mapElement || !inputElement) return;
-  
-    const map = new google.maps.Map(mapElement, {
-      center: { lat: 36.8065, lng: 10.1815 }, // default center
-      zoom: 12
-    });
-  
-    let marker: google.maps.Marker | null = null;
-  
-    // Autocomplete integration
-    const autocomplete = new google.maps.places.Autocomplete(inputElement);
-    autocomplete.bindTo('bounds', map);
-  
-    autocomplete.addListener('place_changed', () => {
-      const place = autocomplete.getPlace();
-      if (!place.geometry || !place.geometry.location) return;
-  
-      // Center map and place marker
-      map.setCenter(place.geometry.location);
-      map.setZoom(14);
-  
-      if (marker) marker.setMap(null);
-      marker = new google.maps.Marker({
-        map,
-        position: place.geometry.location
-      });
-  
-      const latlng = `${place.geometry.location.lat()}, ${place.geometry.location.lng()}`;
-    this.petSittingForm.controls['position'].setValue(latlng);
-  });
-  
-    map.addListener('click', (event: google.maps.MapMouseEvent) => {
-      if (!event.latLng) return;
-  
-      const lat = event.latLng.lat();
-      const lng = event.latLng.lng();
-      const latlng = `${lat}, ${lng}`;
-  
-      if (marker) marker.setMap(null);
-      marker = new google.maps.Marker({
-        map,
-        position: event.latLng
-      });
-  
-      this.petSittingForm.controls['position'].setValue(latlng);
-
-    });
-    
-  }
-
   submitRequest(): void {
+    console.log(this.petSittingForm.value);
     if (this.petSittingForm.valid) {
       this.petSittingOfferService.savePetSittingOffer(this.petSittingForm.value).subscribe(
         (response) => {
