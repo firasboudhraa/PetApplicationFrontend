@@ -13,8 +13,8 @@ export class MedicalnotebookFormComponent implements OnInit {
   carnetForm!: FormGroup;
   recordForm!: FormGroup;
   carnets: any[] = [{
-    id: 2,
-    pet_id: 12
+     id: 2,
+      pet_id: 12 
   }];
   records: any[] = [];
   pets: Pet[] = [
@@ -22,8 +22,8 @@ export class MedicalnotebookFormComponent implements OnInit {
     { id: 2, name: 'Misty', imagePath: 'assets/cat1.jpg', species: 'Chat', age: 2, color: 'Gris', sex: 'Femelle', ownerId: 102, description: 'Chat calme et doux.', forAdoption: true, location: 'Lyon' },
     { id: 3, name: 'Charlie', imagePath: 'assets/dog2.jpg', species: 'Chien', age: 5, color: 'Noir', sex: 'Mâle', ownerId: 103, description: 'Chien énergique et intelligent.', forAdoption: false, location: 'Marseille' },
     { id: 4, name: 'miomioe', imagePath: 'assets/dog2.jpg', species: 'chatton', age: 5, color: 'blanc', sex: 'Mâle', ownerId: 106, description: 'Chien énergique et intelligent.', forAdoption: false, location: 'Marseille' },
-  ]; 
-  id!: string; // ID du carnet ou record en cours d’édition
+
+  ];  id!: string; // ID du carnet ou record en cours d’édition
 
   constructor(
     private fb: FormBuilder,
@@ -57,10 +57,10 @@ export class MedicalnotebookFormComponent implements OnInit {
       veterinarian_id: ['', Validators.required],
       next_due_date: [''],
       carnet_id: ['', Validators.required],
-      attachments: [[]] // Champ pour stocker les fichiers
+      attachments: [[]]
     });
   }
-
+ 
   saveCarnet(): void {
     if (this.carnetForm.valid) {
       const selectedPetId = +this.carnetForm.value.pet_id;  // Convertir en nombre
@@ -92,6 +92,7 @@ export class MedicalnotebookFormComponent implements OnInit {
     }
   }
 
+
   saveRecord(): void {
     if (this.recordForm.valid) {
       // Récupération des valeurs du formulaire
@@ -102,7 +103,6 @@ export class MedicalnotebookFormComponent implements OnInit {
         veterinarian_id: this.recordForm.value.veterinarian_id,
         next_due_date: this.recordForm.value.next_due_date,
         carnetId: this.recordForm.value.carnet_id, // Sélection du carnet
-        attachments: this.recordForm.value.attachments // Ajout des pièces jointes (photos)
       };
   
       // Appel à l'API pour ajouter un record médical
@@ -116,7 +116,11 @@ export class MedicalnotebookFormComponent implements OnInit {
       });
     }
   }
+  
 
+
+  
+  
   /** 🔹 Charger tous les carnets */
   loadCarnets(): void {
     this.medicalService.getAllCarnets().subscribe({
@@ -129,7 +133,7 @@ export class MedicalnotebookFormComponent implements OnInit {
       }
     });
   }
-
+  
   /** 🔹 Charger un carnet par ID */
   loadCarnetById(id: string) {
     this.medicalService.getCarnetById(id).subscribe(
@@ -147,18 +151,6 @@ export class MedicalnotebookFormComponent implements OnInit {
       (error) => console.error("Erreur de chargement des animaux", error)
     );
   }
-
-  /** 🔹 Gérer les fichiers d'images pour le record médical */
-  onFileChange(event: any) {
-    const fileList: FileList = event.target.files;
-    if (fileList.length > 0) {
-      this.recordForm.patchValue({
-        attachments: fileList // Mettre à jour le champ de formulaire pour inclure les fichiers sélectionnés
-      });
-    }
-  }
-
-  
 }
 
   
@@ -166,7 +158,6 @@ export class MedicalnotebookFormComponent implements OnInit {
   
   
   
-
 
 
 

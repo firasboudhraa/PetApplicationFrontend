@@ -14,6 +14,8 @@ throw new Error('Method not implemented.');
 }
   
   carnetId!: number;
+  carnetname!: string;
+
   records: any[] = [];
 
   constructor(
@@ -23,6 +25,8 @@ throw new Error('Method not implemented.');
 
   ngOnInit(): void {
     this.carnetId = +this.route.snapshot.paramMap.get('id')!;
+    this.carnetname = this.route.snapshot.paramMap.get('name')!;
+
     this.loadMedicalRecords();
   }
 

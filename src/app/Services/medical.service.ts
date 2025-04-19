@@ -1,6 +1,6 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { forkJoin, map, Observable, switchMap } from 'rxjs';
+import { catchError, forkJoin, map, Observable, switchMap, throwError } from 'rxjs';
 import { Carnet } from '../models/carnet';
 import { FullCarnetResponse } from '../models/records';
 
@@ -34,10 +34,12 @@ export class MedicalService {
   createCarnet(carnet: any): Observable<any> {
     return this.http.post<any>(`${this.baseUrl}/add-carnet`, carnet);
   }
+  NewcreateMedicalRecord(record: any): Observable<any> {
+    return this.http.post<any>(`http://localhost:8071/api/medicalrecord/add-medicalRecord`, record);
+  }
   createMedicalRecord(record: any): Observable<any> {
     return this.http.post<any>(`${this.baseUrl1}/add-medicalRecord`, record);
   }
-
   
   
   /*getCarnetsWithRecords(): Observable<Carnet[]> {
@@ -87,12 +89,14 @@ export class MedicalService {
     return this.http.get<any>(`http://localhost:8070/api/carnet/record/${id}`);
   }
 
-  /** 🔹 Ajouter un record */
-  addRecord(record: any): Observable<any> {
-    return this.http.post(`${this.baseUrl}/records`, record);
-  }
-
-   
+ /*
+  addMedicalRecord(Record: any): Observable<Record<string, any>[]> {
+    // Ne pas définir le Content-Type manuellement, Angular le gère automatiquement avec FormData
+    return this.http.post<Record<string, any>[]>(`${this.baseUrl1}/add-medicalRecord`, Record);
+  }*/
+    addMedicalRecord(record: FormData): Observable<any> {
+      return this.http.post<Record<string, any>[]>(`${this.baseUrl1}/add-medicalRecord`, record)
+    }
   
  
   

@@ -67,6 +67,7 @@ navigateToMedicalNotebookStats() {
   
   
   
+  
   ngOnInit(): void {
     this.id=this.act.snapshot.params['id']
     console.log(this.id)
@@ -183,6 +184,7 @@ navigateToMedicalNotebookStats() {
           carnet_id: item.carnet_id,
           poids: item.poids,
           nextDate: item.next_due_date ? new Date(item.next_due_date).toISOString() : '', // Add 'nextDate' property
+          imageUrl: item.imageUrl || '', // Add 'imageUrl' property with a default value
         })); // Stocker la réponse dans la variable
         console.log('Records médicaux récupérés testest:', this.medicalRecords); // Vérifiez que vous recevez la liste correcte
       },

@@ -10,6 +10,7 @@ date: string|number|Date;
   next_due_date: Date;
   carnet_id: string;
   poids: number;
+  imageUrl:string;
 }
 export { RecordTypeEnum };
 

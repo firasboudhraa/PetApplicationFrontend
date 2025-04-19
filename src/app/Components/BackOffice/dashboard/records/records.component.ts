@@ -31,7 +31,8 @@ export class RecordsComponent implements OnInit {
           next_due_date: item.next_due_date,
           carnet_id: item.carnet_id,
           poids: item.poids,
-          nextDate: item.next_due_date // Map 'next_due_date' to 'nextDate'
+          nextDate: item.next_due_date, // Map 'next_due_date' to 'nextDate'
+          imageUrl: item.imageUrl || '' // Add 'imageUrl' property with a default value
         })); // Stocker la réponse dans la variable
       },
       (error) => {

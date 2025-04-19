@@ -18,7 +18,8 @@ export class EditrecordComponent implements OnInit {
     date: '',
     type: RecordTypeEnum.VACCINATION,
     next_due_date: new Date(),
-    carnet_id: ''
+    carnet_id: '',
+    imageUrl: ''
   };
 
   constructor(
