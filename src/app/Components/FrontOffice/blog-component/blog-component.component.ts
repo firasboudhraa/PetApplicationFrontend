@@ -145,6 +145,20 @@ export class BlogComponentComponent implements OnInit {
     this.sortByDate('latest');
   }
 
+  showFilterDropdown = false;
+
+toggleFilterDropdown() {
+  this.showFilterDropdown = !this.showFilterDropdown;
+}
+
+applyFilter(filter: string) {
+  this.showFilterDropdown = false;
+  // Handle your sorting logic here
+  console.log('Selected filter:', filter);
+  // Possibly call a service or sort your posts array
+}
+
+
   goToPage(page: number): void {
     if (page >= 1 && page <= this.totalPages) {
       this.currentPage = page;

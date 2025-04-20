@@ -5,7 +5,7 @@
     <h2 class="post-title">{{ post.title }}</h2>
     <img [src]="'http://localhost:8082/posts/images/' + post.imageUrl" alt="Post Image" class="post-image" />
     <p class="post-content">{{ post.content }}</p>
-    <p class="post-author"><strong>Posted By :</strong> {{ authorName || 'Utilisateur inconnu' }} </p>
+    <p class="post-author"><strong>Posted By :</strong> {{ authorName }} </p>
   </div>
   <time [attr.datetime]="post.createdAt">
     📅 Posted At :{{ post.createdAt | date: 'medium' }} ,

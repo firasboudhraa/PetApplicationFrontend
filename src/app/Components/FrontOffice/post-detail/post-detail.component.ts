@@ -7,6 +7,8 @@ import { Post } from 'src/app/models/Post';
 import { Comment } from 'src/app/models/Comment';
 import { UserDTO } from 'src/app/models/userDTO';
 import { Router } from '@angular/router';
+import { ChangeDetectorRef } from '@angular/core';
+
 
 
 declare var google: any;  // Ensure Google Maps API types are loaded via @types/google.maps
@@ -42,7 +44,9 @@ export class PostDetailComponent implements OnInit, AfterViewInit {
     private postService: PostsService,
     private userService: UserService,
     private commentService: CommentService,
-    private router: Router
+    private router: Router,
+    private cdRef: ChangeDetectorRef  // Inject ChangeDetectorRef
+
   ) {}
 
   ngOnInit(): void {
@@ -144,11 +148,21 @@ export class PostDetailComponent implements OnInit, AfterViewInit {
     this.showLikesPopup = !this.showLikesPopup;
   }
 
-  // Dummy implementation for likeComment (to satisfy template calls)
+
   likeComment(commentId: number): void {
-    // Replace this with your actual logic for liking a comment.
-    console.log('Liking comment id:', commentId);
+    this.commentService.likeComment(commentId, this.userId).subscribe({
+      next: () => {
+        // Reload the comments to get the updated like count after the like action
+        const postId = this.post?.id; // Get the current post ID
+        if (postId) {
+          this.loadComments(postId); // Re-fetch the comments to reflect the updated data
+        }
+      },
+      error: (err) => console.error('Error liking comment:', err)
+    });
   }
+  
+  
 
   addComment(): void {
     const trimmedContent = this.newCommentContent.trim();
