@@ -74,14 +74,11 @@
       </button>
       
       <!-- Emoji Picker Popup -->
-     <!-- Emoji Picker Popup -->
 <div class="emoji-picker-popup" *ngIf="showEmojiPicker">
   <emoji-mart 
-    class="emoji-picker" 
     [emoji]="''" 
-    [style]="{ width: '100%', height: '100%' }" 
     [set]="'facebook'" 
-    [perLine]="11"
+    [perLine]="10"
     (emojiClick)="onSelectEmojis($event)">
   </emoji-mart>
 </div>

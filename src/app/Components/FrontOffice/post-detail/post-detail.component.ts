@@ -8,6 +8,7 @@ import { Comment } from 'src/app/models/Comment';
 import { UserDTO } from 'src/app/models/userDTO';
 import { Router } from '@angular/router';
 
+
 declare var google: any;  // Ensure Google Maps API types are loaded via @types/google.maps
 
 @Component({
@@ -224,17 +225,22 @@ export class PostDetailComponent implements OnInit, AfterViewInit {
       // Adjust the position based on the button's position
       popup.style.top = `${rect.top - popup.offsetHeight - 8}px`;  // 8px for margin
       popup.style.left = `${rect.left + rect.width / 2 - popup.offsetWidth / 2}px`;  // Center horizontally
+      
     }
   }
   
-
-@HostListener('document:click', ['$event'])
+  @HostListener('document:click', ['$event'])
 onClickOutside(event: Event) {
-    if (!(event.target as HTMLElement).closest('.emoji-picker-container') && 
-        !(event.target as HTMLElement).closest('.btn-emoji')) {
-        this.showEmojiPicker = false;
-    }
-}
+  if (!(event.target as HTMLElement).closest('.emoji-picker-popup')&&
+  !(event.target as HTMLElement).closest('.btn-emoji')){
+    this.showEmojiPicker=false;
+  }
+  }
+
+
+
+
+  
 
     showEmojis: boolean = false;// Ajoutez cette méthode pour gérer la sélection d'emoji
 

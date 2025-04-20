@@ -325,37 +325,46 @@ button:hover {
 }
 /* Style for the emoji button */
 .btn-emoji {
-  background-color: #ffffff;
+  background-color: #000000;
   border: 1px solid #81c784;
   border-radius: 50%;
-  font-size: 1.5rem;
+  font-size: 1rem;
   padding: 8px;
-  cursor: pointer;
   display: inline-flex;
   align-items: center;
   justify-content: center;
   transition: background-color 0.3s ease;
 }
 
+
 /* Style for the emoji picker popup */
 .emoji-picker-popup {
-  position: absolute;
-  z-index: 9999;
-  background-color: white;
-  border: 1px solid #ddd;
-  border-radius: 8px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-  top: 100%; /* Places it just below the button */
-  left: 50%; /* Center horizontally */
-  transform: translateX(-50%); /* Correct horizontal alignment */
-  margin-top: 8px; /* Optional: add some space above the picker */
-  max-width: 320px; /* Limit width */
-  max-height: 350px; /* Limit height */
-  overflow-y: auto; /* Allow vertical scrolling */
+  right: 0;
+  z-index: 1000;
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+  background: white;
+  border: 1px solid #e9ecef;
+  overflow: hidden;
+
+  /* Adjust the width and height to make the popup smaller */
+  width: 450px; /* Adjust the width to your preference */
+  height: 450px; /* Adjust the height to your preference */
+
+  /* Reduce padding and font size */
+  padding: 10px; /* Decrease padding */
+  font-size: 14px; /* Decrease font size */
+
+  /* Optional: Adjust the grid or layout to fit the smaller size */
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(30px, 1fr)); /* Adjust grid layout */
+  grid-gap: 5px; /* Adjust grid gap */
+
+  /* Add scrollbars if the content exceeds the size */
+  overflow-y: auto; /* Adds a vertical scrollbar if the content overflows */
+  overflow-x: auto; /* Adds a vertical scrollbar if the content overflows */
+  max-height: 100%; /* Ensures the height stays within the defined limit */
 }
 
-/* You can adjust the dimensions of the emoji picker */
-.emoji-picker {
-  width: 100%; /* Make the picker take the full width of its container */
-  height: 100%; /* Make the picker take the full height of its container */
-}
+
+

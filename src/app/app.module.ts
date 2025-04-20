@@ -22,6 +22,7 @@ import { PostsComponent } from './Components/BackOffice/dashboard/posts/posts.co
 import { GeminiChatComponent } from './Components/FrontOffice/gemini-chat/gemini-chat.component';
 import { PickerModule } from '@ctrl/ngx-emoji-mart';
 
+
 @NgModule({
   declarations: [
     AppComponent,
