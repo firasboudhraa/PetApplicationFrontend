@@ -39,16 +39,6 @@
     <div *ngIf="productForm.get('category')?.invalid && productForm.get('category')?.touched" class="text-danger">
       La catégorie est requise.
     </div>
-  
-    <!-- Affichage de la catégorie actuelle -->
-    <div class="form-group">
-
-    
-      <!-- Affichage de la catégorie actuelle -->
-      <p class="current-category mt-2">
-        Catégorie actuelle : <strong>{{ getCategoryLabel(productForm.get('category')?.value) }}</strong>
-      </p>
-    </div>
   </div>
 
   <!-- Stock disponible -->
@@ -69,14 +59,16 @@
     </div>
   </div>
 
-  <!-- Image -->
+  <!-- Aperçu de l'image -->
+  <div *ngIf="imagePreview" class="image-preview">
+    <p>Aperçu de l'image :</p>
+    <img [src]="imagePreview" alt="Aperçu" width="200" style="border-radius: 10px;" />
+  </div>
+
+  <!-- Sélectionner une nouvelle image -->
   <div class="form-group">
-    <label for="image">Image</label>
-    <input type="file" id="image" class="form-control" (change)="onFileSelected($event)" />
-    <div *ngIf="productForm.get('image')?.value" class="mt-2">
-      <p>Image actuelle :</p>
-      <img [src]="productForm.get('image')?.value" alt="Image du produit" class="img-thumbnail" style="max-width: 200px;" />
-    </div>
+    <label for="image">Sélectionner une nouvelle image</label>
+    <input type="file" id="image" class="form-control" (change)="onFileSelected($event)" accept="image/*" />
   </div>
 
   <!-- Boutons -->

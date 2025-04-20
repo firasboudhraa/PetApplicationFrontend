@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import { ProductServiceService } from '../../../Services/FrontOffice/product-service.service';
+import { ActivatedRoute, Router } from '@angular/router';
+import { ProductService } from '../../../Services/FrontOffice/product-service.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import Swal from 'sweetalert2'; // Importation de SweetAlert2
 
 @Component({
   selector: 'app-edit-product',
@@ -10,13 +11,15 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 })
 export class EditProductComponent implements OnInit {
   productForm: FormGroup;
-  productId !: number;
+  productId!: number;
   product: any;
+  imagePreview: string | ArrayBuffer | null = null;
 
   constructor(
     private route: ActivatedRoute,
-    private productService: ProductServiceService,
-    private fb: FormBuilder
+    private productService: ProductService,
+    private fb: FormBuilder,
+    private router: Router
   ) {
     this.productForm = this.fb.group({
       nom: ['', Validators.required],
@@ -38,8 +41,8 @@ export class EditProductComponent implements OnInit {
     this.productService.getProductById(this.productId).subscribe(
       (product) => {
         console.log('Produit récupéré:', product);
-        console.log('Valeur de product.category:', product.category); // Vérifiez la valeur ici
-  
+        console.log('Valeur de product.category:', product.category);
+
         const categoryMapping: { [key: string]: string } = {
           alimentation: 'cat1',
           accessoires: 'cat2',
@@ -47,18 +50,20 @@ export class EditProductComponent implements OnInit {
           sante: 'cat4',
           habitat: 'cat5'
         };
-  
+
         const mappedCategory = categoryMapping[product.category] || product.category;
-  
+
         this.productForm.patchValue({
           nom: product.nom,
           description: product.description,
           prix: product.prix,
-          category: mappedCategory, // Utilisez la catégorie mappée
+          category: mappedCategory,
           stock: product.stock,
           lowStockThreshold: product.lowStockThreshold,
-          image: product.imageUrl
+          image: ''
         });
+
+        this.imagePreview = `http://localhost:8011/api/products/images/${product.imageUrl}`;
       },
       (error) => {
         console.error('Erreur lors de la récupération du produit:', error);
@@ -66,11 +71,48 @@ export class EditProductComponent implements OnInit {
     );
   }
 
+  onFileSelected(event: Event): void {
+    const input = event.target as HTMLInputElement;
+    if (input.files && input.files.length > 0) {
+      const file = input.files[0];
+      this.productForm.patchValue({ image: file });
+  
+      const reader = new FileReader();
+      reader.onload = () => {
+        this.imagePreview = reader.result;
+      };
+      reader.readAsDataURL(file);
+    }
+  }
+
   onSubmit(): void {
     if (this.productForm.valid) {
-      this.productService.updateProduct(this.productId, this.productForm.value).subscribe(
-        (response) => {
-          alert('Produit mis à jour avec succès !');
+      const formValues = this.productForm.value;
+      const formData = new FormData();
+  
+      formData.append('nom', formValues.nom);
+      formData.append('description', formValues.description);
+      formData.append('prix', formValues.prix.toString());
+      formData.append('category', formValues.category);
+      formData.append('stock', formValues.stock.toString());
+      formData.append('quantity', formValues.lowStockThreshold.toString());
+  
+      if (formValues.image instanceof File) {
+        formData.append('image', formValues.image);
+      }
+  
+      this.productService.updateProduct(this.productId, formData).subscribe(
+        () => {
+          // SweetAlert2 popup de succès
+          Swal.fire({
+            icon: 'success',
+            title: 'Produit mis à jour avec succès !',
+            showConfirmButton: false,
+            timer: 1500 // Popup qui disparaît après 1,5 seconde
+          }).then(() => {
+            // Redirection vers la liste des produits après le succès
+            this.router.navigate(['/produit']);
+          });
         },
         (error) => {
           console.error('Erreur lors de la mise à jour du produit:', error);
@@ -79,26 +121,11 @@ export class EditProductComponent implements OnInit {
     }
   }
 
-  onFileSelected(event: Event): void {
-    const input = event.target as HTMLInputElement;
-    if (input.files && input.files.length > 0) {
-      const file = input.files[0];
-      const reader = new FileReader();
-      reader.onload = () => {
-        this.productForm.patchValue({ image: reader.result }); // Met à jour le champ image
-      };
-      reader.readAsDataURL(file);
-    }
-  }
-
   onCancel(): void {
-    // Redirige l'utilisateur vers la liste des produits ou une autre page
     window.history.back();
   }
 
-
   getCategoryLabel(categoryValue: string): string {
-    console.log('Valeur de categoryValue:', categoryValue); // Vérifiez la valeur ici
     const categoryLabels: { [key: string]: string } = {
       cat1: 'Alimentation',
       cat2: 'Accessoires',
@@ -106,8 +133,6 @@ export class EditProductComponent implements OnInit {
       cat4: 'Santé',
       cat5: 'Habitat'
     };
-  
     return categoryLabels[categoryValue] || 'Inconnue';
   }
-
 }

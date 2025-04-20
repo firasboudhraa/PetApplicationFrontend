@@ -1,0 +1,52 @@
+<div class="container mt-5" *ngIf="product">
+    <div class="row">
+      <!-- Colonne pour l'image -->
+      <div class="col-md-4">
+        <img [src]="'http://localhost:8011/api/products/images/' + product.imageUrl"
+             class="img-fluid"
+             alt="{{ product.nom }}">
+      </div>
+      
+      <!-- Colonne pour les détails du produit -->
+      <div class="col-md-8">
+        <div class="card product-card">
+          <div class="card-body">
+            <h3 class="card-title fw-bold">{{ product.nom }}</h3>
+            <p class="card-text">{{ product.description }}</p>
+            <p class="card-text"><strong>Categorie:</strong> {{ product.category }}</p>
+            <p class="card-text"><strong>{{ product.prix }} TND</strong></p>
+            <p class="card-text"><strong>Stock:</strong> {{ product.stock }}</p>
+            <p class="card-text"><strong>Quantité:</strong> {{ product.quantity }}</p>
+            
+            <!-- Champ pour entrer l'ID du panier -->
+            <div class="form-group">
+              <label for="basketId">ID du panier</label>
+              <input type="number" id="basketId" [(ngModel)]="basketId" class="form-control" placeholder="Entrez l'ID du panier">
+            </div>
+  
+            <!-- Actions CRUD -->
+            <div class="btn-group mt-2">
+                <button class="btn btn-success me-2" [routerLink]="['/edit-product', product.id_Product]">Modifier</button>
+                <button class="btn btn-danger me-2" (click)="deleteProduct()">Supprimer</button>
+                <button class="btn btn-warning me-2" (click)="addToBasket()">Ajouter au panier</button>
+              </div>
+              
+          </div>
+        </div>
+      </div>
+    </div>
+    <button class="btn btn-secondary" [routerLink]="['/produit']">Retour aux produits</button>
+
+  </div>
+  
+  <!-- Message de chargement -->
+  <div *ngIf="loading" class="text-center">
+    <p>Chargement en cours...</p>
+  </div>
+  
+  <!-- Message d'erreur -->
+  <div *ngIf="error" class="alert alert-danger">
+    {{ error }}
+  </div>
+<br>
+<br>  

@@ -15,6 +15,8 @@ import { ProduitComponent } from './Components/FrontOffice/produit/produit.compo
 import { FormulaireProduitComponent } from './Components/FrontOffice/formulaire-produit/formulaire-produit.component';
 import { BasketComponent } from './Components/FrontOffice/basket/basket.component';
 import { EditProductComponent } from './Components/FrontOffice/edit-product/edit-product.component';
+import { FormPaymentComponent } from './Components/FrontOffice/form-payment/form-payment.component';
+import { ProdDetailComponent } from './Components/FrontOffice/prod-detail/prod-detail.component';
 
 @NgModule({
   declarations: [
@@ -28,7 +30,9 @@ import { EditProductComponent } from './Components/FrontOffice/edit-product/edit
     ProduitComponent,
     FormulaireProduitComponent,
     BasketComponent,
-    EditProductComponent
+    EditProductComponent,
+    FormPaymentComponent,
+    ProdDetailComponent
   ],
   imports: [
     BrowserModule,

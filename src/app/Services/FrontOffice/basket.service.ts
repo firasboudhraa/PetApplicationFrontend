@@ -1,29 +1,22 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-
-export interface Basket {
-  id_Basket?: number;
-  dateCreation?: string;
-  statut: string;
-  total: number;
-  modePaiement: string;
-  dateValidation?: string;
-  dateModification?: string;
-  productIds: number[];
-}
+import{ Basket } from '../../models/basket'; 
 
 @Injectable({
   providedIn: 'root'
 })
-
 export class BasketService {
-  private baseUrl = 'http://localhost:8012/api/baskets';
+  private baseUrl = 'http://localhost:8013/api/baskets';
 
   constructor(private http: HttpClient) {}
 
   getAllBaskets(): Observable<Basket[]> {
     return this.http.get<Basket[]>(this.baseUrl);
+  }
+
+  getAllBasketsByUser(userId: number): Observable<Basket[]> {
+    return this.http.get<Basket[]>(`${this.baseUrl}/user/${userId}`);
   }
 
   getBasketById(id: number): Observable<Basket> {
@@ -42,12 +35,21 @@ export class BasketService {
     return this.http.delete<void>(`${this.baseUrl}/${id}`);
   }
 
-  clearBasket(id: number): Observable<Basket> {
-    return this.http.delete<Basket>(`${this.baseUrl}/${id}/clear`);
-  }
+    // Ajouter un produit au panier
+    addProductToBasket(basketId: number, productId: number): Observable<Basket> {
+      return this.http.post<Basket>(`${this.baseUrl}/${basketId}/add-product/${productId}`, {});
+    }
+  
+    // Supprimer un produit du panier
+    removeProductFromBasket(basketId: number, productId: number): Observable<Basket> {
+      return this.http.post<Basket>(`${this.baseUrl}/${basketId}/remove-product/${productId}`, {});
+    }
+  
+    // Vider le panier
+    clearBasket(basketId: number): Observable<Basket> {
+      return this.http.put<Basket>(`${this.baseUrl}/clear/${basketId}`, {});
+    }
 
-  // Nouvelle méthode pour supprimer un produit du panier
-  removeProductFromBasket(basketId: number, productId: number): Observable<void> {
-    return this.http.delete<void>(`${this.baseUrl}/${basketId}/products/${productId}`);
-  }
+
+    
 }

@@ -14,181 +14,148 @@
     transform: scale(1.1); /* Effet d'agrandissement au survol */
     color: #218838; /* Changer la couleur du vert lors du survol */
 }
-
-/* Style de la fenêtre du panier */
-.cart-window {
+  
+  .nav-item .btn-success:hover {
+    background-color: #2e7d32;
+    transform: scale(1.1);
+    box-shadow: 0 0 10px rgba(76, 175, 80, 0.4);
+  }
+  
+  /* --- Fenêtre du panier (slide-in) --- */
+  .cart-window {
     position: fixed;
-    top: 0;
-    right: 0;
-    width: 450px;
-    height: 100%;
-    background-color: white;
-    box-shadow: -2px 0 5px rgba(0, 0, 0, 0.5);
-    z-index: 999;
-    transform: translateX(100%); /* Initialement cachée à droite */
-    transition: transform 0.5s ease-in-out;
+    top: 70px;
+    right: -400px;
+    width: 320px;
+    max-height: 80vh;
+    background: #f1f8e9;
+    box-shadow: -4px 0 20px rgba(0, 0, 0, 0.1);
+    border-radius: 12px 0 0 12px;
+    transition: right 0.5s ease;
     overflow-y: auto;
-    display: flex;
-    flex-direction: column;
-}
-
-.cart-window.show {
-    transform: translateX(0); /* Fait glisser la fenêtre vers la gauche */
-}
-
-/* Entête dynamique du panier */
-.cart-window .cart-content {
+    z-index: 1050;
+  }
+  
+  /* Fenêtre visible */
+  .cart-window.show {
+    right: 0;
+  }
+  
+  /* Contenu du panier */
+  .cart-content {
     padding: 20px;
-    text-align: center;
-    background-color: white; /* Fond blanc */
-    color: #333; /* Texte en couleur sombre pour un bon contraste */
-    font-size: 12px;
-    border-top-left-radius: 8px;
-    border-top-right-radius: 8px;
-    animation: bounceIn 0.5s ease-out; /* Animation de rebond pour l'entête */
-    margin-bottom: 100px; /* Ajout d'une marge pour espacer l'entête des articles */
-}
-
-/* Animation pour l'entête */
-@keyframes bounceIn {
-    0% { transform: translateY(-100%); }
-    50% { transform: translateY(10px); }
-    100% { transform: translateY(0); }
-}
-
-/* Liste des articles du panier */
-.cart-items {
-    list-style-type: none;
+  }
+  
+  /* Titre Panier */
+  .cart-content h2 {
+    color: #2e7d32;
+    margin-bottom: 15px;
+    font-size: 24px;
+    border-bottom: 2px solid #a5d6a7;
+    padding-bottom: 5px;
+  }
+  
+  /* Liste des items */
+  .cart-items {
+    list-style: none;
     padding: 0;
-    margin-top: 40px; /* Réduire la marge supérieure pour mieux ajuster l'espacement */
-}
-
-.cart-items li {
+    margin: 0 0 20px 0;
+  }
+  
+  .cart-items li {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 15px;
-    transition: transform 0.3s ease-in-out;
-}
-
-.cart-items li:hover {
-    transform: scale(1.05); /* Effet d'agrandissement lors du survol des articles */
-}
-
-.cart-items img {
-    width: 50px;
-    height: 50px;
-    object-fit: cover;
-}
-
-.item-info {
-    flex-grow: 1;
-    margin-left: 15px;
-    text-align: left;
-    font-size: 11px; /* Taille de la police des articles réduite */
-    margin-right: 10px; /* Espacement à droite pour séparer le prix */
-}
-
-.cart-items .price {
-    font-size: 19px ;
-    font-family: 'Poppins';
-    color: #333 ;
-    margin-left: 15px ;
-}
-
-/* Appliquer la police Poppins aux noms des articles */
-.item-name {
-    font-family: 'Poppins', sans-serif; /* Nouvelle police */
-    font-size: 18px;
-    font-weight: bold;
-    color: #333;
-}
-
-.remove-item {
+    background: #e8f5e9;
+    border-radius: 8px;
+    padding: 10px;
+    margin-bottom: 10px;
+    transition: background 0.3s;
+  }
+  
+  .cart-items li:hover {
+    background: #c8e6c9;
+  }
+  
+  /* Nom de l'article */
+  .item-name {
+    font-size: 16px;
+    color: #33691e;
+  }
+  
+  /* Icône poubelle */
+  .remove-item i {
+    color: #c62828;
     cursor: pointer;
-    color: #dc3545; /* Rouge pour la poubelle */
-    font-size: 2rem; /* Augmenter la taille de l'icône de la poubelle */
-    transition: color 0.3s ease;
-}
-
-.remove-item:hover {
-    color: #a71d2a; /* Couleur plus foncée sur le survol */
-}
-
-.remove-item i {
-    margin-left: 30px;
-    font-size: 27px; /* Agrandir l'icône de la poubelle */
-    color: #dc3545; /* Rouge pour l'icône de poubelle */
-}
-
-.remove-item:hover i {
-    color: #a71d2a;
-}
-
-/* Conteneur des boutons */
-.cart-window .cart-content {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: flex-end; /* Positionner les boutons en bas */
-    padding: 20px;
-    text-align: center;
-    background-color: white; /* Fond blanc */
-    color: #333; /* Texte en couleur sombre pour un bon contraste */
-    font-size: 12px;
-    border-top-left-radius: 8px;
-    border-top-right-radius: 8px;
-    animation: bounceIn 0.5s ease-out; /* Animation de rebond pour l'entête */
-    margin-bottom: 0; /* Retirer la marge pour que les boutons soient en bas */
-}
-
-/* Style des boutons Fermer et Vider le panier */
-.clear-cart, .close-cart {
-    background: linear-gradient(135deg, #28a745, #218838); /* Dégradé de vert */
-    color: white;
+    transition: color 0.3s;
+  }
+  
+  .remove-item i:hover {
+    color: #b71c1c;
+  }
+  
+  /* Boutons */
+  .clear-cart,
+  .close-cart {
+    width: 100%;
+    padding: 10px 0;
+    margin-top: 10px;
     border: none;
-    padding: 10px 20px; /* Réduction du padding */
-    font-size: 16px; /* Réduction de la taille de la police */
-    border-radius: 30px; /* Forme arrondie moins prononcée */
-    cursor: pointer;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Ombre subtile */
-    transition: all 0.3s ease-in-out;
-    margin: 5px; /* Espacement de 5px entre les boutons */
-    width: auto; /* Ajustement à la taille du texte */
-    text-align: center;
-}
-
-/* Espacement entre les boutons */
-.cart-window .cart-content button {
-    margin-bottom: 5px; /* Légère marge entre les boutons */
-}
-
-/* Effet de survol */
-.clear-cart:hover, .close-cart:hover {
-    transform: translateY(-5px); /* Légère remontée au survol */
-    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2); /* Ombre plus marquée */
-    background: linear-gradient(135deg, #218838, #28a745); /* Inverser les couleurs au survol */
-}
-
-/* Effet lors du clic */
-.clear-cart:active, .close-cart:active {
-    transform: translateY(2px); /* Réduction au clic */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Ombre réduite */
-}
-
-/* Animation subtile sur l'hover */
-.clear-cart, .close-cart {
-    animation: buttonHover 0.3s ease-out;
-}
-
-@keyframes buttonHover {
-    0% {
-        transform: scale(1);
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 15px;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+  }
+  
+  .clear-cart {
+    background-color: #ef5350;
+    color: white;
+  }
+  
+  .clear-cart:hover {
+    background-color: #c62828;
+    transform: scale(1.02);
+  }
+  
+  .close-cart {
+    background-color: #81c784;
+    color: #1b5e20;
+  }
+  
+  .close-cart:hover {
+    background-color: #66bb6a;
+    transform: scale(1.02);
+  }
+  
+  /* Responsive adaptation */
+  @media (max-width: 768px) {
+    .cart-window {
+      width: 100%;
+      right: -100%;
+      border-radius: 0;
     }
-    50% {
-        transform: scale(1.05); /* Légère augmentation lors de l'animation */
+  
+    .cart-window.show {
+      right: 0;
     }
-    100% {
-        transform: scale(1);
-    }
-}
+  }
+
+  .close-cart.payment {
+    background-color: #2e7d32;
+    color: white;
+    font-weight: bold;
+    font-size: 16px;
+    border: none;
+    padding: 12px;
+    border-radius: 10px;
+    margin-top: 15px;
+    transition: background-color 0.3s ease, transform 0.2s;
+  }
+  
+  .close-cart.payment:hover {
+    background-color: #1b5e20;
+    transform: scale(1.03);
+    box-shadow: 0 0 10px rgba(46, 125, 50, 0.3);
+  }
+  
+  

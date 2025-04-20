@@ -1,133 +1,92 @@
-/* Container du formulaire */
-.product-form-container {
-    padding: 20px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-    border-radius: 10px;
-    background-color: #ffffff;
-    margin-top: 60px;
-    margin-bottom: 60px;
-    width: 100%;
-    max-width: 600px;
-    margin-left: auto;
-    margin-right: auto;
-    border: 1px solid #e0e0e0;
-}
-
-/* Icône de l'animal */
-.form-header {
-    text-align: center;
+form {
+    background-color: #f0fff4;
+    border: 2px solid #38a169;
+    border-radius: 12px;
+    padding: 30px;
+    box-shadow: 0 4px 12px rgba(56, 161, 105, 0.2);
+    max-width: 700px;
+    margin: 30px auto;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  }
+  
+  .form-group {
     margin-bottom: 20px;
-}
-
-.animal-icon {
-    font-size: 50px; /* Taille grande de l'emoji */
+  }
+  
+  label {
+    font-weight: 600;
+    color: #2f855a;
     display: block;
-    margin: 0 auto 10px; /* Centrer l'emoji et ajouter un espace en dessous */
-}
-
-/* Titre du formulaire */
-.form-header h2 {
-    font-size: 24px;
-    font-weight: bold;
-    color: #333;
-}
-
-/* Style des champs de saisie */
-.product-form-container input,
-.product-form-container select,
-.product-form-container textarea {
+    margin-bottom: 6px;
+  }
+  
+  input[type="text"],
+  input[type="number"],
+  textarea,
+  select {
     width: 100%;
-    padding: 12px 15px;
-    font-size: 16px;
+    padding: 10px 14px;
+    border: 2px solid #c6f6d5;
     border-radius: 8px;
-    border: 1px solid #ccc;
-    transition: all 0.3s ease;
-    margin-bottom: 20px;
-    background-color: #f9f9f9;
-    color: #333;
-}
-
-/* Style au focus (quand l'utilisateur clique sur un champ) */
-.product-form-container input:focus,
-.product-form-container select:focus,
-.product-form-container textarea:focus {
+    background-color: #ffffff;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  }
+  
+  input[type="text"]:focus,
+  input[type="number"]:focus,
+  textarea:focus,
+  select:focus {
+    border-color: #38a169;
     outline: none;
-    border-color: #007bff;
-    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
-    background-color: #ffffff;
-}
-
-/* Effet dynamique sur le label */
-.product-form-container .form-label {
-    font-weight: bold;
-    font-size: 14px;
-    color: #555;
-    margin-bottom: 5px;
-    display: block;
-}
-
-/* Boutons */
-button {
-    padding: 12px 25px;
-    font-size: 16px;
-    background-color: #007bff;
-    color: white;
-    border: none;
-    border-radius: 30px;
-    transition: background-color 0.3s ease, transform 0.3s ease;
-    cursor: pointer;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    margin-top: 10px;
-    margin-bottom: 20px;
-    display: block;
-    margin-left: auto;
-    margin-right: auto; /* Centrage du bouton */
-}
-
-button:hover {
-    background-color: #0056b3;
-    transform: scale(1.05);
-}
-
-button:focus-visible {
-    outline: 2px solid #0056b3;
-    outline-offset: 2px;
-}
-
-/* Animation sur les champs de formulaire */
-@keyframes inputFocus {
-    0% {
-        transform: translateY(10px);
-        opacity: 0;
-    }
-    100% {
-        transform: translateY(0);
-        opacity: 1;
-    }
-}
-
-.product-form-container input,
-.product-form-container select,
-.product-form-container textarea {
-    animation: inputFocus 0.3s ease-out;
-}
-
-/* Style des messages d'erreur */
-.text-danger {
-    color: #dc3545;
-    font-size: 14px;
-    margin-top: -10px;
-    margin-bottom: 10px;
-}
-
-/* Image d'aperçu */
-.img-thumbnail {
+    box-shadow: 0 0 0 3px rgba(72, 187, 120, 0.3);
+  }
+  
+  .text-danger {
+    color: #e53e3e;
+    font-size: 0.875rem;
+    margin-top: 5px;
+  }
+  
+  .current-category {
+    font-style: italic;
+    color: #276749;
+  }
+  
+  button {
+    padding: 10px 20px;
+    margin-right: 10px;
     border-radius: 8px;
-    border: 1px solid #ddd;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    border: none;
+  }
+  
+  .btn-primary {
+    background-color: #38a169;
+    color: white;
+  }
+  
+  .btn-primary:disabled {
+    background-color: #9ae6b4;
+    cursor: not-allowed;
+  }
+  
+  .btn-primary:hover:not(:disabled) {
+    background-color: #2f855a;
+  }
+  
+  .btn-secondary {
+    background-color: #e2e8f0;
+    color: #2d3748;
+  }
+  
+  .btn-secondary:hover {
+    background-color: #cbd5e0;
+  }
+  
+  img.img-thumbnail {
+    border-radius: 8px;
     margin-top: 10px;
-}
-
-/* Espacement entre le formulaire et le footer */
-.footer {
-    margin-top: 40px; /* Plus d'espace entre le formulaire et le footer */
-}
+    border: 2px solid #38a169;
+  }
+  

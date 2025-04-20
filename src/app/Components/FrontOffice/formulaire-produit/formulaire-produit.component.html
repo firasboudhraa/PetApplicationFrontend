@@ -1,4 +1,4 @@
-<form [formGroup]="productForm" (ngSubmit)="onSubmit()">
+<form [formGroup]="productForm" (ngSubmit)="onSubmit()" enctype="multipart/form-data">
   <div class="form-group">
     <label for="nom">Nom du produit</label>
     <input type="text" id="nom" class="form-control" formControlName="nom" />
@@ -18,11 +18,11 @@
     <label for="category">Catégorie</label>
     <select id="category" class="form-control" formControlName="category">
       <option value="">Choisir une catégorie</option>
-      <option value="cat1">Alimentation</option>
-      <option value="cat2">Accessoires</option>
-      <option value="cat3">Hygiène et soins</option>
-      <option value="cat4">Santé</option>
-      <option value="cat5">Habitat</option>
+      <option value="Alimentation">Alimentation</option>
+      <option value="Accessoires">Accessoires</option>
+      <option value="Hygiène et soins">Hygiène et soins</option>
+      <option value="Santé">Santé</option>
+      <option value="Habitat">Habitat</option>
     </select>
   </div>
 
@@ -32,16 +32,37 @@
   </div>
 
   <div class="form-group">
+    <label for="quantity">Quantité souhaitée</label>
+    <input 
+      type="number" 
+      id="quantity" 
+      class="form-control" 
+      formControlName="quantity" 
+      [min]="1" 
+      [max]="productForm.get('stock')?.value" 
+      required 
+    />
+  </div>
+
+  <div class="form-group">
     <label for="lowStockThreshold">Seuil d'alerte de stock</label>
     <input type="number" id="lowStockThreshold" class="form-control" formControlName="lowStockThreshold" />
   </div>
 
   <div class="form-group">
-    <label for="image">Image</label>
-    <input type="file" id="image" class="form-control" (change)="onFileSelected($event)" />
+    <label for="image">Image du produit</label>
+    <input type="file" id="image" class="form-control" (change)="onFileSelected($event)" accept="image/*" />
+    <div *ngIf="previewImage" class="mt-2">
+      <img [src]="previewImage" alt="Aperçu de l'image" class="img-thumbnail" style="max-height: 200px;">
+    </div>
   </div>
 
   <button type="submit" class="btn btn-primary" [disabled]="isLoading || productForm.invalid">
     {{ isLoading ? 'Ajout en cours...' : 'Ajouter le produit' }}
+  </button>
+
+   <!-- Bouton de retour aux produits -->
+   <button type="button" class="btn btn-secondary mt-3" (click)="onReturnToProducts()">
+    Retour aux produits
   </button>
 </form>
