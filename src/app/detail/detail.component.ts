@@ -9,6 +9,7 @@ import { ActivatedRoute } from '@angular/router';
   styleUrls: ['./detail.component.css']
 })
 export class DetailComponent implements OnInit {
+name: any;
 editRecord(arg0: any) {
 throw new Error('Method not implemented.');
 }
@@ -35,9 +36,9 @@ throw new Error('Method not implemented.');
   loadMedicalRecords() {
     this.medicalRecordService.getMedicalRecordsByCarnetId(this.carnetId).subscribe(data => {
       console.log('DATA REÇUE : ', data);
-      this.records = data.medicalRecords; // 👈 On récupère bien le tableau d'enregistrements
+      this.records = data.medicalRecords; // On suppose que les données renvoyées sont un tableau d'enregistrements
+      name:data.name;
     });
   }
-  
 
 }

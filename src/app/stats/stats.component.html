@@ -12,8 +12,8 @@
     </select>
   </div>
 
-  <!-- 📊 Graphique -->
-  <div *ngIf="lineChartData">
+  <!-- 📊 Graphique élargi -->
+  <div *ngIf="lineChartData" class="chart-card">
     <canvas baseChart
             [data]="lineChartData"
             [options]="lineChartOptions"
@@ -23,5 +23,29 @@
 
   <div *ngIf="!lineChartData && selectedCarnetId !== null" class="alert alert-info mt-4">
     Aucune donnée de poids disponible pour ce carnet.
+  </div>
+</div>
+
+<!-- 💬 Chat Messenger flottant -->
+<div class="chat-box" [class.minimized]="isChatMinimized">
+  <div class="chat-header" (click)="toggleChat()">
+    <span>🐾 Pet Chat Assistant</span>
+    <span class="toggle-icon">{{ isChatMinimized ? '▲' : '▼' }}</span>
+  </div>
+
+  <div class="chat-body" *ngIf="!isChatMinimized">
+    <div class="chat-messages">
+  <div *ngIf="isLoading" class="loading">Generating response...</div>
+  
+  <div *ngFor="let msg of responseHistory" class="chat-response">
+    {{ msg }}
+  </div>
+</div>
+
+
+    <div class="chat-input-container">
+      <input type="text" #userPrompt placeholder="Ask a question..." class="chat-input" />
+      <button (click)="askQuestion(userPrompt.value)" class="send-button">Send</button>
+    </div>
   </div>
 </div>

@@ -15,6 +15,7 @@ date: string|number|Date;
 export { RecordTypeEnum };
 
 export interface FullCarnetResponse {
+  records: any;
 id: any;
   name: string;
   medicalRecords: Record[];

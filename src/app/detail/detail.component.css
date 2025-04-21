@@ -43,3 +43,9 @@
 .btn:hover {
   background-color: #1565c0;
 }
+/* Redimensionner l'image */
+.record-image {
+  max-width: 450px;  /* Limite la largeur de l'image à 200px */
+  max-height: 350px; /* Limite la hauteur de l'image à 150px */
+  object-fit: contain; /* Assure que l'image est bien contenue sans déformation */
+}

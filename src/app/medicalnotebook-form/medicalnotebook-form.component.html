@@ -69,6 +69,7 @@
           L'ID du vétérinaire est obligatoire.
         </div>
       </div>
+      
 
       <div class="mb-3">
         <label>Date de suivi (optionnelle)</label>
@@ -87,9 +88,26 @@
           Veuillez sélectionner un carnet.
         </div>
       </div>
+      <div class="mb-3">
+        <label>Poids de l'animal (en kg)</label>
+        <input class="form-control" formControlName="poids" type="number" min="0" required />
+        <div *ngIf="recordForm.controls['poids'].invalid && recordForm.controls['poids'].touched" class="text-danger">
+          Le poids est obligatoire.
+        </div>
+      </div>
+      
+
+      <div class="mb-3">
+        <label for="imageUpload">Ajouter une image (optionnelle)</label>
+        <input
+          id="imageUpload"
+          type="file"
+          class="form-control"
+          (change)="onFileSelected($event)"
+        />
+      </div>
 
       <button type="submit" class="btn btn-primary" [disabled]="recordForm.invalid">➕ Ajouter Record</button>
     </fieldset>
   </form>
 
- 

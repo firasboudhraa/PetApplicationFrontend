@@ -26,6 +26,7 @@ import { FullCalendarModule } from '@fullcalendar/angular';
 import { EditrecordComponent } from './editrecord/editrecord.component';
 import { DetailComponent } from './detail/detail.component';
 import { RouterModule } from '@angular/router';
+import { ChatAIComponent } from './chat-ai/chat-ai.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -47,7 +48,8 @@ import { RouterModule } from '@angular/router';
     StatsComponent,
     AgendaComponent,
     EditrecordComponent,
-    DetailComponent
+    DetailComponent,
+    ChatAIComponent
   ],
   imports: [
     BrowserModule,

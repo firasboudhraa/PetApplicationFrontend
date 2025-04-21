@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Pet } from '../models/pet';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MedicalService } from '../Services/medical.service';
+import { cl } from '@fullcalendar/core/internal-common';
 
 @Component({
   selector: 'app-medicalnotebook-form',
@@ -23,7 +24,9 @@ export class MedicalnotebookFormComponent implements OnInit {
     { id: 3, name: 'Charlie', imagePath: 'assets/dog2.jpg', species: 'Chien', age: 5, color: 'Noir', sex: 'Mâle', ownerId: 103, description: 'Chien énergique et intelligent.', forAdoption: false, location: 'Marseille' },
     { id: 4, name: 'miomioe', imagePath: 'assets/dog2.jpg', species: 'chatton', age: 5, color: 'blanc', sex: 'Mâle', ownerId: 106, description: 'Chien énergique et intelligent.', forAdoption: false, location: 'Marseille' },
 
-  ];  id!: string; // ID du carnet ou record en cours d’édition
+  ];  
+  id!: string; // ID du carnet ou record en cours d’édition
+  selectedImage: File | null = null;
 
   constructor(
     private fb: FormBuilder,
@@ -49,7 +52,6 @@ export class MedicalnotebookFormComponent implements OnInit {
     this.carnetForm = this.fb.group({
       pet_id: ['', Validators.required] // Uniquement la sélection d'un animal
     });
-
     this.recordForm = this.fb.group({
       date: ['', Validators.required],
       type: ['', Validators.required],
@@ -57,8 +59,9 @@ export class MedicalnotebookFormComponent implements OnInit {
       veterinarian_id: ['', Validators.required],
       next_due_date: [''],
       carnet_id: ['', Validators.required],
-      attachments: [[]]
+      poids: ['', Validators.required] // ✅ Ajouté
     });
+    
   }
  
   saveCarnet(): void {
@@ -95,32 +98,52 @@ export class MedicalnotebookFormComponent implements OnInit {
 
   saveRecord(): void {
     if (this.recordForm.valid) {
-      // Récupération des valeurs du formulaire
-      const recordData = {
-        dateTime: this.recordForm.value.date,
-        type: this.recordForm.value.type,
-        description: this.recordForm.value.description,
-        veterinarian_id: this.recordForm.value.veterinarian_id,
-        next_due_date: this.recordForm.value.next_due_date,
-        carnetId: this.recordForm.value.carnet_id, // Sélection du carnet
+      const formData = new FormData();
+  
+      const formatDateTime = (date: any): string => {
+        if (!date) return '';
+        const d = new Date(date);
+        return isNaN(d.getTime()) ? '' : d.toISOString().slice(0, 19);
       };
   
-      // Appel à l'API pour ajouter un record médical
-      this.medicalService.createMedicalRecord(recordData).subscribe({
+      formData.append('dateTime', formatDateTime(this.recordForm.get('date')?.value));
+      formData.append('type', this.recordForm.get('type')?.value);
+      formData.append('description', this.recordForm.get('description')?.value);
+      formData.append('veterinarian_id', this.recordForm.get('veterinarian_id')?.value);
+      formData.append('nextDueDate', formatDateTime(this.recordForm.get('next_due_date')?.value));
+      formData.append('carnetId', this.recordForm.get('carnet_id')?.value);
+      formData.append('poids', this.recordForm.get('poids')?.value);
+  
+      // Ajoute un poids temporaire (à adapter selon ton formulaire ou ta logique)
+      formData.append('poids', '10'); // exemple
+  
+      if (this.selectedImage) {
+        formData.append('image', this.selectedImage); // <-- nom correct
+      }
+  
+      this.medicalService.createMedicalRecordWithFile(formData).subscribe({
         next: (response) => {
-          console.log('Record médical ajouté avec succès:', response);
+          console.log('Record médical ajouté avec succès :', response);
         },
-        error: (error) => {
-          console.error('Erreur lors de l\'ajout du record médical:', error);
+        error: (err) => {
+          console.error('Erreur complète :', err);
+          alert(`Erreur : ${err.error?.message || 'Vérifiez les champs'}`);
         }
       });
+    } else {
+      alert('Veuillez remplir tous les champs obligatoires');
     }
   }
   
-
-
   
-  
+  onFileSelected(event: Event): void {
+    const input = event.target as HTMLInputElement;
+    if (input.files && input.files.length > 0) {
+      this.selectedImage = input.files[0];
+      console.log('Image sélectionnée :', this.selectedImage);
+    }
+  }
+
   /** 🔹 Charger tous les carnets */
   loadCarnets(): void {
     this.medicalService.getAllCarnets().subscribe({
@@ -153,11 +176,11 @@ export class MedicalnotebookFormComponent implements OnInit {
   }
 }
 
-  
-  
-  
-  
-  
+
+
+
+
+
 
 
 

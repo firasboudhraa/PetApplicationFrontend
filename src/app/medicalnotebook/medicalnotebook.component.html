@@ -72,6 +72,7 @@
                   <p><strong>Description :</strong> {{ record.description }}</p>
                   <p><strong>Vétérinaire :</strong> {{ record.veterinarian_id || 'Non spécifié' }}</p>
                   <p><strong>Poids :</strong> {{ record.poids || 'Non spécifié' }}</p>
+                  
                   <button class="btn btn-sm btn-outline-warning mt-1" (click)="editRecord(record.id)">
                     ✏️ Modifier
                   </button>

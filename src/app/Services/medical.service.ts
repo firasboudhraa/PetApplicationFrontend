@@ -40,6 +40,10 @@ export class MedicalService {
   createMedicalRecord(record: any): Observable<any> {
     return this.http.post<any>(`${this.baseUrl1}/add-medicalRecord`, record);
   }
+
+  createMedicalRecordWithFile(record: FormData): Observable<any> {
+    return this.http.post<any>(`${this.baseUrl1}/New-add-medicalRecord`, record);
+  }
   
   
   /*getCarnetsWithRecords(): Observable<Carnet[]> {

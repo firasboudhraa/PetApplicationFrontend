@@ -13,6 +13,8 @@ import { StatsComponent } from './stats/stats.component';
 import { AgendaComponent } from './agenda/agenda.component';
 import { EditrecordComponent } from './editrecord/editrecord.component';
 import { DetailComponent } from './detail/detail.component';
+import { Chat } from 'openai/resources/chat';
+import { ChatAIComponent } from './chat-ai/chat-ai.component';
 
 const routes: Routes = [
   { path: 'home', component: HomeComponent },
@@ -25,6 +27,8 @@ const routes: Routes = [
   { path: 'agenda', component:AgendaComponent },
   {path :"editrecord/:id",component:EditrecordComponent},
   {path :"details/:id",component:DetailComponent},
+  {path :"chat",component:ChatAIComponent},
+
 
   {path:'dashboard', component:DashboardComponent,
     children:[
