@@ -1,5 +1,8 @@
 import { Pet } from "./pet";
-
+export interface UserRequestStatus {
+  userId: number;
+  status: string; 
+}
 export interface PetSittingOffer {
     id: number;
     price: number;
@@ -9,5 +12,6 @@ export interface PetSittingOffer {
     locationInLetters: string;
     offerType: string;
     amountPerDay: number | null; 
+    userRequestStatuses: UserRequestStatus[];
   }
   

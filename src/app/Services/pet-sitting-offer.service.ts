@@ -18,4 +18,7 @@ export class PetSittingOfferService {
   getAvailablePetSittingOffers(userId : number): Observable<PetSittingOffer[]> {
     return this.http.get<PetSittingOffer[]>(`${this.apiUrl}/AvailableOffers/${userId}`);
   }
+  requestPetSittingOffer(offerId: number, sitterId: number): Observable<any> {
+    return this.http.post<any>(`${this.apiUrl}/${offerId}/request/${sitterId}`,{});
+  }
 }

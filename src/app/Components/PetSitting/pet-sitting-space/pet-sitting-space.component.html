@@ -54,7 +54,11 @@
             <p class="offer-dates">
               <i class="fas fa-calendar-alt"></i><strong>From</strong>  {{ offer.startDate }} - <strong>To</strong>  {{ offer.endDate }}
             </p>
-            <button class="btn btn-primary" (click)="viewPetDetail(offer.pet)">Pet Details</button>
+            <div class="row g-1">
+              <button class="btn btn-primary" (click)="viewPetDetail(offer.pet)">Pet Details</button>
+              <button class="btn btn-success" *ngIf="isOfferSent(offer)" [disabled]="isOfferSent(offer)" >Offer Sent</button>
+              <button class="btn btn-success" *ngIf="!isOfferSent(offer)" (click)="sendOffer(offer.id)">Offer Sitting</button>
+            </div>
           </div>
         </div>
       </div>

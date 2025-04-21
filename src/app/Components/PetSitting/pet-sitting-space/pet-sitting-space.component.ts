@@ -3,6 +3,7 @@ import { Pet } from 'src/app/models/pet';
 import { PetSittingOffer } from 'src/app/models/petSittingOffer';
 import { GoogleMapsLoaderService } from 'src/app/Services/google-maps-loader.service';
 import { PetSittingOfferService } from 'src/app/Services/pet-sitting-offer.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-pet-sitting-space',
@@ -26,6 +27,7 @@ export class PetSittingSpaceComponent implements OnInit {
           isFlipped: false,
         }))
       );
+      console.log(this.offers);
     });
   }
   closeDetailModal(): void {
@@ -33,6 +35,9 @@ export class PetSittingSpaceComponent implements OnInit {
     this.renderer.removeClass(document.querySelector('app-navbar'), 'blur-effect');
     this.renderer.removeClass(document.querySelector('app-footer'), 'blur-effect');
     this.showDetailModal = false;
+  }
+  isOfferSent(offer: PetSittingOffer): boolean {
+    return offer.userRequestStatuses.some((status) => status.userId === this.userId );
   }
   calculateDays(startDate: string, endDate: string): number {
     const start = new Date(startDate);
@@ -62,5 +67,30 @@ export class PetSittingSpaceComponent implements OnInit {
     this.renderer.addClass(document.querySelector('.pet-sitting-space-container'), 'blur-effect');
     this.renderer.addClass(document.querySelector('app-navbar'), 'blur-effect');
     this.renderer.addClass(document.querySelector('app-footer'), 'blur-effect');
+  }
+  sendOffer(offerId: number): void {
+    this.petSittingOfferService.requestPetSittingOffer(offerId, this.userId).subscribe({
+      next: (response) => {
+        console.log('Offer sent successfully:', response);
+        Swal.fire({
+          icon: 'success',
+          title: 'Success',
+          text: 'Your pet sitting offer has been sent successfully!',
+          confirmButtonText: 'OK',
+        }).then(() => {
+        //  this.offers = this.offers.filter((offer) => offer.id !== offerId);
+        });
+      },
+      error: (error) => {
+        console.log('Error sending offer:', error);
+        Swal.fire({
+          icon: 'error',
+          title: 'Error',
+          text: 'An error occurred while sending the pet sitting offer. Please try again later.',
+          confirmButtonText: 'OK',
+        });
+        console.error('Error sending offer:', error);
+      },
+    });
   }
 }
