@@ -27,13 +27,14 @@ export class PostDetailComponent implements OnInit, AfterViewInit {
   showLikesPopup: boolean = false;
   newCommentContent: string = '';
   reportedComments: Set<Comment> = new Set<Comment>();
+  
 
   userId: number = 2; // Replace with dynamic user ID
 
   // Map-related properties
   latitude: number | null = null;
   longitude: number | null = null;
-  zoom: number = 12;
+  zoom: number = 12.5;
   map!: google.maps.Map;
   marker!: google.maps.Marker;
   showEmojiPicker = false;
@@ -161,6 +162,7 @@ export class PostDetailComponent implements OnInit, AfterViewInit {
       error: (err) => console.error('Error liking comment:', err)
     });
   }
+
   
   
 
