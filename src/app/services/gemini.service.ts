@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { GoogleGenerativeAI } from '@google/generative-ai';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -10,7 +11,7 @@ export class GeminiService {
 
   constructor() {
     // Configuration initiale - EN PROD, utilisez des variables d'environnement
-    this.genAI = new GoogleGenerativeAI('AIzaSyDpzYkOOebvdY2pLKZwUm_uSkWR0OPqoZg');
+    this.genAI = new GoogleGenerativeAI(environment.apiGemini);
    
     // Configuration du modèle (version la plus stable)
     this.model = this.genAI.getGenerativeModel({

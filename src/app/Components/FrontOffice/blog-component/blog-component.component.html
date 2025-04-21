@@ -1,176 +1,169 @@
-<section class="home-blog bg-sand">
-  <div class="container-fluid px-0">
+  <section class="home-blog bg-sand">
+    <div class="container-fluid px-0">
 
-    <!-- Section Title -->
-    <div class="row justify-content-md-center">
-      <div class="col-xl-5 col-lg-6 col-md-8">
-        <div class="section-title text-center title-ex1">
-          <h2>Welcome to Our Community</h2>
-          <p>
-            Explore a variety of topics such as Help & Advice, Success Stories, and more. Interact with fellow members, share ideas, and stay connected!
-          </p>
+      <!-- Section Title -->
+      <div class="row justify-content-md-center">
+        <div class="col-xl-5 col-lg-6 col-md-8">
+          <div class="section-title text-center title-ex1">
+            <h2>Welcome to Our Community</h2>
+            <p>
+              Explore a variety of topics such as Help & Advice, Success Stories, and more. Interact with fellow members, share ideas, and stay connected!
+            </p>
+          </div>
         </div>
       </div>
-    </div>
-    <br>
+      <br>
 
-    <!-- Add Post Button -->
-    <div class="row justify-content-md-center">
-      <div class="col-md-4">
-        <a [routerLink]="'/add-post'" class="btn btn-add-post btn-lg btn-block shining-btn">
-          ➕ Add Post
-        </a>
+      <!-- Add Post Button -->
+      <div class="row justify-content-md-center">
+        <div class="col-md-4">
+          <a [routerLink]="'/add-post'" class="btn btn-add-post btn-lg btn-block shining-btn">
+            ➕ Add Post
+          </a>
+        </div>
       </div>
-    </div>
-    <br>
+      <br>
 
-    <!-- Search Filter Section (Left) + Search Bar (Right) -->
-    <div class="row">
-      <!-- Filter -->
-      <div class="col-md-5">
-        <form id="category-search-form">
-          <div class="form-group">
-            <label for="search-categories">Search by Category</label><br>
-            <div class="row">
-              <div class="col-6">
-                <div class="form-check">
-                  <input class="form-check-input" type="checkbox" value="HELP_ADVICE" id="helpAdvice" (change)="updateSelectedCategories($event)">
-                  <label class="form-check-label" for="helpAdvice">Help & Advice</label>
+      <!-- Search Filter Section (Left) + Search Bar (Right) -->
+      <div class="row">
+        <!-- Filter -->
+        <div class="col-md-5">
+          <form id="category-search-form">
+            <div class="form-group">
+              <label for="search-categories">Search by Category</label><br>
+              <div class="row">
+                <div class="col-6">
+                  <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="HELP_ADVICE" id="helpAdvice" (change)="updateSelectedCategories($event)">
+                    <label class="form-check-label" for="helpAdvice">Help & Advice</label>
+                  </div>
+                </div>
+                <div class="col-6">
+                  <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="LOST_FOUND" id="lostFound" (change)="updateSelectedCategories($event)">
+                    <label class="form-check-label" for="lostFound">Lost & Found</label>
+                  </div>
                 </div>
               </div>
-              <div class="col-6">
-                <div class="form-check">
-                  <input class="form-check-input" type="checkbox" value="LOST_FOUND" id="lostFound" (change)="updateSelectedCategories($event)">
-                  <label class="form-check-label" for="lostFound">Lost & Found</label>
+              <div class="row mt-2">
+                <div class="col-6">
+                  <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="SUCCESS_STORIES" id="successStories" (change)="updateSelectedCategories($event)">
+                    <label class="form-check-label" for="successStories">Success Stories</label>
+                  </div>
                 </div>
               </div>
             </div>
-            <div class="row mt-2">
-              <div class="col-6">
-                <div class="form-check">
-                  <input class="form-check-input" type="checkbox" value="SUCCESS_STORIES" id="successStories" (change)="updateSelectedCategories($event)">
-                  <label class="form-check-label" for="successStories">Success Stories</label>
-                </div>
+          </form>
+        </div>
+
+        <!-- Search + Sort -->
+        <div class="w-full flex justify-end mb-4 px-4 sm:px-6 lg:px-8">
+          <div class="relative inline-block text-left">
+            <!-- Filter by button with three vertical dots (ellipsis) -->
+            <button
+              (click)="toggleFilterDropdown()"
+              class="inline-flex items-center justify-center gap-2 rounded-xl border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+              aria-expanded="false"
+              aria-haspopup="true"
+            >
+              <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M6 12h12M6 6h12M6 18h12"></path>
+              </svg>
+            </button>
+        
+            <!-- Dropdown Menu -->
+            <div
+              *ngIf="showFilterDropdown"
+              class="absolute right-0 mt-2 w-48 origin-top-right rounded-xl bg-white shadow-lg ring-1 ring-black ring-opacity-5 z-20"
+            >
+              <div class="py-1">
+                <button
+                  (click)="applyFilter('latest')"
+                  class="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                >
+                  Latest
+                </button>
+                <button
+                  (click)="applyFilter('oldest')"
+                  class="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                >
+                  Oldest
+                </button>
+                <button
+                  (click)="applyFilter('most-liked')"
+                  class="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                >
+                  Most Liked
+                </button>
+                <button
+                  (click)="applyFilter('most-commented')"
+                  class="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                >
+                  Most Commented
+                </button>
               </div>
             </div>
           </div>
-        </form>
-      </div>
+        </div>
+        
 
-      <!-- Search + Sort -->
-      <div class="w-full flex justify-end mb-4 px-4 sm:px-6 lg:px-8">
-        <div class="relative inline-block text-left">
-          <!-- Filter by button -->
-          <button
-            (click)="toggleFilterDropdown()"
-            class="inline-flex items-center justify-center gap-2 rounded-xl border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500"
-          >
-            Filter by
-            <svg
-              class="w-4 h-4"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="2"
-              viewBox="0 0 24 24"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+      <!-- Posts -->
+      <section class="dark">
+        <div class="container py-4">
+
+          <article *ngFor="let post of filteredPosts; let i = index" class="postcard dark" [ngClass]="getCardColor(i)">
+            <a class="postcard__img_link" [routerLink]="['/post', post.id]">
+              <img [src]="'http://localhost:8082/posts/images/' + post.imageUrl" alt="Post Image" class="post-image" />
+            </a>
+            <div class="postcard__text">
+              <h1 class="postcard__title"><a [routerLink]="['/post', post.id]">{{ post.title }}</a></h1>
+              <div class="postcard__subtitle small">
+                <time [attr.datetime]="post.createdAt">
+                  📅 {{ post.createdAt | date:'EEE, MMM d, y' }}
+                </time>
+              </div>
+              <div class="postcard__bar"></div>
+              <div class="postcard__preview-txt">{{ post.content | slice:0:200 }}...</div>
+              <ul class="postcard__tagbox">
+                <li class="tag__item">👤 {{ userNames.get(post.userId) }}</li>
+                <li class="tag__item">🏷️ {{ formatCategory(post.type) }}</li>
+                <li class="tag__item">💬 {{ post.comments }} Comments</li>
+                <li class="tag__item">👍 {{ post.likes }} Likes</li>
+              </ul>
+            </div>
+          </article>
+
+          <!-- No Posts Message -->
+          <div *ngIf="filteredPosts.length === 0" class="col-md-12 text-center">
+            <p>No posts found matching your search.</p>
+          </div>
+
+          <!-- Pagination -->
+          <div class="pagination d-flex justify-content-center mt-4 align-items-center">
+            <button (click)="goToPage(1)" [disabled]="currentPage === 1" class="pagination__button pagination__first">
+              «
+            </button>
+            <button (click)="goToPage(currentPage - 1)" [disabled]="currentPage === 1" class="pagination__button pagination__prev">
+              ‹
+            </button>
+            <span class="pagination__page-info mx-3">{{ currentPage }} / {{ totalPages }}</span>
+            <button (click)="goToPage(currentPage + 1)" [disabled]="currentPage === totalPages" class="pagination__button pagination__next">
+              ›
+            </button>
+            <button (click)="goToPage(totalPages)" [disabled]="currentPage === totalPages" class="pagination__button pagination__last">
+              »
+            </button>
+          </div>
+
+          <!-- Scroll to Top -->
+          <button class="button scroll-top-btn" (click)="scrollToTop()" title="Go to top">
+            <svg class="svgIcon" viewBox="0 0 384 512">
+              <path d="M214.6 41.4c-12.5-12.5-32.8-12.5-45.3 0l-160 160c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L160 141.2V448c0 17.7 14.3 32 32 32s32-14.3 32-32V141.2L329.4 246.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3l-160-160z"></path>
             </svg>
           </button>
-      
-          <!-- Dropdown -->
-          <div
-            *ngIf="showFilterDropdown"
-            class="absolute right-0 mt-2 w-48 origin-top-right rounded-xl bg-white shadow-lg ring-1 ring-black ring-opacity-5 z-20"
-          >
-            <div class="py-1">
-              <button
-                (click)="applyFilter('latest')"
-                class="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-              >
-                Latest
-              </button>
-              <button
-                (click)="applyFilter('oldest')"
-                class="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-              >
-                Oldest
-              </button>
-              <button
-                (click)="applyFilter('most-liked')"
-                class="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-              >
-                Most Liked
-              </button>
-              <button
-                (click)="applyFilter('most-commented')"
-                class="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-              >
-                Most Commented
-              </button>
-            </div>
-          </div>
+
         </div>
-      </div>
-      
-      
+      </section>
 
-    <!-- Posts -->
-    <section class="dark">
-      <div class="container py-4">
-
-        <article *ngFor="let post of filteredPosts; let i = index" class="postcard dark" [ngClass]="getCardColor(i)">
-          <a class="postcard__img_link" [routerLink]="['/post', post.id]">
-            <img [src]="'http://localhost:8082/posts/images/' + post.imageUrl" alt="Post Image" class="post-image" />
-          </a>
-          <div class="postcard__text">
-            <h1 class="postcard__title"><a [routerLink]="['/post', post.id]">{{ post.title }}</a></h1>
-            <div class="postcard__subtitle small">
-              <time [attr.datetime]="post.createdAt">
-                📅 {{ post.createdAt | date:'EEE, MMM d, y' }}
-              </time>
-            </div>
-            <div class="postcard__bar"></div>
-            <div class="postcard__preview-txt">{{ post.content | slice:0:200 }}...</div>
-            <ul class="postcard__tagbox">
-              <li class="tag__item">👤 {{ userNames.get(post.userId) }}</li>
-              <li class="tag__item">🏷️ {{ formatCategory(post.type) }}</li>
-              <li class="tag__item">💬 {{ post.comments }} Comments</li>
-              <li class="tag__item">👍 {{ post.likes }} Likes</li>
-            </ul>
-          </div>
-        </article>
-
-        <!-- No Posts Message -->
-        <div *ngIf="filteredPosts.length === 0" class="col-md-12 text-center">
-          <p>No posts found matching your search.</p>
-        </div>
-
-        <!-- Pagination -->
-        <div class="pagination d-flex justify-content-center mt-4 align-items-center">
-          <button (click)="goToPage(1)" [disabled]="currentPage === 1" class="pagination__button pagination__first">
-            «
-          </button>
-          <button (click)="goToPage(currentPage - 1)" [disabled]="currentPage === 1" class="pagination__button pagination__prev">
-            ‹
-          </button>
-          <span class="pagination__page-info mx-3">{{ currentPage }} / {{ totalPages }}</span>
-          <button (click)="goToPage(currentPage + 1)" [disabled]="currentPage === totalPages" class="pagination__button pagination__next">
-            ›
-          </button>
-          <button (click)="goToPage(totalPages)" [disabled]="currentPage === totalPages" class="pagination__button pagination__last">
-            »
-          </button>
-        </div>
-
-        <!-- Scroll to Top -->
-        <button class="button scroll-top-btn" (click)="scrollToTop()" title="Go to top">
-          <svg class="svgIcon" viewBox="0 0 384 512">
-            <path d="M214.6 41.4c-12.5-12.5-32.8-12.5-45.3 0l-160 160c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L160 141.2V448c0 17.7 14.3 32 32 32s32-14.3 32-32V141.2L329.4 246.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3l-160-160z"></path>
-          </svg>
-        </button>
-
-      </div>
-    </section>
-
-  </div>
+    </div>
