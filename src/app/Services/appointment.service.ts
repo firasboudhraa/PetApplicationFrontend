@@ -30,4 +30,8 @@ private apiUrl = 'http://localhost:8222/api/appointments/';
     return this.http.get<any[]>(this.apiUrl + '/owner/' + idOwner);
   }
 
+  getNearestAppointmentByUserId(idOwner: number): Observable<any[]> {
+    return this.http.get<any[]>(this.apiUrl + '/nearest/' + idOwner);
+  }
+
 }

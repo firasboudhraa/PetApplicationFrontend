@@ -72,6 +72,7 @@
                       <th>Date</th>
                       <th>Reason</th>
                       <th>Status</th>
+                      <th>Time Remaining</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -85,6 +86,9 @@
                         <span class="badge badge-success status-badge">
                           <i class="bi bi-check-circle-fill me-1"></i> {{ item.appointment.status }}
                         </span>
+                      </td>
+                      <td>
+                        {{ remainingTimes[item.appointment.idAppointment] || 'Calculating...' }}
                       </td>
                     </tr>
                   </tbody>

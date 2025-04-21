@@ -20,6 +20,8 @@ export class SentAppointmentComponent {
   combinedConfirmed: { appointment: any; service: any }[] = [];
   combinedRejected: { appointment: any; service: any }[] = [];
   activeRequestId: string | null = null;
+  remainingTimes: { [id: number]: string } = {};
+ intervalRef: any;
   
   constructor(
     private appointmentService: AppointmentService,
@@ -29,8 +31,35 @@ export class SentAppointmentComponent {
 
   ngOnInit(): void {
     this.mapsLoader.load()
-      .then(() => this.fetchAppointments())
+      .then(() =>{ 
+        this.fetchAppointments();
+      this.startCountdown();
+     })
       .catch(error => console.error('Error loading Google Maps:', error));
+  }
+
+  startCountdown(): void {
+    this.intervalRef = setInterval(() => {
+      this.combinedConfirmed.forEach(item => {
+        const appointmentDate = new Date(item.appointment.dateAppointment).getTime();
+        const now = new Date().getTime();
+        const diff = appointmentDate - now;
+  
+        if (diff <= 0) {
+          this.remainingTimes[item.appointment.idAppointment] = 'Started';
+        } else {
+          const hours = Math.floor(diff / (1000 * 60 * 60));
+          const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+          const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+          this.remainingTimes[item.appointment.idAppointment] =
+            `${hours}h ${minutes}m ${seconds}s`;
+        }
+      });
+    }, 1000);
+  }
+
+  ngOnDestroy(): void {
+    clearInterval(this.intervalRef);
   }
 
   toggleMenu(requestId: string): void {

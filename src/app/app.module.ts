@@ -57,7 +57,7 @@ import { SentAppointmentComponent } from './Components/FrontOffice/PetService/us
     AppointmentDashboardComponent,
     ReceivedAppointmentComponent,
     UserAppointmentDashboardComponent,
-    SentAppointmentComponent
+    SentAppointmentComponent,
   ],
   imports: [
     BrowserModule,
