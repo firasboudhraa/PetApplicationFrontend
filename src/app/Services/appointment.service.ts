@@ -19,7 +19,10 @@ private apiUrl = 'http://localhost:8222/api/appointments/';
   }
 
   getAppointmentsByProviderId(providerId: number): Observable<any[]> {
-    return this.http.get<any[]>(this.apiUrl + '/service/' + providerId);
+    return this.http.get<any[]>(this.apiUrl + 'service/' + providerId);
+  }
+  createAppointment(appointment: any): Observable<any> {
+    return this.http.post<any>(this.apiUrl + 'addAppointment', appointment);
   }
 
   deleteAppointment(id: number): Observable<void> {
@@ -27,11 +30,11 @@ private apiUrl = 'http://localhost:8222/api/appointments/';
   }
 
   getAppointmentsByUserId(idOwner: number): Observable<any[]> {
-    return this.http.get<any[]>(this.apiUrl + '/owner/' + idOwner);
+    return this.http.get<any[]>(this.apiUrl + 'owner/' + idOwner);
   }
 
-  getNearestAppointmentByUserId(idOwner: number): Observable<any[]> {
-    return this.http.get<any[]>(this.apiUrl + '/nearest/' + idOwner);
+  updateAppoitnment(id: number, appointment: any): Observable<any> {
+    return this.http.put<any>(this.apiUrl + 'updateAppointment/' + id, appointment);
   }
 
 }

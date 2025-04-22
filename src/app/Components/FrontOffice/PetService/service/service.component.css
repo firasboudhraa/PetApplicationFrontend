@@ -1,6 +1,6 @@
 :root {
   --primary: #4caf50;
-  --dark: #1e1e2f;
+  --dark: #c1d7c5;
   --light: #f4f4f9;
   --accent: #ffcc00;
 }
@@ -50,10 +50,10 @@ body {
 }
 
 .service-card {
-  background-color: var(--dark);
-  color: var(--light);
+  background-color: rgba(228, 216, 216, 0.25);
+  color: black;
   border-radius: 16px;
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
+  box-shadow: 0 8px 20px rgba(68, 67, 67, 0.25);
   width: 320px;
   padding: 25px;
   transition: transform 0.3s ease, box-shadow 0.3s;
@@ -149,7 +149,7 @@ body {
 
 .fab {
   position: fixed;
-  bottom: 30px;
+  bottom: 100px;
   right: 30px;
   width: 60px;
   height: 60px;

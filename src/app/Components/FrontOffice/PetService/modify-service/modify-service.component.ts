@@ -37,10 +37,11 @@ export class ModifyServiceComponent {
     this.loading = true;
     const formData = { 
       ...this.serviceForm.value, 
-      idService: +this.Act.snapshot.params['id'],  // Convert id to a number
+      idService: +this.Act.snapshot.params['id'],  
       providerId: 1 
-    };    console.log('Form Data to Submit:',formData);
-    this.ps.updateService(formData).subscribe(
+    };
+    console.log('Form Data to Submit:',formData);
+    this.ps.updateService(this.id,formData).subscribe(
       () => {
         this.loading = false;
         this.serviceForm.reset();

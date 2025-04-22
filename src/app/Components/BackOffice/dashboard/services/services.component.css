@@ -260,3 +260,22 @@
     color: #0056b3;
   }
   
+
+/* Styling for the labels inside the modal */
+.swal2-label {
+  display: block;
+  font-size: 14px;
+  margin-bottom: 5px;
+  font-weight: 600;
+}
+
+/* Adjust the appearance of textareas */
+.swal2-textarea {
+  height: 100px;
+  resize: vertical;  /* Allow vertical resizing */
+}
+
+/* Add some padding to the inputs */
+.swal2-input, .swal2-textarea {
+  padding: 10px;
+}

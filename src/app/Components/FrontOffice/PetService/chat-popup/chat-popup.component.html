@@ -1,0 +1,38 @@
+
+
+<button class="chat-toggle" (click)="togglePopup()">
+    <lord-icon
+    src="https://cdn.lordicon.com/sxdpfsrn.json"
+    trigger="hover"
+    colors="primary:#121331,secondary:#9ce5f4,tertiary:#ebe6ef"
+    style="width:60px;height:60px">
+</lord-icon>  </button>
+<div class="chat-popup" *ngIf="showPopup">
+  <div class="chat-header">
+    <div class="title">
+      🐾 FureverBuddy Assistant
+    </div>
+    <button class="close-btn" (click)="closeChat()" title="Close Chat">
+      <i class="fas fa-times"></i>
+    </button>
+  </div>
+
+  <div class="chat-body">
+    <div *ngFor="let msg of messages" [ngClass]="msg.sender">
+      {{ msg.content }}
+    </div>
+    <div *ngIf="loading" class="loading">FureverBuddy Bot is thinking...</div>
+  </div>
+  
+  <div class="chat-input">
+    <input
+      [(ngModel)]="userInput"
+      (keydown.enter)="sendMessage()"
+      placeholder="Write a message..."
+      class="chat-input-field"
+    />
+    <button (click)="sendMessage()" class="chat-send-btn">
+      <i class="fas fa-paper-plane"></i>
+    </button>
+  </div>
+</div>

@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
 import { AppointmentService } from 'src/app/Services/appointment.service';
 import { GoogleMapsLoaderService } from 'src/app/Services/google-map-loader.service';
 import { PetServiceService } from 'src/app/Services/pet-service.service';
@@ -21,6 +20,12 @@ export class ReceivedAppointmentComponent {
 combinedRejected: { appointment: any; service: any }[] = [];
 allServices: any[] = [];
 activeRequestId: string | null = null;
+remainingTimes: { [id: number]: string } = {};
+intervalRef: any;
+
+  // Pagination variables
+  currentPage = 1;
+  itemsPerPage = 5;
 
 
 
@@ -28,13 +33,39 @@ activeRequestId: string | null = null;
     private appointmentService: AppointmentService,
     private petService: PetServiceService,
     private mapsLoader: GoogleMapsLoaderService,
-    private router: Router
   ) {}
 
   ngOnInit(): void {
     this.mapsLoader.load()
-      .then(() => this.fetchAppointments())
+      .then(() =>{ 
+        this.fetchAppointments();
+      this.startCountdown();
+     })
       .catch(error => console.error('Error loading Google Maps:', error));
+  }
+
+  startCountdown(): void {
+    this.intervalRef = setInterval(() => {
+      this.combinedConfirmed.forEach(item => {
+        const appointmentDate = new Date(item.appointment.dateAppointment).getTime();
+        const now = new Date().getTime();
+        const diff = appointmentDate - now;
+  
+        if (diff <= 0) {
+          this.remainingTimes[item.appointment.idAppointment] = 'Started';
+        } else {
+          const hours = Math.floor(diff / (1000 * 60 * 60));
+          const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+          const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+          this.remainingTimes[item.appointment.idAppointment] =
+            `${hours}h ${minutes}m ${seconds}s`;
+        }
+      });
+    }, 1000);
+  }
+
+  ngOnDestroy(): void {
+    clearInterval(this.intervalRef);
   }
   // Toggle the FAB menu visibility
   toggleMenu(requestId: string): void {
@@ -180,32 +211,6 @@ activeRequestId: string | null = null;
       position: 'top',
       toast: true
     });
-  }  
-
-  deleteAppointment(id: number): void {
-    this.appointmentService.deleteAppointment(id).subscribe(() => {
-      Swal.fire({
-        icon: 'success',
-        title: 'Deleted!',
-        text: 'Appointment removed successfully.',
-        toast: true,
-        position: 'top',
-        timer: 3000,
-        showConfirmButton: false
-      });
-      this.fetchAppointments();
-    }, () => {
-      Swal.fire({
-        icon: 'error',
-        title: 'Error',
-        text: 'Failed to delete appointment.',
-        toast: true,
-        position: 'top',
-        timer: 3000,
-        showConfirmButton: false
-      });
-    });
-  }
-  
+  }    
 
 }

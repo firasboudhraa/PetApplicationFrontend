@@ -99,17 +99,29 @@
               data-bs-toggle="dropdown"
               aria-haspopup="true"
               aria-expanded="false"
+              (click)="openNotifications()"
             >
               <i class="fa fa-bell"></i>
+              <!-- Display the number of notifications dynamically -->
+              <span class="notification">{{ unreadCount }}</span>
             </a>
-            <ul
-              class="dropdown-menu notif-box animated fadeIn"
-              aria-labelledby="notifDropdown"
-            >
+            <ul class="dropdown-menu notif-box animated fadeIn" aria-labelledby="notifDropdown">
+              <li>
+                <div class="dropdown-title">
+                  You have {{ unreadCount }} new notifications
+                </div>
+              </li>
               <li>
               </li>
+              <li>
+                <a class="see-all" href="javascript:void(0);">
+                  See all notifications
+                  <i class="fa fa-angle-right"></i>
+                </a>
+              </li>
             </ul>
-          </li>
+          </li>                    
+          
           <li class="nav-item topbar-icon dropdown hidden-caret">
             <a
               class="nav-link"

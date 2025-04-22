@@ -39,7 +39,7 @@
       <h3 class="title">{{ service.name }}</h3>
 
       <div class="info">
-        <p><i class="fa fa-dollar-sign"></i> <strong>Price:</strong> {{ service.price | currency }}</p>
+        <p><i class="fa fa-credit-card"></i> <strong>Price:</strong> {{ service.price  }} TND</p>
         <p><i class="fa fa-clock"></i> <strong>Duration:</strong> {{ service.durationInMinutes }} min</p>
         <p *ngIf="service.address"><i class="fa fa-map-marker-alt"></i> <strong>Location:</strong> {{ service.address }}</p>
       </div>

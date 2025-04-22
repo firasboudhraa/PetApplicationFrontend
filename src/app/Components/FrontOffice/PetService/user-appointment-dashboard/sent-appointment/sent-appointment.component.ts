@@ -125,6 +125,99 @@ export class SentAppointmentComponent {
       });
   }
 
+  updateAppointment(item: any): void {
+    // Fetch the service name based on idService before opening Swal
+    this.petService.getServiceById(item.appointment.idService).subscribe(service => {
+      const serviceName = service.name; // The name of the service
+  
+      Swal.fire({
+        title: 'Edit Appointment',
+        html: `
+          <div class="swal2-input-container mb-4">
+            <label for="swal-date" class="text-gray-700 font-medium">Date:</label>
+            <input id="swal-date" class="swal2-input border-2 rounded-lg p-2 w-full mb-4 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all" 
+              type="datetime-local" value="${new Date(item.appointment.dateAppointment).toISOString().slice(0, 16)}">
+          </div>
+  
+          <div class="swal2-input-container mb-4">
+            <label for="swal-reason" class="text-gray-700 font-medium">Reason:</label>
+            <input id="swal-reason" class="swal2-input border-2 rounded-lg p-2 w-full mb-4 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all" 
+              value="${item.appointment.reason || ''}" placeholder="Reason">
+          </div>
+  
+          <div class="swal2-input-container mb-4">
+            <label for="swal-idPet" class="text-gray-700 font-medium">Pet ID:</label>
+            <input id="swal-idPet" class="swal2-input border-2 rounded-lg p-2 w-full mb-4 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all" 
+              type="number" value="${item.appointment.idPet}">
+          </div>
+  
+          <div class="swal2-input-container mb-4">
+            <label for="swal-service" class="text-gray-700 font-medium">Service:</label>
+            <input id="swal-service" class="swal2-input border-2 rounded-lg p-2 w-full mb-4 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all" 
+              value="${serviceName}" readonly>
+          </div>
+        `,
+        showCancelButton: true,
+        confirmButtonText: 'Update',
+        focusConfirm: false,
+        preConfirm: () => {
+          const date = (document.getElementById('swal-date') as HTMLInputElement).value;
+          const reason = (document.getElementById('swal-reason') as HTMLInputElement).value;
+          const idPet = +(document.getElementById('swal-idPet') as HTMLInputElement).value;
+  
+          if (!date || !reason ||  !idPet ) {
+            Swal.showValidationMessage('Please fill in all fields');
+            return;
+          }
+  
+          return { 
+            date,
+            reason,
+            idVet: item.appointment.idVet,
+            idPet,
+            idOwner: item.appointment.idOwner,
+            idService: item.appointment.idService
+            };
+        }
+      }).then(result => {
+        if (result.isConfirmed && result.value) {
+          const updatedAppointment = {
+            dateAppointment: result.value.date,
+            reason: result.value.reason,
+            idVet: result.value.idVet,
+            idPet: result.value.idPet,
+            idOwner: result.value.idOwner,
+            idService: item.appointment.idService // Maintain the original service ID
+          };
+  
+          const id = item.appointment.idAppointment;
+  
+          this.appointmentService.updateAppoitnment(id, updatedAppointment)
+            .subscribe(() => {
+              Swal.fire({
+                icon: 'success',
+                title: 'Updated!',
+                text: 'Appointment updated successfully.',
+                timer: 4000,
+                toast: true,
+                position: 'top-end',
+                showConfirmButton: false
+              });
+              this.fetchAppointments(); // Refresh the list
+            }, error => {
+              Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: 'Failed to update appointment.'
+              });
+            });
+        }
+      });
+    });
+  }
+  
+  
+
   deleteAppointment(id: number): void {
     this.appointmentService.deleteAppointment(id).subscribe(() => {
       Swal.fire({

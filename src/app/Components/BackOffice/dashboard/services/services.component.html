@@ -4,6 +4,9 @@
     <i class="fa fa-home"></i> > Services
   </h1>
 
+  <!-- Add Service Button -->
+  <button class="mr-5 btn btn-primary" (click)="openAddServiceForm()">Add Service</button>
+
   <!-- Services Table -->
   <div class="services-container">
     <table class="services-table">
@@ -13,12 +16,13 @@
           <th>Price</th>
           <th>Duration</th>
           <th>Location</th>
+          <th>Actions</th>
         </tr>
       </thead>
       <tbody>
         <tr *ngFor="let service of services.slice((currentPage - 1) * pageSize, currentPage * pageSize)">
           <td><i class="fa fa-paw"></i> {{ service.name }}</td>
-          <td>{{ service.price | currency }}</td>
+          <td>{{ service.price }} TND</td>
           <td>{{ service.durationInMinutes }} min</td>
           <td>
             <span *ngIf="service.address">
@@ -30,10 +34,15 @@
             <button *ngIf="service.address" class="btn-map" (click)="serviceClicked(service)">
               <i class="fa fa-map"></i>
             </button>
+            <button class="btn btn-warning" (click)="openEditServiceForm(service)">
+              <i class="fa fa-pencil-alt"></i>
+            </button>
+            <button class="btn btn-danger" (click)="deleteService(service.idService)">
+              <i class="fa fa-trash"></i>
+            </button>
           </td>
         </tr>
       </tbody>
-      
     </table>
   </div>
 </div>

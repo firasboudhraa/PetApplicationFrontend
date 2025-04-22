@@ -18,7 +18,7 @@
           <div class="grid grid-cols-2 gap-5 text-center mb-5">
             <div class="bg-gray-100 p-3 rounded-lg shadow">
               <h4 class="text-lg font-semibold text-gray-800">💰 Price</h4>
-              <p class="text-gray-600">{{ service.price | currency }}</p>
+              <p class="text-gray-600">{{ service.price }}TND</p>
             </div>
             <div class="bg-gray-100 p-3 rounded-lg shadow">
               <h4 class="text-lg font-semibold text-gray-800">⏳ Duration</h4>
@@ -33,22 +33,19 @@
           </div>
 
           <!-- Location and Map Section -->
-        <div class="mt-6">
-          <div class="flex justify-between items-center">
+          <div class="mt-6 flex items-center">
+            <!-- Loader positioned first, followed by Location text -->
+            <div class="loader cursor-pointer mr-3" (click)="openMap()" title="View on Map"></div>
             <p class="text-gray-700 font-medium">📍 Location: {{ service.address }}</p>
-            <button class="text-sm bg-red-100 text-red-600 hover:bg-red-200 px-3 py-1 rounded-md" (click)="openMap()">
-              <i class="fa fa-map-marker mr-1"></i> View on Map
-            </button>
           </div>
           <div id="map" class="mt-4 rounded-lg shadow" style="height: 250px;" *ngIf="mapOpened"></div>
-        </div>
 
           <!-- Available Slots -->
-           <div class="text-center">
-          <button  class="btn btn-primary" [routerLink]="['/full-calendar',service.idService]">
-            View Available Times
-          </button>
-        </div>
+          <div class="text-center">
+            <button class="btn btn-primary" [routerLink]="['/full-calendar',service.idService]">
+              View Available Times
+            </button>
+          </div>
         </div>
       </div>
     </div>

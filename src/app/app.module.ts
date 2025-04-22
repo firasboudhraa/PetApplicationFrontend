@@ -32,6 +32,8 @@ import { AppointmentDashboardComponent } from './Components/FrontOffice/PetServi
 import { ReceivedAppointmentComponent } from './Components/FrontOffice/PetService/appointment-dashboard/received-appointment/received-appointment.component';
 import { UserAppointmentDashboardComponent } from './Components/FrontOffice/PetService/user-appointment-dashboard/user-appointment-dashboard.component';
 import { SentAppointmentComponent } from './Components/FrontOffice/PetService/user-appointment-dashboard/sent-appointment/sent-appointment.component';
+import { ChatPopupComponent } from './Components/FrontOffice/PetService/chat-popup/chat-popup.component';
+import { DatePipe } from '@angular/common'; 
 @NgModule({
   declarations: [
     AppComponent,
@@ -58,6 +60,7 @@ import { SentAppointmentComponent } from './Components/FrontOffice/PetService/us
     ReceivedAppointmentComponent,
     UserAppointmentDashboardComponent,
     SentAppointmentComponent,
+    ChatPopupComponent,
   ],
   imports: [
     BrowserModule,
@@ -77,7 +80,7 @@ import { SentAppointmentComponent } from './Components/FrontOffice/PetService/us
 
   ],
 
-  providers: [PetServiceService],
+  providers: [PetServiceService, DatePipe],
   bootstrap: [AppComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })

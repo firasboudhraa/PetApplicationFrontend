@@ -55,18 +55,14 @@
                         <div *ngIf="activeRequestId === item.appointment.idAppointment" class="fab-menu">
                           <!-- Confirm Button (Green) -->
                           <button mat-mini-fab class="top" color="primary" (click)="confirmAppointment(item.appointment.idAppointment)" matTooltip="Confirm" matTooltipPosition="right" style="background-color: #28a745; color: #fff;">
-                            <mat-icon>check</mat-icon>
+                            <mat-icon>confirm</mat-icon>
                           </button>
   
                           <!-- Reject Button (Red) -->
                           <button mat-mini-fab class="left" color="warn" (click)="rejectAppointment(item.appointment.idAppointment)" matTooltip="Reject" matTooltipPosition="right" style="background-color: #dc3545; color: #fff;">
                             <mat-icon>cancel</mat-icon>
                           </button>
-  
-                          <!-- Delete Button (Red) -->
-                          <button mat-mini-fab class="right" color="accent" (click)="deleteAppointment(item.appointment.idAppointment)" matTooltip="Delete" matTooltipPosition="right" style="background-color: #ffc107; color: #000;">
-                            <mat-icon>delete</mat-icon>
-                          </button>
+
                         </div>
                       </td>
                     </tr>
@@ -90,6 +86,7 @@
                       <th>Date</th>
                       <th>Reason</th>
                       <th>Status</th>
+                      <th>Time Remaining</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -103,6 +100,9 @@
                         <span class="badge badge-success status-badge">
                           <i class="bi bi-check-circle-fill me-1"></i> {{ item.appointment.status }}
                         </span>
+                      </td>
+                      <td>
+                        {{ remainingTimes[item.appointment.idAppointment] || 'Calculating...' }}
                       </td>
                     </tr>
                   </tbody>

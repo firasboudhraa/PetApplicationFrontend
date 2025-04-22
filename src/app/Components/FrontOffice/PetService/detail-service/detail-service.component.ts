@@ -44,55 +44,6 @@ export class DetailServiceComponent {
       }
     );
   }
-  bookAppointment(serviceId : number) {
-    const user = localStorage.getItem('user');
-
-    if (user) {
-      this.router.navigate(['/appointment', serviceId]);
-    } else {
-      Swal.fire({
-        title: '🔒 Access Restricted!',
-        html: `
-          <div style="font-size: 16px; font-weight: 500; color: #fff;">
-            You must be logged in to access this page.
-          </div>
-          <br>
-        `,
-        icon: 'warning',
-        position: 'center',
-        background: 'linear-gradient(135deg, #00c853, #1b5e20)',  
-        color: '#ffffff',
-        confirmButtonText: '🔑 Login Now',
-        showCancelButton: true,
-        cancelButtonText: '❌ Maybe Later',
-        customClass: {
-          popup: 'swal2-border-radius', 
-          confirmButton: 'swal2-confirm-button',
-          cancelButton: 'swal2-cancel-button'
-        },
-        allowOutsideClick: false,
-        showClass: {
-          popup: 'animate__animated animate__zoomIn'  
-        },
-        hideClass: {
-          popup: 'animate__animated animate__zoomOut'
-        }
-      }).then((result) => {
-        if (result.isConfirmed) {
-          this.router.navigate(['/login']);
-        }
-      });
-    }
-  }
-
-  deleteService(id :number){
-    this.ps.deleteService(id).subscribe(
-      ()=> {
-        this.ngOnInit()
-        this.router.navigate(['/services'])
-      }
-    )
-  }
 
   openMap() {
     if (!this.service.address){

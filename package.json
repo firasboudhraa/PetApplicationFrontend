@@ -28,7 +28,9 @@
     "@fullcalendar/timegrid": "^6.1.15",
     "@googlemaps/js-api-loader": "^1.16.8",
     "@ionic/angular": "^8.5.2",
+    "@stomp/stompjs": "^7.1.1",
     "@types/google.maps": "^3.58.1",
+    "@types/sockjs-client": "^1.5.4",
     "angular-calendar": "^0.31.1",
     "aos": "^2.3.4",
     "bootstrap": "^5.3.3",
@@ -42,10 +44,12 @@
     "primeicons": "^7.0.0",
     "primeng": "^19.0.10",
     "rxjs": "~7.8.0",
+    "sockjs-client": "^1.6.1",
     "sweetalert2": "^11.17.2",
     "timepicker": "^1.14.1",
     "tslib": "^2.3.0",
     "uninstall": "^0.0.0",
+    "uuid": "^11.1.0",
     "zone.js": "~0.13.0"
   },
   "devDependencies": {

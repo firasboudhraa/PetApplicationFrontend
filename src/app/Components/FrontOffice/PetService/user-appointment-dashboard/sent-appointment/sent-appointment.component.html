@@ -46,10 +46,27 @@
                         </span>
                       </td>
                       <td>
+                        <button mat-fab color="primary" (click)="toggleMenu(item.appointment.idAppointment)" matTooltip="Actions" matTooltipPosition="right">
+                          <mat-icon>add</mat-icon>
+                        </button>
+                        
+                        <!-- FAB Menu -->
+                        <div *ngIf="activeRequestId === item.appointment.idAppointment" class="fab-menu">
+                        <!-- FAB Button -->
+                                               
+                        <button mat-mini-fab
+                            color="warn"
+                            matTooltip="Update"
+                            matTooltipPosition="right"
+                            style="background-color: #dc3545; color: #fff;"
+                            (click)="updateAppointment(item)">
+                          <mat-icon>edit</mat-icon>
+                          </button>
                           <!-- Delete Button (Red) -->
                           <button mat-mini-fab class="right" color="accent" (click)="deleteAppointment(item.appointment.idAppointment)" matTooltip="Delete" matTooltipPosition="right" style="background-color: #ffc107; color: #000;">
                             <mat-icon>delete</mat-icon>
                           </button>
+                          </div>
                       </td>
                     </tr>
                   </tbody>
