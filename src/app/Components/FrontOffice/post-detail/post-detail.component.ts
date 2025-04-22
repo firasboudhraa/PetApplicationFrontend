@@ -168,17 +168,18 @@ export class PostDetailComponent implements OnInit, AfterViewInit {
 
   addComment(): void {
     const trimmedContent = this.newCommentContent.trim();
-    if (trimmedContent) {
+    if (trimmedContent && this.post?.id) {
       const commentData = { content: trimmedContent };
-      this.commentService.addComment(this.post?.id ?? 0, this.userId, commentData).subscribe({
-        next: (response: Comment) => {
-          this.comments.push(response);
+      this.commentService.addComment(this.post.id, this.userId, commentData).subscribe({
+        next: () => {
           this.newCommentContent = '';
+          this.loadComments(this.post!.id); // 👈 Re-fetch all comments after adding
         },
         error: (error) => console.error('Error adding comment:', error)
       });
     }
   }
+  
 
   likePost(postId: number): void {
     this.postService.likePost(postId, this.userId).subscribe({
