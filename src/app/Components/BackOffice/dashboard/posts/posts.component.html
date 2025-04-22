@@ -51,12 +51,15 @@
         </li>
       </ul>
     </div>
+    
 
     <ng-template #noComments>
       <p>Aucun commentaire pour ce post.</p>
     </ng-template>
   </div>
 </div>
+
+<button class="btn btn-primary" (click)="generatePdf()">Download PDF</button>
 
 <!-- Custom Confirmation Modal -->
 <div *ngIf="showConfirmModal" class="custom-modal-backdrop">

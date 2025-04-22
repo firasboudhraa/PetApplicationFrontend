@@ -5,8 +5,9 @@ import { CommentService } from 'src/app/services/comments.service';
 import { Post } from 'src/app/models/Post';
 import { UserDTO } from 'src/app/models/userDTO';
 import { Comment } from 'src/app/models/Comment';
-import { EmailService } from 'src/app/services/email.service';
 import { Router } from '@angular/router';
+import { jsPDF } from 'jspdf';
+
 
 
 @Component({
@@ -158,4 +159,74 @@ export class PostsComponent implements OnInit {
   closePopup(): void {
     this.selectedPostId = null;
   }
+
+
+  generatePdf(): void {
+    const doc = new jsPDF();
+  
+    // Add a title
+    doc.setFontSize(18);
+    doc.text('List of Posts and Comments', 10, 10);
+    let yPosition = 20; // Starting y position for the first post
+  
+    this.posts.forEach(post => {
+      // Add post title
+      doc.setFontSize(12);
+      doc.text(`Post #${post.id}: ${post.title}`, 10, yPosition);
+      yPosition += 10;
+  
+      // Add post content (Type, Likes, Comments)
+      doc.setFontSize(10);
+      doc.text(`Type: ${post.type}`, 10, yPosition);
+      doc.text(`Likes: ${this.likeCounts[post.id] || 0}`, 100, yPosition);
+      doc.text(`Comments: ${this.commentCounts[post.id] || 0}`, 150, yPosition);
+      yPosition += 10;
+  
+      // Add content of the post (if any)
+      if (post.content) {
+        doc.setFontSize(10);
+        doc.text(`Content: ${post.content}`, 10, yPosition);
+        yPosition += 10;
+      }
+  
+      // Add "Comments:" heading
+      const comments = this.postComments[post.id] || [];
+      if (comments.length > 0) {
+        doc.setFontSize(12);
+        doc.text('Comments:', 10, yPosition); // Heading for comments
+        yPosition += 10;
+  
+        // Loop through each comment and add it
+        comments.forEach(comment => {
+          doc.setFontSize(10);
+          const userName = this.userNames.get(comment.userId) || 'Inconnu';
+          // Ensure the text doesn't overflow (you can adjust the break logic for longer comments)
+          let commentText = `${userName}: ${comment.content}`;
+          if (commentText.length > 100) {
+            commentText = commentText.substring(0, 97) + '...'; // Trim long comments
+          }
+          doc.text(`- ${commentText}`, 10, yPosition);
+          yPosition += 10;
+        });
+      } else {
+        // If there are no comments, display a message
+        doc.setFontSize(10);
+        doc.text('No comments available for this post.', 10, yPosition);
+        yPosition += 10;
+      }
+  
+      // Add some space between posts
+      yPosition += 5;
+  
+      // Check if we need to move to the next page if the content is too long
+      if (yPosition > 270) {
+        doc.addPage(); // Add a new page if content overflows
+        yPosition = 20; // Reset y position for new page
+      }
+    });
+  
+    // Save the PDF
+    doc.save('Blog-Posts&Comments.pdf');
+  }
+  
 }
