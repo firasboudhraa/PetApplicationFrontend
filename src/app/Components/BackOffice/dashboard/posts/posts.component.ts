@@ -44,25 +44,35 @@ export class PostsComponent implements OnInit {
   loadPosts(): void {
     this.postsService.getPosts().subscribe(posts => {
       this.posts = posts;
-
+  
       posts.forEach(post => {
-        // Load the author
+        // Load the author for each post
         this.userService.getUserById(post.userId).subscribe(user => {
           this.authors[post.id] = user;
           this.userNames.set(post.userId, user.name);
         });
-
+  
         // Load comments for each post
         this.commentService.getCommentsByPostId(post.id).subscribe(comments => {
           this.commentCounts[post.id] = comments.length;
           this.postComments[post.id] = comments;
+  
+          // For each comment, ensure the userName is populated
+          comments.forEach(comment => {
+            if (!this.userNames.has(comment.userId)) {
+              this.userService.getUserById(comment.userId).subscribe(user => {
+                this.userNames.set(comment.userId, user.name); // Set the username for this comment
+              });
+            }
+          });
         });
-
+  
         // Count the likes
         this.likeCounts[post.id] = post.likedBy?.length || 0;
       });
     });
   }
+  
 
   // Open the confirmation modal for deleting a post
   openConfirmModal(postId: number): void {
