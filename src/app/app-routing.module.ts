@@ -14,6 +14,8 @@ import { EditAdoptionRequestComponent } from './Components/AdoptionRequest/edit-
 import { ChatPopupComponent } from './Components/chat-popup/chat-popup.component';
 import { LookForASitterFormComponent } from './Components/PetSitting/look-for-asitter-form/look-for-asitter-form.component';
 import { PetSittingSpaceComponent } from './Components/PetSitting/pet-sitting-space/pet-sitting-space.component';
+import { DisplayOffersComponent } from './Components/PetSitting/pet-sitting-space/display-offers/display-offers.component';
+import { TrackOffersComponent } from './Components/PetSitting/pet-sitting-space/track-offers/track-offers.component';
 
   
   const routes: Routes = [
@@ -25,7 +27,12 @@ import { PetSittingSpaceComponent } from './Components/PetSitting/pet-sitting-sp
   {path:'serviceDetail/:id', component:DetailServiceComponent},
   {path:'adoptionRequestDashboard', component:AdoptionRequestDashbordComponent},
   {path:'petSittingForm', component:LookForASitterFormComponent},
-  {path:'petSittingSpace', component:PetSittingSpaceComponent},
+  {path:'petSittingSpace', component:PetSittingSpaceComponent ,
+    children:[
+      {path:'display-offers', component:DisplayOffersComponent},
+      {path:'track-offers', component:TrackOffersComponent},
+    ] 
+  },
   {path:'dashboard', component:DashboardComponent,
     children:[
       {path:'users', component:UsersComponent},

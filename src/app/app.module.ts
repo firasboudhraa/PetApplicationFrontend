@@ -36,6 +36,8 @@ import { EditAdoptionRequestComponent } from './Components/AdoptionRequest/edit-
 import { ChatPopupComponent } from './Components/chat-popup/chat-popup.component';
 import { LookForASitterFormComponent } from './Components/PetSitting/look-for-asitter-form/look-for-asitter-form.component';
 import { PetSittingSpaceComponent } from './Components/PetSitting/pet-sitting-space/pet-sitting-space.component';
+import { DisplayOffersComponent } from './Components/PetSitting/pet-sitting-space/display-offers/display-offers.component';
+import { TrackOffersComponent } from './Components/PetSitting/pet-sitting-space/track-offers/track-offers.component';
 
 
 @NgModule({
@@ -71,7 +73,9 @@ import { PetSittingSpaceComponent } from './Components/PetSitting/pet-sitting-sp
     EditAdoptionRequestComponent,
     ChatPopupComponent,
     LookForASitterFormComponent,
-    PetSittingSpaceComponent
+    PetSittingSpaceComponent,
+    DisplayOffersComponent,
+    TrackOffersComponent,
     ],
   imports: [
     BrowserModule,

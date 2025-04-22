@@ -21,4 +21,19 @@ export class PetSittingOfferService {
   requestPetSittingOffer(offerId: number, sitterId: number): Observable<any> {
     return this.http.post<any>(`${this.apiUrl}/${offerId}/request/${sitterId}`,{});
   }
+  getReceivedPetSittingOffers(userId: number): Observable<PetSittingOffer[]> {
+    return this.http.get<PetSittingOffer[]>(`${this.apiUrl}/receivedRequests/${userId}`);
+  }
+  getSentPetSittingOffers(userId: number): Observable<PetSittingOffer[]> {
+    return this.http.get<PetSittingOffer[]>(`${this.apiUrl}/sentRequests/${userId}`);
+  }
+  confirmPetSittingOffer(offerId: number, requesterId: number): Observable<any> {
+    return this.http.put<any>(`${this.apiUrl}/${offerId}/confirm/${requesterId}`, {});
+  }
+  rejectPetSittingOffer(offerId: number, requesterId: number): Observable<any> {
+    return this.http.delete<any>(`${this.apiUrl}/${offerId}/reject/${requesterId}`, {});
+  }
+  cancelPetSittingOffer(offerId: number,sitterId:number): Observable<any> {
+    return this.http.delete<any>(`${this.apiUrl}/${offerId}/cancel/${sitterId}`);
+  }
 }

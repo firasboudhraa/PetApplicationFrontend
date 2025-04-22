@@ -1,0 +1,131 @@
+<div class="track-offers-container">
+  <h2 class="title">Track Your Offers</h2>
+
+  <!-- Tabs for Sent and Received Offers -->
+  <div class="tabs">
+    <button
+      class="tab-button"
+      [class.active]="activeTab === 'sent'"
+      (click)="setActiveTab('sent')"
+    >
+      Sent Offers
+    </button>
+    <button
+      class="tab-button"
+      [class.active]="activeTab === 'received'"
+      (click)="setActiveTab('received')"
+    >
+      Received Offers
+    </button>
+  </div>
+
+  <!-- Sent Offers -->
+  <div class="offers-list w-100" *ngIf="activeTab === 'sent'">
+    <div *ngIf="sentOffers.length > 0; else noSentOffers" class="w-100">
+      <div *ngFor="let offer of sentOffers">
+
+        <div class="offer-card horizontal" *ngFor="let requestState of offer.userRequestStatuses">
+
+        <!-- Offer Details -->
+        <div class="offer-details">
+          <!-- Pet Image -->
+          <img [src]="getImageUrl(offer.pet.imagePath)" alt="{{ offer.pet.name }}" class="pet-image" />
+
+          <h3>{{ offer.pet.name }}</h3>
+          <p><strong>To:</strong> {{ offer.pet.ownerId }}</p>
+          <p><strong>From:</strong> {{ offer.startDate }} <strong>To:</strong> {{ offer.endDate }}</p>
+          <p><strong>Price:</strong> {{ offer.amountPerDay || 'Free' }} TND</p>
+        </div>
+        
+        <!-- Progress Tracker -->
+        <div class="progress-tracker">
+          <div
+            class="step"
+            [class.active]="requestState.status === 'REJECTED'"
+          >
+            <div class="circle" [ngClass]="{'rejected': requestState.status === 'REJECTED'}">0</div>
+            <p>Rejected</p>
+          </div>
+          <div
+            class="step"
+            [class.active]="requestState.status === 'PENDING' || requestState.status === 'CONFIRMED'"
+          >
+            <div class="circle" [ngClass]="{'pending': requestState.status === 'PENDING'}">1</div>
+            <p>Pending</p>
+          </div>
+          <div
+            class="step"
+            [class.active]="requestState.status === 'CONFIRMED'"
+          >
+            <div class="circle" [ngClass]="{'confirmed': requestState.status === 'CONFIRMED'}">2</div>
+            <p>Confirmed</p>
+          </div>
+        </div>
+
+        <div class="actions">
+          <button class="btn btn-danger" (click)="cancelOffer(offer.id)">Cancel Offer</button>
+        </div>
+      </div>
+    </div>
+
+    </div>
+    <ng-template #noSentOffers>
+      <p class="no-offers">You have not sent any offers yet.</p>
+    </ng-template>
+  </div>
+
+  <!-- Received Offers -->
+  <div class="offers-list" *ngIf="activeTab === 'received'">
+    <div *ngIf="receivedOffers.length > 0; else noReceivedOffers" class="w-100">
+      <div *ngFor="let offer of receivedOffers">
+        <!-- Offer Card -->
+        <div class="offer-card horizontal w-100" *ngFor="let requestState of offer.userRequestStatuses">
+          <!-- Offer Details -->
+          <div class="offer-details">
+            <!-- Pet Image -->
+            <img [src]="getImageUrl(offer.pet.imagePath)" alt="{{ offer.pet.name }}" class="pet-image" />
+
+            <h3>{{ offer.pet.name }}</h3>
+            <p><strong>From:</strong> {{ requestState.userId }}</p>
+            <p><strong>From:</strong> {{ offer.startDate }} <strong>To:</strong> {{ offer.endDate }}</p>
+            <p><strong>Price:</strong> {{ offer.amountPerDay || 'Free' }} TND</p>
+          </div>
+
+          <!-- Progress Tracker -->
+          <div class="progress-tracker">
+            <div
+              class="step"
+              [class.active]="requestState.status === 'REJECTED'"
+            >
+              <div class="circle" [ngClass]="{'rejected': requestState.status === 'REJECTED'}">0</div>
+              <p>Rejected</p>
+            </div>
+            <div
+              class="step"
+              [class.active]="requestState.status === 'PENDING' || requestState.status === 'CONFIRMED'"
+            >
+              <div class="circle" [ngClass]="{'pending': requestState.status === 'PENDING'}">1</div>
+              <p>Pending</p>
+            </div>
+            <div
+              class="step"
+              [class.active]="requestState.status === 'CONFIRMED'"
+            >
+              <div class="circle" [ngClass]="{'confirmed': requestState.status === 'CONFIRMED'}">2</div>
+              <p>Confirmed</p>
+            </div>
+          </div>
+
+          <!-- Actions -->
+          <div class="actions" *ngIf="requestState.status === 'PENDING'">
+            <button class="btn btn-success" (click)="acceptOffer(offer.id, requestState.userId)">Accept</button>
+            <button class="btn btn-danger" (click)="rejectOffer(offer.id, requestState.userId)">Reject</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <ng-template #noReceivedOffers>
+      <p class="no-offers">You have not received any offers yet.</p>
+    </ng-template>
+  </div>
+</div>
