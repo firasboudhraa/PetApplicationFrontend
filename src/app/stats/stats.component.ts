@@ -6,6 +6,7 @@ import OpenAI from "openai";
 import { Observable } from 'rxjs';
 
 import { environment } from 'src/environments/environment';
+import { Router } from '@angular/router';
 @Component({
   selector: 'app-stats',
   templateUrl: './stats.component.html',
@@ -22,7 +23,7 @@ export class StatsComponent implements OnInit {
 
   poidsList: number[] = [];
 typeList: string[] = [];
-  constructor(private carnetService: MedicalService) {}
+  constructor(private carnetService: MedicalService, private rt: Router) {}
 
   ngOnInit(): void {
     this.loadCarnets(); // 🔁 Charger tous les carnets au démarrage
@@ -80,6 +81,10 @@ console.log('Type List:', this.typeList);
     });
   }
   
+  retour(){
+    this.rt.navigate(['/medicalnotebook']);
+  }
+
 
  private apiKey = environment.apiKey;
 
@@ -102,9 +107,11 @@ console.log('Type List:', this.typeList);
      prompt = `
       Pet weight history: [${poidsData}]
       Consultation types: [${typeData}]
-      Generate a coherent paragraph in English (no bullet points, no introduction).
-      Use only real data, ignore null values, and briefly provide recommendations based on the evolution of weight and types of consultations.
-    `;      const response = await this.client.chat.completions.create({
+    Generate a coherent and well-structured paragraph in English (no bullet points, no headings). Use only valid and non-null data. 
+    Analyze the evolution of the pet's weight and the types of consultations. Based on this analysis, provide concise recommendations,
+     including dietary suggestions and future care habits to adopt for the pet’s health and well-being.
+    `;
+          const response = await this.client.chat.completions.create({
         messages: [
           { role: "system", content: "" },
           { role: "user", content: prompt }
@@ -120,11 +127,7 @@ console.log('Type List:', this.typeList);
       })
      
         const raw = await response
-      // Affiche immédiatement toute la réponse
- 
-      // Test : afficher la réponse après 1 seconde
-      
-
+      // Affiche immédiatement toute la réponse 
   return null
   }
 

@@ -38,32 +38,49 @@ navigateToMedicalNotebookStats() {
   id!:number
   
  
-  goToDetails(carnet: any) {
-    console.log('Carnet reçu :', carnet);  // Vérifie la structure de l'objet
-    if (carnet && carnet.name) {  // Vérifie si le carnet a un nom
-      // Récupère tous les carnets via getAllCarnets
-      this.medicalService.getAllCarnets().subscribe({
-        next: (data) => {
-          // Cherche l'ID du carnet dans la liste récupérée
-          const carnetTrouve = data.find((c) => c.name === carnet.name);
-          console.log('Carnet trouvé:', carnetTrouve);  // Vérifie la structure de l'objet trouvé
-          
-          if (carnetTrouve && carnetTrouve.id) {
-            // Si un carnet correspondant est trouvé avec un ID, navigue vers la page de détails
-            this.router.navigate(['/details', carnetTrouve.id]);
-          } else {
-            console.error('Carnet avec l\'ID introuvable pour le nom:', carnet.name);
-          }
-        },
-        error: (err) => {
-          console.error('Erreur lors de la récupération des carnets:', err);
-        }
-      });
-    } else {
-      console.error('Impossible de naviguer : le carnet n\'a pas de nom ou d\'ID');
-    }
-  }
+  goToDetails(carnetRecu: any) {
+    console.log('📦 Carnet reçu en paramètre:', carnetRecu);
   
+    this.medicalService.getAllCarnets().subscribe({
+      next: (data) => {
+        console.log('📚 Tous les carnets récupérés:', data);
+  
+        // Création des requêtes pour chaque carnet pour récupérer les records
+        const carnetRequests = data.map(carnet => {
+          return this.medicalService.getMedicalRecordsByCarnetId(carnet.id).pipe(
+            map(response => {
+              console.log(`📁 Réponse des records pour le carnet ID=${carnet.id} :`, response);
+              // Vérifie si c'est le carnet voulu
+              this.router.navigate(['/details', carnet.id]);
+
+  
+              // Retourne un objet bien formaté avec le bon ID
+              return {
+                carnetId: carnet.id,
+                name: carnet.name,
+                records: response.medicalRecords
+                
+              };
+            })
+          );
+        });
+  
+        // Exécuter toutes les requêtes en parallèle
+        forkJoin(carnetRequests).subscribe({
+          next: (results) => {
+            console.log('📦 Tous les résultats des enregistrements médicaux :', results);
+
+          },
+          error: (err) => {
+            console.error('❌ Erreur lors de la récupération des enregistrements :', err);
+          }
+        });
+      },
+      error: (err) => {
+        console.error('❌ Erreur lors de la récupération des carnets :', err);
+      }
+    });
+  }
   
   
   

@@ -1,41 +1,95 @@
 <div class="container mt-5">
-    <h2 class="mb-4 text-center text-primary">✏️ Modifier le Record Médical</h2>
-  
-    <form (ngSubmit)="submitUpdate()" *ngIf="record">
+  <div class="card shadow-lg rounded-4 p-4 border-0">
+    <h2 class="mb-4 text-center text-primary fw-bold">
+      ✏️ Modifier le Record Médical
+    </h2>
+
+    <form (ngSubmit)="onSubmit()" *ngIf="record" class="needs-validation" novalidate>
+
+      <!-- Type de soin -->
       <div class="mb-3">
-        <label for="type" class="form-label">Type de soin</label>
+        <label for="type" class="form-label fw-semibold">Type de soin</label>
         <select id="type" class="form-select" [(ngModel)]="record.type" name="type" required>
-          <option value="VACCINATION">VACCINATION</option>
-          <option value="SURGERY">SURGERY</option>
-          <option value="CHECKUP">CHECKUP</option>
-          <option value="MEDICATION">MEDICATION</option>
-          <option value="OTHER">OTHER</option>
+          <option value="" disabled selected>Sélectionnez un type</option>
+          <option value="VACCINATION">Vaccination</option>
+          <option value="SURGERY">Chirurgie</option>
+          <option value="CHECKUP">Bilan</option>
+          <option value="MEDICATION">Médication</option>
+          <option value="OTHER">Autre</option>
         </select>
       </div>
-  
+
+      <!-- Date de soin -->
       <div class="mb-3">
-        <label for="dateTime" class="form-label">Date de soin</label>
-        <input type="date" class="form-control" id="dateTime" name="dateTime" [(ngModel)]="record.dateTime" required>
+        <label for="dateTime" class="form-label fw-semibold">Date de soin</label>
+        <input
+          type="date"
+          class="form-control"
+          id="dateTime"
+          name="dateTime"
+          [(ngModel)]="record.dateTime"
+          required>
       </div>
-  
+
+      <!-- Prochaine consultation -->
       <div class="mb-3">
-        <label for="next_due_date" class="form-label">Prochaine consultation</label>
-        <input type="date" class="form-control" id="next_due_date" name="next_due_date" [(ngModel)]="record.next_due_date">
+        <label for="next_due_date" class="form-label fw-semibold">Prochaine consultation</label>
+        <input
+          type="date"
+          class="form-control"
+          id="next_due_date"
+          name="next_due_date"
+          [(ngModel)]="record.next_due_date">
       </div>
-  
+
+      <!-- Description -->
       <div class="mb-3">
-        <label for="description" class="form-label">Description</label>
-        <textarea class="form-control" id="description" name="description" rows="3" [(ngModel)]="record.description"></textarea>
+        <label for="description" class="form-label fw-semibold">Description</label>
+        <textarea
+          class="form-control"
+          id="description"
+          name="description"
+          rows="3"
+          [(ngModel)]="record.description"
+          placeholder="Ajoutez des détails sur le soin...">
+        </textarea>
       </div>
-  
+
+      <!-- Poids -->
       <div class="mb-3">
-        <label for="poids" class="form-label">Poids</label>
-        <input type="number" class="form-control" id="poids" name="poids" [(ngModel)]="record.poids">
+        <label for="poids" class="form-label fw-semibold">Poids (kg)</label>
+        <input
+          type="number"
+          class="form-control"
+          id="poids"
+          name="poids"
+          [(ngModel)]="record.poids"
+          min="0"
+          placeholder="Ex: 12.5">
       </div>
-  
-      
-  
-      <button type="submit" class="btn btn-success w-100">💾 Mettre à jour</button>
+
+      <div class="mb-3">
+        <label for="imageUpload">Ajouter une image (optionnelle)</label>
+        <input
+          id="imageUpload"
+          type="file"
+          class="form-control"
+          (change)="onFileSelected($event)"
+        />
+      </div>
+
+      <!-- Submit Button -->
+      <button type="submit" class="btn btn-success w-100 mt-3">
+        💾 Mettre à jour
+      </button>
     </form>
   </div>
-  
+  <br>
+  <button type="button" (click)="retour()" class="btn btn-primary" >Retour</button>
+
+</div>
+
+<div 
+*ngIf="successMessage" class="alert alert-success mt-3 text-center">
+  {{ successMessage }}
+</div>

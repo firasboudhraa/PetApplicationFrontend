@@ -27,7 +27,9 @@ export class MedicalnotebookFormComponent implements OnInit {
   ];  
   id!: string; // ID du carnet ou record en cours d’édition
   selectedImage: File | null = null;
-
+retour(){
+  this.rt.navigate(['/medicalnotebook']);
+}
   constructor(
     private fb: FormBuilder,
     private act: ActivatedRoute,

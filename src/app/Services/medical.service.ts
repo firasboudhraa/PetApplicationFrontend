@@ -44,7 +44,10 @@ export class MedicalService {
   createMedicalRecordWithFile(record: FormData): Observable<any> {
     return this.http.post<any>(`${this.baseUrl1}/New-add-medicalRecord`, record);
   }
-  
+  updateMedicalRecord(id: number, updatedRecord: any): Observable<any> {
+    return this.http.put<any>(`${this.baseUrl1}/update/${id}`, updatedRecord);
+  }
+
   
   /*getCarnetsWithRecords(): Observable<Carnet[]> {
     return this.getAllCarnets().pipe(
@@ -86,13 +89,10 @@ export class MedicalService {
     return this.http.put(`${this.baseUrl}/carnets/${id}`, carnet);
   }
 
-  updateMedicalRecord(record: any): Observable<any> {
-    return this.http.put('http://localhost:8071/api/medicalrecord/modify-medicalRecord', record);
-  }
+  
   getMedicalRecordById(id: number): Observable<any> {
-    return this.http.get<any>(`http://localhost:8070/api/carnet/record/${id}`);
+    return this.http.get<any>(`${this.baseUrl1}/retrieve-medicalRecord/${id}`);
   }
-
  /*
   addMedicalRecord(Record: any): Observable<Record<string, any>[]> {
     // Ne pas définir le Content-Type manuellement, Angular le gère automatiquement avec FormData
@@ -107,33 +107,12 @@ export class MedicalService {
   deleteCarnet(id: number): Observable<any> {
     return this.http.delete(`${this.baseUrl}/remove-carnet/${id}`);
   }
+  deleteMedicalRecord(id: number): Observable<any> {
+    return this.http.delete(`${this.baseUrl1}/remove-medicalRecord/${id}`);
+  }
   
   
   
 
-  /*constructor(private http : HttpClient) { }
-  private carnets: any[] = [];  // Stockage des carnets
-  private records: any[] = [];  // Stockage des records
-
-
-  // Ajouter un carnet
-  addCarnet(carnet: any) {
-    this.carnets.push(carnet);
-  }
-
-  // Récupérer les carnets
-  getCarnets(): Observable <Carnet[]>  {
-    return this.http.get<Carnet[]>('http://localhost:3000/api/carnets');
-  }
-
-  // Ajouter un record
-  addRecord(record: any) {
-    this.records.push(record);
-  }
-
-  // Récupérer les records
-  getRecords() {
-    return this.records;
-  }*/
 
 }

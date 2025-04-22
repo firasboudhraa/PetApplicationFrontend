@@ -4,6 +4,7 @@ import dayGridPlugin from '@fullcalendar/daygrid';
 import interactionPlugin from '@fullcalendar/interaction'; // pour les clics
 import { MedicalService } from '../Services/medical.service';
 import { FullCarnetResponse, Record } from '../models/records';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-agenda',
@@ -11,6 +12,8 @@ import { FullCarnetResponse, Record } from '../models/records';
   styleUrls: ['./agenda.component.css']
 })
 export class AgendaComponent implements OnInit {
+retour() {
+this.rt.navigate(['/medicalnotebook']);}
   carnets: any[] = [];
   selectedCarnetId: number | null = null;
   medicalRecords: Record[] = [];
@@ -28,7 +31,7 @@ export class AgendaComponent implements OnInit {
     eventDisplay: 'block'
   };
 
-  constructor(private carnetService: MedicalService) {}
+  constructor(private carnetService: MedicalService,private rt:Router) {}
 
   ngOnInit(): void {
     this.loadCarnets();
@@ -39,6 +42,9 @@ export class AgendaComponent implements OnInit {
       this.carnets = data as FullCarnetResponse[];
     });
   }
+
+
+  
 
   onCarnetSelected(): void {
     if (this.selectedCarnetId === null) return;

@@ -1,51 +1,33 @@
-.records-container {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: 1rem;
-  padding: 1rem;
+.text-gradient {
+  background: linear-gradient(90deg, #007bff, #00c9a7);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
-.record-card {
-  border: none;
-  border-radius: 12px;
-  background: linear-gradient(135deg, #e3f2fd, #ffffff);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-  transition: transform 0.2s ease-in-out;
-}
-
-.record-card:hover {
+.card:hover {
   transform: translateY(-5px);
+  transition: transform 0.3s ease;
 }
 
-.card-body {
-  padding: 1rem;
+img.record-image {
+  transition: transform 0.3s ease;
 }
 
-.animate-fade-in {
-  animation: fadeIn 0.5s ease-in;
+img.record-image:hover {
+  transform: scale(1.05);
 }
 
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(15px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+button.btn-outline-primary,
+button.btn-outline-danger {
+  transition: all 0.2s ease-in-out;
 }
 
-.btn {
-  transition: background-color 0.3s ease-in-out;
+button.btn-outline-primary:hover {
+  background-color: #007bff;
+  color: white;
 }
 
-.btn:hover {
-  background-color: #1565c0;
-}
-/* Redimensionner l'image */
-.record-image {
-  max-width: 450px;  /* Limite la largeur de l'image à 200px */
-  max-height: 350px; /* Limite la hauteur de l'image à 150px */
-  object-fit: contain; /* Assure que l'image est bien contenue sans déformation */
+button.btn-outline-danger:hover {
+  background-color: #dc3545;
+  color: white;
 }
