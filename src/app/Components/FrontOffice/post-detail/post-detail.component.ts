@@ -29,7 +29,7 @@ export class PostDetailComponent implements OnInit, AfterViewInit {
   reportedComments: Set<Comment> = new Set<Comment>();
   
 
-  userId: number = 2; // Replace with dynamic user ID
+  userId: number = 1; // Replace with dynamic user ID
 
   // Map-related properties
   latitude: number | null = null;

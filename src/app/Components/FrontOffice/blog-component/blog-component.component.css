@@ -597,5 +597,145 @@ body.light {
     /* transform: translateY(-30px); */
     transition-duration: 0.3s;
   }
-  
+  /* Wrapper that pushes the button to the right */
+/* Wrapper for the Filter Button */
+/* Wrapper for the Filter Button */
+.filter-button-wrapper {
+    display: block;
+    justify-content: flex-end;
+    padding: 0 12rem;
+    margin-bottom: 1rem;
+    position: flex;  /* Ensure the dropdown is positioned relative to this container */
+}
+
+/* Button Style */
+.searchBy {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background-color: #ffffff;
+    border: 1px solid #d1d5db; /* Tailwind's gray-300 */
+    color: #374151; /* Tailwind's gray-700 */
+    padding: 1rem 1rem;
+    font-size: 0.95rem;
+    border-radius: 0.75rem;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+    transition: background-color 0.2s ease, box-shadow 0.2s ease;
+    cursor: pointer;
+}
+
+.searchBy:hover {
+    background-color: #f2fff2;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+.searchBy:focus {
+    outline: none;
+    box-shadow: 0 0 0 2px #6366f1; /* Tailwind's indigo-500 */
+}
+
+/* SVG Icon */
+.searchBy .icon {
+    width: 1.25rem;
+    height: 1.25rem;
+    stroke: currentColor;
+}
+
+/* Dropdown menu positioned below the button */
+/* Dropdown menu positioned below the button */
+.dropdown-menu {
+    position: absolute;
+    right: 0;  /* Align it directly under the button */
+    top: 60%;  /* Position directly below the button */
+    margin-top: 5rem;  /* Adjusted margin-top to move the dropdown a little lower */
+    width: 12rem;
+    background-color: #ffffff;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    border-radius: 0.75rem;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+    z-index: 999;
+    padding: 0.25rem 0.5rem;
+    display: none; /* Initially hidden until the dropdown is toggled */
+}
+
+
+
+
+/* Dropdown item styling */
+.dropdown-item {
+    padding: 0.7rem 1rem;
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: #0e0e0f; /* Tailwind gray-700 */
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    transition: background-color 0.2s ease;
+}
+
+.dropdown-item:hover {
+    background-color: #b9babd; /* Tailwind gray-100 */
+    color: #111827; /* Tailwind gray-900 */
+}
+
+/* Mobile responsiveness */
+@media (max-width: 768px) {
+    .dropdown-menu {
+        right: 0.9rem;
+        width: 90%;
+    }
+}
+
+/* 🌿 Search by Category Styling */
+#category-search-form {
+    background-color: #ffffff;
+    padding: 10px;
+    border-radius: 20px;
+    box-shadow: 5px 4px 10px rgba(0, 0, 0, 0.1);
+    flex-wrap: wrap;
+}
+#category-search-form:hover {
+    background-color: #f4fef4;
+}
+
+
+#category-search-form .form-group {
+    margin-bottom: 1px;
+}
+
+
+/* 🎯 Category Filter Labels */
+#category-search-form .form-check {
+    display: flex;
+    align-items: center;
+    gap: 4px; /* tight space between checkbox and label */
+    margin-bottom: 6px; /* controls vertical spacing between items */
+}
+
+#category-search-form .form-check-input {
+    margin: 20px;
+    padding: 10; /* checkboxes don’t need padding */
+}
+
+#category-search-form .form-check-label {
+    font-size: 15px;
+    font-weight: 500; /* valid font-weight value */
+    color: #0b0c0b; /* dark green/black */
+    padding: 0; /* remove excess spacing */
+}
+
+
+
+/* 💬 Filter Button */
+.filter-button-wrapper {
+    position: relative;
+}
+
+
+.category-inline-container {
+    display: flex;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+  }
   
