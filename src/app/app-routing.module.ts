@@ -19,6 +19,7 @@ const routes: Routes = [
   { path: 'blog', component: BlogComponentComponent },
   { path: 'post/:id', component: PostDetailComponent },
   { path: 'add-post', component: AddPostComponent }, 
+
   { path: 'gemini', component: GeminiChatComponent }, // Assuming GeminiChatComponent is part of BlogComponent
   {path:'',redirectTo:'home',pathMatch:'full'},
     { path: 'modify-post/:id', component: ModifyPostComponent },

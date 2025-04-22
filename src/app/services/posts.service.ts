@@ -24,6 +24,9 @@ export class PostsService {
   deletePost(postId: number): Observable<void> {
     return this.http.delete<void>(`${this.apiUrl}/${postId}`); // Just delete the post
   }
+  deletePostWithoutMail(postId: number): Observable<void> {
+    return this.http.delete<void>(`${this.apiUrl}/delete-without-mail/${postId}`);
+   } // Delete the post without sending an email
   
   
   // Get a specific post by ID

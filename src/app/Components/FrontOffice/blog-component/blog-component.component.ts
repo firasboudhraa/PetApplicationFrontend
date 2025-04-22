@@ -19,6 +19,8 @@ export class BlogComponentComponent implements OnInit {
   currentPage: number = 1;
   postsPerPage: number = 5;
   totalPages: number = 1;
+  private fetchInterval: any;
+
 
   constructor(
     private postService: PostsService,
@@ -28,6 +30,7 @@ export class BlogComponentComponent implements OnInit {
 
   ngOnInit(): void {
     this.fetchPosts();
+
   }
 
   fetchPosts(): void {

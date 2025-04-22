@@ -1,5 +1,6 @@
 <div *ngIf="post" class="post-detail-container">
   <!-- Post Content -->
+   
 
   <div class="post-header">
     <h2 class="post-title">{{ post.title }}</h2>
@@ -22,10 +23,14 @@
   </button>
 
   <!-- Delete Post Button -->
-  <button class="delete-post-button" (click)="deletePost(post.id)">
+  <button class="delete-post-button" (click)="openDeleteModal(post.id)">
     🗑️ Delete Post
   </button>
-
+  
+  <div *ngIf="isDeleted" class="notification">
+    Comment deleted successfully!
+  </div>
+  
   <!-- Likes Section for Post -->
   <div class="likes-section">
     <button class="like-icon" (click)="likePost(post.id)">
@@ -43,7 +48,7 @@
     </h3>
     <div *ngFor="let comment of comments" class="post-comment">
       <p class="comment-author">
-        <strong>👤 {{ commentAuthors.get(comment.userId) || 'Utilisateur inconnu' }}</strong>
+        <strong>👤 {{ commentAuthors.get(comment.userId) }}</strong>
       </p>
       <p class="comment-content">{{ comment.content }}</p>
       <p class="comment-date">
@@ -111,4 +116,17 @@
       </path>
     </svg>
   </button>
+
+  <!-- Custom Confirmation Modal -->
+<div *ngIf="showConfirmModal" class="custom-modal-backdrop">
+  <div class="custom-modal">
+    <h3>Confirmer la suppression</h3>
+    <p>Êtes-vous sûr de vouloir supprimer ce post ?</p>
+    <div class="modal-buttons">
+      <button class="btn btn-secondary" (click)="cancelDelete()">Annuler</button>
+      <button class="btn btn-danger" (click)="confirmDelete()">Supprimer</button>
+    </div>
+  </div>
+</div>
+
 </div>

@@ -7,9 +7,8 @@ import { Post } from 'src/app/models/Post';
 import { Comment } from 'src/app/models/Comment';
 import { UserDTO } from 'src/app/models/userDTO';
 import { Router } from '@angular/router';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { ChangeDetectorRef } from '@angular/core';
-
-
 
 declare var google: any;  // Ensure Google Maps API types are loaded via @types/google.maps
 
@@ -28,7 +27,6 @@ export class PostDetailComponent implements OnInit, AfterViewInit {
   newCommentContent: string = '';
   reportedComments: Set<Comment> = new Set<Comment>();
   
-
   userId: number = 1; // Replace with dynamic user ID
 
   // Map-related properties
@@ -37,8 +35,13 @@ export class PostDetailComponent implements OnInit, AfterViewInit {
   zoom: number = 12.5;
   map!: google.maps.Map;
   marker!: google.maps.Marker;
-  showEmojiPicker = false;
 
+  showEmojiPicker = false;
+  isSnackbarVisible: boolean = true; // Set this to true to show snackbar for testing
+
+  // For Confirmation Modal
+  showConfirmModal = false;
+  postIdToDelete: number | null = null;
 
   constructor(
     private route: ActivatedRoute,
@@ -46,7 +49,8 @@ export class PostDetailComponent implements OnInit, AfterViewInit {
     private userService: UserService,
     private commentService: CommentService,
     private router: Router,
-    private cdRef: ChangeDetectorRef  // Inject ChangeDetectorRef
+    private snackBar: MatSnackBar,
+    private changeDetectorRef: ChangeDetectorRef
 
   ) {}
 
@@ -149,7 +153,6 @@ export class PostDetailComponent implements OnInit, AfterViewInit {
     this.showLikesPopup = !this.showLikesPopup;
   }
 
-
   likeComment(commentId: number): void {
     this.commentService.likeComment(commentId, this.userId).subscribe({
       next: () => {
@@ -162,9 +165,6 @@ export class PostDetailComponent implements OnInit, AfterViewInit {
       error: (err) => console.error('Error liking comment:', err)
     });
   }
-
-  
-  
 
   addComment(): void {
     const trimmedContent = this.newCommentContent.trim();
@@ -189,34 +189,30 @@ export class PostDetailComponent implements OnInit, AfterViewInit {
     });
   }
 
-  deletePost(postId: number): void {
-    if (confirm("Are you sure you want to delete this post?")) {
-      this.postService.deletePost(postId).subscribe({
+  isDeleted: boolean = false;
+
+  deletePostWithoutMail(postId: number): void {
+    if (postId) { // Ensure that postId is provided
+      // Proceed with the deletion first
+      this.postService.deletePostWithoutMail(postId).subscribe({
         next: () => {
           console.log('Post deleted successfully');
+          // Now navigate to the blog page after successful deletion
           this.router.navigate(['/blog']);
         },
-        error: (error) => console.error('Error deleting post:', error)
+        error: (error) => {
+          console.error('Error deleting post:', error);
+        }
       });
     }
   }
-
-  deleteComment(commentId: number): void {
-    if (confirm("Are you sure you want to delete this comment?")) {
-      this.commentService.deleteComment(commentId).subscribe({
-        next: () => {
-          console.log('Comment deleted successfully');
-          this.comments = this.comments.filter(comment => comment.id !== commentId);
-        },
-        error: (error) => console.error('Error deleting comment:', error)
-      });
-    }
-  }
+  
+  
 
   scrollToTop(): void {
     window.scrollTo({ top: 0, behavior: "smooth" });
   }
-  
+
   formatCategory(category: string): string {
     if (!category) return '';
     return category
@@ -225,11 +221,10 @@ export class PostDetailComponent implements OnInit, AfterViewInit {
       .replace(/\b\w/g, char => char.toUpperCase());
   }
 
-
   // Fonction pour basculer l'affichage du picker
   toggleEmojiPicker() {
     this.showEmojiPicker = !this.showEmojiPicker;
-  
+
     // Get the position of the emoji button
     const emojiButton = document.querySelector('.btn-emoji') as HTMLElement;
     const rect = emojiButton.getBoundingClientRect();
@@ -241,30 +236,77 @@ export class PostDetailComponent implements OnInit, AfterViewInit {
       // Adjust the position based on the button's position
       popup.style.top = `${rect.top - popup.offsetHeight - 8}px`;  // 8px for margin
       popup.style.left = `${rect.left + rect.width / 2 - popup.offsetWidth / 2}px`;  // Center horizontally
-      
     }
   }
-  
+
   @HostListener('document:click', ['$event'])
-onClickOutside(event: Event) {
-  if (!(event.target as HTMLElement).closest('.emoji-picker-popup')&&
-  !(event.target as HTMLElement).closest('.btn-emoji')){
-    this.showEmojiPicker=false;
-  }
-  }
-
-
-
-
-  
-
-    showEmojis: boolean = false;// Ajoutez cette méthode pour gérer la sélection d'emoji
-
-    onSelectEmojis(event: any): void {
-      const emoji = event.emoji?.native;  // This should directly give you the emoji character
-      if (emoji) {
-        this.newCommentContent += emoji;  // Append the emoji to the comment content
-      }
+  onClickOutside(event: Event) {
+    if (!(event.target as HTMLElement).closest('.emoji-picker-popup') &&
+      !(event.target as HTMLElement).closest('.btn-emoji')) {
+      this.showEmojiPicker = false;
     }
-    
+  }
+
+  showEmojis: boolean = false; // Ajoutez cette méthode pour gérer la sélection d'emoji
+
+  onSelectEmojis(event: any): void {
+    const emoji = event.emoji?.native;  // This should directly give you the emoji character
+    if (emoji) {
+      this.newCommentContent += emoji;  // Append the emoji to the comment content
+    }
+  }
+
+  deleteComment(commentId: number): void {
+    this.commentService.deleteComment(commentId).subscribe({
+      next: () => {
+        console.log('Comment deleted successfully!');
+        this.isDeleted = true;
+        setTimeout(() => {
+          this.isDeleted = false;
+        }, 3000); // Hide notification after 3 seconds
+
+        // Re-fetch the updated comments list from the server
+        const postId = this.post?.id; // Get the current post ID
+        if (postId) {
+          this.loadComments(postId); // Re-fetch the comments to reflect the updated data
+        }
+      },
+      error: (error) => {
+        console.error('Error deleting comment:', error);
+
+        // Show error snackbar
+        console.log('Opening error snackbar...');
+        this.snackBar.open('Error deleting comment', '', {
+          duration: 3000, // 3 seconds
+          panelClass: ['snackbar-error'], // Red error snackbar
+        });
+      }
+    });
+  }
+
+  // Open the confirmation modal
+  openDeleteModal(postId: number): void {
+    this.postIdToDelete = postId;
+    this.showConfirmModal = true;
+  }
+
+  // Cancel deletion and close modal
+  cancelDelete(): void {
+    this.showConfirmModal = false;
+    this.postIdToDelete = null;
+  }
+
+  // Confirm and delete the post
+  confirmDelete(): void {
+    if (this.postIdToDelete) {
+      this.deletePostWithoutMail(this.postIdToDelete);
+      this.showConfirmModal = false; // Hide the modal after confirming
+      this.postIdToDelete = null; // Reset the post ID to delete
+    }
+  }
+
+
+
+
+
 }

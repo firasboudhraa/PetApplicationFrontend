@@ -21,6 +21,10 @@ import { SidebarComponent } from './Components/BackOffice/sidebar/sidebar.compon
 import { PostsComponent } from './Components/BackOffice/dashboard/posts/posts.component';
 import { GeminiChatComponent } from './Components/FrontOffice/gemini-chat/gemini-chat.component';
 import { PickerModule } from '@ctrl/ngx-emoji-mart';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { CommentService } from './services/comments.service';
+
 
 
 @NgModule({
@@ -44,12 +48,15 @@ import { PickerModule } from '@ctrl/ngx-emoji-mart';
 
   ],
   imports: [
+    BrowserAnimationsModule,  
     BrowserModule,
     AppRoutingModule,
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
     PickerModule,
+    MatSnackBarModule
+
 
   ],
   providers: [],
