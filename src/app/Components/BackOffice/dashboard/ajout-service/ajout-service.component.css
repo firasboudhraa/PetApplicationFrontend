@@ -1,4 +1,42 @@
-/* Main container */
+:root {
+    --primary: #4caf50;
+    --dark: #1e1e2f;
+    --light: #f4f4f9;
+    --accent: #ffcc00;
+  }
+  
+  body {
+    font-family: 'Segoe UI', sans-serif;
+  }
+  
+  .page-center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column; /* Optional, if not already set */
+    min-height: 80vh;
+  } 
+  
+  .title {
+    font-size: 2rem;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    gap: 10px;  /* Adjusts the space between the icon and the text */
+    color: var(--accent); /* Optional: use your theme's color */
+    margin-right: 700px; /* Space below the title */
+    margin-left: 200px;
+    margin-top: 60px; /* Space below the title */
+    padding: 20px; /* Space around the title */
+  }
+  
+  .title i {
+    font-size: 2rem; /* Size of the icon */
+    color: var(--primary); /* Optional: use your theme's color */
+  }
+
+
+  /* Main container */
 .add-service-container {
     max-width: 600px;
     margin: 50px auto;
@@ -119,3 +157,4 @@
     100% { transform: rotate(360deg); }
   }
   
+

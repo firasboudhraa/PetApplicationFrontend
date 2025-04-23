@@ -27,13 +27,14 @@ import { UsersComponent } from './Components/BackOffice/dashboard/users/users.co
 import { SidebarComponent } from './Components/BackOffice/sidebar/sidebar.component';
 import { HeaderComponent } from './Components/BackOffice/header/header.component';
 import { ServicesComponent } from './Components/BackOffice/dashboard/services/services.component';
-import { ModifyServiceComponent } from './Components/FrontOffice/PetService/modify-service/modify-service.component';
 import { AppointmentDashboardComponent } from './Components/FrontOffice/PetService/appointment-dashboard/appointment-dashboard.component';
 import { ReceivedAppointmentComponent } from './Components/FrontOffice/PetService/appointment-dashboard/received-appointment/received-appointment.component';
 import { UserAppointmentDashboardComponent } from './Components/FrontOffice/PetService/user-appointment-dashboard/user-appointment-dashboard.component';
 import { SentAppointmentComponent } from './Components/FrontOffice/PetService/user-appointment-dashboard/sent-appointment/sent-appointment.component';
 import { ChatPopupComponent } from './Components/FrontOffice/PetService/chat-popup/chat-popup.component';
-import { DatePipe } from '@angular/common'; 
+import { DatePipe } from '@angular/common';
+import { AjoutServiceComponent } from './Components/BackOffice/dashboard/ajout-service/ajout-service.component';
+import { UpdateServiceComponent } from './Components/BackOffice/dashboard/update-service/update-service.component'; 
 @NgModule({
   declarations: [
     AppComponent,
@@ -55,12 +56,13 @@ import { DatePipe } from '@angular/common';
     SidebarComponent,
     HeaderComponent,
     ServicesComponent,
-    ModifyServiceComponent,
     AppointmentDashboardComponent,
     ReceivedAppointmentComponent,
     UserAppointmentDashboardComponent,
     SentAppointmentComponent,
     ChatPopupComponent,
+    AjoutServiceComponent,
+    UpdateServiceComponent,
   ],
   imports: [
     BrowserModule,

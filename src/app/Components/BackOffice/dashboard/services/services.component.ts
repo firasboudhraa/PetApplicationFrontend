@@ -213,18 +213,18 @@ export class ServicesComponent {
       preConfirm: () => {
         const name = (document.getElementById('service-name') as HTMLInputElement).value;
         const price = +(document.getElementById('service-price') as HTMLInputElement).value;
-        const duration = +(document.getElementById('service-duration') as HTMLInputElement).value;
+        const durationInMinutes = +(document.getElementById('service-duration') as HTMLInputElement).value;
         const address = (document.getElementById('service-address') as HTMLInputElement).value;
         const description = (document.getElementById('service-description') as HTMLTextAreaElement).value;
         const startDate = (document.getElementById('service-startDate') as HTMLInputElement).value;
         const endDate = (document.getElementById('service-endDate') as HTMLInputElement).value;
   
-        if (!name || !price || !duration || !address || !description || !startDate || !endDate) {
+        if (!name || !price || !durationInMinutes || !address || !description || !startDate || !endDate) {
           Swal.showValidationMessage('All fields are required');
           return;
         }
   
-        return { idService: service.idService, name, price, duration, address, description, startDate, endDate };
+        return { idService: service.idService, name, price, durationInMinutes, address, description, startDate, endDate, providerId: service.providerId };
       }
     }).then(result => {
       if (result.isConfirmed && result.value) {

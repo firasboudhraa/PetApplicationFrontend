@@ -1,55 +1,56 @@
 import { Injectable } from '@angular/core';
-import { Subject, Observable } from 'rxjs'; // Import Observable and Subject
+import { Subject, BehaviorSubject, Observable } from 'rxjs';
 import { CompatClient, Stomp } from '@stomp/stompjs';
 import * as SockJS from 'sockjs-client';
 import { environment } from 'src/environments/environment';
-import { Notification } from '../models/notification'; // Import the Notification model
+import { Notification } from '../models/notification';
 
 @Injectable({
   providedIn: 'root',
 })
 export class WebsocketService {
-  private stompClient: CompatClient = {} as CompatClient;
-  private notificationsSubject: Subject<Notification> = new Subject<Notification>(); // Subject to emit notifications
+  private stompClient: CompatClient | null = null;
+  private notificationsSubject = new BehaviorSubject<Notification[]>([]);
+  public notifications$ = this.notificationsSubject.asObservable();
 
-  // Modify the connect method to return an Observable (Subject)
-  connect(): Observable<any> {
-    const socket = new SockJS(`${environment.apiUrl}${environment.webSocketUrl}`);
+  constructor() {
+    this.initializeWebSocketConnection();
+  }
+
+  private initializeWebSocketConnection(): void {
+    const socket = new SockJS(`${environment.websocketUrl}`);
     this.stompClient = Stomp.over(socket);
+  }
 
+  connect(): void {
+    if (!this.stompClient) return;
 
-    return new Observable<any>((observer) => {
-      // Connect to the WebSocket
-      this.stompClient.connect({}, (frame: string) => {
-        console.log('✅ Connected: ' + frame);
+    this.stompClient.connect({}, () => {
+      console.log('WebSocket connected');
 
-        this.stompClient.subscribe('/topic/notifications', (message) => {
-          if (message.body) {
-            const data: Notification = JSON.parse(message.body);
-            console.log('📨 Notification received:', data);
-            this.notificationsSubject.next(data);
-          }
-        });
-        observer.next('Connected to WebSocket');
-      }, (error: any) => {
-        observer.error('WebSocket connection error: ' + error);
+      this.stompClient?.subscribe(`/topic/notifications`, (message) => {
+        const notification: Notification = JSON.parse(message.body);
+        const current = this.notificationsSubject.value;
+        this.notificationsSubject.next([notification, ...current]);
       });
+    }, (error: any) => {
+      console.error('WebSocket connection error:', error);
     });
   }
 
-  getNotifications(): Observable<Notification> {
-    return this.notificationsSubject.asObservable();
-  }
-
-
-
-
-  // Disconnect the WebSocket
   disconnect(): void {
-    if (this.stompClient) {
+    if (this.stompClient && this.stompClient.connected) {
       this.stompClient.disconnect(() => {
-        console.log('❌ Disconnected');
+        console.log('WebSocket disconnected');
       });
     }
+  }
+
+  getNotifications(): Observable<Notification[]> {
+    return this.notifications$;
+  }
+
+  clearNotifications(): void {
+    this.notificationsSubject.next([]);
   }
 }

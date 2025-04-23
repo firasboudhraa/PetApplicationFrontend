@@ -140,6 +140,17 @@ h4 {
   font-size: 1.48rem;
 }
 
+.notif-unread {
+  background-color: #e8f0fe; /* Light blue */
+  font-weight: 500;
+}
+
+.notif-recent {
+  background-color: #d4edda; /* light green */
+  border-left: 4px solid #28a745; /* solid green bar for emphasis */
+  font-weight: 500;
+}
+
 
 
 .h5,

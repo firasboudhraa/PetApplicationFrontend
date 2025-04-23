@@ -5,7 +5,7 @@
   </h1>
 
   <!-- Add Service Button -->
-  <button class="mr-5 btn btn-primary" (click)="openAddServiceForm()">Add Service</button>
+  <button class="mr-5 btn btn-primary" [routerLink]="['/dashboard/ajout-service']">Add Service</button>
 
   <!-- Services Table -->
   <div class="services-container">
@@ -34,7 +34,7 @@
             <button *ngIf="service.address" class="btn-map" (click)="serviceClicked(service)">
               <i class="fa fa-map"></i>
             </button>
-            <button class="btn btn-warning" (click)="openEditServiceForm(service)">
+            <button class="btn btn-warning" [routerLink]="['/dashboard/update-service', service.idService]">
               <i class="fa fa-pencil-alt"></i>
             </button>
             <button class="btn btn-danger" (click)="deleteService(service.idService)">

@@ -9,15 +9,15 @@ import { AvailableSlotsComponent } from './Components/FrontOffice/PetService/ava
 import { DashboardComponent } from './Components/BackOffice/dashboard/dashboard.component';
 import { UsersComponent } from './Components/BackOffice/dashboard/users/users.component';
 import { ServicesComponent } from './Components/BackOffice/dashboard/services/services.component';
-import { ModifyServiceComponent } from './Components/FrontOffice/PetService/modify-service/modify-service.component';
 import { AppointmentDashboardComponent } from './Components/FrontOffice/PetService/appointment-dashboard/appointment-dashboard.component';
 import { UserAppointmentDashboardComponent } from './Components/FrontOffice/PetService/user-appointment-dashboard/user-appointment-dashboard.component';
+import { AjoutServiceComponent } from './Components/BackOffice/dashboard/ajout-service/ajout-service.component';
+import { UpdateServiceComponent } from './Components/BackOffice/dashboard/update-service/update-service.component';
 
 const routes: Routes = [
   { path: 'home', component: HomeComponent },
   {path:'service', component:ServiceComponent},
   {path:'add-service',component:AddServiceComponent},
-  {path:'update-service/:id',component:ModifyServiceComponent},
   {path:'full-calendar/:id',component:AvailableSlotsComponent},
   {path:'serviceDetail/:id', component:DetailServiceComponent},
   {path:'appointment-Dashboard',component:AppointmentDashboardComponent},
@@ -27,6 +27,8 @@ const routes: Routes = [
     children:[
      {path:'users',component:UsersComponent},
      {path:'services',component:ServicesComponent},
+     {path:'ajout-service',component:AjoutServiceComponent},
+     {path:'update-service/:id',component:UpdateServiceComponent},
     ]
   },
   {path:'',redirectTo:'home',pathMatch:'full'},
