@@ -48,6 +48,8 @@ export class AddPostComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit(): void {}
+  isDeleted: boolean = false;
+
 
   ngAfterViewInit(): void {
     this.postForm.get('type')?.valueChanges.subscribe(value => {
@@ -105,10 +107,12 @@ export class AddPostComponent implements OnInit, AfterViewInit {
 
   onSubmit(): void {
     if (this.postForm.invalid || !this.selectedFile) return;
+  
     console.log('Latitude:', this.latitude);
     console.log('Longitude:', this.longitude);
-
+  
     this.isSubmitting = true;
+  
     const formData = new FormData();
     formData.append('title', this.postForm.value.title);
     formData.append('content', this.postForm.value.content);
@@ -116,16 +120,22 @@ export class AddPostComponent implements OnInit, AfterViewInit {
     formData.append('image', this.selectedFile);
     formData.append('latitude', this.latitude.toString());
     formData.append('longitude', this.longitude.toString());
-
+  
     this.postService.addPost(formData, this.userId).subscribe({
-      next: () => this.router.navigate(['/blog']),
+      next: () => {
+        this.isDeleted = true; // Show success notification
+        setTimeout(() => {
+          this.isDeleted = false; // Hide notification after 3 seconds
+          this.router.navigate(['/blog']); // Navigate after 3 seconds
+        }, 1000);
+      },
       error: (err) => {
         this.errorMessage = 'Erreur lors de la publication.';
         this.isSubmitting = false;
       }
     });
   }
-
+  
   mapTypeToEnum(type: string): string {
     switch (type) {
       case 'success_stories':
@@ -157,4 +167,7 @@ export class AddPostComponent implements OnInit, AfterViewInit {
       this.errorMessage = "Content is empty and can't be enhanced.";
     }
   }
+
+
+ 
 }

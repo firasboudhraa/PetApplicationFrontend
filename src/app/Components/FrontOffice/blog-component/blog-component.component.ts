@@ -19,8 +19,13 @@ export class BlogComponentComponent implements OnInit {
   currentPage: number = 1;
   postsPerPage: number = 5;
   totalPages: number = 1;
-  private fetchInterval: any;
+  showFilterDropdown = false;
 
+  categories = [
+    { label: 'Help & Advice', value: 'HELP_ADVICE' },
+    { label: 'Lost & Found', value: 'LOST_FOUND' },
+    { label: 'Success Stories', value: 'SUCCESS_STORIES' }
+  ];
 
   constructor(
     private postService: PostsService,
@@ -30,7 +35,6 @@ export class BlogComponentComponent implements OnInit {
 
   ngOnInit(): void {
     this.fetchPosts();
-
   }
 
   fetchPosts(): void {
@@ -93,24 +97,24 @@ export class BlogComponentComponent implements OnInit {
   applyFilters(): void {
     let filtered = [...this.posts];
 
-    // Filtrage par catégorie
+    // Filter by category
     if (this.selectedTypes.length > 0) {
       filtered = filtered.filter(post => this.selectedTypes.includes(post.type));
     }
 
-    // Filtrage par recherche texte
+    // Filter by search text
     if (this.searchText.trim() !== '') {
       filtered = filtered.filter(post =>
         post.title.toLowerCase().includes(this.searchText.toLowerCase()) ||
         post.type.toLowerCase().includes(this.searchText.toLowerCase()) ||
         post.content.toLowerCase().includes(this.searchText.toLowerCase()) ||
-        this.userNames.get(post.userId)?.toLowerCase().includes(this.searchText.toLowerCase())
+        (this.userNames.has(post.userId) && this.userNames.get(post.userId)?.toLowerCase().includes(this.searchText.toLowerCase()))
       );
     }
 
     this.filteredPosts = filtered;
     this.totalPages = Math.ceil(this.filteredPosts.length / this.postsPerPage);
-    this.currentPage = 1; // Reset to first page when filters change
+    this.currentPage = 1; // Reset to the first page when filters change
   }
 
   formatCategory(category: string): string {
@@ -141,26 +145,36 @@ export class BlogComponentComponent implements OnInit {
   }
 
   getCardColor(index: number): string {
-    return index % 2 === 0 ? 'ligh-theme' : 'light-theme';
+    return index % 2 === 0 ? 'light-theme' : 'dark-theme'; // Just a sample card color alternation
   }
 
   refreshPosts(): void {
     this.sortByDate('latest');
   }
 
-  showFilterDropdown = false;
+  toggleFilterDropdown(): void {
+    this.showFilterDropdown = !this.showFilterDropdown;
+  }
 
-toggleFilterDropdown() {
-  this.showFilterDropdown = !this.showFilterDropdown;
-}
-
-applyFilter(filter: string) {
-  this.showFilterDropdown = false;
-  // Handle your sorting logic here
-  console.log('Selected filter:', filter);
-  // Possibly call a service or sort your posts array
-}
-
+  applyFilter(filter: string): void {
+    this.showFilterDropdown = false;
+    switch (filter) {
+      case 'latest':
+        this.sortByDate('latest');
+        break;
+      case 'oldest':
+        this.sortByDate('oldest');
+        break;
+      case 'mostLiked':
+        this.sortByNumber('mostLiked');
+        break;
+      case 'mostCommented':
+        this.sortByNumber('mostCommented');
+        break;
+      default:
+        break;
+    }
+  }
 
   goToPage(page: number): void {
     if (page >= 1 && page <= this.totalPages) {
@@ -169,9 +183,7 @@ applyFilter(filter: string) {
     }
   }
 
-  scrollToTop(): void { 
-    window.scrollTo({ top: 0, behavior: "smooth" });}
-
-
-
+  scrollToTop(): void {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }
 }

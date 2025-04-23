@@ -1,6 +1,5 @@
 <section class="home-blog bg-sand">
   <div class="container-fluid px-0">
-
     <!-- Section Title -->
     <div class="row justify-content-md-center">
       <div class="col-xl-5 col-lg-6 col-md-8">
@@ -24,36 +23,23 @@
     </div>
     <br>
 
-    <!-- Search Filter Section (Left) + Search Bar (Right) -->
+    <!-- Filter and Sort Row -->
     <div class="row">
-      <!-- Filter Section -->
+      <!-- Category Filter -->
       <div class="col-md-5">
         <form id="category-search-form">
-          <div class="form-group">
-            <label for="search-categories">Search by Category</label><br>
-            <div class="category-inline-container mt-2">
-              <div class="form-check">
-                <input class="form-check-input" type="checkbox" value="HELP_ADVICE" id="helpAdvice" (change)="updateSelectedCategories($event)">
-                <label class="form-check-label" for="helpAdvice">Help & Advice</label>
-              </div>
-              <div class="form-check">
-                <input class="form-check-input" type="checkbox" value="LOST_FOUND" id="lostFound" (change)="updateSelectedCategories($event)">
-                <label class="form-check-label" for="lostFound">Lost & Found</label>
-              </div>
-              <div class="form-check">
-                <input class="form-check-input" type="checkbox" value="SUCCESS_STORIES" id="successStories" (change)="updateSelectedCategories($event)">
-                <label class="form-check-label" for="successStories">Success Stories</label>
-              </div>
+          <label>Search by Category</label><br />
+          <div class="category-inline-container mt-2">
+            <div class="form-check" *ngFor="let cat of categories">
+              <input class="form-check-input" type="checkbox" [value]="cat.value" (change)="updateSelectedCategories($event)">
+              <label class="form-check-label">{{ cat.label }}</label>
             </div>
           </div>
         </form>
       </div>
-      
 
-      <!-- Filter Button & Dropdown (Right side) -->
+      <!-- Sorting Dropdown -->
       <div class="col-md-7 d-flex justify-content-end align-items-start position-relative">
-
-        <!-- Filter Button -->
         <div class="filter-button-wrapper">
           <button (click)="toggleFilterDropdown()" class="searchBy">
             🔎 Filter By
@@ -62,8 +48,6 @@
             </svg>
           </button>
         </div>
-
-        <!-- Dropdown Menu -->
         <div *ngIf="showFilterDropdown" class="dropdown-menu-custom position-absolute">
           <div class="dropdown-item" (click)="sortByDate('latest')">🆕 Latest</div>
           <div class="dropdown-item" (click)="sortByDate('oldest')">📜 Oldest</div>
@@ -73,10 +57,16 @@
       </div>
     </div>
 
+    <!-- Search Bar -->
+    <div class="row mt-3 mb-4">
+      <div class="col-md-6 offset-md-3">
+        <input type="text" class="form-control" placeholder="🔍 Search posts by title or content or author..." [(ngModel)]="searchText" (ngModelChange)="applyFilters()" />
+      </div>
+    </div>
+
     <!-- Posts Section -->
     <section class="dark">
       <div class="container py-4">
-
         <article *ngFor="let post of filteredPosts; let i = index" class="postcard dark" [ngClass]="getCardColor(i)">
           <a class="postcard__img_link" [routerLink]="['/post', post.id]">
             <img [src]="'http://localhost:8082/posts/images/' + post.imageUrl" alt="Post Image" class="post-image" />
@@ -84,9 +74,7 @@
           <div class="postcard__text">
             <h1 class="postcard__title"><a [routerLink]="['/post', post.id]">{{ post.title }}</a></h1>
             <div class="postcard__subtitle small">
-              <time [attr.datetime]="post.createdAt">
-                📅 {{ post.createdAt | date:'EEE, MMM d, y' }}
-              </time>
+              <time [attr.datetime]="post.createdAt">📅 {{ post.createdAt | date:'EEE, MMM d, y' }}</time>
             </div>
             <div class="postcard__bar"></div>
             <div class="postcard__preview-txt">{{ post.content | slice:0:200 }}...</div>
@@ -99,48 +87,34 @@
           </div>
         </article>
 
-        <!-- No Posts Message -->
         <div *ngIf="filteredPosts.length === 0" class="col-md-12 text-center">
           <p>No posts found matching your search.</p>
         </div>
 
         <!-- Pagination -->
         <div class="pagination d-flex justify-content-center mt-4 align-items-center">
-          <button (click)="goToPage(1)" [disabled]="currentPage === 1" class="pagination__button pagination__first">
-            «
-          </button>
-          <button (click)="goToPage(currentPage - 1)" [disabled]="currentPage === 1" class="pagination__button pagination__prev">
-            ‹
-          </button>
+          <button (click)="goToPage(1)" [disabled]="currentPage === 1" class="pagination__button pagination__first">«</button>
+          <button (click)="goToPage(currentPage - 1)" [disabled]="currentPage === 1" class="pagination__button pagination__prev">‹</button>
           <span class="pagination__page-info mx-3">{{ currentPage }} / {{ totalPages }}</span>
-          <button (click)="goToPage(currentPage + 1)" [disabled]="currentPage === totalPages" class="pagination__button pagination__next">
-            ›
-          </button>
-          <button (click)="goToPage(totalPages)" [disabled]="currentPage === totalPages" class="pagination__button pagination__last">
-            »
-          </button>
+          <button (click)="goToPage(currentPage + 1)" [disabled]="currentPage === totalPages" class="pagination__button pagination__next">›</button>
+          <button (click)="goToPage(totalPages)" [disabled]="currentPage === totalPages" class="pagination__button pagination__last">»</button>
         </div>
 
-       <!-- Scroll to Top -->
-<button class="button scroll-top-btn" (click)="scrollToTop()" title="Go to top">
-  <svg class="svgIcon" viewBox="0 0 384 512">
-    <path d="M214.6 41.4c-12.5-12.5-32.8-12.5-45.3 0l-160 160c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L160 141.2V448c0 17.7 14.3 32 32 32s32-14.3 32-32V141.2L329.4 246.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3l-160-160z"></path>
-  </svg>
-</button>
-
-
-
+        <!-- Scroll to Top -->
+        <button class="button scroll-top-btn" (click)="scrollToTop()" title="Go to top">
+          <svg class="svgIcon" viewBox="0 0 384 512">
+            <path d="M214.6 41.4c-12.5-12.5-32.8-12.5-45.3 0l-160 160c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L160 141.2V448c0 17.7 14.3 32 32 32s32-14.3 32-32V141.2L329.4 246.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3l-160-160z"></path>
+          </svg>
+        </button>
       </div>
     </section>
 
+    <!-- Chat Button -->
+    <button class="chat-btn" routerLink="/gemini" title="Chat with Gemini">
+      <svg class="chat-icon" viewBox="0 0 24 24">
+        <path d="M19.005 3.175H4.674C3.642 3.175 3 3.789 3 4.821V21.02l3.544-3.514h12.461c1.033 0 2.064-1.06 2.064-2.093V4.821c-.001-1.032-1.032-1.646-2.064-1.646zm-4.989 9.869H7.041V11.1h6.975v1.944zm3-4H7.041V7.1h9.975v1.944z"/>
+      </svg>
+    </button>
+
   </div>
-  <!-- Chat Button -->
-<!-- Chat Button - Fixed Version -->
-<button class="chat-btn" routerLink="/gemini" title="Chat with Gemini">
-  <svg class="chat-icon" viewBox="0 0 24 24">
-    <path d="M19.005 3.175H4.674C3.642 3.175 3 3.789 3 4.821V21.02l3.544-3.514h12.461c1.033 0 2.064-1.06 2.064-2.093V4.821c-.001-1.032-1.032-1.646-2.064-1.646zm-4.989 9.869H7.041V11.1h6.975v1.944zm3-4H7.041V7.1h9.975v1.944z"/>
-  </svg>
-</button>
-  
-  
 </section>

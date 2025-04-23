@@ -44,7 +44,7 @@
         Content is required.
       </div>
     </div>
-    <button type="button" class="btn1" (click)="enhanceContent()">Refine Text</button>
+    <button type="button" class="btn1" (click)="enhanceContent()"> 📝 + ✨ Refine Text</button>
    
 
     <div class="form-group">
@@ -80,4 +80,8 @@
     </svg>
     Cancel
   </button>
+</div>
+
+<div *ngIf="isDeleted" class="notification">
+  Post Added successfully!
 </div>
