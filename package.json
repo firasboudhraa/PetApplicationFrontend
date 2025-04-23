@@ -32,6 +32,7 @@
     "leaflet": "^1.9.4",
     "mdb-ui-kit": "^8.2.0",
     "ng2-charts": "^8.0.0",
+    "ngx-bootstrap": "^19.0.2",
     "popper.js": "^1.16.1",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",

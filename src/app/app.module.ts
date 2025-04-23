@@ -26,6 +26,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CommentService } from './services/comments.service';
 import { BaseChartDirective } from 'ng2-charts';
 import { Chart, registerables } from 'chart.js';
+import { PopoverModule } from 'ngx-bootstrap/popover';
+
 
 
 Chart.register(...registerables);
@@ -60,7 +62,9 @@ Chart.register(...registerables);
     HttpClientModule,
     PickerModule,
     MatSnackBarModule,
-    BaseChartDirective
+    BaseChartDirective,
+    PopoverModule.forRoot(),
+
 
 
   ],

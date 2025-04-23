@@ -9,6 +9,7 @@ form {
     transition: all 0.3s ease-in-out;
   }
   
+ 
   /* Hover Effect on Form */
   form:hover {
     transform: translateY(-5px);
@@ -20,6 +21,7 @@ form {
     margin-bottom: 25px;
     transition: all 0.3s ease;
   }
+  
   
   /* Label Styling */
   label {

@@ -15,6 +15,7 @@
         <th>Type</th>
         <th>Likes</th>
         <th>Commentaires</th>
+        <th>Contenu</th> <!-- Added Content column -->
         <th>Date</th>
         <th>Actions</th>
       </tr>
@@ -31,6 +32,15 @@
           <td>{{ post.type }}</td>
           <td>{{ likeCounts[post.id] || 0 }}</td>
           <td>{{ commentCounts[post.id] || 0 }}</td>
+          <td>
+            <span 
+              [popover]="post.content" 
+              popoverTitle="Post Content" 
+              class="popover-trigger"
+              style="cursor: pointer; text-decoration: underline; font-weight: bold; color: blue;">
+              {{ post.content | slice:0:10 }}...
+            </span>
+          </td>
           <td>{{ post.createdAt | date: 'medium' }}</td>
           <td>
             <button class="btn btn-red" (click)="deletePost(post.id)">Supprimer</button>
@@ -81,7 +91,7 @@
       <div *ngIf="selectedPostId && (postComments[selectedPostId] || []).length > 0; else noComments">        <ul class="comments-list">
           <li *ngFor="let comment of postComments[selectedPostId]">
             <strong>{{ userNames.get(comment.userId) || 'Inconnu' }}</strong> : {{ comment.content }}
-            <button class="btn btn-small-red" (click)="deleteComment(comment.id, selectedPostId)">✖ Delete</button>
+            <button class="btn btn-small-red" (click)="deleteComment(comment.id, selectedPostId!)">✖ Delete</button>
           </li>
         </ul>
       </div>
@@ -103,6 +113,19 @@
       </div>
     </div>
   </div>
+
+
+  <div *ngIf="showConfirmModalComment" class="custom-modal-backdrop">
+    <div class="custom-modal">
+      <h3>Confirmer la suppression</h3>
+      <p>Êtes-vous sûr de vouloir supprimer ce commentaire ?</p>
+      <div class="modal-buttons">
+        <button class="btn btn-secondary" (click)="cancelDeleteComment()">Annuler</button>
+        <button class="btn btn-danger" (click)="confirmDeleteComment(selectedCommentId!, selectedPostId!)">Supprimer</button>
+      </div>
+    </div>
+  </div>
+
 
   <div *ngIf="isDeleted" class="notification">
     Post deleted successfully!

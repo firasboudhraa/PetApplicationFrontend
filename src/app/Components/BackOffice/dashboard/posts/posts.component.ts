@@ -24,6 +24,10 @@ export class PostsComponent implements OnInit {
   userNames: Map<number, string> = new Map();
   postComments: { [key: number]: Comment[] } = {};
   showConfirmModal = false;
+  showConfirmModalComment = false;
+  selectedCommentId: number | null = null;
+
+
   selectedPostId: number | null = null;
   isDeleted = false;
   isDeletedComment = false;
@@ -201,10 +205,17 @@ export class PostsComponent implements OnInit {
     this.selectedPostId = postId;
     this.showConfirmModal = true;
   }
+  openConfirmModalComment(postId: number): void {
+    this.selectedPostId = postId;
+    this.showConfirmModal = true;
+  }
 
   cancelDelete(): void {
     this.showConfirmModal = false;
     this.selectedPostId = null;
+  }
+  cancelDeleteComment(): void {
+    this.showConfirmModalComment = false;
   }
 
   confirmDelete(): void {
@@ -222,13 +233,15 @@ export class PostsComponent implements OnInit {
     }
   }
 
-  deleteComment(commentId: number, postId: number): void {
+  confirmDeleteComment(commentId: number, postId: number): void {
     this.commentService.deleteComment(commentId).subscribe(
       () => {
         this.postComments[postId] = this.postComments[postId].filter(c => c.id !== commentId);
         this.commentCounts[postId] = this.postComments[postId].length;
         this.isDeletedComment = true;
         setTimeout(() => this.isDeletedComment = false, 3000);
+        this.showConfirmModalComment = false;
+
       },
       error => console.error('Error deleting comment', error)
     );
@@ -241,6 +254,13 @@ export class PostsComponent implements OnInit {
   deletePost(postId: number): void {
     this.openConfirmModal(postId);
   }
+
+  deleteComment(commentId: number, postId: number): void {
+    this.selectedCommentId = commentId;
+    this.selectedPostId = postId;
+    this.showConfirmModalComment = true;
+  }
+  
 
   closePopup(): void {
     this.selectedPostId = null;

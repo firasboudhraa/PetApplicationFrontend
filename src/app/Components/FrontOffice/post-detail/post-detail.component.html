@@ -19,12 +19,12 @@
 </div>
   <!-- Modify Post Button -->
   <button class="modify-post-button" [routerLink]="['/modify-post', post.id]">
-    ✏️ Modify Post
+    ✏️ 
   </button>
 
   <!-- Delete Post Button -->
   <button class="delete-post-button" (click)="openDeleteModal(post.id)">
-    🗑️ Delete Post
+    🗑️ 
   </button>
   
   <div *ngIf="isDeleted" class="notification">
@@ -34,10 +34,10 @@
   <!-- Likes Section for Post -->
   <div class="likes-section">
     <button class="like-icon" (click)="likePost(post.id)">
-      👍 Like
+      👍 
     </button>
     <button class="likes-button" (click)="toggleLikesPopup()" title="Click to see who liked this post">
-      ❤️ {{ post.likes }} Like{{ post.likes > 1 ? 's' : '' }} - See Who Liked
+      ❤️ {{ post.likes }} Like{{ post.likes > 1 ? 's' : '' }} 
     </button>
   </div>
 

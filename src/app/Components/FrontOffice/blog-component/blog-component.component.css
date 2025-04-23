@@ -172,6 +172,17 @@ body.light {
 .postcard:hover .postcard__bar {
     width: 120px;
 }
+.postcard__subtitle time {
+  background-color: #f3f4f6; /* Tailwind gray-100 */
+  color: #374151; /* Tailwind gray-700 */
+  padding: 4px 8px;
+  border-radius: 6px;
+  display: inline-block;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  letter-spacing: 0.3px;
+  font-style: normal;
+}
+
 
 .postcard__text {
     padding: 1.5rem;
