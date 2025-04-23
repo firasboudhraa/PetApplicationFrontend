@@ -738,4 +738,81 @@ body.light {
     flex-wrap: nowrap;
     overflow-x: auto;
   }
+  /* Chat Button Styles */
+.chat-btn {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background-color: #4285f4;
+    color: white;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+    z-index: 1000;
+    transition: all 0.3s ease;
+    /* Prevent any inherited styles */
+    appearance: none;
+    -webkit-appearance: none;
+    /* Custom tooltip */
+  }
+  
+  /* Custom tooltip implementation */
+  .chat-btn::after {
+    content: attr(title);
+    position: absolute;
+    bottom: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #333;
+    color: white;
+    padding: 5px 10px;
+    border-radius: 4px;
+    font-size: 14px;
+    white-space: nowrap;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s;
+    margin-bottom: 10px;
+  }
+  
+  .chat-btn:hover::after {
+    opacity: 1;
+  }
+  
+  .chat-btn:hover {
+    background-color: #3367d6;
+    transform: scale(1.1);
+  }
+  
+  .chat-icon {
+    width: 24px;
+    height: 24px;
+    fill: currentColor;
+  }
+  
+  /* Scroll to top button - ensure distinct styling */
+  .scroll-top-btn {
+    bottom: 90px;
+    /* Make sure it has different classes */
+  }
+  
+  /* Responsive adjustments */
+  @media (max-width: 768px) {
+    .chat-btn {
+      width: 45px;
+      height: 45px;
+      bottom: 20px;
+      right: 20px;
+    }
+    
+    .scroll-top-btn {
+      bottom: 80px;
+    }
+  }
   

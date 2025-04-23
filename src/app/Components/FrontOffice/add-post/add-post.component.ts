@@ -16,7 +16,7 @@ export class AddPostComponent implements OnInit, AfterViewInit {
   imageError: string | null = null;
   isSubmitting: boolean = false;
   errorMessage: string = '';
-  userId: number = 2; // TODO: récupérer depuis JWT
+  userId: number = 1; // TODO: récupérer depuis JWT
   map!: google.maps.Map;
   marker!: google.maps.Marker;
   fileName: string | null = null;  // Pour stocker le nom du fichier

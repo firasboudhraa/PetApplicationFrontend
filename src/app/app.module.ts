@@ -24,7 +24,11 @@ import { PickerModule } from '@ctrl/ngx-emoji-mart';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CommentService } from './services/comments.service';
+import { BaseChartDirective } from 'ng2-charts';
+import { Chart, registerables } from 'chart.js';
 
+
+Chart.register(...registerables);
 
 
 @NgModule({
@@ -55,7 +59,8 @@ import { CommentService } from './services/comments.service';
     ReactiveFormsModule,
     HttpClientModule,
     PickerModule,
-    MatSnackBarModule
+    MatSnackBarModule,
+    BaseChartDirective
 
 
   ],

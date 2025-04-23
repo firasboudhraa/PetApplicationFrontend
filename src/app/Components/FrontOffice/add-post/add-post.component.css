@@ -232,4 +232,31 @@ form {
     border: 2px solid #ccc;
     border-radius: 10px;
   }
-  
+
+  /* ===== MAGICAL AI ENHANCE BUTTON ===== */
+.btn1 {
+  position: relative;
+  padding: 0.8rem 2rem;
+  padding-top: 1rem;
+  font-size: 1rem;
+  font-weight: 600;
+  color: #fff;
+  background: linear-gradient(135deg, #6e8efb, #a777e3);
+  border: none;
+  border-radius: 50px;
+  cursor: pointer;
+  overflow: hidden;
+  transition: all 0.4s cubic-bezier(0.65, 0, 0.35, 1);
+  box-shadow: 0 4px 15px rgba(103, 58, 183, 0.3);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+/* Gradient animation on hover */
+.btn1:hover {
+  background: linear-gradient(135deg, #a777e3, #6e8efb);
+  box-shadow: 0 6px 20px rgba(103, 58, 183, 0.4);
+  transform: translateY(-2px);
+}

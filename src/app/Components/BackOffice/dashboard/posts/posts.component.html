@@ -1,6 +1,10 @@
 <div class="container">
   <h2>Liste des Posts</h2>
 
+  <button class="btn btn-primary" (click)="toggleCharts()">
+    {{ showCharts ? 'Hide Statistics' : 'Show Statistics' }}
+  </button>
+
   <table class="posts-table">
     <thead>
       <tr>
@@ -30,55 +34,81 @@
           <td>{{ post.createdAt | date: 'medium' }}</td>
           <td>
             <button class="btn btn-red" (click)="deletePost(post.id)">Supprimer</button>
-            
             <button class="btn btn-blue" (click)="openCommentsPopup(post.id)">Voir commentaires</button>
           </td>
         </tr>
       </ng-container>
     </tbody>
   </table>
-<!-- Modal for comments -->
-<div class="modal" *ngIf="selectedPostId !== null && !showConfirmModal">
-  <div class="modal-content">
-    <span class="close" (click)="closePopup()">&times;</span>
-    <h3>Commentaires du post</h3>
 
-    <div *ngIf="postComments[selectedPostId] && postComments[selectedPostId].length > 0; else noComments">
-      <ul class="comments-list">
-        <li *ngFor="let comment of postComments[selectedPostId]">
-          <strong>{{ userNames.get(comment.userId) || 'Inconnu' }}</strong> : {{ comment.content }}
-          <button class="btn btn-small-red" (click)="deleteComment(comment.id, selectedPostId)">✖ Delete</button>
-        </li>
-      </ul>
+  <div class="stats-section" *ngIf="showCharts">
+    <h2>Blog Statistics</h2>
+    
+    <div class="chart-row">
+      <div class="chart-card">
+        <h3>Recent Activity (Last 7 Days)</h3>
+        <canvas baseChart
+          [data]="activityChartData"
+          [options]="activityChartOptions"
+          [type]="activityChartType">
+        </canvas>
+      </div>
+      
+      <div class="chart-card">
+        <h3>Post Type Distribution</h3>
+        <canvas baseChart
+          [data]="typeChartData"
+          [options]="typeChartOptions"
+          type="pie">
+        </canvas>
+      </div>
     </div>
     
-
-    <ng-template #noComments>
-      <p>Aucun commentaire pour ce post.</p>
-    </ng-template>
-  </div>
-</div>
-
-<button class="btn btn-primary" (click)="generatePdf()">Download PDF</button>
-
-<!-- Custom Confirmation Modal -->
-<div *ngIf="showConfirmModal" class="custom-modal-backdrop">
-  <div class="custom-modal">
-    <h3>Confirmer la suppression</h3>
-    <p>Êtes-vous sûr de vouloir supprimer ce post ?</p>
-    <div class="modal-buttons">
-      <button class="btn btn-secondary" (click)="cancelDelete()">Annuler</button>
-      <button class="btn btn-danger" (click)="confirmDelete()">Supprimer</button>
+    <div class="chart-card full-width">
+      <h3>Top Contributors</h3>
+      <canvas baseChart
+        [data]="contributorsChartData"
+        [options]="contributorsChartOptions"
+        type="bar">
+      </canvas>
     </div>
   </div>
+
+  <div class="modal" *ngIf="selectedPostId !== null && !showConfirmModal">
+    <div class="modal-content">
+      <span class="close" (click)="closePopup()">&times;</span>
+      <h3>Commentaires du post</h3>
+      <div *ngIf="selectedPostId && (postComments[selectedPostId] || []).length > 0; else noComments">        <ul class="comments-list">
+          <li *ngFor="let comment of postComments[selectedPostId]">
+            <strong>{{ userNames.get(comment.userId) || 'Inconnu' }}</strong> : {{ comment.content }}
+            <button class="btn btn-small-red" (click)="deleteComment(comment.id, selectedPostId)">✖ Delete</button>
+          </li>
+        </ul>
+      </div>
+      <ng-template #noComments>
+        <p>Aucun commentaire pour ce post.</p>
+      </ng-template>
+    </div>
+  </div>
+
+  <button class="btn btn-primary" (click)="generatePdf()">Download PDF</button>
+
+  <div *ngIf="showConfirmModal" class="custom-modal-backdrop">
+    <div class="custom-modal">
+      <h3>Confirmer la suppression</h3>
+      <p>Êtes-vous sûr de vouloir supprimer ce post ?</p>
+      <div class="modal-buttons">
+        <button class="btn btn-secondary" (click)="cancelDelete()">Annuler</button>
+        <button class="btn btn-danger" (click)="confirmDelete()">Supprimer</button>
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="isDeleted" class="notification">
+    Post deleted successfully!
+  </div>
+
+  <div *ngIf="isDeletedComment" class="notification">
+    Comment deleted successfully!
+  </div>
 </div>
-
-<div *ngIf="isDeleted" class="notification">
-  Post deleted successfully!
-</div>
-
-<div *ngIf="isDeletedComment" class="notification">
-  Post deleted successfully!
-</div>
-
-
