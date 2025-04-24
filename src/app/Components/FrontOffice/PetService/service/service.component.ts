@@ -17,6 +17,11 @@ export class ServiceComponent {
   pageSizeOptions = [3, 6, 9, 12];
   totalPages = 0;
   filterCriteria = '';
+  minPrice: number | null = null;
+maxPrice: number | null = null;
+selectedDuration: string = '';
+locationFilter: string = '';
+
 
   constructor(private ps: PetServiceService, private router: Router) {}
 
@@ -30,17 +35,32 @@ export class ServiceComponent {
   }
 
   filterServices(): void {
-    if (!this.filterCriteria.trim()) {
-      this.filteredServices = this.services;
-    } else {
-      this.filteredServices = this.services.filter(service =>
-        service.name.toLowerCase().includes(this.filterCriteria.toLowerCase())
-      );
-    }
+    this.filteredServices = this.services.filter(service => {
+      const matchesName = this.filterCriteria
+        ? service.name.toLowerCase().includes(this.filterCriteria.toLowerCase())
+        : true;
+  
+      const matchesMinPrice = this.minPrice != null ? service.price >= this.minPrice : true;
+      const matchesMaxPrice = this.maxPrice != null ? service.price <= this.maxPrice : true;
+  
+      const matchesDuration =
+        this.selectedDuration === 'short' ? service.durationInMinutes < 30 :
+        this.selectedDuration === 'medium' ? service.durationInMinutes >= 30 && service.durationInMinutes <= 60 :
+        this.selectedDuration === 'long' ? service.durationInMinutes > 60 :
+        true;
+  
+      const matchesLocation = this.locationFilter
+        ? service.address?.toLowerCase().includes(this.locationFilter.toLowerCase())
+        : true;
+  
+      return matchesName && matchesMinPrice && matchesMaxPrice && matchesDuration && matchesLocation;
+    });
+  
     this.currentPage = 1;
     this.calculateTotalPages();
     this.updatePaginatedServices();
   }
+  
 
   calculateTotalPages(): void {
     this.totalPages = Math.ceil(this.filteredServices.length / this.pageSize);

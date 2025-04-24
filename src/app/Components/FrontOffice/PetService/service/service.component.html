@@ -19,6 +19,32 @@
       (input)="filterServices()"
     />
   </div>
+  <div class="advanced-filters">
+    <!-- Price Range Filter -->
+    <div class="filter-group">
+      <label>Price Range (TND):</label>
+      <input type="number" [(ngModel)]="minPrice" placeholder="Min" (input)="filterServices()" />
+      <input type="number" [(ngModel)]="maxPrice" placeholder="Max" (input)="filterServices()" />
+    </div>
+  
+    <!-- Duration Filter -->
+    <div class="filter-group">
+      <label>Duration:</label>
+      <select [(ngModel)]="selectedDuration" (change)="filterServices()">
+        <option value="">All</option>
+        <option value="short">Less than 30 min</option>
+        <option value="medium">30–60 min</option>
+        <option value="long">More than 60 min</option>
+      </select>
+    </div>
+  
+    <!-- Location Filter -->
+    <div class="filter-group">
+      <label>Location:</label>
+      <input type="text" [(ngModel)]="locationFilter" placeholder="City or Address" (input)="filterServices()" />
+    </div>
+  </div>
+  
 
   <div class="page-size-selector">
     <label for="pageSize">Show:</label>
