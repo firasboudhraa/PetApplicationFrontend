@@ -46,7 +46,7 @@ export class PostsService {
       this.http.post<Post>(`${this.apiUrl}/${userId}`, postData).subscribe({
         next: (createdPost) => {
           let title: string, content: string, type: string;
-
+  
           if (postData instanceof FormData) {
             title = postData.get('title') as string;
             content = postData.get('content') as string;
@@ -56,44 +56,60 @@ export class PostsService {
             content = postData.content;
             type = postData.type;
           }
-
-          if (type === 'lost_found') {
+  
+          let postedUrl: string;
+  
+          // If the post type is 'lost_found' or 'help_advice', publish it on Facebook
+          if (type === 'lost_found' || type === 'help_advice') {
             const defaultImageUrl =
               'https://media.istockphoto.com/id/1226627799/vector/paper-ad-on-the-wall-about-the-missing-dog.jpg?s=612x612&w=0&k=20&c=R9NOIi9IE6dTuMuT0D2b7MMm92irRLNGf8k429aGwJw=';
-
+            const helpImageUrl = 'https://img.freepik.com/vecteurs-libre/mains-personnes-tenant-pancartes-aide-personnes-signes-demandant-aide-dons-illustration-vectorielle-plane-soutien-assistance-concept-caritatif-pour-banniere-conception-sites-web-page-web-destination_74855-26040.jpg?semt=ais_hybrid&w=740';
+  
             const now = new Date();
             const formattedDate = now.toLocaleDateString('en-GB');
-
+  
             this.userService.getUserById(userId).subscribe({
               next: (user: UserDTO) => {
                 const userName = user.name;
-
-                const message = `🚨 LOST PET ALERT 🚨
-
-👤 Posted by: ${userName}
-📌 Title: ${title}
-📝 Description:
-${content}
-
-🗓 Date: ${formattedDate}
-
-📍 Check our website for location details and more info!
-🌐 furreverbuddy.com/blog`;
-
-                this.uploadPhotoToFacebook(defaultImageUrl, message).subscribe({
+  
+                // Set the appropriate message prefix based on post type
+                let messagePrefix = '';
+                if (type === 'lost_found') {
+                  messagePrefix = '🚨 LOST PET ALERT 🚨';
+                  postedUrl = defaultImageUrl;
+                } else if (type === 'help_advice') {
+                  messagePrefix = '🚨 SEEKING HELP ALERT 🚨';
+                  postedUrl = helpImageUrl;
+                }
+  
+                const message = `${messagePrefix}
+  
+  👤 Posted by: ${userName}
+  📌 Title: ${title}
+  📝 Description:
+  ${content}
+  
+  🗓 Date: ${formattedDate}
+  
+  📍 Check our website for location details and more info!
+  🌐 FurreverBuddy.com/blog`;
+  
+                // Upload to Facebook with the correct image URL
+                this.uploadPhotoToFacebook(postedUrl, message).subscribe({
                   next: () => observer.next(createdPost),
                   error: (fbErr: HttpErrorResponse) => {
                     console.error('Facebook photo upload failed', fbErr);
-                    observer.next(createdPost);
+                    observer.next(createdPost); // Proceed even if FB fails
                   }
                 });
               },
               error: (err: HttpErrorResponse) => {
                 console.error('Failed to fetch user for Facebook post', err);
-                observer.next(createdPost);
+                observer.next(createdPost); // Proceed even if user fetch fails
               }
             });
           } else {
+            // If it's any other type, just return the post normally (no Facebook)
             observer.next(createdPost);
           }
         },
@@ -101,7 +117,8 @@ ${content}
       });
     });
   }
-
+  
+  
   // 🗑 Delete a post
   deletePost(postId: number): Observable<void> {
     return this.http.delete<void>(`${this.apiUrl}/${postId}`);
