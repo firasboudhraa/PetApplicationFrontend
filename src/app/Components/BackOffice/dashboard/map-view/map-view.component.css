@@ -25,7 +25,7 @@
     gap: 10px;  /* Adjusts the space between the icon and the text */
     color: var(--accent); /* Optional: use your theme's color */
     margin-right: 700px; /* Space below the title */
-    margin-left: 200px;
+    margin-left: 80px;
     margin-top: 60px; /* Space below the title */
     padding: 20px; /* Space around the title */
   }
@@ -53,3 +53,5 @@
     height: 100%;
     border-radius: 8px; /* Optional: Rounded corners for the map */
   }
+
+  

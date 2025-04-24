@@ -37,13 +37,13 @@
           </td>
           <td>
             <button *ngIf="service.address" class="btn-map" (click)="serviceClicked(service)">
-              <i class="fa fa-map"></i>
+              <i class="fa fa-map-marker-alt"></i>
             </button>
             <button class="btn btn-warning" [routerLink]="['/dashboard/update-service', service.idService]">
               <i class="fa fa-pencil-alt"></i>
             </button>
-            <button class="btn btn-danger" (click)="deleteService(service.idService)">
-              <i class="fa fa-trash"></i>
+            <button class="btn btn-danger rounded" (click)="deleteService(service.idService)">
+              <i class="fa fa-trash-alt"></i>
             </button>
           </td>
         </tr>

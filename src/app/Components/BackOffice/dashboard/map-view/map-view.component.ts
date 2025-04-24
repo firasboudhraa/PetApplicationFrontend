@@ -43,11 +43,9 @@ export class MapViewComponent implements AfterViewInit {
 
   initMap(googleMaps: any) {
     const mapElement = document.getElementById('map');
-    const defaultCenter = { lat: 36.8065, lng: 10.1815 }; // Tunis as an example
-
+    const defaultCenter = { lat: 36.8065, lng: 10.1815 }; 
     if (!mapElement) return;
 
-    // Initialize the map using googleMaps API
     this.map = new googleMaps.Map(mapElement, {
       center: defaultCenter,
       zoom: 12
@@ -55,15 +53,12 @@ export class MapViewComponent implements AfterViewInit {
   }
 
   addMarkersToMap(googleMaps: any) {
-    const bounds = new googleMaps.LatLngBounds(); // Create a LatLngBounds object
+    const bounds = new googleMaps.LatLngBounds();
 
     // If services are available, add a marker for each one
     this.services.forEach(service => {
-      const address = service.address || '123 Main St, Springfield, IL'; // Fallback address if not available
+      const address = service.address || '123 Main St, Springfield, IL'; 
 
-      console.log('Attempting to geocode Address:', address); // Log the address
-
-      // Check if the address is not empty or just whitespace
       if (!address || address.trim() === '') {
         console.warn('Service has no valid address.');
         return;
@@ -71,7 +66,6 @@ export class MapViewComponent implements AfterViewInit {
 
       this.geocodeAddress(address, googleMaps).then((location) => {
         if (location) {
-          // Place a marker at the geocoded location
           const marker = new googleMaps.Marker({
             position: location,
             map: this.map,
@@ -79,15 +73,12 @@ export class MapViewComponent implements AfterViewInit {
             cursor: 'pointer' // Show pointer cursor on hover
           });
 
-          // Extend the bounds to include this marker's position
           bounds.extend(location);
 
-          // Add a click event to navigate to the update page for the selected service
           marker.addListener('click', () => {
             this.router.navigate(['/dashboard/update-service', service.idService]);
           });
 
-          // Optionally, center the map on the first service
           this.map.setCenter(location);
         }
       }).catch((err) => {
@@ -95,28 +86,21 @@ export class MapViewComponent implements AfterViewInit {
       });
     });
 
-    // Once all markers are added, fit the map to the bounds
     this.map.fitBounds(bounds);
   }
 
-  // Function to geocode an address string and return the coordinates
   geocodeAddress(address: string, googleMaps: any): Promise<google.maps.LatLng | null> {
     return new Promise((resolve, reject) => {
       const geocoder = new googleMaps.Geocoder();
 
-      // Use geocoder to get lat/lng from address
       geocoder.geocode({ address: address }, (results: google.maps.GeocoderResult[], status: google.maps.GeocoderStatus) => {
-        console.log('Geocode Status:', status); // Log status to check for errors
 
         if (status === 'OK' && results[0]) {
-          // Successfully got the geocode, return lat/lng
           const location = results[0].geometry.location;
           resolve(location);
         } else {
-          // If geocoding failed, try adding the country or logging the error
-          console.error('Geocode failed for address:', address);
+
           if (status === 'ZERO_RESULTS') {
-            // Add Tunisia explicitly if it's a common issue with missing country
             const addressWithCountry = `${address}, Tunisie`;
             console.log('Retrying with address:', addressWithCountry);
             geocoder.geocode({ address: addressWithCountry }, (retryResults: google.maps.GeocoderResult[], retryStatus: google.maps.GeocoderStatus) => {
