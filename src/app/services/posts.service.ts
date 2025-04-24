@@ -8,7 +8,7 @@ import { Post } from 'src/app/models/Post'; // Adjust the import path as necessa
 })
 export class PostsService {
   
-private fbAccessToken = '${environment.FACEBOOK_ACCESS_TOKEN}'; 
+private fbAccessToken = '${environments/environment.FACEBOOK_ACCESS_TOKEN}'; 
 private fbApiUrl = `https://graph.facebook.com/me/feed`;
 
 

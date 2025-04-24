@@ -1,6 +1,21 @@
 @import url("https://fonts.googleapis.com/css2?family=Baloo+2&display=swap");
 
-
+.post-meta {
+    background-color: #f3f4f6; /* Tailwind gray-100 */
+    color: #374151; /* Tailwind gray-700 */
+    padding: 15px 20px;
+    border-radius: 6px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    letter-spacing: 0.3px;
+    font-size: 0.9rem;
+    
+  }
+  
+  .author-meta,
+  .date-meta {
+    font-style: normal;
+  }
+  
 /* 🌿 Styles Généraux */
 body {
     font-family: "Baloo 2", cursive;
@@ -194,13 +209,6 @@ body.light {
 }
 
 /* 🎭 Tags */
-.postcard__tagbox {
-    display: flex;
-    flex-wrap: wrap;
-    font-size: 14px;
-    margin-top: 10px;
-    justify-content: center;
-}
 @import url("https://fonts.googleapis.com/css2?family=Baloo+2&display=swap");
 
 /* 🌿 Styles Généraux */
