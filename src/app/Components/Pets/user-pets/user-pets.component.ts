@@ -17,7 +17,9 @@ export class UserPetsComponent {
 
   selectedPet!: Pet;
   currentPage: number = 1;
-  itemsPerPage: number = 3;
+
+  itemsPerPageOptions: number[] = [3, 5, 10, 15, 20]; 
+  itemsPerPage: number = this.itemsPerPageOptions[0];
   totalItems: number = 0;
 
   showModal: boolean = false;
@@ -67,22 +69,64 @@ export class UserPetsComponent {
     this.renderer.removeClass(document.querySelector('app-navbar'), 'blur-effect');
     this.renderer.removeClass(document.querySelector('app-footer'), 'blur-effect');
   }
+  searchKeyword: string = '';
+  selectedGender: string = '';
+  adoptionStatus: string = ''; 
+
   filterPets(): void {
-    if (this.selectedSpecies != '') {
-      this.filteredPets = this.allPets.filter((pet) =>
-        pet.species.toLowerCase() === this.selectedSpecies.toLowerCase()
-      );
-    } else {
-      this.filteredPets = [...this.allPets];
-    }
-    this.totalItems = this.filteredPets.length;
-    this.currentPage = 1;
-    this.loadPets()
+  let petsToFilter = [...this.allPets];
+
+  // Species filter
+  if (this.selectedSpecies !== '') {
+    petsToFilter = petsToFilter.filter(p => p.species.toLowerCase() === this.selectedSpecies.toLowerCase());
   }
+
+  // Gender filter
+  if (this.selectedGender !== '') {
+    petsToFilter = petsToFilter.filter(p => p.sex.toLowerCase() === this.selectedGender.toLowerCase());
+  }
+
+  // isForAdoption filter
+  if (this.adoptionStatus !== '') {
+    const isForAdoption = this.adoptionStatus === 'true';
+    petsToFilter = petsToFilter.filter(p => p.forAdoption === isForAdoption);
+  }
+
+  // Keyword search
+  if (this.searchKeyword.trim() !== '') {
+    const keyword = this.searchKeyword.toLowerCase();
+    petsToFilter = petsToFilter.filter(pet =>
+      Object.values(pet).some(value =>
+        typeof value === 'string' && value.toLowerCase().includes(keyword)
+      )
+    );
+  }
+
+  this.filteredPets = petsToFilter;
+  this.totalItems = this.filteredPets.length;
+  this.currentPage = 1;
+  this.loadPets();
+}
+setSpeciesFilter(species: string) {
+  this.selectedSpecies = species;
+  this.filterPets();
+}
+
+setGenderFilter(gender: string) {
+  this.selectedGender = gender;
+  this.filterPets();
+}
+
+setAdoptionFilter(status: string) {
+  this.adoptionStatus = status;
+  this.filterPets();
+}
+  
   get totalPages(): number {
     return Math.ceil(this.totalItems / this.itemsPerPage);
   }
-
+  speciesSearchTerm: string = '';
+  displayedSpecies: { label: string; value: string }[] = [];
   ngOnInit(): void {
     this.petDataService.getPetsByOwnerId(this.userId).subscribe((data) => {
       this.allPets = data;
@@ -91,8 +135,27 @@ export class UserPetsComponent {
       
     }); 
     this.petSpecies = this.ps.speciesOption ;
-  }
+    this.updateFilteredSpecies(); 
 
+  }
+showAllSpecies: boolean = false;
+  updateFilteredSpecies() {
+    const term = this.speciesSearchTerm.toLowerCase();
+  
+    if (term) {
+      this.displayedSpecies = this.petSpecies.filter(option =>
+        option.label.toLowerCase().includes(term)
+      );
+    } else if (this.showAllSpecies) {
+      this.displayedSpecies = [...this.petSpecies];
+    } else {
+      this.displayedSpecies = this.petSpecies.slice(0, 3);
+    }
+  }
+  showAllSpeciesOptions() {
+    this.showAllSpecies = true;
+    this.updateFilteredSpecies();
+  }
   loadPets(): void {
     const startIndex = (this.currentPage - 1) * this.itemsPerPage;
     const endIndex = startIndex + this.itemsPerPage;
@@ -108,7 +171,11 @@ export class UserPetsComponent {
     }); 
 
   }
-
+  changeItemsPerPage(itemsPerPage: number): void {
+    this.itemsPerPage = itemsPerPage;
+    this.currentPage = 1; 
+    this.loadPets();
+  }
   changePage(page: number): void {
     if (page >= 1 && page <= this.totalPages) {
       this.currentPage = page;

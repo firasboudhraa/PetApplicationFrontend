@@ -10,7 +10,7 @@ import { Notification } from 'src/app/models/notification';
 export class NavbarComponent implements OnInit {
   notifications: Notification[] = [];
   dropdownOpen = false;
-  userId :number = 2; 
+  userId :number = 1; 
 
   @ViewChild('dropdownRef') dropdownRef!: ElementRef;
 

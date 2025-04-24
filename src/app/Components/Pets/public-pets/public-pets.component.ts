@@ -1,6 +1,7 @@
 import { Component, Renderer2 } from '@angular/core';
 import { Pet } from 'src/app/models/pet';
 import { PetdataServiceService } from 'src/app/Services/petdata-service.service';
+import { PetsSpeciesService } from 'src/app/Services/shared/pets-species.service';
 
 @Component({
   selector: 'app-public-pets',
@@ -14,8 +15,10 @@ export class PublicPetsComponent {
 
   allPets: Pet[] = []; 
   selectedPet!: Pet;
+
+  itemsPerPageOptions: number[] = [3, 5, 10, 15, 20]; 
+  itemsPerPage: number = this.itemsPerPageOptions[0];
   currentPage: number = 1;
-  itemsPerPage: number = 3;
   totalItems: number = 0;
 
   showModal: boolean = false;
@@ -23,7 +26,7 @@ export class PublicPetsComponent {
   showEditModal: boolean = false;
   isUserPet: boolean = false;
   userId:number = 2 ; 
-  constructor(private petDataService: PetdataServiceService ,private renderer: Renderer2 ) {}
+  constructor(private petDataService: PetdataServiceService, private ps : PetsSpeciesService ,private renderer: Renderer2 ) {}
 
   openModal() {
     this.showModal = true;
@@ -70,26 +73,90 @@ export class PublicPetsComponent {
   get totalPages(): number {
     return Math.ceil(this.totalItems / this.itemsPerPage);
   }
-
+  speciesSearchTerm: string = '';
+  displayedSpecies: { label: string; value: string }[] = [];
   ngOnInit(): void {
     this.petDataService.getPets().subscribe((data) => {
       this.allPets = data;
       this.totalItems = this.allPets.length;
       this.filterPets();
     }); 
+    this.petSpecies = this.ps.speciesOption ;
+    this.updateFilteredSpecies(); 
+
   }
-  filterPets(): void {
-    if (this.selectedSpecies) {
-      this.filteredPets = this.allPets.filter((pet) =>
-        pet.species.toLowerCase() === this.selectedSpecies.toLowerCase()
+  petSpecies : any[] = [] ;
+
+  showAllSpecies: boolean = false;
+  updateFilteredSpecies() {
+    const term = this.speciesSearchTerm.toLowerCase();
+  
+    if (term) {
+      this.displayedSpecies = this.petSpecies.filter(option =>
+        option.label.toLowerCase().includes(term)
       );
+    } else if (this.showAllSpecies) {
+      this.displayedSpecies = [...this.petSpecies];
     } else {
-      this.filteredPets = [...this.allPets];
+      this.displayedSpecies = this.petSpecies.slice(0, 3);
     }
-    this.totalItems = this.filteredPets.length;
-    this.currentPage = 1;
-    this.loadPets()
   }
+  showAllSpeciesOptions() {
+    this.showAllSpecies = true;
+    this.updateFilteredSpecies();
+  }
+  searchKeyword: string = '';
+  selectedGender: string = '';
+  adoptionStatus: string = ''; 
+
+  filterPets(): void {
+  let petsToFilter = [...this.allPets];
+
+  // Species filter
+  if (this.selectedSpecies !== '') {
+    petsToFilter = petsToFilter.filter(p => p.species.toLowerCase() === this.selectedSpecies.toLowerCase());
+  }
+
+  // Gender filter
+  if (this.selectedGender !== '') {
+    petsToFilter = petsToFilter.filter(p => p.sex.toLowerCase() === this.selectedGender.toLowerCase());
+  }
+
+  // isForAdoption filter
+  if (this.adoptionStatus !== '') {
+    const isForAdoption = this.adoptionStatus === 'true';
+    petsToFilter = petsToFilter.filter(p => p.forAdoption === isForAdoption);
+  }
+
+  // Keyword search
+  if (this.searchKeyword.trim() !== '') {
+    const keyword = this.searchKeyword.toLowerCase();
+    petsToFilter = petsToFilter.filter(pet =>
+      Object.values(pet).some(value =>
+        typeof value === 'string' && value.toLowerCase().includes(keyword)
+      )
+    );
+  }
+
+  this.filteredPets = petsToFilter;
+  this.totalItems = this.filteredPets.length;
+  this.currentPage = 1;
+  this.loadPets();
+}
+setSpeciesFilter(species: string) {
+  this.selectedSpecies = species;
+  this.filterPets();
+}
+
+setGenderFilter(gender: string) {
+  this.selectedGender = gender;
+  this.filterPets();
+}
+
+setAdoptionFilter(status: string) {
+  this.adoptionStatus = status;
+  this.filterPets();
+}
 
   loadPets(): void {
     const startIndex = (this.currentPage - 1) * this.itemsPerPage;
@@ -113,7 +180,11 @@ export class PublicPetsComponent {
       this.loadPets();
     }
   }
-
+  changeItemsPerPage(itemsPerPage: number): void {
+    this.itemsPerPage = itemsPerPage;
+    this.currentPage = 1; 
+    this.loadPets();
+  }
   getIndexArray(n: number): number[] {
     return Array.from({ length: n }, (_, i) => i); 
   }
@@ -121,5 +192,8 @@ export class PublicPetsComponent {
   onPetAdded() {
     this.loadPetsAfterChange(); 
   }
-  
+  applyFilter(species: string): void {
+    this.selectedSpecies = species; // Update the selected species
+    this.filterPets(); // Apply the filter
+  }
 }

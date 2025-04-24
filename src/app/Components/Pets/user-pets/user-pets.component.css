@@ -46,16 +46,34 @@
 .modal-btn {
   width: 10vw;
   z-index: 1000;
-  margin:5vh 10vw 0px 0px ;
 }
 .page-container{
   display: flex ;
   flex-direction: column;
 
 }
-.filter-dropdown{
-  margin:5vh 10vw 0px 20vw ;
+#itemsPerPage {
+  width: auto;
+  display: inline-block;
 }
+.page-header input{
+  width: 100%;
+  height: 2rem;
+  padding: 0.5rem;
+  border-radius: 25px; /* Rounded pill-shaped input */
+  border: 1px solid #007bff; /* Primary blue border */
+  background-color: #f8f9fa; /* Light gray background for the input */
+  font-size: 14px;
+  color: #333; /* Neutral text color */
+}
+.page-header{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+  background-color: #f8f9fa; 
+  gap: 7rem;
+  }
 
 .filter-dropdown .btn {
   display: flex;

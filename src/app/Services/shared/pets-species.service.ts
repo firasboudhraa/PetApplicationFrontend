@@ -8,6 +8,8 @@ export class PetsSpeciesService {
     { label: 'Cat', value: 'cat' },
     { label: 'Dog', value: 'dog' },
     { label: 'Bird', value: 'bird' },
+    { label: 'Monkey', value: 'monkey' },
+    { label: 'Cow', value: 'cow' },
   ];
   constructor() { }
 }

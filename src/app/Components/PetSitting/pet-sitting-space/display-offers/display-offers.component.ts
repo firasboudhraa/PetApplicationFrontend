@@ -11,7 +11,7 @@ import Swal from 'sweetalert2';
   styleUrls: ['./display-offers.component.css']
 })
 export class DisplayOffersComponent {
-  userId: number = 2;
+  userId: number = 3;
   private imageServerUrl = 'http://localhost:8222/api/v1/pet/images';
   showDetailModal: boolean = false;
   offers: (PetSittingOffer & { isFlipped: boolean })[] = []; // Add isFlipped dynamically
