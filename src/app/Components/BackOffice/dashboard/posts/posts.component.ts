@@ -271,52 +271,78 @@ export class PostsComponent implements OnInit {
     doc.setFontSize(18);
     doc.text('List of Posts and Comments', 10, 10);
     let yPosition = 20;
-
+  
     this.posts.forEach(post => {
-      doc.setFontSize(12);
+      // Title Section (Post Title in Bold)
+      doc.setFontSize(16);
+      doc.setFont('helvetica', 'bold');
       doc.text(`Post #${post.id}: ${post.title}`, 10, yPosition);
       yPosition += 10;
-
-      doc.setFontSize(10);
+  
+      // Type, Likes, Comments
+      doc.setFontSize(12);
+      doc.setFont('helvetica', 'normal');
       doc.text(`Type: ${post.type}`, 10, yPosition);
       doc.text(`Likes: ${this.likeCounts[post.id] || 0}`, 100, yPosition);
       doc.text(`Comments: ${this.commentCounts[post.id] || 0}`, 150, yPosition);
       yPosition += 10;
-
+  
+      // Content Section with better spacing
       if (post.content) {
-        doc.setFontSize(10);
         const splitText = doc.splitTextToSize(post.content, 180);
+        doc.setFontSize(12);
         doc.text(splitText, 10, yPosition);
-        yPosition += splitText.length * 7;
+        yPosition += splitText.length * 7 + 10; // Extra padding
       }
-
+  
+   
+      // Comments Section
       const comments = this.postComments[post.id] || [];
       if (comments.length > 0) {
-        doc.setFontSize(12);
+        doc.setFontSize(14);
+        doc.setFont('helvetica', 'bold');
         doc.text('Comments:', 10, yPosition);
         yPosition += 10;
-
+  
         comments.forEach(comment => {
-          doc.setFontSize(10);
-          const userName = this.userNames.get(comment.userId) || 'Inconnu';
+          // Comment Section with Indentation
+          doc.setFontSize(12);
+          doc.setFont('helvetica', 'normal');
+          const userName = this.userNames.get(comment.userId) || 'Anonymous';
           const commentText = `${userName}: ${comment.content}`;
+  
           const splitComment = doc.splitTextToSize(commentText, 180);
-          doc.text(splitComment, 10, yPosition);
-          yPosition += splitComment.length * 7;
+          doc.text(splitComment, 15, yPosition);  // Indented comments
+          yPosition += splitComment.length * 7 + 5; // Extra padding after comment
         });
       } else {
-        doc.setFontSize(10);
+        // If no comments, display this text
+        doc.setFontSize(12);
         doc.text('No comments available for this post.', 10, yPosition);
         yPosition += 10;
       }
-
+  
+      // Add extra space after each post for clean separation
       yPosition += 5;
+         // Adding a dark, bold line for separation after post content (only between posts)
+         doc.setDrawColor(0); // Set to black for a dark line
+         doc.setLineWidth(1.5); // Bold line width
+         doc.line(10, yPosition, 200, yPosition); // Draw the line
+         yPosition += 15; // Add space after the line
+     
+  
+      // Check if yPosition exceeds page height and add new page if necessary
       if (yPosition > 270) {
         doc.addPage();
         yPosition = 20;
       }
     });
-
+  
+    // Save the document as a PDF file
     doc.save('Blog-Posts&Comments.pdf');
   }
-}
+
+  
+
+
+}  
