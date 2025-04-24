@@ -74,14 +74,14 @@
           </div>
           <div class="postcard__text">
             <h1 class="postcard__title"><a [routerLink]="['/post', post.id]">{{ post.title }}</a></h1>
-            <div class="post-meta d-flex justify-content-between align-items-center mb-2">
+            <div class="post-meta justify-content-between   ">
+              <span class="author-meta">👤 {{ userNames.get(post.userId) }}</span>
               <time class="date-meta" style="right: 80px ;"[attr.datetime]="post.createdAt">📅 {{ post.createdAt | date:'EEE, MMM d, y' }}</time>
             </div>
             
             <div class="postcard__bar"></div>
             <div class="postcard__preview-txt">{{ post.content | slice:0:200 }}...</div>
             <ul class="postcard__tagbox">
-              <span class="tag__item">👤 {{ userNames.get(post.userId) }}</span>
               <li class="tag__item">🏷️ {{ formatCategory(post.type) }}</li>
               <li class="tag__item">💬 {{ post.comments }} Comments</li>
               <li class="tag__item">👍 {{ post.likes }} Likes</li>

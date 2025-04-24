@@ -1,12 +1,10 @@
 @import url("https://fonts.googleapis.com/css2?family=Baloo+2&display=swap");
 
 .post-meta {
-    background-color: #f3f4f6; /* Tailwind gray-100 */
-    color: #374151; /* Tailwind gray-700 */
-    padding: 15px 20px;
+    background-color: #ffffff; /* Tailwind gray-100 */
+    color: #000000; /* Tailwind gray-700 */
     border-radius: 6px;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    letter-spacing: 0.3px;
     font-size: 0.9rem;
     
   }
@@ -14,7 +12,8 @@
   .author-meta,
   .date-meta {
     font-style: normal;
-  }
+    padding-right:280px
+}
   
 /* 🌿 Styles Généraux */
 body {
