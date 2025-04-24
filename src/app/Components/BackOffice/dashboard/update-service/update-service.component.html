@@ -1,7 +1,10 @@
 <div class="page-center">
-  <h1 class="title"><i class="fa fa-home"></i> > Services > Update Service</h1>
+  <h1 class="title">
+    <i class="fa fa-home"></i> > Services > Update Service
+  </h1>
 
   <form [formGroup]="serviceForm" (ngSubmit)="onSubmit()">
+    <!-- Service Name Field -->
     <div class="form-group floating-label">
       <input
         type="text"
@@ -12,15 +15,14 @@
       />
       <label for="name">Service Name</label>
       <small
-        *ngIf="
-          serviceForm.get('name')?.invalid && serviceForm.get('name')?.touched
-        "
+        *ngIf="serviceForm.get('name')?.invalid && serviceForm.get('name')?.touched"
         class="text-danger"
       >
         Service name is required.
       </small>
     </div>
 
+    <!-- Service Description Field -->
     <div class="form-group floating-label">
       <textarea
         id="description"
@@ -30,16 +32,14 @@
       ></textarea>
       <label for="description">Description</label>
       <small
-        *ngIf="
-          serviceForm.get('description')?.invalid &&
-          serviceForm.get('description')?.touched
-        "
+        *ngIf="serviceForm.get('description')?.invalid && serviceForm.get('description')?.touched"
         class="text-danger"
       >
         Description is required.
       </small>
     </div>
 
+    <!-- Price and Duration Fields -->
     <div class="form-row">
       <div class="form-group floating-label">
         <input
@@ -51,10 +51,7 @@
         />
         <label for="price">Price ($)</label>
         <small
-          *ngIf="
-            serviceForm.get('price')?.invalid &&
-            serviceForm.get('price')?.touched
-          "
+          *ngIf="serviceForm.get('price')?.invalid && serviceForm.get('price')?.touched"
           class="text-danger"
         >
           Price must be greater than 0.
@@ -71,10 +68,7 @@
         />
         <label for="duration">Duration (minutes)</label>
         <small
-          *ngIf="
-            serviceForm.get('durationInMinutes')?.invalid &&
-            serviceForm.get('durationInMinutes')?.touched
-          "
+          *ngIf="serviceForm.get('durationInMinutes')?.invalid && serviceForm.get('durationInMinutes')?.touched"
           class="text-danger"
         >
           Minimum 10 minutes.
@@ -82,6 +76,7 @@
       </div>
     </div>
 
+    <!-- Address Field -->
     <div class="form-group floating-label">
       <input
         type="text"
@@ -89,10 +84,21 @@
         class="form-control"
         formControlName="address"
         required
+        id="autocomplete"  
       />
       <label for="address">Address</label>
+      <small
+        *ngIf="serviceForm.get('address')?.invalid && serviceForm.get('address')?.touched"
+        class="text-danger"
+      >
+        Address is required.
+      </small>
     </div>
 
+    <!-- Map Container -->
+    <div id="map" style="height: 300px; width: 100%; margin-top: 20px; border-radius: 8px;"></div>
+
+    <!-- Start Date and End Date Fields -->
     <div class="form-row">
       <div class="form-group floating-label">
         <input
@@ -117,10 +123,19 @@
       </div>
     </div>
 
+    <!-- Validation for Date Range -->
+    <small
+      *ngIf="serviceForm.errors?.['dateRangeInvalid']"
+      class="text-danger"
+    >
+      End Date must be after Start Date.
+    </small>
+
+    <!-- Submit Button -->
     <button
       type="submit"
       class="btn btn-submit"
-      [disabled]="serviceForm.invalid"
+      [disabled]="serviceForm.invalid || loading"
     >
       <span *ngIf="loading" class="loading-spinner"></span> Submit
     </button>

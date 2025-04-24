@@ -16,6 +16,8 @@
     flex-direction: column; /* Optional, if not already set */
     min-height: 80vh;
   } 
+
+  
   
   .title {
     font-size: 2rem;

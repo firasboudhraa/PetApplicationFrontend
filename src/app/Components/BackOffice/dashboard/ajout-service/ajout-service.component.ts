@@ -1,7 +1,8 @@
-import { Component } from '@angular/core';
-import  { FormGroup, FormControl, Validators, AbstractControl, ValidationErrors } from '@angular/forms';
-import  { Router } from '@angular/router';
-import  { PetServiceService } from 'src/app/Services/pet-service.service';
+import { AfterViewInit, Component } from '@angular/core';
+import { FormGroup, FormControl, Validators, AbstractControl, ValidationErrors } from '@angular/forms';
+import { Router } from '@angular/router';
+import  { GoogleMapsLoaderService } from 'src/app/Services/google-map-loader.service';
+import { PetServiceService } from 'src/app/Services/pet-service.service';
 import Swal from 'sweetalert2';
 
 @Component({
@@ -9,11 +10,17 @@ import Swal from 'sweetalert2';
   templateUrl: './ajout-service.component.html',
   styleUrls: ['./ajout-service.component.css']
 })
-export class AjoutServiceComponent {
+export class AjoutServiceComponent implements AfterViewInit {
   serviceForm!: FormGroup;
   loading = false;
+  map: any;
+  marker: any;
 
-  constructor(private ps: PetServiceService, private router: Router) {
+  constructor(
+    private ps: PetServiceService,
+    private router: Router,
+    private mapsLoader: GoogleMapsLoaderService
+  ) {
     this.serviceForm = new FormGroup({
       name: new FormControl('', Validators.required),
       description: new FormControl('', Validators.required),
@@ -23,6 +30,68 @@ export class AjoutServiceComponent {
       startDate: new FormControl('', Validators.required),
       endDate: new FormControl('', Validators.required)
     }, { validators: this.dateRangeValidator });
+  }
+
+  ngAfterViewInit() {
+    this.mapsLoader.load().then(() => this.initMap());
+  }
+
+  initMap() {
+    const mapElement = document.getElementById('map');
+    const inputElement = document.getElementById('autocomplete') as HTMLInputElement;
+
+    if (!mapElement || !inputElement) return;
+
+    const defaultCenter = { lat: 36.8065, lng: 10.1815 }; // Tunis
+
+    const map = new google.maps.Map(mapElement, {
+      center: defaultCenter,
+      zoom: 12
+    });
+
+    let marker: google.maps.Marker | null = null;
+
+    const autocomplete = new google.maps.places.Autocomplete(inputElement);
+    autocomplete.bindTo('bounds', map);
+
+    autocomplete.addListener('place_changed', () => {
+      const place = autocomplete.getPlace();
+      if (!place.geometry || !place.geometry.location) return;
+
+      map.setCenter(place.geometry.location);
+      map.setZoom(14);
+
+      if (marker) marker.setMap(null);
+      marker = new google.maps.Marker({
+        map,
+        position: place.geometry.location,
+        label: 'Service Location',
+      });
+
+      this.serviceForm.controls['address'].setValue(place.formatted_address || inputElement.value);
+    });
+
+    map.addListener('click', (event: google.maps.MapMouseEvent) => {
+      if (!event.latLng) return;
+
+      const lat = event.latLng.lat();
+      const lng = event.latLng.lng();
+
+      const geocoder = new google.maps.Geocoder();
+      geocoder.geocode({ location: { lat, lng } }, (results, status) => {
+        if (status === 'OK' && results && results[0]) {
+          const address = results[0].formatted_address;
+          if (marker) marker.setMap(null);
+          marker = new google.maps.Marker({
+            map,
+            position: { lat, lng },
+            label: 'Selected',
+          });
+          this.serviceForm.controls['address'].setValue(address);
+          inputElement.value = address;
+        }
+      });
+    });
   }
 
   dateRangeValidator(group: AbstractControl): ValidationErrors | null {
@@ -68,5 +137,4 @@ export class AjoutServiceComponent {
       }
     });
   }
-
 }

@@ -13,6 +13,7 @@ import { AppointmentDashboardComponent } from './Components/FrontOffice/PetServi
 import { UserAppointmentDashboardComponent } from './Components/FrontOffice/PetService/user-appointment-dashboard/user-appointment-dashboard.component';
 import { AjoutServiceComponent } from './Components/BackOffice/dashboard/ajout-service/ajout-service.component';
 import { UpdateServiceComponent } from './Components/BackOffice/dashboard/update-service/update-service.component';
+import { MapViewComponent } from './Components/BackOffice/dashboard/map-view/map-view.component';
 
 const routes: Routes = [
   { path: 'home', component: HomeComponent },
@@ -29,6 +30,7 @@ const routes: Routes = [
      {path:'services',component:ServicesComponent},
      {path:'ajout-service',component:AjoutServiceComponent},
      {path:'update-service/:id',component:UpdateServiceComponent},
+     {path:'map-view',component:MapViewComponent}
     ]
   },
   {path:'',redirectTo:'home',pathMatch:'full'},

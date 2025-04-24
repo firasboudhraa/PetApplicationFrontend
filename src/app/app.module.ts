@@ -34,7 +34,8 @@ import { SentAppointmentComponent } from './Components/FrontOffice/PetService/us
 import { ChatPopupComponent } from './Components/FrontOffice/PetService/chat-popup/chat-popup.component';
 import { DatePipe } from '@angular/common';
 import { AjoutServiceComponent } from './Components/BackOffice/dashboard/ajout-service/ajout-service.component';
-import { UpdateServiceComponent } from './Components/BackOffice/dashboard/update-service/update-service.component'; 
+import { UpdateServiceComponent } from './Components/BackOffice/dashboard/update-service/update-service.component';
+import { MapViewComponent } from './Components/BackOffice/dashboard/map-view/map-view.component'; 
 @NgModule({
   declarations: [
     AppComponent,
@@ -63,6 +64,7 @@ import { UpdateServiceComponent } from './Components/BackOffice/dashboard/update
     ChatPopupComponent,
     AjoutServiceComponent,
     UpdateServiceComponent,
+    MapViewComponent,
   ],
   imports: [
     BrowserModule,
