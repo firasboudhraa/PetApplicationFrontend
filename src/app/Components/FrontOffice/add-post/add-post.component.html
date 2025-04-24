@@ -57,6 +57,10 @@
         Please select a type.
       </div>
     </div>
+     <!-- Conditional Facebook info -->
+  <div *ngIf="postForm.get('type')?.value === 'lost_found' || postForm.get('type')?.value === 'help_advice'" class="alert alert-warning mt-3">
+    <strong>Note:</strong> Posts in <em>Lost & Found</em> or <em>Help & Advice</em> will also be shared on our <a href="https://www.facebook.com/FurreveryBuddyBlog/" target="_blank">Facebook page</a> for more visibility and interaction.
+  </div>
 
     <label for="postLocation" *ngIf="postForm.get('type')?.value === 'lost_found'">
       Where did you last see it?
