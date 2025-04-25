@@ -1,0 +1,214 @@
+/* Layout principal - Aligné avec le dashboard */
+.eventback-container {
+  margin-left: 250px;
+  padding: 30px;
+  width: calc(100% - 250px);
+  min-height: 100vh;
+  background-color: #f5f7fa;
+  transition: all 0.3s ease;
+  margin-top: 60px; /* Ajouté pour laisser de l'espace pour le header */
+}
+
+/* Style de header cohérent avec le dashboard */
+.eventback-container h2 {
+  color: #2c3e50;
+  font-weight: 600;
+  margin-bottom: 25px;
+  padding-bottom: 15px;
+  border-bottom: 1px solid #e0e6ed;
+}
+
+/* Cartes modernes comme le dashboard */
+.event-card {
+  background: #ffffff;
+  border: none;
+  border-radius: 10px;
+  box-shadow: 0 0 40px 0 rgba(94, 92, 154, 0.06);
+  transition: all 0.3s ease;
+  margin-bottom: 25px;
+  overflow: hidden;
+}
+
+.event-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 5px 20px 0 rgba(94, 92, 154, 0.1);
+}
+
+.event-image {
+  height: 180px;
+  background-size: cover;
+  background-position: center;
+}
+
+/* Style du texte dans les cartes */
+.event-title {
+  font-size: 1.3rem;
+  font-weight: 600;
+  color: #3b3f5c;
+  margin-bottom: 10px;
+}
+
+.event-meta {
+  color: #888ea8;
+  font-size: 0.9rem;
+  margin-bottom: 15px;
+}
+
+.event-description {
+  color: #515365;
+  font-size: 0.95rem;
+  line-height: 1.5;
+  margin-bottom: 20px;
+}
+
+/* Barre de progression améliorée */
+.progress-container {
+  background: #f1f2f3;
+  padding: 15px;
+  border-radius: 8px;
+  margin-bottom: 20px;
+}
+
+.progress {
+  height: 12px;
+  border-radius: 20px;
+  background-color: #ebedf2;
+}
+
+.progress-bar {
+  border-radius: 20px;
+  background-color: #00ab55;
+}
+
+/* Boutons modernes */
+.btn {
+  border-radius: 6px;
+  font-weight: 500;
+  padding: 8px 20px;
+  font-size: 0.85rem;
+  transition: all 0.3s ease;
+}
+
+.btn-primary {
+  background-color: #4361ee;
+  border-color: #4361ee;
+}
+
+.btn-warning {
+  background-color: #e2a03f;
+  border-color: #e2a03f;
+  color: #fff;
+}
+
+.btn-danger {
+  background-color: #e7515a;
+  border-color: #e7515a;
+}
+
+/* Section de recherche */
+.search-card {
+  border: none;
+  border-radius: 10px;
+  box-shadow: 0 0 40px 0 rgba(94, 92, 154, 0.06);
+  margin-bottom: 30px;
+}
+
+.search-card .card-title {
+  color: #3b3f5c;
+  font-weight: 600;
+  font-size: 1.2rem;
+}
+
+/* Pagination moderne */
+.pagination {
+  margin-top: 30px;
+}
+
+.page-item.active .page-link {
+  background-color: #4361ee;
+  border-color: #4361ee;
+}
+
+.page-link {
+  color: #4361ee;
+  border-radius: 6px !important;
+  margin: 0 5px;
+  border: none;
+}
+
+/* Alertes */
+.alert {
+  border-radius: 8px;
+  border: none;
+}
+
+.alert-info {
+  background-color: #eaf1ff;
+  color: #4361ee;
+}
+
+/* Responsive Design */
+@media (max-width: 992px) {
+  .eventback-container {
+    margin-left: 80px;
+    width: calc(100% - 80px);
+    padding: 20px;
+  }
+  
+  .sidebar.expanded ~ .eventback-container {
+    margin-left: 250px;
+    width: calc(100% - 250px);
+  }
+}
+
+@media (max-width: 768px) {
+  .eventback-container {
+    margin-left: 0;
+    width: 100%;
+    padding: 15px;
+  }
+  
+  .event-card {
+    margin-bottom: 20px;
+  }
+  
+  .event-actions .btn {
+    margin-bottom: 10px;
+    width: 100%;
+  }
+  
+  .search-card .card-body {
+    padding: 15px;
+  }
+}
+
+/* Animation douce */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.eventback-container > * {
+  animation: fadeIn 0.4s ease forwards;
+}
+
+/* Style personnalisé pour SweetAlert2 */
+.custom-swal-popup {
+  border-radius: 12px !important;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1) !important;
+}
+
+.swal2-title {
+  font-size: 1.5rem !important;
+  color: #2c3e50 !important;
+}
+
+.swal2-confirm {
+  font-weight: 600 !important;
+  padding: 10px 24px !important;
+}
+
+.swal2-cancel {
+  font-weight: 500 !important;
+  padding: 10px 24px !important;
+}

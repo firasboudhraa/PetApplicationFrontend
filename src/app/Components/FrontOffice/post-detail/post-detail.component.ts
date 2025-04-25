@@ -1,14 +1,14 @@
 import { Component, OnInit, AfterViewInit, HostListener } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { PostsService } from 'src/app/services/posts.service';
-import { UserService } from 'src/app/services/user.service';
-import { CommentService } from 'src/app/services/comments.service';
+import { PostsService } from 'src/app/Services/posts.service';
+import { UserService } from 'src/app/Components/FrontOffice/user/service_user/user.service';
+import { CommentService } from 'src/app/Services/comments.service';
 import { Post } from 'src/app/models/Post';
 import { Comment } from 'src/app/models/Comment';
-import { UserDTO } from 'src/app/models/userDTO';
 import { Router } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ChangeDetectorRef } from '@angular/core';
+import { User } from '../user/models/user_model';
 
 declare var google: any;  // Ensure Google Maps API types are loaded via @types/google.maps
 
@@ -89,8 +89,8 @@ export class PostDetailComponent implements OnInit, AfterViewInit {
 
   private loadPostAuthor(userId: number): void {
     this.userService.getUserById(userId).subscribe({
-      next: (user: UserDTO) => {
-        this.authorName = user.name;
+      next: (user: User) => {
+        this.authorName = user.firstName + ' ' + user.lastName;
       },
       error: (error) => console.error('Error loading post author:', error)
     });
@@ -110,8 +110,8 @@ export class PostDetailComponent implements OnInit, AfterViewInit {
     this.comments.forEach(comment => {
       if (!this.commentAuthors.has(comment.userId)) {
         this.userService.getUserById(comment.userId).subscribe({
-          next: (user: UserDTO) => {
-            this.commentAuthors.set(comment.userId, user.name);
+          next: (user: User) => {
+            this.commentAuthors.set(comment.userId, user.firstName + ' ' + user.lastName);
           },
           error: (error) => console.error('Error loading comment author:', error)
         });
@@ -123,8 +123,8 @@ export class PostDetailComponent implements OnInit, AfterViewInit {
     userIds.forEach(userId => {
       if (!this.userNames.has(userId)) {
         this.userService.getUserById(userId).subscribe({
-          next: (user: UserDTO) => {
-            this.userNames.set(userId, user.name);
+          next: (user: User) => {
+            this.userNames.set(userId, user.firstName + ' ' + user.lastName);
           },
           error: (error) => console.error('Error loading user likes:', error)
         });

@@ -1,0 +1,86 @@
+<form class="login-form card p-4 shadow-lg mx-auto text-center"
+      [formGroup]="loginForm" 
+      (ngSubmit)="save()" 
+      style="max-width: 400px; border-radius: 15px; border: none;">
+
+  <!-- Image inside the card -->
+  <img src="https://hips.hearstapps.com/hmg-prod/images/woman-with-dog-outside-1558449251.jpg" 
+       alt="Login Image" 
+       class="img-fluid mb-3" 
+       style="width: 100%; border-radius: 15px 15px 0 0; object-fit: cover; height: 180px;">
+
+  <h3 class="text-center mb-4" style="color: #36c864;">
+    Login 
+    <span class="flaticon-pawprint-1" style="font-size: 2.5rem; color: #36c864;"></span> 
+  </h3>
+
+  <!-- Email Field -->
+  <div class="form-group">
+    <label for="email">Email</label>
+    <input type="text" id="email" class="form-control" placeholder="Enter your email" formControlName="email">
+    <div *ngIf="loginForm.controls['email'].invalid && loginForm.controls['email'].touched" class="alert alert-danger">
+      <p *ngIf="loginForm.controls['email'].hasError('required')">Email is required</p>
+      <p *ngIf="loginForm.controls['email'].hasError('email')">Email must be valid</p>
+    </div>
+  </div>
+
+  <!-- Password Field -->
+  <div class="form-group position-relative">
+    <label for="password">Password</label>
+    <input [type]="showPassword ? 'text' : 'password'"
+           id="password"
+           class="form-control"
+           placeholder="Enter your password"
+           formControlName="password">
+           
+           <i class="fa"
+           [ngClass]="showPassword ? 'fa-eye-slash' : 'fa-eye'"
+           (click)="togglePasswordVisibility()"
+           style="position: absolute; right: 50px; top: 50px; cursor: pointer; color: #6c757d;">
+        </i>
+  
+    <div *ngIf="loginForm.controls['password'].invalid && loginForm.controls['password'].touched" class="alert alert-danger">
+      <p *ngIf="loginForm.controls['password'].hasError('required')">Password is required</p>
+      <p *ngIf="loginForm.controls['password'].hasError('minlength')">Password must be at least 8 characters</p>
+    </div>
+  </div>
+  
+
+  <!-- Links -->
+  <a href="/forgot-password" class="link">Forgot Password?</a>
+<a routerLink="/register" class="link">Create an account</a>
+
+  <!-- Submit Button -->
+  <button class="btn btn-primary mt-3" type="submit" [disabled]="loginForm.invalid">
+    Login
+  </button>
+</form>
+<!-- Modal -->
+<div class="modal fade show d-block" *ngIf="showModal" tabindex="-1" style="background: rgba(0,0,0,0.5);">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content text-center p-4" 
+         [ngStyle]="{
+           'background-color': modalType === 'error' ? '#f8d7da' : '#e8fbe5', 
+           'border-radius': '20px'}">
+      
+      <!-- Dynamic Icon -->
+      <i class="fa"
+         [ngClass]="{
+           'fa-check-circle': modalType === 'success', 
+           'fa-times-circle': modalType === 'error'}"
+         style="font-size: 4rem;"
+         [ngStyle]="{
+           'color': modalType === 'success' ? '#28a745' : '#dc3545'}">
+      </i>
+
+      <div class="modal-body">
+        <h5 class="modal-title" 
+            [ngStyle]="{
+              'font-size': '1.8rem', 
+              'color': modalType === 'success' ? '#2f5f36' : '#721c24'
+            }">
+          {{ modalMessage }}
+        </h5>
+      </div>
+      
+</div>

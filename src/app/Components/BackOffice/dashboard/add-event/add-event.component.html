@@ -1,0 +1,139 @@
+<div class="container">
+  <div class="row justify-content-center">
+    <div class="col-lg-8">
+      <div class="card">
+        <div class="card-body">
+          <h3 class="card-title">Add New Event</h3>
+          <form [formGroup]="eventForm" (ngSubmit)="onSubmit()">
+            <div *ngIf="errorMessage" class="alert alert-danger mb-4">
+              <i class="fas fa-exclamation-circle mr-2"></i>{{ errorMessage }}
+            </div>
+
+            <!-- Name Field -->
+            <div class="mb-4">
+              <label for="nameEvent" class="form-label">Event Name</label>
+              <input type="text" class="form-control" id="nameEvent" formControlName="nameEvent">
+              <div *ngIf="eventForm.get('nameEvent')?.invalid && (eventForm.get('nameEvent')?.dirty || eventForm.get('nameEvent')?.touched)" class="text-danger mt-2">
+                <small *ngIf="eventForm.get('nameEvent')?.errors?.['required']"><i class="fas fa-exclamation-circle mr-1"></i>Event name is required</small>
+                <small *ngIf="eventForm.get('nameEvent')?.errors?.['minlength']"><i class="fas fa-exclamation-circle mr-1"></i>Minimum 3 characters required</small>
+              </div>
+            </div>
+
+            <!-- Description Field -->
+            <div class="mb-4">
+              <label for="description" class="form-label description-label">Description</label>
+              <button type="button" class="btn btn-ai" (click)="openAIModal()">
+                <i class="fas fa-magic"></i> Generate with AI
+              </button>
+              <textarea class="form-control" id="description" rows="4" formControlName="description"></textarea>
+              <div *ngIf="eventForm.get('description')?.invalid && (eventForm.get('description')?.dirty || eventForm.get('description')?.touched)" class="text-danger mt-2">
+                <small *ngIf="eventForm.get('description')?.errors?.['required']"><i class="fas fa-exclamation-circle mr-1"></i>Description is required</small>
+                <small *ngIf="eventForm.get('description')?.errors?.['minlength']"><i class="fas fa-exclamation-circle mr-1"></i>Minimum 10 characters required</small>
+              </div>
+            </div>
+
+            <!-- Date Field -->
+            <div class="mb-4">
+              <label for="dateEvent" class="form-label">Event Date & Time</label>
+              <input type="datetime-local" class="form-control" id="dateEvent" formControlName="dateEvent">
+              <div *ngIf="eventForm.get('dateEvent')?.invalid && (eventForm.get('dateEvent')?.dirty || eventForm.get('dateEvent')?.touched)" class="text-danger mt-2">
+                <small *ngIf="eventForm.get('dateEvent')?.errors?.['required']"><i class="fas fa-exclamation-circle mr-1"></i>Event date is required</small>
+              </div>
+            </div>
+
+            <!-- Location Field -->
+            <div class="mb-4">
+              <label class="form-label">Location</label>
+              <div class="input-group mb-3">
+                <input type="text" 
+                       class="form-control" 
+                       id="location" 
+                       formControlName="location"
+                       placeholder="Search location or click on map"
+                       #locationSearch>
+                <button class="btn btn-outline-secondary" 
+                        type="button"
+                        (click)="openMapModal()">
+                  <i class="fas fa-map-marker-alt"></i> Pick on Map
+                </button>
+              </div>
+              <div id="map" style="height: 300px; width: 100%; margin-top: 10px;"></div>
+              <div *ngIf="eventForm.get('location')?.invalid && (eventForm.get('location')?.dirty || eventForm.get('location')?.touched)" class="text-danger mt-2">
+                <small *ngIf="eventForm.get('location')?.errors?.['required']"><i class="fas fa-exclamation-circle mr-1"></i>Location is required</small>
+              </div>
+            </div>
+
+            <!-- Goal Amount Field -->
+            <div class="mb-4">
+              <label for="goalAmount" class="form-label">Goal Amount (DT)</label>
+              <input type="number" class="form-control" id="goalAmount" formControlName="goalAmount" min="1" step="0.01">
+              <div *ngIf="eventForm.get('goalAmount')?.invalid && (eventForm.get('goalAmount')?.dirty || eventForm.get('goalAmount')?.touched)" class="text-danger mt-2">
+                <small *ngIf="eventForm.get('goalAmount')?.errors?.['required']"><i class="fas fa-exclamation-circle mr-1"></i>Goal amount is required</small>
+                <small *ngIf="eventForm.get('goalAmount')?.errors?.['min']"><i class="fas fa-exclamation-circle mr-1"></i>Minimum amount is 1 DT</small>
+              </div>
+            </div>
+
+            <!-- Form Buttons -->
+            <div class="d-flex justify-content-between mt-4">
+              <button type="button" class="btn btn-secondary" (click)="onCancel()" [disabled]="isSubmitting">
+                <i class="fas fa-times mr-2"></i>Cancel
+              </button>
+              <button type="submit" class="btn btn-primary" [disabled]="eventForm.invalid || isSubmitting">
+                <i class="fas fa-save mr-2"></i>
+                <span *ngIf="!isSubmitting">Add Event</span>
+                <span *ngIf="isSubmitting">Adding...</span>
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- AI Modal -->
+<div class="modal fade show" *ngIf="showAIModal" tabindex="-1" role="dialog" style="display: block; background: rgba(0,0,0,0.5);">
+  <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header" style="background: linear-gradient(135deg, #4361ee, #3a0ca3);">
+        <h5 class="modal-title text-white">AI Description Generator</h5>
+        <button type="button" class="btn-close btn-close-white" (click)="closeAIModal()" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="mb-4">
+          <label class="form-label fw-bold">Describe your event to the AI:</label>
+          <textarea class="form-control" 
+                    [(ngModel)]="aiPrompt"
+                    placeholder="E.g., 'A beach cleanup event to protect marine life in Miami on June 5th'"
+                    rows="3"></textarea>
+          <small class="text-muted">Provide as much detail as possible for better results</small>
+        </div>
+        
+        <button class="btn btn-primary" 
+                (click)="generateDescription()"
+                [disabled]="isGeneratingDescription || !aiPrompt.trim()">
+          <span *ngIf="!isGeneratingDescription">
+            <i class="fas fa-robot mr-2"></i>Generate Description
+          </span>
+          <span *ngIf="isGeneratingDescription">
+            <i class="fas fa-spinner fa-spin mr-2"></i>Generating...
+          </span>
+        </button>
+        
+        <div *ngIf="aiGeneratedDescription" class="mt-4">
+          <h6 class="mb-3 fw-bold">Generated Description:</h6>
+          <div class="ai-output">{{aiGeneratedDescription}}</div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" (click)="closeAIModal()">Cancel</button>
+        <button type="button" 
+                class="btn btn-primary" 
+                (click)="useGeneratedDescription()"
+                [disabled]="!aiGeneratedDescription">
+          Use This Description
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

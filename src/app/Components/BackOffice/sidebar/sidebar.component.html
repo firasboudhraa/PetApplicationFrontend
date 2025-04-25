@@ -1,28 +1,26 @@
 <div class="sidebar" data-background-color="dark">
-    <div class="sidebar-logo">
-      <!-- Logo Header -->
-      <div class="logo-header" data-background-color="dark">
-        <a routerLink="/home" class="logo">
-          <img
-            src="assets/images/logo.png"
-            alt="navbar brand"
-            class="navbar-brand"
-            height="60"
-          />
-        </a>
-        <div class="nav-toggle">
-          <button class="btn btn-toggle toggle-sidebar">
-            <i class="gg-menu-right"></i>
-          </button>
-          <button class="btn btn-toggle sidenav-toggler">
-            <i class="gg-menu-left"></i>
-          </button>
-        </div>
-        <button class="topbar-toggler more">
-          <i class="gg-more-vertical-alt"></i>
+  <div class="sidebar-logo">
+    <!-- Logo Header -->
+    <div class="logo-header" data-background-color="dark">
+      <a routerLink="/home" class="logo">
+        <img
+          src="assets/images/logo.png"
+          alt="navbar brand"
+          class="navbar-brand"
+          height="60"
+        />
+      </a>
+      <div class="nav-toggle">
+        <button class="btn btn-toggle toggle-sidebar">
+          <i class="gg-menu-right"></i>
+        </button>
+        <button class="btn btn-toggle sidenav-toggler">
+          <i class="gg-menu-left"></i>
         </button>
       </div>
-      <!-- End Logo Header -->
+      <button class="topbar-toggler more">
+        <i class="gg-more-vertical-alt"></i>
+      </button>
     </div>
     <div class="sidebar-wrapper scrollbar scrollbar-inner">
       <div class="sidebar-content">
@@ -57,6 +55,12 @@
             </a>
           </li>
           <li class="nav-item">
+            <a data-bs-toggle="collapse" routerLink="carnets">
+              <i class="fas fa-paw"></i>
+              <p>Carnets</p>
+            </a>
+          </li>
+          <li class="nav-item">
             <a (click)="togglePetsSubmenu()" role="button" [attr.aria-expanded]="isPetsSubmenuOpen" aria-controls="petsSubmenu">
               <i class="fas fa-dog"></i>
               <p>Pets</p>
@@ -88,6 +92,12 @@
             <a data-bs-toggle="collapse" href="#maps">
               <i class="fas fa-cube"></i>
               <p>Products</p>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a data-bs-toggle="collapse" routerLink="/dashboard/eventback" routerLinkActive="active">
+              <i class="fas fa-calendar-alt"></i>
+              <p>Events</p>
             </a>
           </li>
           <li class="nav-item">

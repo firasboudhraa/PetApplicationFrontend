@@ -1,19 +1,46 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
-import { UserDTO } from 'src/app/models/userDTO'; // Import UserDTO model
+import { Observable, of } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserService {
-  private apiUrl = 'http://localhost:8081/user';
+ 
+private currentUsers = [
+  { id: 1, name: 'Rayen Trabelsi' },
+  { id: 2, name: 'Mokhtar Snoussi' },
+  { id: 3, name: 'Yassine Drira' },
+  { id: 4, name: 'Roronoa Zoro' }
+];
 
-  constructor(private http: HttpClient) { }
+private currentUser = this.currentUsers[0]; 
 
-  // Fetch user by ID
-  getUserById(userId: number): Observable<UserDTO> {
-    return this.http.get<UserDTO>(`${this.apiUrl}/retrieve-user/${userId}`);
-  }
-  
+getCurrentUser() {
+  return this.currentUser;
+}
+
+getCurrentUserId(): number {
+  // from jwt stored in local storage
+  return this.currentUser.id;
+}
+
+getAllUsers() {
+  return this.currentUsers;
+}
+
+getUserById(id: number): Observable<{id: number, name: string}> {
+  const user = this.currentUsers.find(u => u.id === id);
+  return of(user || {id, name: `User ${id}`});
+}
+
+getUsersByIds(ids: number[]): Observable<{id: number, name: string}[]> {
+  const users = this.currentUsers.filter(user => ids.includes(user.id));
+  // Compléter avec des utilisateurs par défaut si certains ne sont pas trouvés
+  const result = ids.map(id => {
+    const found = users.find(u => u.id === id);
+    return found || {id, name: `User ${id}`};
+  });
+  return of(result);
+}
+
 }

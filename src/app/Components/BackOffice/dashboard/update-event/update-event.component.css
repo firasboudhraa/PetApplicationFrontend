@@ -1,0 +1,193 @@
+/* Style principal aligné avec le dashboard */
+.container {
+  padding: 30px;
+  margin-left: 250px;
+  width: calc(100% - 250px);
+  transition: all 0.3s ease;
+  margin-top: 60px;
+}
+
+/* Style de carte moderne comme le dashboard */
+.card {
+  border-radius: 10px;
+  border: none;
+  box-shadow: 0 0 40px 0 rgba(94, 92, 154, 0.06);
+  transition: all 0.3s ease;
+}
+
+.card:hover {
+  box-shadow: 0 5px 20px 0 rgba(94, 92, 154, 0.1);
+}
+
+.card-title {
+  font-weight: 600;
+  color: #3b3f5c;
+  position: relative;
+  padding-bottom: 15px;
+  text-align: center;
+  margin-bottom: 25px;
+}
+
+.card-title:after {
+  content: '';
+  position: absolute;
+  width: 50px;
+  height: 3px;
+  background: #4361ee;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+/* Style des formulaires */
+.form-control, .form-select {
+  border-radius: 6px;
+  padding: 10px 15px;
+  border: 1px solid #e0e6ed;
+  transition: all 0.3s;
+  background-color: #f5f7fa;
+}
+
+.form-control:focus, .form-select:focus {
+  border-color: #4361ee;
+  box-shadow: 0 0 0 0.2rem rgba(67, 97, 238, 0.25);
+  background-color: #fff;
+}
+
+/* Style des boutons */
+.btn {
+  padding: 10px 25px;
+  border-radius: 6px;
+  font-weight: 500;
+  transition: all 0.3s;
+  border: none;
+}
+
+.btn-primary {
+  background-color: #4361ee;
+}
+
+.btn-primary:hover {
+  background-color: #3a56d4;
+  transform: translateY(-2px);
+}
+
+.btn-secondary {
+  background-color: #888ea8;
+}
+
+.btn-secondary:hover {
+  background-color: #6c757d;
+  transform: translateY(-2px);
+}
+
+.btn-outline-secondary {
+  border-color: #e0e6ed;
+  color: #3b3f5c;
+}
+
+.btn-outline-secondary:hover {
+  background-color: #f5f7fa;
+}
+
+/* Messages d'erreur */
+.text-danger small {
+  font-size: 0.85rem;
+  color: #e7515a;
+}
+
+.alert {
+  border-radius: 8px;
+  border: none;
+}
+
+.alert-danger {
+  background-color: #fff5f5;
+  color: #e7515a;
+}
+
+/* Map styles */
+#map {
+  border-radius: 8px;
+  border: 1px solid #e0e6ed;
+  margin-bottom: 15px;
+}
+
+/* Autocomplete dropdown */
+.pac-container {
+  z-index: 1051 !important;
+  border-radius: 8px;
+  box-shadow: 0 5px 10px rgba(0,0,0,0.1);
+  border: none;
+}
+
+.pac-item {
+  padding: 8px 10px;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.pac-item:hover {
+  background-color: #f5f7fa;
+}
+
+/* Map modal in SweetAlert */
+.swal2-popup #mapModal {
+  height: 400px;
+  border-radius: 8px;
+}
+
+/* Responsive Design */
+@media (max-width: 992px) {
+  .container {
+    margin-left: 80px;
+    width: calc(100% - 80px);
+    padding: 20px;
+  }
+}
+
+@media (max-width: 768px) {
+  .container {
+    margin-left: 0;
+    width: 100%;
+    padding: 15px;
+  }
+  
+  .d-flex {
+    flex-direction: column;
+    gap: 10px;
+  }
+  
+  .btn {
+    width: 100%;
+  }
+
+  #map {
+    height: 250px;
+  }
+}
+
+/* Animation */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.card {
+  animation: fadeIn 0.4s ease forwards;
+}
+
+/* Style pour SweetAlert2 */
+.swal2-popup {
+  border-radius: 12px !important;
+  font-family: inherit !important;
+}
+
+.swal2-title {
+  font-size: 1.3rem !important;
+  color: #2c3e50 !important;
+}
+
+.swal2-confirm, .swal2-cancel {
+  padding: 8px 20px !important;
+  font-weight: 500 !important;
+}

@@ -11,6 +11,12 @@ import { ContactInfoComponent } from './Components/FrontOffice/contact-info/cont
 import { PostDetailComponent } from './Components/FrontOffice/post-detail/post-detail.component';
 import { AddPostComponent } from './Components/FrontOffice/add-post/add-post.component';
 import { ModifyPostComponent } from './Components/FrontOffice/modify-post/modify-post.component';
+import { DonationComponent } from './Components/FrontOffice/EventDonation/donation/donation.component';
+import { AddDonationComponent } from './Components/FrontOffice/EventDonation/add-donation/add-donation.component';
+import { EventComponent } from './Components/FrontOffice/EventDonation/event/event.component';
+import { EventDetailComponent } from './Components/FrontOffice/EventDonation/event-detail/event-detail.component';
+import { RangePipe } from './Components/FrontOffice/EventDonation/event/range.pipe';
+
 import { DashboardComponent } from './Components/BackOffice/dashboard/dashboard.component';
 import { HeaderComponent } from './Components/BackOffice/header/header.component';
 import { SidebarComponent } from './Components/BackOffice/sidebar/sidebar.component';
@@ -18,16 +24,16 @@ import { PostsComponent } from './Components/BackOffice/dashboard/posts/posts.co
 import { GeminiChatComponent } from './Components/FrontOffice/gemini-chat/gemini-chat.component';
 import { PickerModule } from '@ctrl/ngx-emoji-mart';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { BaseChartDirective } from 'ng2-charts';
 import { Chart, registerables } from 'chart.js';
 import { PopoverModule } from 'ngx-bootstrap/popover';
+
+
 
 Chart.register(...registerables);
 import { FooterComponent } from './Components/FrontOffice/footer/footer.component';
 import { HomeComponent } from './Components/FrontOffice/home/home.component';
-import { ServiceComponent } from './Components/FrontOffice/service/service.component';
-import { AddServiceComponent } from './Components/FrontOffice/add-service/add-service.component';
-import { DetailServiceComponent } from './Components/FrontOffice/detail-service/detail-service.component';
+
 import { PetCardComponent } from './Components/Pets/user-pets/pet-card/pet-card.component';
 import { AddPetModalComponent } from './Components/Pets/user-pets/add-pet-modal/add-pet-modal.component';
 import { PetDetailModalComponent } from './Components/Pets/user-pets/pet-detail-modal/pet-detail-modal.component';
@@ -35,6 +41,7 @@ import { EditPetModalComponent } from './Components/Pets/user-pets/edit-pet-moda
 import { UserPetsComponent } from './Components/Pets/user-pets/user-pets.component';
 import { PublicPetsComponent } from './Components/Pets/public-pets/public-pets.component';
 import { PublicPetCardComponent } from './Components/Pets/public-pets/public-pet-card/public-pet-card.component';
+import { PublicPetDetailModalComponent } from './Components/Pets/public-pets/public-pet-detail-modal/public-pet-detail-modal.component';
 import { AdoptionRequestComponent } from './Components/AdoptionRequest/adoption-request/adoption-request.component';
 import { AdoptionRequestDashbordComponent } from './Components/AdoptionRequest/adoption-request-dashbord/adoption-request-dashbord.component';
 import { SentRequestComponent } from './Components/AdoptionRequest/adoption-request-dashbord/sent-request/sent-request.component';
@@ -49,19 +56,35 @@ import { PetSittingSpaceComponent } from './Components/PetSitting/pet-sitting-sp
 import { DisplayOffersComponent } from './Components/PetSitting/pet-sitting-space/display-offers/display-offers.component';
 import { TrackOffersComponent } from './Components/PetSitting/pet-sitting-space/track-offers/track-offers.component';
 import { NavbarComponent } from './Components/FrontOffice/navbar/navbar.component';
+
+
 import { MedicalnotebookComponent } from './medicalnotebook/medicalnotebook.component';
 import { MedicalnotebookFormComponent } from './medicalnotebook-form/medicalnotebook-form.component';
 import { UsersComponent } from './Components/BackOffice/dashboard/users/users.component';
 import { RecordsComponent } from './Components/BackOffice/dashboard/records/records.component';
 import { StatsComponent } from './stats/stats.component';
-import {  NgChartsModule } from 'ng2-charts';
+import { NgChartsModule } from 'ng2-charts';
 import { AgendaComponent } from './agenda/agenda.component';
 import { FullCalendarModule } from '@fullcalendar/angular';
 import { EditrecordComponent } from './editrecord/editrecord.component';
 import { DetailComponent } from './detail/detail.component';
 import { RouterModule } from '@angular/router';
 import { ChatAIComponent } from './chat-ai/chat-ai.component';
-import { PublicPetDetailModalComponent } from './Components/Pets/public-pets/public-pet-detail-modal/public-pet-detail-modal.component';
+import { RegisterComponent } from './Components/FrontOffice/user/register/register.component';
+import { UserProfileComponent } from './Components/FrontOffice/user/user-profile/user-profile.component';
+import { EditProfileComponent } from './Components/FrontOffice/user/edit-profile/edit-profile.component';
+import { LoginComponent } from './Components/FrontOffice/user/login/login.component';
+import { UserProfileModalComponent } from './Components/FrontOffice/user/user-profile-modal/user-profile-modal.component';
+import { ResetPasswordComponent } from './Components/FrontOffice/user/reset-password/reset-password.component';
+import { ForgotPasswordComponent } from './Components/FrontOffice/user/forgot-password/forgot-password.component';
+import { UsersCarnetComponent } from './Components/BackOffice/dashboard/users/users-carnet/users-carnet.component';
+import { EventbackComponent } from './Components/BackOffice/dashboard/eventback/eventback.component';
+import { UpdateEventComponent } from './Components/BackOffice/dashboard/update-event/update-event.component';
+import { AddEventComponent } from './Components/BackOffice/dashboard/add-event/add-event.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { LeaderboardComponent } from './Components/FrontOffice/EventDonation/leaderboard/leaderboard.component';
+import { Nl2BrPipe } from './Components/BackOffice/dashboard/add-event/nl2br.pipe';
+
 @NgModule({
   declarations: [
     AboutComponentComponent,
@@ -80,13 +103,7 @@ import { PublicPetDetailModalComponent } from './Components/Pets/public-pets/pub
     GeminiChatComponent,
     FooterComponent,
     HomeComponent,
-    ServiceComponent,
-    AddServiceComponent,
-    DetailServiceComponent,
     PetCardComponent,
-    AddServiceComponent,
-    DetailServiceComponent,
-    ServiceComponent,
     AddPetModalComponent,
     PetDetailModalComponent,
     EditPetModalComponent,
@@ -100,6 +117,11 @@ import { PublicPetDetailModalComponent } from './Components/Pets/public-pets/pub
     ReceivedRequestComponent,
     MedicalnotebookComponent,
     MedicalnotebookFormComponent,
+    DonationComponent,
+    AddDonationComponent,
+    EventComponent,
+    EventDetailComponent,
+    RangePipe,
     DashboardComponent,
     UsersComponent,
     SidebarComponent,
@@ -115,7 +137,22 @@ import { PublicPetDetailModalComponent } from './Components/Pets/public-pets/pub
     AgendaComponent,
     EditrecordComponent,
     DetailComponent,
-    ChatAIComponent
+    ChatAIComponent,
+    /*user components*/
+    RegisterComponent,
+    UserProfileComponent,
+    LoginComponent,
+    UserProfileModalComponent,
+    EditProfileComponent,
+    ResetPasswordComponent ,
+  ForgotPasswordComponent,
+UsersComponent,
+UsersCarnetComponent,
+    EventbackComponent,
+    UpdateEventComponent,
+    AddEventComponent,
+    LeaderboardComponent,
+    Nl2BrPipe
   ],
   imports: [
     BrowserAnimationsModule,  
@@ -126,14 +163,15 @@ import { PublicPetDetailModalComponent } from './Components/Pets/public-pets/pub
     HttpClientModule,
     PickerModule,
     MatSnackBarModule,
-    NgChartsModule,
     PopoverModule.forRoot(),
     BrowserAnimationsModule,
     MatButtonModule,
     MatIconModule,
     MatTooltipModule,
+    NgChartsModule ,
     FullCalendarModule, 
 
+    BrowserAnimationsModule,
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   providers: [],
