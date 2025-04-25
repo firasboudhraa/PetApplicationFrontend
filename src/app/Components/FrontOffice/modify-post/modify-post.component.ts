@@ -3,7 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { PostsService } from 'src/app/Services/posts.service';
 import { Post } from 'src/app/models/Post';
-import { UserService } from 'src/app/Services/user.service';
+import { UserService } from 'src/app/Components/FrontOffice/user/service_user/user.service';
 
 
 @Component({
@@ -39,7 +39,6 @@ fileName: string | null = null;  // Pour stocker le nom du fichier
     private postService: PostsService,
     private route: ActivatedRoute,
     public router: Router,
-    private userService: UserService
   ) {
     this.postForm = this.fb.group({
       title: ['', Validators.required],

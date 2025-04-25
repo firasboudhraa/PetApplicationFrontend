@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { PostsService } from 'src/app/Services/posts.service';
 import { Post } from 'src/app/models/Post';
-import { UserService } from 'src/app/Services/user.service';
-import { UserDTO } from 'src/app/models/userDTO';
+import { UserService } from 'src/app/Components/FrontOffice/user/service_user/user.service';
 import { CommentService } from 'src/app/Services/comments.service';
+import { User } from '../user/models/user_model';
 
 @Component({
   selector: 'app-blog-component',
@@ -86,8 +86,8 @@ export class BlogComponentComponent implements OnInit {
   fetchUserNames(): void {
     this.posts.forEach(post => {
       this.userService.getUserById(post.userId).subscribe(
-        (user: UserDTO) => {
-          this.userNames.set(post.userId, user.name);
+        (user: User) => {
+          this.userNames.set(post.userId, `${user.firstName} ${user.lastName}`);
         },
         (error) => {
           console.error('Error fetching user by ID', error);

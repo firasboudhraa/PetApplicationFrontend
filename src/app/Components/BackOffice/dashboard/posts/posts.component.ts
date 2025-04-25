@@ -1,15 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 import { PostsService } from 'src/app/Services/posts.service';
-import { UserService } from 'src/app/Services/user.service';
+import { UserService } from 'src/app/Components/FrontOffice/user/service_user/user.service';
 import { CommentService } from 'src/app/Services/comments.service';
 import { Post } from 'src/app/models/Post';
-import { UserDTO } from 'src/app/models/userDTO';
 import { Comment } from 'src/app/models/Comment';
 import { Router } from '@angular/router';
 import { jsPDF } from 'jspdf';
 import { ChartConfiguration, ChartData, ChartType } from 'chart.js';
 import { Chart } from 'chart.js';
 import ChartDataLabels from 'chartjs-plugin-datalabels';
+import { User } from 'src/app/Components/FrontOffice/user/models/user_model';
 
 @Component({
   selector: 'app-posts',
@@ -18,7 +18,7 @@ import ChartDataLabels from 'chartjs-plugin-datalabels';
 })
 export class PostsComponent implements OnInit {
   posts: Post[] = [];
-  authors: { [key: number]: UserDTO } = {};
+  authors: { [key: number]: User } = {};
   commentCounts: { [key: number]: number } = {};
   likeCounts: { [key: number]: number } = {};
   userNames: Map<number, string> = new Map();
@@ -108,7 +108,7 @@ export class PostsComponent implements OnInit {
         if (!this.authors[post.id]) {
           this.userService.getUserById(post.userId).subscribe(user => {
             this.authors[post.id] = user;
-            this.userNames.set(post.userId, user.name);
+            this.userNames.set(post.userId, user.firstName + ' ' + user.lastName);
           });
         }
 
@@ -121,7 +121,7 @@ export class PostsComponent implements OnInit {
             comments.forEach(comment => {
               if (!this.userNames.has(comment.userId)) {
                 this.userService.getUserById(comment.userId).subscribe(user => {
-                  this.userNames.set(comment.userId, user.name);
+                  this.userNames.set(comment.userId, user.firstName + ' ' + user.lastName);
                 });
               }
             });
