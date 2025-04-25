@@ -17,7 +17,7 @@ export class LoginComponent {
 
   showModal = false;
   modalMessage = '';
-  modalType: 'success' | 'error' = 'success';  // Default to success
+  modalType: 'success' | 'error' = 'success';  
   showPassword = false;
 
   constructor(
@@ -35,7 +35,7 @@ export class LoginComponent {
       this.authService.login(credentials).subscribe({
         next: () => {
           this.modalMessage = 'Login successful!';
-          this.modalType = 'success';  // Success modal type
+          this.modalType = 'success';
           this.showModal = true;
 
           setTimeout(() => {
@@ -45,7 +45,7 @@ export class LoginComponent {
         },
         error: (err) => {
           this.modalMessage = err.error?.message || 'Login failed. Please check your credentials.';
-          this.modalType = 'error';  // Error modal type
+          this.modalType = 'error'; 
           this.showModal = true;
 
           setTimeout(() => {
@@ -55,7 +55,7 @@ export class LoginComponent {
       });
     } else {
       this.modalMessage = 'Please fill in all required fields correctly.';
-      this.modalType = 'error';  // Error modal type for invalid form
+      this.modalType = 'error';  
       this.showModal = true;
 
       setTimeout(() => {

@@ -11,7 +11,7 @@ import { User, UserUpdateRequest } from '../models/user_model';
 export class adminService {
 
   constructor(private http : HttpClient) { }
-  private apiUrl = 'http://localhost:8081/api/admin'; ;
+  private apiUrl = 'http://localhost:8084/api/admin'; ;
 
 getAllUsers(): Observable<User[]> {
     return this.http.get<User[]>(`${this.apiUrl}/retrieve-all-users`);

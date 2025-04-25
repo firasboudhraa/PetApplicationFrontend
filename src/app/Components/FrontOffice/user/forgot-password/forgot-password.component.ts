@@ -13,7 +13,6 @@ export class ForgotPasswordComponent implements OnInit {
   message = '';
   error = '';
 
-  // Define a regex pattern for a valid email format
   emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
 
   constructor(private fb: FormBuilder, private authService: AuthService) {}

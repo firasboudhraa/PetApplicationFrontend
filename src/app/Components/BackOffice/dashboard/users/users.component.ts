@@ -27,7 +27,6 @@ export class UsersComponent implements OnInit {
       },
       error: (err) => {
         console.error('Error fetching users:', err);
-        // Handle error (show message to user)
       }
     });
   }
@@ -64,7 +63,6 @@ export class UsersComponent implements OnInit {
   }
 
   createNewUser(): void {
-    // Handle creating a new user (e.g., navigate to a form or show a modal)
     console.log('Creating new user...');
   }
 }

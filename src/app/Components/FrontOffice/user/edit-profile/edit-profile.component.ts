@@ -20,7 +20,6 @@ export class EditProfileComponent implements OnInit {
     bio: '' 
   };
   
-  // Add these new properties
   availableRoles: string[] = ['PET_OWNER', 'VETERINARIAN', "SERVICE_PROVIDER"]; 
   selectedRole: string = '';
   password: string = '';
@@ -58,7 +57,6 @@ export class EditProfileComponent implements OnInit {
     this.userService.getUserById(userId).subscribe({
       next: (data: User) => {
         this.user = { ...data };
-        // Initialize selectedRole with current role
         this.selectedRole = typeof this.user.roles === 'string' 
           ? this.user.roles 
           : this.user.roles[0]?.name || '';
@@ -87,13 +85,10 @@ export class EditProfileComponent implements OnInit {
       selectedFile: this.selectedFile,
     }));
   
-    // Append the profile image if selected
     if (this.selectedFile) {
-      formData.append('image', this.selectedFile); // Assuming backend expects 'image'
+      formData.append('image', this.selectedFile); 
     }
-  
-    // Now make the update request with the correct formData
-    this.userService.updateUserWithImage(formData, this.user.id).subscribe({
+      this.userService.updateUserWithImage(formData, this.user.id).subscribe({
       next: () => {
         this.toastr.success('Profile updated successfully');
         this.router.navigate(['/profile']);
@@ -132,7 +127,7 @@ export class EditProfileComponent implements OnInit {
   
   private formatRoleName(role: string): string {
     return role.toLowerCase()
-      .replace(/_/g, ' ')  // Replace underscores with spaces
-      .replace(/\b\w/g, (l) => l.toUpperCase());  // Capitalize each word
+      .replace(/_/g, ' ')  
+      .replace(/\b\w/g, (l) => l.toUpperCase()); 
   }
 }

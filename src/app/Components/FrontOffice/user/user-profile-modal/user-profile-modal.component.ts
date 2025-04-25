@@ -9,21 +9,20 @@ import { UserService } from '../service_user/user.service';  // Import UserServi
 })
 export class UserProfileModalComponent implements OnInit {
   @Input() isVisible: boolean = false;
-  @Input() userId: number = 0; // Input property to accept userId
+  @Input() userId: number = 0; 
   @Output() closeModal = new EventEmitter<void>();
 
-  prefrencesForm!: FormGroup;  // Use the '!' to assert it will be initialized
-  preferences: any;  // Store user preferences
+  prefrencesForm!: FormGroup;  
+  preferences: any; 
   isLoading = true;
   errorMessage = '';
 
   constructor(
-    private fb: FormBuilder,  // FormBuilder for easy form creation
+    private fb: FormBuilder, 
     private userService: UserService
   ) {}
 
   ngOnInit(): void {
-    // Initialize the form group with form controls
     this.prefrencesForm = this.fb.group({
       lifestyle: ['', Validators.required],
       experience: ['', Validators.required],

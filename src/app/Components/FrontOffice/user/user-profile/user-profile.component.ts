@@ -66,9 +66,9 @@ export class UserProfileComponent implements OnInit {
     } else if (this.user.profileImageUrl.startsWith('http')) {
         url = this.user.profileImageUrl;
     } else if (this.user.profileImageUrl.startsWith('/api/user/images/')) {
-        url = `http://localhost:8081${this.user.profileImageUrl}`;
+        url = `http://localhost:8084${this.user.profileImageUrl}`;
     } else {
-        url = `http://localhost:8081/api/user/images/${this.user.profileImageUrl}`;
+        url = `http://localhost:8084/api/user/images/${this.user.profileImageUrl}`;
     }
     return `${url}?v=${this.imageTimestamp}`;
   }
