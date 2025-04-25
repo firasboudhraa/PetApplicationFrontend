@@ -1,0 +1,36 @@
+.carnet-hover:hover {
+  transform: scale(1.01);
+  box-shadow: 0 10px 20px rgba(78, 115, 223, 0.2);
+}
+.carnet-hover {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  cursor: pointer;
+} 
+.button-container {
+  display: flex;
+  flex-direction: column; /* Disposition en colonne */
+  gap: 10px; /* Espacement entre les boutons */
+  margin-top: 20px;
+}
+
+.sticky-top {
+  position: sticky;
+  top: 80px; /* S'assurer que les éléments sont fixés au top lors du défilement */
+  z-index: 100; /* Priorité de superposition si nécessaire */
+}
+
+.btn {
+  font-size: 1rem; /* Taille uniforme des boutons */
+  padding: 10px 20px;
+  border-radius: 5px;
+}
+
+@media (max-width: 768px) {
+  .button-container {
+    gap: 15px;
+  }
+
+  .btn {
+    font-size: 0.9rem;
+  }
+}

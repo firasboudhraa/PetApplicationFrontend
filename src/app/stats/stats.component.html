@@ -1,0 +1,54 @@
+<div class="container mt-5">
+  <h2 class="text-center mb-4" style="color: #4e73df;">📈 Statistiques Poids des Carnets</h2>
+
+  <!-- 🔽 Menu déroulant -->
+  <div class="mb-4">
+    <label for="carnetSelect" class="form-label">Sélectionnez un carnet :</label>
+    <select id="carnetSelect" class="form-control" [(ngModel)]="selectedCarnetId" (change)="onCarnetSelected()">
+      <option [ngValue]="null">-- Choisir un carnet --</option>
+      <option *ngFor="let carnet of carnets" [ngValue]="carnet.id">
+        {{ carnet.name }}
+      </option>
+    </select>
+  </div>
+
+  <!-- 📊 Graphique élargi -->
+  <div *ngIf="lineChartData" class="chart-card">
+    <canvas baseChart
+            [data]="lineChartData"
+            [options]="lineChartOptions"
+            [type]="'line'">
+    </canvas>
+  </div>
+
+  <div *ngIf="!lineChartData && selectedCarnetId !== null" class="alert alert-info mt-4">
+    Aucune donnée de poids disponible pour ce carnet.
+  </div>
+  <button type="button" (click)="retour()" class="btn btn-primary" >Retour</button>
+
+</div>
+
+
+<!-- 💬 Chat Messenger flottant -->
+<div class="chat-box" [class.minimized]="isChatMinimized">
+  <div class="chat-header" (click)="toggleChat()">
+    <span>🐾 Pet Chat Assistant</span>
+    <span class="toggle-icon">{{ isChatMinimized ? '▲' : '▼' }}</span>
+  </div>
+
+  <div class="chat-body" *ngIf="!isChatMinimized">
+    <div class="chat-messages">
+  <div *ngIf="isLoading" class="loading">Generating response...</div>
+  
+  <div *ngFor="let msg of responseHistory" class="chat-response">
+    {{ msg }}
+  </div>
+</div>
+
+
+    <div class="chat-input-container">
+      <input type="text" #userPrompt placeholder="Ask a question..." class="chat-input" />
+      <button (click)="askQuestion(userPrompt.value)" class="send-button">Send</button>
+    </div>
+  </div>
+</div>

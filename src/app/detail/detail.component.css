@@ -1,0 +1,33 @@
+.text-gradient {
+  background: linear-gradient(90deg, #007bff, #00c9a7);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  transition: transform 0.3s ease;
+}
+
+img.record-image {
+  transition: transform 0.3s ease;
+}
+
+img.record-image:hover {
+  transform: scale(1.05);
+}
+
+button.btn-outline-primary,
+button.btn-outline-danger {
+  transition: all 0.2s ease-in-out;
+}
+
+button.btn-outline-primary:hover {
+  background-color: #007bff;
+  color: white;
+}
+
+button.btn-outline-danger:hover {
+  background-color: #dc3545;
+  color: white;
+}

@@ -19,11 +19,8 @@ import { GeminiChatComponent } from './Components/FrontOffice/gemini-chat/gemini
 import { PickerModule } from '@ctrl/ngx-emoji-mart';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { BaseChartDirective } from 'ng2-charts';
 import { Chart, registerables } from 'chart.js';
 import { PopoverModule } from 'ngx-bootstrap/popover';
-
-
 
 Chart.register(...registerables);
 import { FooterComponent } from './Components/FrontOffice/footer/footer.component';
@@ -31,7 +28,6 @@ import { HomeComponent } from './Components/FrontOffice/home/home.component';
 import { ServiceComponent } from './Components/FrontOffice/service/service.component';
 import { AddServiceComponent } from './Components/FrontOffice/add-service/add-service.component';
 import { DetailServiceComponent } from './Components/FrontOffice/detail-service/detail-service.component';
-import { UsersComponent } from './Components/BackOffice/dashboard/users/users.component';
 import { PetCardComponent } from './Components/Pets/user-pets/pet-card/pet-card.component';
 import { AddPetModalComponent } from './Components/Pets/user-pets/add-pet-modal/add-pet-modal.component';
 import { PetDetailModalComponent } from './Components/Pets/user-pets/pet-detail-modal/pet-detail-modal.component';
@@ -39,7 +35,6 @@ import { EditPetModalComponent } from './Components/Pets/user-pets/edit-pet-moda
 import { UserPetsComponent } from './Components/Pets/user-pets/user-pets.component';
 import { PublicPetsComponent } from './Components/Pets/public-pets/public-pets.component';
 import { PublicPetCardComponent } from './Components/Pets/public-pets/public-pet-card/public-pet-card.component';
-import { PublicPetDetailModalComponent } from 'src/app/Components/Pets/public-pets/public-pet-detail-modal/public-pet-detail-modal.component';
 import { AdoptionRequestComponent } from './Components/AdoptionRequest/adoption-request/adoption-request.component';
 import { AdoptionRequestDashbordComponent } from './Components/AdoptionRequest/adoption-request-dashbord/adoption-request-dashbord.component';
 import { SentRequestComponent } from './Components/AdoptionRequest/adoption-request-dashbord/sent-request/sent-request.component';
@@ -54,8 +49,19 @@ import { PetSittingSpaceComponent } from './Components/PetSitting/pet-sitting-sp
 import { DisplayOffersComponent } from './Components/PetSitting/pet-sitting-space/display-offers/display-offers.component';
 import { TrackOffersComponent } from './Components/PetSitting/pet-sitting-space/track-offers/track-offers.component';
 import { NavbarComponent } from './Components/FrontOffice/navbar/navbar.component';
-
-
+import { MedicalnotebookComponent } from './medicalnotebook/medicalnotebook.component';
+import { MedicalnotebookFormComponent } from './medicalnotebook-form/medicalnotebook-form.component';
+import { UsersComponent } from './Components/BackOffice/dashboard/users/users.component';
+import { RecordsComponent } from './Components/BackOffice/dashboard/records/records.component';
+import { StatsComponent } from './stats/stats.component';
+import {  NgChartsModule } from 'ng2-charts';
+import { AgendaComponent } from './agenda/agenda.component';
+import { FullCalendarModule } from '@fullcalendar/angular';
+import { EditrecordComponent } from './editrecord/editrecord.component';
+import { DetailComponent } from './detail/detail.component';
+import { RouterModule } from '@angular/router';
+import { ChatAIComponent } from './chat-ai/chat-ai.component';
+import { PublicPetDetailModalComponent } from './Components/Pets/public-pets/public-pet-detail-modal/public-pet-detail-modal.component';
 @NgModule({
   declarations: [
     AboutComponentComponent,
@@ -92,6 +98,8 @@ import { NavbarComponent } from './Components/FrontOffice/navbar/navbar.componen
     AdoptionRequestDashbordComponent,
     SentRequestComponent,
     ReceivedRequestComponent,
+    MedicalnotebookComponent,
+    MedicalnotebookFormComponent,
     DashboardComponent,
     UsersComponent,
     SidebarComponent,
@@ -102,7 +110,13 @@ import { NavbarComponent } from './Components/FrontOffice/navbar/navbar.componen
     PetSittingSpaceComponent,
     DisplayOffersComponent,
     TrackOffersComponent,
-    ],
+    RecordsComponent,
+    StatsComponent,
+    AgendaComponent,
+    EditrecordComponent,
+    DetailComponent,
+    ChatAIComponent
+  ],
   imports: [
     BrowserAnimationsModule,  
     BrowserModule,
@@ -112,14 +126,13 @@ import { NavbarComponent } from './Components/FrontOffice/navbar/navbar.componen
     HttpClientModule,
     PickerModule,
     MatSnackBarModule,
-    BaseChartDirective,
+    NgChartsModule,
     PopoverModule.forRoot(),
     BrowserAnimationsModule,
     MatButtonModule,
     MatIconModule,
-    MatTooltipModule
-
-
+    MatTooltipModule,
+    FullCalendarModule, 
 
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
