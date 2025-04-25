@@ -99,17 +99,29 @@
             data-bs-toggle="dropdown"
             aria-haspopup="true"
             aria-expanded="false"
+            (click)="openNotifications()"
           >
             <i class="fa fa-bell"></i>
+            <!-- Display the number of notifications dynamically -->
+            <span class="notification">{{ unreadCount }}</span>
           </a>
-          <ul
-            class="dropdown-menu notif-box animated fadeIn"
-            aria-labelledby="notifDropdown"
-          >
+          <ul class="dropdown-menu notif-box animated fadeIn" aria-labelledby="notifDropdown">
+            <li>
+              <div class="dropdown-title">
+                You have {{ unreadCount }} new notifications
+              </div>
+            </li>
             <li>
             </li>
+            <li>
+              <a class="see-all" href="javascript:void(0);">
+                See all notifications
+                <i class="fa fa-angle-right"></i>
+              </a>
+            </li>
           </ul>
-        </li>
+        </li>                    
+        
         <li class="nav-item topbar-icon dropdown hidden-caret">
           <a
             class="nav-link"
@@ -130,14 +142,14 @@
           >
             <div class="avatar-sm">
               <img
-                src="assets/img/profile.jpg"
+                src="https://cdn.vectorstock.com/i/1000v/51/87/student-avatar-user-profile-icon-vector-47025187.jpg"
                 alt="..."
                 class="avatar-img rounded-circle"
               />
             </div>
             <span class="profile-username">
               <span class="op-7">Hi,</span>
-              <span class="fw-bold">Hizrian</span>
+              <span class="fw-bold">Firas</span>
             </span>
           </a>
           <ul class="dropdown-menu dropdown-user animated fadeIn">
@@ -152,7 +164,7 @@
                     />
                   </div>
                   <div class="u-text">
-                    <h4>Hizrian</h4>
+                    <h4>Firas</h4>
                     <p class="text-muted"></p>
                     <a
                       href="profile.html"
