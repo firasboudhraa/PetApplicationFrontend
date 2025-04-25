@@ -3,8 +3,10 @@
   <div class="form-group">
     <label for="nom">Nom du produit</label>
     <input type="text" id="nom" class="form-control" formControlName="nom" />
-    <div *ngIf="productForm.get('nom')?.invalid && productForm.get('nom')?.touched" class="text-danger">
-      Le nom du produit est requis.
+    <div class="text-danger" *ngIf="productForm.get('nom')?.touched && productForm.get('nom')?.invalid">
+      <div *ngIf="productForm.get('nom')?.errors?.['required']">Le nom est requis.</div>
+      <div *ngIf="productForm.get('nom')?.errors?.['minlength']">Le nom doit contenir au moins 3 caractères.</div>
+      <div *ngIf="productForm.get('nom')?.errors?.['maxlength']">Le nom ne doit pas dépasser 10 caractères.</div>
     </div>
   </div>
 
@@ -12,18 +14,21 @@
   <div class="form-group">
     <label for="description">Description</label>
     <textarea id="description" class="form-control" formControlName="description"></textarea>
-    <div *ngIf="productForm.get('description')?.invalid && productForm.get('description')?.touched" class="text-danger">
-      La description est requise.
-    </div>
+    <div class="text-danger" *ngIf="productForm.get('description')?.touched && productForm.get('description')?.invalid">
+    <div *ngIf="productForm.get('description')?.errors?.['required']">La description est requise.</div>
+    <div *ngIf="productForm.get('description')?.errors?.['minlength']">La description doit contenir au moins 5 caractères.</div>
+    <div *ngIf="productForm.get('description')?.errors?.['maxlength']">La description ne doit pas dépasser 100 caractères.</div>
+  </div>
   </div>
 
   <!-- Prix -->
   <div class="form-group">
     <label for="prix">Prix</label>
     <input type="number" id="prix" class="form-control" formControlName="prix" />
-    <div *ngIf="productForm.get('prix')?.invalid && productForm.get('prix')?.touched" class="text-danger">
-      Le prix doit être supérieur à 0.
-    </div>
+    <div *ngIf="productForm.get('prix')?.touched && productForm.get('prix')?.invalid" class="text-danger">
+    <div *ngIf="productForm.get('prix')?.errors?.['required']">Le prix est requis.</div>
+    <div *ngIf="productForm.get('prix')?.errors?.['min']">Le prix doit être supérieur à 0.</div>
+  </div>
   </div>
 
   <!-- Catégorie -->
@@ -45,18 +50,23 @@
   <div class="form-group">
     <label for="stock">Stock disponible</label>
     <input type="number" id="stock" class="form-control" formControlName="stock" />
-    <div *ngIf="productForm.get('stock')?.invalid && productForm.get('stock')?.touched" class="text-danger">
-      Le stock doit être supérieur ou égal à 0.
-    </div>
+    <div *ngIf="productForm.get('stock')?.touched && productForm.get('stock')?.invalid" class="text-danger">
+    <div *ngIf="productForm.get('stock')?.errors?.['required']">Le stock est requis.</div>
+      <div *ngIf="productForm.get('stock')?.errors?.['min']">Le stock ne peut pas être négatif.</div>
+  </div>
   </div>
 
   <!-- Seuil d'alerte de stock -->
   <div class="form-group">
     <label for="lowStockThreshold">Seuil d'alerte de stock</label>
     <input type="number" id="lowStockThreshold" class="form-control" formControlName="lowStockThreshold" />
-    <div *ngIf="productForm.get('lowStockThreshold')?.invalid && productForm.get('lowStockThreshold')?.touched" class="text-danger">
-      Le seuil d'alerte doit être supérieur ou égal à 0.
+    <div class="text-danger" *ngIf="productForm.get('lowStockThreshold')?.touched && productForm.get('lowStockThreshold')?.invalid">
+    <div *ngIf="productForm.get('lowStockThreshold')?.errors?.['required']">Le seuil est requis.</div>
+    <div *ngIf="productForm.get('lowStockThreshold')?.errors?.['lowStockThresholdExceedsStock']">
+      Le seuil d'alerte ne peut pas dépasser le stock disponible.
     </div>
+    <div *ngIf="productForm.get('lowStockThreshold')?.errors?.['min']">Le seuil ne peut pas être négatif.</div>
+  </div>
   </div>
 
   <!-- Aperçu de l'image -->

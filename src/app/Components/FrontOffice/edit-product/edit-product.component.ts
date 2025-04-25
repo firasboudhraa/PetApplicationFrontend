@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { ProductService } from '../../../Services/FrontOffice/product-service.service';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { ProductService } from '../../../Services/product-service.service';
+import { FormBuilder, FormGroup, Validators, AbstractControl  } from '@angular/forms';
 import Swal from 'sweetalert2'; // Importation de SweetAlert2
 
 @Component({
@@ -24,12 +24,13 @@ export class EditProductComponent implements OnInit {
     this.productForm = this.fb.group({
       nom: ['', Validators.required],
       description: ['', Validators.required],
-      prix: ['', [Validators.required, Validators.min(1)]],
+      prix: ['', [Validators.required, Validators.min(0.01), Validators.pattern('^\\d+(\\.\\d{1,2})?$')]],  // Ajout de la validation du prix avec deux décimales max
       category: ['cat1', Validators.required],
       stock: [0, [Validators.required, Validators.min(0)]],
       lowStockThreshold: [0, Validators.min(0)],
       image: ['']
     });
+    
   }
 
   ngOnInit(): void {
@@ -52,11 +53,13 @@ export class EditProductComponent implements OnInit {
         };
 
         const mappedCategory = categoryMapping[product.category] || product.category;
+        const lowStockThreshold = product.lowStockThreshold > product.stock ? product.stock : product.lowStockThreshold;
+
 
         this.productForm.patchValue({
           nom: product.nom,
           description: product.description,
-          prix: product.prix,
+          prix: Number(product.prix), 
           category: mappedCategory,
           stock: product.stock,
           lowStockThreshold: product.lowStockThreshold,
@@ -85,6 +88,17 @@ export class EditProductComponent implements OnInit {
     }
   }
 
+  stockThresholdValidator(control: AbstractControl): { [key: string]: boolean } | null {
+    const stock = control.get('stock')?.value;
+    const lowStockThreshold = control.get('lowStockThreshold')?.value;
+  
+    if (lowStockThreshold > stock) {
+      return { 'lowStockThresholdExceedsStock': true };
+    }
+    return null;
+  }
+  
+
   onSubmit(): void {
     if (this.productForm.valid) {
       const formValues = this.productForm.value;
@@ -92,7 +106,7 @@ export class EditProductComponent implements OnInit {
   
       formData.append('nom', formValues.nom);
       formData.append('description', formValues.description);
-      formData.append('prix', formValues.prix.toString());
+      formData.append('prix', Number(formValues.prix).toString()); 
       formData.append('category', formValues.category);
       formData.append('stock', formValues.stock.toString());
       formData.append('quantity', formValues.lowStockThreshold.toString());

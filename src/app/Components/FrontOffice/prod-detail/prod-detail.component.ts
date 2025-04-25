@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { ProductService } from '../../../Services/FrontOffice/product-service.service'; 
+import { ProductService } from '../../../Services/product-service.service'; 
 import { Product } from '../../../models/product';
-import { BasketService } from '../../../Services/FrontOffice/basket.service'; 
+import { BasketService } from '../../../Services/basket.service'; 
 import Swal from 'sweetalert2'; // Pour afficher des messages d'alerte
 
 @Component({

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { BasketService } from '../../../Services/FrontOffice/basket.service'; 
-import { ProductService } from 'src/app/Services/FrontOffice/product-service.service'; 
+import { BasketService } from '../../../Services/basket.service'; 
+import { ProductService } from 'src/app/Services/product-service.service'; 
 import { Basket } from '../../../models/basket'; 
 import { Product } from '../../../models/product';
 import Swal from 'sweetalert2';
@@ -183,14 +183,20 @@ export class NavbarComponent implements OnInit {
   }
 
   increaseQuantity(product: Product): void {
-    // Vérification de la quantité maximale disponible en stock
-    const maxQuantity = product.stock; // Utiliser 'stock' pour la quantité maximale
+    const maxQuantity = product.stock;
   
     if (product.quantity < maxQuantity) {
       product.quantity++;
-      this.updateTotal();
+  
+      // Appel back-end
+      this.productService.increaseQuantityBackend(product.id_Product!).subscribe({
+        next: () => this.updateTotal(),
+        error: () => {
+          product.quantity--; // rollback en cas d'erreur
+          Swal.fire('Erreur', 'Impossible d’augmenter la quantité', 'error');
+        }
+      });
     } else {
-      // Affichage d'un message d'alerte si la quantité maximale est atteinte
       Swal.fire({
         icon: 'warning',
         title: 'Quantité maximale atteinte',
@@ -199,13 +205,21 @@ export class NavbarComponent implements OnInit {
     }
   }
   
+  
   decreaseQuantity(product: Product): void {
-    // Empêcher la quantité de descendre en dessous de 1
     if (product.quantity > 1) {
       product.quantity--;
-      this.updateTotal();
+  
+      this.productService.decreaseQuantityBackend(product.id_Product!).subscribe({
+        next: () => this.updateTotal(),
+        error: () => {
+          product.quantity++; // rollback si erreur
+          Swal.fire('Erreur', 'Impossible de diminuer la quantité', 'error');
+        }
+      });
     }
   }
+  
   
   updateTotal(): void {
     // Vérifier si this.basket et productDetailsList sont définis

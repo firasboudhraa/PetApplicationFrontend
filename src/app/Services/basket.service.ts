@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import{ Basket } from '../../models/basket'; 
+import{ Basket } from '../models/basket'; 
+import { Product } from '../models/product';
 
 @Injectable({
   providedIn: 'root'
@@ -34,6 +35,12 @@ export class BasketService {
   deleteBasket(id: number): Observable<void> {
     return this.http.delete<void>(`${this.baseUrl}/${id}`);
   }
+
+  // Dans basket.service.ts
+getProductsByBasketId(basketId: number): Observable<Product[]> {
+  return this.http.get<Product[]>(`${this.baseUrl}/${basketId}/products`);
+}
+
 
     // Ajouter un produit au panier
     addProductToBasket(basketId: number, productId: number): Observable<Basket> {

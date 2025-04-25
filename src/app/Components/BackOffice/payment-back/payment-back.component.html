@@ -1,0 +1,45 @@
+<br>
+<br>
+<br>
+<div class="container">
+  <h2>Historique des Paiements</h2>
+
+  <table *ngIf="!isLoading && payments.length > 0" class="payment-table">
+    <thead>
+      <tr>
+        <th>Montant</th>
+        <th>Statut</th>
+        <th>Moyen de Paiement</th>
+        <th>Date</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let payment of payments">
+        <td>{{ payment.amount | currency:'TND':'symbol' }}</td>
+        <td>
+          <span [ngClass]="{
+              'badge-success': payment.status === 'Success',
+              'badge-pending': payment.status === 'Pending',
+              'badge-failed': payment.status === 'Failed'
+            }">
+            {{ payment.status }}
+          </span>
+        </td>
+        <td>{{ payment.paymentMethod }}</td>
+        <td>{{ payment.paymentDate | date:'shortDate' }}</td>
+        <td>
+          <div class="btn-group">
+            <button class="btn-delete" (click)="deletePayment(payment.id_Payment)">
+              🗑 Supprimer
+            </button>
+          </div>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div *ngIf="!isLoading && payments.length === 0" class="no-data">
+    Aucun paiement trouvé.
+  </div>
+</div>
