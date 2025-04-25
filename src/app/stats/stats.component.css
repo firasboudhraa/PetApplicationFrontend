@@ -1,0 +1,223 @@
+/* ===================== */
+/* 📊 Statistiques - Carte */
+/* ===================== */
+
+.chart-card {
+    background: #ffffff;
+    padding: 30px;
+    border-radius: 20px;
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.1);
+    margin-top: 30px;
+    animation: fadeInContainer 0.8s ease;
+    transition: transform 0.3s ease;
+  }
+  
+  .chart-card:hover {
+    transform: translateY(-4px);
+  }
+  
+  /* ===================== */
+  /* 💬 Chat Messenger */
+  /* ===================== */
+  
+  .chat-box {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    width: 500px;
+    max-height: 700px;
+    background-color: #ffffff;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+    border-radius: 18px;
+    overflow: hidden;
+    z-index: 10000;
+    transition: all 0.4s ease-in-out;
+    display: flex;
+    flex-direction: column;
+    font-family: 'Segoe UI', sans-serif;
+  }
+  
+  .chat-box.minimized {
+    height: 55px;
+    width: 260px;
+  }
+  
+  /* ===== Header ===== */
+  .chat-header {
+    background: linear-gradient(to right, #4e73df, #6c8cff);
+    color: white;
+    padding: 15px 18px;
+    font-weight: 600;
+    font-size: 16px;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .toggle-icon {
+    font-size: 20px;
+    transform: rotate(0deg);
+    transition: transform 0.3s ease;
+  }
+  
+  .chat-box.minimized .toggle-icon {
+    transform: rotate(180deg);
+  }
+  
+  /* ===== Body ===== */
+  .chat-body {
+    padding: 18px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
+  }
+  
+  .chat-messages {
+    flex: 1;
+    min-height: 100px;
+    max-height: 400px;
+    overflow-y: auto;
+    margin-bottom: 15px;
+    padding-right: 5px;
+    font-size: 15px;
+    color: #333;
+    animation: fadeInText 0.4s ease;
+  }
+  
+  /* ===== Message ===== */
+  .chat-response {
+    background-color: #eef2ff;
+    border-left: 4px solid #4e73df;
+    padding: 12px 16px;
+    border-radius: 12px;
+    animation: slideUp 0.5s ease;
+    white-space: pre-wrap;
+    word-break: break-word;
+  }
+  
+  /* ===== Loading ===== */
+  .loading {
+    font-style: italic;
+    color: #777;
+    padding: 8px;
+  }
+  
+  /* ===== Input ===== */
+  .chat-input-container {
+    display: flex;
+    gap: 10px;
+  }
+  
+  .chat-input {
+    flex: 1;
+    padding: 12px 14px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    font-size: 15px;
+    transition: border-color 0.3s;
+  }
+  
+  .chat-input:focus {
+    outline: none;
+    border-color: #4e73df;
+  }
+  
+  /* ===== Bouton Send ===== */
+  .send-button {
+    background-color: #4e73df;
+    color: white;
+    border: none;
+    padding: 10px 16px;
+    border-radius: 10px;
+    font-weight: 600;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .send-button:hover {
+    background-color: #3c5ecb;
+  }
+  
+  /* ===================== */
+  /* ✨ Animations */
+  /* ===================== */
+  
+  @keyframes fadeInContainer {
+    from {
+      opacity: 0;
+      transform: scale(0.98);
+    }
+    to {
+      opacity: 1;
+      transform: scale(1);
+    }
+  }
+  
+  @keyframes fadeInText {
+    from {
+      opacity: 0;
+      transform: translateY(5px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  @keyframes slideUp {
+    from {
+      opacity: 0;
+      transform: translateY(15px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  /* ===================== */
+  /* 📱 Responsive */
+  /* ===================== */
+  
+  @media (max-width: 768px) {
+    .chat-box {
+      width: 95%;
+      right: 2.5%;
+      bottom: 15px;
+    }
+  
+    .chart-card {
+      padding: 20px;
+    }
+  }
+  .chat-messages {
+    padding: 1rem;
+    max-height: 400px;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .chat-response {
+    background-color: #f0f2f5;
+    border-radius: 8px;
+    padding: 0.8rem 1rem;
+    margin-bottom: 10px; /* ✅ espace entre les messages */
+    animation: fadeIn 0.3s ease-in-out;
+    line-height: 1.5;
+    color: #333;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    max-width: 85%;
+    align-self: flex-start; /* si tu veux simuler des messages côté bot */
+  }
+  
+  /* Optionnel : effet d’animation à l’arrivée */
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(5px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  

@@ -1,0 +1,7 @@
+export enum RecordTypeEnum {
+  VACCINATION = 'VACCINATION',
+  SURGERY = 'SURGERY',
+  CHECKUP = 'CHECKUP',
+  MEDICATION = 'MEDICATION',
+  OTHER = 'OTHER'
+}

@@ -1,0 +1,53 @@
+<div #pdfContent class="container my-5">
+  <h2 class="text-center mb-5 display-6 fw-bold text-gradient">
+    📝 Historique médical de <span class="text-primary">{{ name }}</span>
+  </h2>
+
+  <div class="row g-4 justify-content-center">
+    <div *ngFor="let record of records" class="col-md-6 col-lg-4">
+      <div class="card shadow-lg border-0 h-100 animate__animated animate__fadeInUp rounded-4">
+        <div class="card-body d-flex flex-column px-4 pt-4">
+          <h5 class="card-title text-center fw-bold text-primary mb-3">
+            📅 {{ record.dateTime | date: 'dd/MM/yyyy' }}
+          </h5>
+
+          <div class="mb-2">
+            <span class="badge bg-info text-dark fs-6">
+              🧾 {{ record.type }}
+            </span>
+          </div>
+
+          <p class="mb-1"><strong>📄 Description :</strong> {{ record.description }}</p>
+          <p class="mb-1"><strong>👨‍⚕️ Vétérinaire :</strong> {{ record.veterinarian_id || 'Non spécifié' }}</p>
+          <p class="mb-3"><strong>⚖️ Poids :</strong> {{ record.poids || 'Non spécifié' }} kg</p>
+
+          <div *ngIf="record.imagePath" class="text-center mb-3">
+            <div class="mb-2 text-secondary small">📎 Ordonnance</div>
+            <img 
+              [src]="'http://localhost:8071/record/images/' + record.imagePath"
+              alt="Ordonnance"
+              class="img-fluid rounded-3 border shadow-sm"
+              style="max-height: 200px; object-fit: cover;"
+              crossorigin="anonymous"
+            />
+          </div>
+
+          <div class="mt-auto d-flex justify-content-between">
+            <button class="btn btn-outline-primary btn-sm px-3" (click)="editRecord(record)">
+              ✏️ Modifier
+            </button>
+            <button class="btn btn-outline-danger btn-sm px-3" (click)="deleteRecord(record)">
+              🗑️ Supprimer
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="text-center mt-5">
+    <button class="btn btn-success btn-lg shadow-sm px-4" (click)="generatePDF()">
+      📄 Exporter en PDF
+    </button>
+  </div>
+</div>
