@@ -90,7 +90,7 @@ export class PostDetailComponent implements OnInit, AfterViewInit {
   private loadPostAuthor(userId: number): void {
     this.userService.getUserById(userId).subscribe({
       next: (user: User) => {
-        this.authorName = user.firstName + ' ' + user.lastName;
+        this.authorName = user.firstName + ' ' + user.lastName + ''+ '\n'+  'Role : '+ user.roles;
       },
       error: (error) => console.error('Error loading post author:', error)
     });

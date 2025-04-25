@@ -27,6 +27,7 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { BaseChartDirective } from 'ng2-charts';
 import { Chart, registerables } from 'chart.js';
 import { PopoverModule } from 'ngx-bootstrap/popover';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
 
 
 
@@ -84,6 +85,9 @@ import { AddEventComponent } from './Components/BackOffice/dashboard/add-event/a
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { LeaderboardComponent } from './Components/FrontOffice/EventDonation/leaderboard/leaderboard.component';
 import { Nl2BrPipe } from './Components/BackOffice/dashboard/add-event/nl2br.pipe';
+import { AuthInterceptor } from './Components/FrontOffice/user/auth/jwt.interceptor';
+import { ActivateAccountComponent } from './Components/FrontOffice/user/activate-account/activate-account.component';
+import { ToastrModule } from 'ngx-toastr';
 
 @NgModule({
   declarations: [
@@ -152,7 +156,9 @@ UsersCarnetComponent,
     UpdateEventComponent,
     AddEventComponent,
     LeaderboardComponent,
-    Nl2BrPipe
+    Nl2BrPipe,
+    ActivateAccountComponent,
+
   ],
   imports: [
     BrowserAnimationsModule,  
@@ -169,12 +175,21 @@ UsersCarnetComponent,
     MatIconModule,
     MatTooltipModule,
     NgChartsModule ,
-    FullCalendarModule, 
+    FullCalendarModule,
+    BrowserAnimationsModule,
+    ToastrModule.forRoot(),
 
     BrowserAnimationsModule,
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  providers: [],
+  providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthInterceptor,
+      multi: true
+
+    }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

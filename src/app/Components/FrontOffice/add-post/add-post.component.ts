@@ -4,6 +4,7 @@ import { PostsService } from 'src/app/Services/posts.service';
 import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';  // Ensure you have the environment set correctly
+import { AuthService } from 'src/app/Components/FrontOffice/user/auth/auth.service';
 
 @Component({
   selector: 'app-add-post',
@@ -16,7 +17,7 @@ export class AddPostComponent implements OnInit, AfterViewInit {
   imageError: string | null = null;
   isSubmitting: boolean = false;
   errorMessage: string = '';
-  userId: number = 2; // TODO: récupérer depuis JWT
+  userId: number = 0; // Will be set in ngOnInit
   map!: google.maps.Map;
   marker!: google.maps.Marker;
   fileName: string | null = null;  // Pour stocker le nom du fichier
@@ -35,7 +36,9 @@ export class AddPostComponent implements OnInit, AfterViewInit {
     private fb: FormBuilder,
     private postService: PostsService,
     public router: Router,
-    private http: HttpClient  // Inject HttpClient for API calls
+    private http: HttpClient,
+    private authService: AuthService // <-- add this
+    // Inject HttpClient for API calls
   ) {
     this.postForm = this.fb.group({
       title: ['', Validators.required],
@@ -47,7 +50,20 @@ export class AddPostComponent implements OnInit, AfterViewInit {
     });
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    const tokenData = this.authService.getDecodedToken();
+    if (tokenData && tokenData.userId) {
+      this.userId = tokenData.userId;
+      console.log('Logged-in user ID:', this.userId);
+    } else {
+      this.errorMessage = 'User not authenticated';
+      this.router.navigate(['/login']);
+    }
+  }
+  
+
+
+
   isDeleted: boolean = false;
 
 

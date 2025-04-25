@@ -1,88 +1,87 @@
 <div class="edit-profile">
-    <div *ngIf="isLoading" class="loading-spinner">
-      <p>Loading...</p>
-    </div>
-  
-    <div *ngIf="!isLoading">
-      <h1>Edit Profile</h1>
-  
-      <div *ngIf="errorMessage" class="alert alert-danger">
-        {{ errorMessage }}
-      </div>
-  
-      <div *ngIf="successMessage" class="alert alert-success">
-        {{ successMessage }}
-      </div>
-  
-      <form (ngSubmit)="updateProfile()" #profileForm="ngForm">
-        <div class="form-group">
-          <label for="firstName">First Name</label>
-          <input
-            type="text"
-            id="firstName"
-            class="form-control"
-            [(ngModel)]="user.firstName"
-            name="firstName"
-            required
-          />
-        </div>
-        <div class="form-group">
-          <label for="profilePicture">Profile Picture</label>
-          <input
-            type="file"
-            id="profilePicture"
-            class="form-control"
-            (change)="onFileSelected($event)"
-            accept="image/*"
-          />
-          <div *ngIf="previewUrl" class="preview mt-2">
-            <img [src]="previewUrl" alt="Profile Preview" width="150" class="img-thumbnail" />
-          </div>
-        </div>
-        
-  
-        <div class="form-group">
-          <label for="lastName">Last Name</label>
-          <input
-            type="text"
-            id="lastName"
-            class="form-control"
-            [(ngModel)]="user.lastName"
-            name="lastName"
-            required
-          />
-        </div>
-  
-        <div class="form-group">
-          <label for="email">Email</label>
-          <input
-            type="email"
-            id="email"
-            class="form-control"
-            [(ngModel)]="user.email"
-            name="email"
-            required
-          />
-        </div>
-        <div class="form-group">
-          <label for="bio">Bio <small>(optional)</small></label>
-          <textarea
-            id="bio"
-            class="form-control"
-            [(ngModel)]="user.bio"
-            placeholder="example: I am an active person who loves energetic cats"
-            name="bio"
-            rows="4"
-          ></textarea>
-        </div>
-       
-          
-          
-  
-        <button type="submit" class="btn btn-primary" [disabled]="profileForm.invalid">
-          Save Changes
-        </button>
-      </form>
-    </div>
+  <div *ngIf="isLoading" class="loading-spinner">
+    <p>Loading...</p>
   </div>
-  
+
+  <div *ngIf="!isLoading">
+    <h1>Edit Profile</h1>
+
+    <div *ngIf="errorMessage" class="alert alert-danger">
+      {{ errorMessage }}
+    </div>
+
+    <div *ngIf="successMessage" class="alert alert-success">
+      {{ successMessage }}
+    </div>
+
+    <form (ngSubmit)="updateProfile()" #profileForm="ngForm">
+      <div class="form-group">
+        <label for="firstName">First Name</label>
+        <input
+          type="text"
+          id="firstName"
+          class="form-control"
+          [(ngModel)]="user.firstName"
+          name="firstName"
+          required
+        />
+      </div>
+      <div class="form-group">
+        <label for="profilePicture">Profile Picture</label>
+        <input
+          type="file"
+          id="profilePicture"
+          class="form-control"
+          (change)="onFileSelected($event)"
+          accept="image/*"
+        />
+        <div *ngIf="previewUrl" class="preview mt-2">
+          <img [src]="previewUrl" alt="Profile Preview" width="150" class="img-thumbnail" />
+        </div>
+      </div>
+     
+
+      <div class="form-group">
+        <label for="lastName">Last Name</label>
+        <input
+          type="text"
+          id="lastName"
+          class="form-control"
+          [(ngModel)]="user.lastName"
+          name="lastName"
+          required
+        />
+      </div>
+
+      <div class="form-group">
+        <label for="email">Email</label>
+        <input
+          type="email"
+          id="email"
+          class="form-control"
+          [(ngModel)]="user.email"
+          name="email"
+          required
+        />
+      </div>
+      <div class="form-group">
+        <label for="bio">Bio <small>(optional)</small></label>
+        <textarea
+          id="bio"
+          class="form-control"
+          [(ngModel)]="user.bio"
+          placeholder="example: I am an active person who loves energetic cats"
+          name="bio"
+          rows="4"
+        ></textarea>
+      </div>
+     
+       
+       
+
+      <button type="submit" class="btn btn-primary" [disabled]="profileForm.invalid">
+        Save Changes
+      </button>
+    </form>
+  </div>
+</div>
