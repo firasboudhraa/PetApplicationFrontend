@@ -1,74 +1,96 @@
-<!-- register.component.html -->
 <div class="container mt-5" id="register">
   <div class="row justify-content-center">
     <div class="col-md-6">
-      <div class="card">
-        <div class="card-header">
-          <h3 class="text-center">Register</h3>
+      <div class="card shadow-lg rounded" style="border: none;">
+        <div class="card-header bg-primary text-white text-center py-3">
+          <h3>Register</h3>
         </div>
-        <div class="card-body">
+        <div class="card-body p-4">
           <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
-            <div *ngIf="errorMessage" class="alert alert-danger">
+            
+            <!-- Error Message -->
+            <div *ngIf="errorMessage" class="alert alert-danger text-center">
               {{ errorMessage }}
             </div>
-            <div *ngIf="successMessage" class="alert alert-success">
+            
+            <!-- Success Message -->
+            <div *ngIf="successMessage" class="alert alert-success text-center">
               {{ successMessage }}
             </div>
-            
-            <div class="mb-3">
-              <label for="firstName" class="form-label">First Name</label>
-              <input type="text" class="form-control" id="firstName" formControlName="firstName">
-              <div *ngIf="registerForm.get('firstName')?.invalid && registerForm.get('firstName')?.touched" 
-                   class="text-danger">
+
+            <!-- First Name -->
+            <div class="mb-4">
+              <label for="firstName" class="form-label text-muted">First Name</label>
+              <input type="text" class="form-control rounded-3" id="firstName" formControlName="firstName" placeholder="Enter your first name">
+              <div *ngIf="registerForm.get('firstName')?.invalid && registerForm.get('firstName')?.touched" class="text-danger small">
                 First name is required
               </div>
             </div>
-            
-            <div class="mb-3">
-              <label for="lastName" class="form-label">Last Name</label>
-              <input type="text" class="form-control" id="lastName" formControlName="lastName">
-              <div *ngIf="registerForm.get('lastName')?.invalid && registerForm.get('lastName')?.touched" 
-                   class="text-danger">
+
+            <!-- Last Name -->
+            <div class="mb-4">
+              <label for="lastName" class="form-label text-muted">Last Name</label>
+              <input type="text" class="form-control rounded-3" id="lastName" formControlName="lastName" placeholder="Enter your last name">
+              <div *ngIf="registerForm.get('lastName')?.invalid && registerForm.get('lastName')?.touched" class="text-danger small">
                 Last name is required
               </div>
             </div>
-            
-            <div class="mb-3">
-              <label for="email" class="form-label">Email</label>
-              <input type="email" class="form-control" id="email" formControlName="email">
-              <div *ngIf="registerForm.get('email')?.invalid && registerForm.get('email')?.touched" 
-                   class="text-danger">
+
+            <!-- Email -->
+            <div class="mb-4">
+              <label for="email" class="form-label text-muted">Email</label>
+              <input type="email" class="form-control rounded-3" id="email" formControlName="email" placeholder="Enter your email">
+              <div *ngIf="registerForm.get('email')?.invalid && registerForm.get('email')?.touched" class="text-danger small">
                 Valid email is required
               </div>
             </div>
-            
-            <div class="mb-3">
-              <label for="password" class="form-label">Password</label>
-              <input type="password" class="form-control" id="password" formControlName="password">
-              <div *ngIf="registerForm.get('password')?.invalid && registerForm.get('password')?.touched" 
-                   class="text-danger">
+
+            <!-- Password -->
+            <div class="mb-4 position-relative">
+              <label for="password" class="form-label text-muted">Password</label>
+              <input type="password" class="form-control rounded-3" id="password" formControlName="password" placeholder="Enter your password">
+              <div *ngIf="registerForm.get('password')?.invalid && registerForm.get('password')?.touched" class="text-danger small">
                 Password must be at least 6 characters
               </div>
             </div>
-            
-            <div class="mb-3">
-              <label for="role" class="form-label">Role</label>
-              <select class="form-control" id="role" formControlName="role">
+
+            <!-- Role -->
+            <div class="mb-4">
+              <label for="role" class="form-label text-muted">Role</label>
+              <select class="form-control rounded-3" id="role" formControlName="role">
                 <option value="PET_OWNER">Pet Owner</option>
                 <option value="VETERINARIAN">Veterinarian</option>
                 <option value="SERVICE_PROVIDER">Service Provider</option>
               </select>
             </div>
-            
-            <button type="submit" class="btn btn-primary w-100" [disabled]="registerForm.invalid" >
-              Register
+
+            <!-- Submit Button -->
+            <button type="submit" class="btn btn-primary w-100 rounded-pill py-2" [disabled]="registerForm.invalid">
+              <i class="fa fa-user-plus me-2"></i> Register
             </button>
           </form>
-          
-          <div class="mt-3 text-center">
-            <p>Already have an account? <a routerLink="/login">Login here</a></p>
+
+          <!-- Link to Login -->
+          <div class="mt-4 text-center">
+            <p class="text-muted">
+              Already have an account? <a routerLink="/login" class="text-decoration-none text-primary">Login here</a>
+            </p>
           </div>
         </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal for Notifications -->
+<!-- Modal for Notifications -->
+<div class="modal fade show d-block" *ngIf="showModal" tabindex="-1" style="background: rgba(0,0,0,0.5);">
+  <div class="modal-dialog modal-sm">
+    <div class="modal-content text-center p-4" [ngStyle]="{ 'background-color': modalType === 'success' ? '#e8fbe5' : '#f8d7da' }" style="border-radius: 20px;">
+      <div class="modal-body">
+        <h5 class="modal-title" [ngStyle]="{ 'color': modalType === 'success' ? '#2f5f36' : '#721c24' }" style="font-size: 1.8rem;">
+          {{ modalMessage }}
+        </h5>
       </div>
     </div>
   </div>

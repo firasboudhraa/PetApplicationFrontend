@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { adminService } from '../../../FrontOffice/user/service_user/admin.Service';
-import { User } from "../../../FrontOffice/user/models/user_model"
+import { User } from "../../../FrontOffice/user/models/user_model";
+import { adminService } from 'src/app/Components/FrontOffice/user/service_user/admin.service';
 
 @Component({
   selector: 'app-users',
@@ -12,7 +12,6 @@ export class UsersComponent implements OnInit {
   filteredUsers: User[] = [];
   selectedRole: string = 'all';
   noUsersForRole: boolean = false;
-
 
   constructor(private adminService: adminService) {}
 
@@ -40,15 +39,14 @@ export class UsersComponent implements OnInit {
     } else {
       const filtered = this.users.filter(user =>
         user.roles.some(role =>
-          role.name.trim().toLowerCase() === this.selectedRole.trim().toLowerCase()
+          role.name.toLowerCase() === this.selectedRole.toLowerCase()
         )
       );
-  
+
       this.filteredUsers = filtered;
       this.noUsersForRole = filtered.length === 0;
     }
   }
-  
 
   deleteUser(userId: number): void {
     if (confirm('Are you sure you want to delete this user?')) {
@@ -63,5 +61,10 @@ export class UsersComponent implements OnInit {
         }
       });
     }
+  }
+
+  createNewUser(): void {
+    // Handle creating a new user (e.g., navigate to a form or show a modal)
+    console.log('Creating new user...');
   }
 }

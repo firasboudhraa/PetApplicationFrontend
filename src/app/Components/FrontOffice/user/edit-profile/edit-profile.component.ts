@@ -3,6 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from '../auth/auth.service';
 import { UserService } from '../service_user/user.service';
 import { User } from '../models/user_model';
+import { ToastrService } from 'ngx-toastr'; 
 
 @Component({
   selector: 'app-edit-profile',
@@ -15,7 +16,8 @@ export class EditProfileComponent implements OnInit {
     firstName: '',
     lastName: '',
     email: '',
-    roles: []
+    roles: [],
+    bio: '' 
   };
   
   // Add these new properties
@@ -26,13 +28,18 @@ export class EditProfileComponent implements OnInit {
   isLoading = true;
   errorMessage = '';
   successMessage = '';
-
+  selectedFile?: File;
+  previewUrl: string | ArrayBuffer | null = null;
+  
+  
   constructor(
     private authService: AuthService,
     private userService: UserService,
     private router: Router,
-    private activatedRoute: ActivatedRoute
+    private activatedRoute: ActivatedRoute,
+    private toastr: ToastrService 
   ) {}
+  
 
   ngOnInit(): void {
     const userId = +this.activatedRoute.snapshot.paramMap.get('id')!;
@@ -65,35 +72,54 @@ export class EditProfileComponent implements OnInit {
     });
   }
 
-  // Updated updateProfile method
   updateProfile(): void {
-    this.isLoading = true;
-    this.errorMessage = '';
-    this.successMessage = '';
+    const formData = new FormData();
+    console.log('Bio value before submit:', this.user.bio);
 
-    const updateData = {
+  
+    // Append the user data as a JSON string
+     formData.append('user', JSON.stringify({
       firstName: this.user.firstName,
       lastName: this.user.lastName,
       email: this.user.email,
-      role: this.selectedRole
-    };
-
-   
-    this.userService.updateUser(updateData, this.user.id).subscribe({
-      next: (updatedUser: User) => {
-        this.successMessage = 'Profile updated successfully!';
-        setTimeout(() => {
-          this.router.navigate(['/profile']);
-        }, 1500);
+      password: this.password,
+      bio: this.user.bio, 
+      selectedFile: this.selectedFile,
+    }));
+  
+    // Append the profile image if selected
+    if (this.selectedFile) {
+      formData.append('image', this.selectedFile); // Assuming backend expects 'image'
+    }
+  
+    // Now make the update request with the correct formData
+    this.userService.updateUserWithImage(formData, this.user.id).subscribe({
+      next: () => {
+        this.toastr.success('Profile updated successfully');
+        this.router.navigate(['/profile']);
       },
-      error: (err) => {
-        console.error('Failed to update profile:', err);
-        this.errorMessage = err.error?.message || 'Failed to update profile';
-        this.isLoading = false;
+      error: (error) => {
+        console.error(error);
+        this.toastr.error('Failed to update profile');
       }
     });
   }
-
+  
+  
+  onFileSelected(event: Event): void {
+    const input = event.target as HTMLInputElement;
+    if (input.files && input.files.length > 0) {
+      this.selectedFile = input.files[0];
+      
+      // Preview the selected image
+      const reader = new FileReader();
+      reader.onload = () => {
+        this.previewUrl = reader.result;
+      };
+      reader.readAsDataURL(this.selectedFile);
+    }
+  }
+  
   getRolesAsString(): string {
     if (!this.user.roles || this.user.roles.length === 0) return 'No roles assigned';
     

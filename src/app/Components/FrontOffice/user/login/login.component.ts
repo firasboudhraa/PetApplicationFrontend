@@ -15,6 +15,11 @@ export class LoginComponent {
     password: new FormControl('', [Validators.minLength(8), Validators.required]),
   });
 
+  showModal = false;
+  modalMessage = '';
+  modalType: 'success' | 'error' = 'success';  // Default to success
+  showPassword = false;
+
   constructor(
     private authService: AuthService,
     private router: Router
@@ -29,16 +34,37 @@ export class LoginComponent {
 
       this.authService.login(credentials).subscribe({
         next: () => {
-          alert('Login successful!');
-          this.router.navigate(['/profile']);
+          this.modalMessage = 'Login successful!';
+          this.modalType = 'success';  // Success modal type
+          this.showModal = true;
+
+          setTimeout(() => {
+            this.showModal = false;
+            this.router.navigate(['/profile']);
+          }, 2000);
         },
         error: (err) => {
-          const errorMessage = err.error?.message || 'Login failed. Please check your credentials.';
-          alert(errorMessage);
+          this.modalMessage = err.error?.message || 'Login failed. Please check your credentials.';
+          this.modalType = 'error';  // Error modal type
+          this.showModal = true;
+
+          setTimeout(() => {
+            this.showModal = false;
+          }, 2000);
         }
       });
     } else {
-      alert('Please fill in all required fields correctly.');
+      this.modalMessage = 'Please fill in all required fields correctly.';
+      this.modalType = 'error';  // Error modal type for invalid form
+      this.showModal = true;
+
+      setTimeout(() => {
+        this.showModal = false;
+      }, 2000);
     }
+  }
+
+  togglePasswordVisibility() {
+    this.showPassword = !this.showPassword;
   }
 }

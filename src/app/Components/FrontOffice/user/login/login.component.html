@@ -25,17 +25,29 @@
   </div>
 
   <!-- Password Field -->
-  <div class="form-group">
+  <div class="form-group position-relative">
     <label for="password">Password</label>
-    <input type="password" id="password" class="form-control" placeholder="Enter your password" formControlName="password">
+    <input [type]="showPassword ? 'text' : 'password'"
+           id="password"
+           class="form-control"
+           placeholder="Enter your password"
+           formControlName="password">
+           
+           <i class="fa"
+           [ngClass]="showPassword ? 'fa-eye-slash' : 'fa-eye'"
+           (click)="togglePasswordVisibility()"
+           style="position: absolute; right: 50px; top: 50px; cursor: pointer; color: #6c757d;">
+        </i>
+  
     <div *ngIf="loginForm.controls['password'].invalid && loginForm.controls['password'].touched" class="alert alert-danger">
       <p *ngIf="loginForm.controls['password'].hasError('required')">Password is required</p>
       <p *ngIf="loginForm.controls['password'].hasError('minlength')">Password must be at least 8 characters</p>
     </div>
   </div>
+  
 
   <!-- Links -->
-  <a href="#" class="link">Forgot Password?</a>
+  <a href="/forgot-password" class="link">Forgot Password?</a>
 <a routerLink="/register" class="link">Create an account</a>
 
   <!-- Submit Button -->
@@ -43,3 +55,32 @@
     Login
   </button>
 </form>
+<!-- Modal -->
+<div class="modal fade show d-block" *ngIf="showModal" tabindex="-1" style="background: rgba(0,0,0,0.5);">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content text-center p-4" 
+         [ngStyle]="{
+           'background-color': modalType === 'error' ? '#f8d7da' : '#e8fbe5', 
+           'border-radius': '20px'}">
+      
+      <!-- Dynamic Icon -->
+      <i class="fa"
+         [ngClass]="{
+           'fa-check-circle': modalType === 'success', 
+           'fa-times-circle': modalType === 'error'}"
+         style="font-size: 4rem;"
+         [ngStyle]="{
+           'color': modalType === 'success' ? '#28a745' : '#dc3545'}">
+      </i>
+
+      <div class="modal-body">
+        <h5 class="modal-title" 
+            [ngStyle]="{
+              'font-size': '1.8rem', 
+              'color': modalType === 'success' ? '#2f5f36' : '#721c24'
+            }">
+          {{ modalMessage }}
+        </h5>
+      </div>
+      
+</div>

@@ -26,6 +26,20 @@
             required
           />
         </div>
+        <div class="form-group">
+          <label for="profilePicture">Profile Picture</label>
+          <input
+            type="file"
+            id="profilePicture"
+            class="form-control"
+            (change)="onFileSelected($event)"
+            accept="image/*"
+          />
+          <div *ngIf="previewUrl" class="preview mt-2">
+            <img [src]="previewUrl" alt="Profile Preview" width="150" class="img-thumbnail" />
+          </div>
+        </div>
+        
   
         <div class="form-group">
           <label for="lastName">Last Name</label>
@@ -50,22 +64,18 @@
             required
           />
         </div>
-  
         <div class="form-group">
-            <label for="roles">Roles</label>
-            <select
-              id="roles"
-              class="form-control"
-              [(ngModel)]="selectedRole"
-              name="roles"
-              required
-            >
-              <option *ngFor="let role of availableRoles" [value]="role">
-                {{ role }}
-              </option>
-            </select>
-          </div>
-          
+          <label for="bio">Bio <small>(optional)</small></label>
+          <textarea
+            id="bio"
+            class="form-control"
+            [(ngModel)]="user.bio"
+            placeholder="example: I am an active person who loves energetic cats"
+            name="bio"
+            rows="4"
+          ></textarea>
+        </div>
+       
           
           
   

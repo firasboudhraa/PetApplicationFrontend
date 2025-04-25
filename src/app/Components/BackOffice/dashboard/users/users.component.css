@@ -1,3 +1,47 @@
-.container{
-    margin-left: 300px;
-}
+/* You can now manage the layout and styles here */
+.filters {
+    margin: 1rem 0;
+  }
+  
+  .filters label {
+    margin-right: 0.5rem;
+  }
+  
+  .table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  .table th, .table td {
+    padding: 10px;
+    border-bottom: 2px solid #dee2e6;
+  }
+  
+  .table th {
+    background-color: #f8f9fa;
+    text-align: left;
+  }
+  
+  .badge {
+    margin-right: 5px;
+    background-color: #6c757d;
+    color: white;
+  }
+  
+  .alert-warning {
+    margin-top: 1rem;
+    padding: 0.75rem;
+    background-color: #fff3cd;
+    border: 1px solid #ffeeba;
+    border-radius: 0.25rem;
+  }
+  
+  .title {
+    font-size: 1.5rem;
+    font-weight: bold;
+  }
+  
+  .btn {
+    margin-right: 5px;
+  }
+  

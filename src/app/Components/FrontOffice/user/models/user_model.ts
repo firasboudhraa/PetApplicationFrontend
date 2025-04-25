@@ -4,7 +4,9 @@ export interface User {
     lastName: string;
     email: string;
     roles: Role[]   // Accept both formats
-    profilePictureUrl?: string;
+    profileImageUrl?: string;
+    bio?: string;  
+
   }
 export interface Role {
   roleId: number;            
@@ -17,6 +19,8 @@ export interface UserUpdateRequest {
     email?: string;
     password?: string;
     role?: string; 
+    bio?: string;  // Add this line
+
   }
 export interface RegisterRequest {
     firstName: string;

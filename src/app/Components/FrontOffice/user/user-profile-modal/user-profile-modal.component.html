@@ -1,0 +1,53 @@
+<div *ngIf="isVisible" class="modal-background" (click)="onBackdropClick($event)">
+    <div class="modal-content">
+      <div class="modal-header">
+        <img class="header-banner" src="../../../../../assets/images/addoptionBanner.jpg" alt="adoption" />
+      </div>
+  
+      <div class="modal-body">
+        <h6>Tell us about you, so we can find your purr-fect match ✨🐾</h6>
+        <form [formGroup]="prefrencesForm" (ngSubmit)="onSubmit()">
+          <div class="form-group">
+            <label for="lifestyle">Lifestyle :</label>
+            <input 
+              type="text" 
+              id="lifestyle" 
+              formControlName="lifestyle" 
+              placeholder="e.g., very active, old person">
+          </div>
+  
+          <div class="form-group">
+            <label for="experience">Experience :</label>
+            <input 
+              type="text" 
+              id="experience" 
+              formControlName="experience" 
+              placeholder="e.g., owned a cat, beginner with dogs">
+          </div>
+  
+          <div class="form-group">
+            <label for="livingSpace">Living Space :</label>
+            <input 
+              type="text" 
+              id="livingSpace" 
+              formControlName="livingSpace" 
+              placeholder="e.g., villa, apartment">
+          </div>
+  
+          <div class="form-group">
+            <label for="preferences">Preferences :</label>
+            <input 
+              type="text" 
+              id="preferences" 
+              formControlName="preferences" 
+              placeholder="e.g., low maintenance pet, protective dog">
+          </div>
+  
+          <div class="modal-footer">
+            <button class="save-button" type="submit">View to match</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  

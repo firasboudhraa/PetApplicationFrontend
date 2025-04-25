@@ -15,11 +15,15 @@ export class UserProfileComponent implements OnInit {
     firstName: '',
     lastName: '',
     email: '',
-    roles: [],  // Role is a single string based on your registration JSON
-  };
+    roles: [],
+    profileImageUrl: '' ,
+     bio: ''
 
+  };
+  imageTimestamp: number = 0;
   isLoading = true;
   errorMessage = '';
+  isAdoptionModalVisible = false;
 
   constructor(
     private authService: AuthService,
@@ -28,7 +32,7 @@ export class UserProfileComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    // Get user ID from token
+    this.imageTimestamp = new Date().getTime();
     const tokenData = this.authService.getDecodedToken();
     
     if (tokenData) {
@@ -44,28 +48,42 @@ export class UserProfileComponent implements OnInit {
   private loadUserProfile(userId: number): void {
     this.userService.getUserById(userId).subscribe({
       next: (data: User) => {
-        this.user = { ...data }; // Merge user data with API response
+        console.log('User Data:', data); 
+        this.user = { ...data };
         this.isLoading = false;
       },
       error: (err) => {
         console.error('Failed to load user:', err);
-        this.errorMessage = 'aleh';
+        this.errorMessage = 'Failed to load user profile';
         this.isLoading = false;
       }
     });
   }
-
+  getProfilePictureUrl(): string {
+    let url = ''; // Construct the URL as before
+    if (!this.user.profileImageUrl) {
+        url = '/assets/images/userDefaultPic.png';
+    } else if (this.user.profileImageUrl.startsWith('http')) {
+        url = this.user.profileImageUrl;
+    } else if (this.user.profileImageUrl.startsWith('/api/user/images/')) {
+        url = `http://localhost:8081${this.user.profileImageUrl}`;
+    } else {
+        url = `http://localhost:8081/api/user/images/${this.user.profileImageUrl}`;
+    }
+    return `${url}?v=${this.imageTimestamp}`;
+  }
+  handleImageError(event: Event) {
+    const img = event.target as HTMLImageElement;
+    img.src = '/assets/images/userDefaultPic.png';
+  }
   getRolesAsString(): string {
     if (!this.user.roles) return 'No roles assigned';
     
-    // Handle string case
     if (typeof this.user.roles === 'string') {
       return this.formatRoleName(this.user.roles);
     }
     
-    // Handle array case
     if (Array.isArray(this.user.roles)) {
-      // Handle both Role objects and strings
       return this.user.roles
         .map(role => typeof role === 'string' ? role : role.name)
         .map(role => this.formatRoleName(role))
@@ -73,33 +91,33 @@ export class UserProfileComponent implements OnInit {
     }
     
     return 'Unknown role format';
+    
   }
 
-private formatRoleName(role: string): string {
+  private formatRoleName(role: string): string {
     return role.toLowerCase()
-        .replace(/_/g, ' ')  // Replace underscores with spaces
-        .replace(/\b\w/g, (l) => l.toUpperCase());  // Capitalize each word
-}
-
+        .replace(/_/g, ' ')
+        .replace(/\b\w/g, (l) => l.toUpperCase());
+  }
 
   logout() {
     this.authService.logout().subscribe({
       next: () => {
-        this.authService.clearToken();  // Ensure token is cleared
-        this.router.navigate(['/login']);  // Redirect user to login page after logout
+        this.authService.clearToken();
+        this.router.navigate(['/login']);
       },
       error: (err) => {
         console.error('Logout failed:', err);
-        this.authService.clearToken();  // Force clear token if logout failed
-        this.router.navigate(['/login']);  // Redirect on error as well
+        this.authService.clearToken();
+        this.router.navigate(['/login']);
       }
     });
   }
-
-  // Edit profile if the logged-in user is the same as the profile user
+  user_pref() {
+    this.isAdoptionModalVisible = true;
+  }
   editProfile() {
     const tokenData = this.authService.getDecodedToken();
-    console.log('Token:', tokenData, 'User:', this.user); // Debug log
   
     if (tokenData && tokenData.userId === this.user.id) {
       this.router.navigate(['/editProfile', this.user.id]);
@@ -107,6 +125,7 @@ private formatRoleName(role: string): string {
       this.errorMessage = 'You can only edit your own profile';
     }
   }
+
 
   supp(id: number): void {
     this.userService.deleteUser(id).subscribe({
@@ -117,13 +136,9 @@ private formatRoleName(role: string): string {
       },
       error: (err) => {
         console.error('Error deleting user:', err);
-        console.log('Error status:', err.status);
-        console.log('Error response:', err.error);
         this.errorMessage = 'Failed to delete user'; 
       }
     });
   }
-  
-  
-  
 }
+

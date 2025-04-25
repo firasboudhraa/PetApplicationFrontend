@@ -9,15 +9,17 @@ import { ContactInfoComponent } from './Components/FrontOffice/contact-info/cont
 import { NavbarComponent } from './Components/FrontOffice/navbar/navbar.component';
 import { HomeComponent } from './Components/FrontOffice/home/home.component';
 import { DashboardComponent } from './Components/BackOffice/dashboard/dashboard.component';
-import { UsersComponent } from './Components/BackOffice/dashboard/users/users.component';
 import { SidebarComponent } from './Components/BackOffice/sidebar/sidebar.component';
 import { HeaderComponent } from './Components/BackOffice/header/header.component';
-import { EditProfileComponent } from './Components/FrontOffice/user/edit-profile/edit-profile.component';
 import { RegisterComponent } from './Components/FrontOffice/user/register/register.component';
 import { UserProfileComponent } from './Components/FrontOffice/user/user-profile/user-profile.component';
 import { LoginComponent } from './Components/FrontOffice/user/login/login.component';
-import { AuthInterceptor } from './Components/FrontOffice/user/auth/auth.interceptor';
-
+import { AuthInterceptor } from './Components/FrontOffice/user/auth/jwt.interceptor';
+import { UserProfileModalComponent } from './Components/FrontOffice/user/user-profile-modal/user-profile-modal.component';
+import { EditProfileComponent } from './Components/FrontOffice/user/edit-profile/edit-profile.component';
+import { ForgotPasswordComponent } from './Components/FrontOffice/user/forgot-password/forgot-password.component';
+import { ResetPasswordComponent } from './Components/FrontOffice/user/reset-password/reset-password.component';
+import { UsersComponent } from './Components/BackOffice/dashboard/users/users.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -26,21 +28,24 @@ import { AuthInterceptor } from './Components/FrontOffice/user/auth/auth.interce
     ContactInfoComponent,
     FooterComponent,
     DashboardComponent,
-    UsersComponent,
     SidebarComponent,
     HeaderComponent,
     // User components
-    EditProfileComponent,
     RegisterComponent,
     UserProfileComponent,
     LoginComponent,
-  ],
+    UserProfileModalComponent,
+    EditProfileComponent,
+    ResetPasswordComponent ,
+  ForgotPasswordComponent,
+UsersComponent ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
     FormsModule,
     ReactiveFormsModule,
+    
   ],
   providers: [
     {

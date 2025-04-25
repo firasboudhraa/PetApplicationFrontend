@@ -31,8 +31,3 @@ getAllUsers(): Observable<User[]> {
   }
 
 }
-
-
-
-
- 
