@@ -1,9 +1,12 @@
 <div class="container">
   <h2>Liste des Posts</h2>
 
-  <button class="btn btn-primary" (click)="toggleCharts()">
+  <button class="btn btn-primary" (click)="toggleCharts(); scrollToStatistics()">
     {{ showCharts ? 'Hide Statistics' : 'Show Statistics' }}
   </button>
+  <button class="btn btn-primary" (click)="generatePdf()">Download Blog PDF</button>
+  
+
 
   <table class="posts-table">
     <thead>
@@ -51,38 +54,44 @@
     </tbody>
   </table>
 
-  <div class="stats-section" *ngIf="showCharts">
+  <div class="stats-section" *ngIf="showCharts" id="statisticsSection">
     <h2>Blog Statistics</h2>
-    
-    <div class="chart-row">
-      <div class="chart-card">
-        <h3>Recent Activity (Last 7 Days)</h3>
-        <canvas baseChart
-          [data]="activityChartData"
-          [options]="activityChartOptions"
-          [type]="activityChartType">
-        </canvas>
-      </div>
-      
-      <div class="chart-card">
-        <h3>Post Type Distribution</h3>
-        <canvas baseChart
-          [data]="typeChartData"
-          [options]="typeChartOptions"
-          type="pie">
-        </canvas>
-      </div>
-    </div>
-    
-    <div class="chart-card full-width">
-      <h3>Top Contributors</h3>
-      <canvas baseChart
-        [data]="contributorsChartData"
-        [options]="contributorsChartOptions"
-        type="bar">
-      </canvas>
-    </div>
-  </div>
+    <!-- Activity Over Time Chart -->
+    <h3>Activity Over Last 7 Days</h3>
+    <canvas baseChart
+id="activityChart"
+[data]="activityChartData"
+[options]="activityChartOptions"
+[type]="activityChartType">
+</canvas>
+
+<!-- Post Type Distribution Chart -->
+<h3>Post Type Distribution Chart</h3>
+
+<canvas baseChart
+id="typeChart"
+[data]="typeChartData"
+[options]="typeChartOptions"
+[type]="'pie'">
+</canvas>
+
+<!-- Top Contributors Chart -->
+<h3>Top Contributors</h3>
+
+<canvas baseChart
+
+id="contributorsChart"
+[data]="contributorsChartData"
+[options]="contributorsChartOptions"
+[type]="'bar'">
+</canvas>
+
+
+  <button class="btn btn-primary" (click)="toggleCharts(); scrollToStatistics()">
+    {{ showCharts ? 'Hide Statistics' : 'Show Statistics' }}
+  </button>
+  <button (click)="generateStatisticsPdf()" class="btn btn-primary">Download Statistics PDF</button>
+
 
   <div class="modal" *ngIf="selectedPostId !== null && !showConfirmModal">
     <div class="modal-content">
@@ -101,7 +110,7 @@
     </div>
   </div>
 
-  <button class="btn btn-primary" (click)="generatePdf()">Download PDF</button>
+<!-- Button to Download Statistics PDF -->
 
   <div *ngIf="showConfirmModal" class="custom-modal-backdrop">
     <div class="custom-modal">

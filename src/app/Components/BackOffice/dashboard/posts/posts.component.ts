@@ -8,7 +8,8 @@ import { Comment } from 'src/app/models/Comment';
 import { Router } from '@angular/router';
 import { jsPDF } from 'jspdf';
 import { ChartConfiguration, ChartData, ChartType } from 'chart.js';
-import { BaseChartDirective } from 'ng2-charts';
+import { Chart } from 'chart.js';
+import ChartDataLabels from 'chartjs-plugin-datalabels';
 
 @Component({
   selector: 'app-posts',
@@ -16,7 +17,6 @@ import { BaseChartDirective } from 'ng2-charts';
   styleUrls: ['./posts.component.css']
 })
 export class PostsComponent implements OnInit {
-  // Existing properties
   posts: Post[] = [];
   authors: { [key: number]: UserDTO } = {};
   commentCounts: { [key: number]: number } = {};
@@ -26,11 +26,10 @@ export class PostsComponent implements OnInit {
   showConfirmModal = false;
   showConfirmModalComment = false;
   selectedCommentId: number | null = null;
-
-
   selectedPostId: number | null = null;
   isDeleted = false;
   isDeletedComment = false;
+  isGeneratingPdf = false;
 
   // Chart properties
   showCharts = false;
@@ -86,7 +85,17 @@ export class PostsComponent implements OnInit {
 
   toggleCharts(): void {
     this.showCharts = !this.showCharts;
-    if (this.showCharts) this.updateCharts();
+    setTimeout(() => {
+      this.showCharts ? this.scrollToStatistics() : this.scrollToTop();
+    }, 0);
+  }
+
+  scrollToTop(): void {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  scrollToStatistics(): void {
+    document.getElementById('statisticsSection')?.scrollIntoView({ behavior: 'smooth' });
   }
 
   loadPosts(): void {
@@ -95,16 +104,20 @@ export class PostsComponent implements OnInit {
       if (this.showCharts) this.updateCharts();
 
       posts.forEach(post => {
-        this.userService.getUserById(post.userId).subscribe(user => {
-          this.authors[post.id] = user;
-          this.userNames.set(post.userId, user.name);
-        });
+        // Load author data
+        if (!this.authors[post.id]) {
+          this.userService.getUserById(post.userId).subscribe(user => {
+            this.authors[post.id] = user;
+            this.userNames.set(post.userId, user.name);
+          });
+        }
 
+        // Load comments
         this.commentService.getCommentsByPostId(post.id).subscribe({
-          next: (comments) => {
+          next: comments => {
             this.postComments[post.id] = comments || [];
-            this.commentCounts[post.id] = this.postComments[post.id].length;
-            
+            this.commentCounts[post.id] = comments.length;
+
             comments.forEach(comment => {
               if (!this.userNames.has(comment.userId)) {
                 this.userService.getUserById(comment.userId).subscribe(user => {
@@ -119,6 +132,7 @@ export class PostsComponent implements OnInit {
           }
         });
 
+        // Likes
         this.likeCounts[post.id] = post.likedBy?.length || 0;
       });
     });
@@ -136,13 +150,13 @@ export class PostsComponent implements OnInit {
     const commentCounts = new Array(7).fill(0);
 
     this.posts.forEach(post => {
-      const dayIndex = this.getDayIndex(new Date(post.createdAt), dates);
-      if (dayIndex !== -1) postCounts[dayIndex]++;
+      const index = this.getDayIndex(new Date(post.createdAt), dates);
+      if (index !== -1) postCounts[index]++;
     });
 
     Object.values(this.postComments).flat().forEach(comment => {
-      const dayIndex = this.getDayIndex(new Date(comment.createdAt), dates);
-      if (dayIndex !== -1) commentCounts[dayIndex]++;
+      const index = this.getDayIndex(new Date(comment.createdAt), dates);
+      if (index !== -1) commentCounts[index]++;
     });
 
     this.activityChartData = {
@@ -156,25 +170,27 @@ export class PostsComponent implements OnInit {
 
   private updateContributorsChart(): void {
     const userPostCounts = new Map<number, number>();
+
     this.posts.forEach(post => {
       userPostCounts.set(post.userId, (userPostCounts.get(post.userId) || 0) + 1);
     });
 
-    const sorted = [...userPostCounts.entries()]
+    const topContributors = [...userPostCounts.entries()]
       .sort((a, b) => b[1] - a[1])
       .slice(0, 5);
 
     this.contributorsChartData = {
-      labels: sorted.map(([userId]) => this.userNames.get(userId) || `User ${userId}`),
+      labels: topContributors.map(([id]) => this.userNames.get(id) || `User ${id}`),
       datasets: [{
         ...this.contributorsChartData.datasets[0],
-        data: sorted.map(([_, count]) => count)
+        data: topContributors.map(([_, count]) => count)
       }]
     };
   }
 
   private updateTypeChart(): void {
     const typeCounts = new Map<string, number>();
+
     this.posts.forEach(post => {
       typeCounts.set(post.type, (typeCounts.get(post.type) || 0) + 1);
     });
@@ -190,9 +206,9 @@ export class PostsComponent implements OnInit {
 
   private getLast7Days(): Date[] {
     return Array.from({ length: 7 }, (_, i) => {
-      const date = new Date();
-      date.setDate(date.getDate() - (6 - i));
-      return new Date(date.setHours(0, 0, 0, 0));
+      const d = new Date();
+      d.setDate(d.getDate() - (6 - i));
+      return new Date(d.setHours(0, 0, 0, 0));
     });
   }
 
@@ -200,12 +216,7 @@ export class PostsComponent implements OnInit {
     return dates.findIndex(d => d.toDateString() === date.toDateString());
   }
 
-  // Rest of your existing methods...
   openConfirmModal(postId: number): void {
-    this.selectedPostId = postId;
-    this.showConfirmModal = true;
-  }
-  openConfirmModalComment(postId: number): void {
     this.selectedPostId = postId;
     this.showConfirmModal = true;
   }
@@ -214,41 +225,31 @@ export class PostsComponent implements OnInit {
     this.showConfirmModal = false;
     this.selectedPostId = null;
   }
-  cancelDeleteComment(): void {
-    this.showConfirmModalComment = false;
-  }
 
   confirmDelete(): void {
     if (this.selectedPostId) {
       const postId = this.selectedPostId;
-      this.showConfirmModal = false;
-      this.isDeleted = true;
       this.posts = this.posts.filter(post => post.id !== postId);
-      
+      this.isDeleted = true;
+      this.showConfirmModal = false;
+
       setTimeout(() => this.isDeleted = false, 3000);
-      this.postsService.deletePost(postId).subscribe(
-        () => console.log('Post deleted'),
-        error => console.error('Error deleting post', error)
-      );
+
+      this.postsService.deletePost(postId).subscribe({
+        next: () => console.log('Post deleted'),
+        error: err => console.error('Delete post failed:', err)
+      });
     }
   }
 
-  confirmDeleteComment(commentId: number, postId: number): void {
-    this.commentService.deleteComment(commentId).subscribe(
-      () => {
-        this.postComments[postId] = this.postComments[postId].filter(c => c.id !== commentId);
-        this.commentCounts[postId] = this.postComments[postId].length;
-        this.isDeletedComment = true;
-        setTimeout(() => this.isDeletedComment = false, 3000);
-        this.showConfirmModalComment = false;
-
-      },
-      error => console.error('Error deleting comment', error)
-    );
+  openCommentsPopup(postId: number): void {
+    if (!this.showConfirmModal) {
+      this.selectedPostId = postId;
+    }
   }
 
-  openCommentsPopup(postId: number): void {
-    if (!this.showConfirmModal) this.selectedPostId = postId;
+  closePopup(): void {
+    this.selectedPostId = null;
   }
 
   deletePost(postId: number): void {
@@ -260,89 +261,139 @@ export class PostsComponent implements OnInit {
     this.selectedPostId = postId;
     this.showConfirmModalComment = true;
   }
-  
 
-  closePopup(): void {
-    this.selectedPostId = null;
+  confirmDeleteComment(commentId: number, postId: number): void {
+    this.commentService.deleteComment(commentId).subscribe({
+      next: () => {
+        this.postComments[postId] = this.postComments[postId].filter(c => c.id !== commentId);
+        this.commentCounts[postId] = this.postComments[postId].length;
+        this.isDeletedComment = true;
+        this.showConfirmModalComment = false;
+        setTimeout(() => this.isDeletedComment = false, 3000);
+      },
+      error: err => console.error('Error deleting comment:', err)
+    });
+  }
+
+  cancelDeleteComment(): void {
+    this.showConfirmModalComment = false;
   }
 
   generatePdf(): void {
     const doc = new jsPDF();
     doc.setFontSize(18);
     doc.text('List of Posts and Comments', 10, 10);
-    let yPosition = 20;
-  
+    let y = 20;
+
     this.posts.forEach(post => {
-      // Title Section (Post Title in Bold)
-      doc.setFontSize(16);
-      doc.setFont('helvetica', 'bold');
-      doc.text(`Post #${post.id}: ${post.title}`, 10, yPosition);
-      yPosition += 10;
-  
-      // Type, Likes, Comments
-      doc.setFontSize(12);
-      doc.setFont('helvetica', 'normal');
-      doc.text(`Type: ${post.type}`, 10, yPosition);
-      doc.text(`Likes: ${this.likeCounts[post.id] || 0}`, 100, yPosition);
-      doc.text(`Comments: ${this.commentCounts[post.id] || 0}`, 150, yPosition);
-      yPosition += 10;
-  
-      // Content Section with better spacing
-      if (post.content) {
-        const splitText = doc.splitTextToSize(post.content, 180);
-        doc.setFontSize(12);
-        doc.text(splitText, 10, yPosition);
-        yPosition += splitText.length * 7 + 10; // Extra padding
-      }
-  
-   
-      // Comments Section
+      doc.setFont('helvetica', 'bold').setFontSize(16).text(`Post #${post.id}: ${post.title}`, 10, y);
+      y += 10;
+
+      doc.setFont('helvetica', 'normal').setFontSize(12);
+      doc.text(`Type: ${post.type}`, 10, y);
+      doc.text(`Likes: ${this.likeCounts[post.id] || 0}`, 100, y);
+      doc.text(`Comments: ${this.commentCounts[post.id] || 0}`, 150, y);
+      y += 10;
+
+      const splitText = doc.splitTextToSize(post.content || '', 180);
+      doc.text(splitText, 10, y);
+      y += splitText.length * 7 + 10;
+
       const comments = this.postComments[post.id] || [];
-      if (comments.length > 0) {
-        doc.setFontSize(14);
-        doc.setFont('helvetica', 'bold');
-        doc.text('Comments:', 10, yPosition);
-        yPosition += 10;
-  
+      if (comments.length) {
+        doc.setFont('helvetica', 'bold').setFontSize(14).text('Comments:', 10, y);
+        y += 10;
         comments.forEach(comment => {
-          // Comment Section with Indentation
-          doc.setFontSize(12);
-          doc.setFont('helvetica', 'normal');
-          const userName = this.userNames.get(comment.userId) || 'Anonymous';
-          const commentText = `${userName}: ${comment.content}`;
-  
-          const splitComment = doc.splitTextToSize(commentText, 180);
-          doc.text(splitComment, 15, yPosition);  // Indented comments
-          yPosition += splitComment.length * 7 + 5; // Extra padding after comment
+          const author = this.userNames.get(comment.userId) || 'Anonymous';
+          const commentLines = doc.splitTextToSize(`${author}: ${comment.content}`, 180);
+          doc.setFont('helvetica', 'normal').setFontSize(12).text(commentLines, 15, y);
+          y += commentLines.length * 7 + 5;
         });
       } else {
-        // If no comments, display this text
-        doc.setFontSize(12);
-        doc.text('No comments available for this post.', 10, yPosition);
-        yPosition += 10;
+        doc.text('No comments available for this post.', 10, y);
+        y += 10;
       }
-  
-      // Add extra space after each post for clean separation
-      yPosition += 5;
-         // Adding a dark, bold line for separation after post content (only between posts)
-         doc.setDrawColor(0); // Set to black for a dark line
-         doc.setLineWidth(1.5); // Bold line width
-         doc.line(10, yPosition, 200, yPosition); // Draw the line
-         yPosition += 15; // Add space after the line
-     
-  
-      // Check if yPosition exceeds page height and add new page if necessary
-      if (yPosition > 270) {
+
+      doc.setDrawColor(0).setLineWidth(1.5).line(10, y, 200, y);
+      y += 15;
+
+      if (y > 270) {
         doc.addPage();
-        yPosition = 20;
+        y = 20;
       }
     });
-  
-    // Save the document as a PDF file
+
     doc.save('Blog-Posts&Comments.pdf');
   }
 
-  
+  async generateStatisticsPdf(): Promise<void> {
+    this.isGeneratingPdf = true;
 
+    try {
+      if (!this.showCharts) {
+        this.showCharts = true;
+        await new Promise(resolve => setTimeout(resolve, 500));
+      }
 
-}  
+      this.updateCharts();
+      await new Promise(resolve => setTimeout(resolve, 1000));
+
+      const doc = new jsPDF();
+      doc.setFontSize(18).text('Blog Statistics Report', 105, 10, { align: 'center' });
+
+      let y = 30;
+      await this.addChartToPdf(doc, 'activityChart', y, 'Recent Activity');
+      y += 110;
+
+      await this.addChartToPdf(doc, 'typeChart', y, 'Post Type Distribution');
+      y += 110;
+
+      await this.addChartToPdf(doc, 'contributorsChart', y, 'Top Contributors');
+
+      doc.setFontSize(10).setTextColor(100).text(`Generated on ${new Date().toLocaleString()}`, 105, 285, { align: 'center' });
+
+      const timestamp = new Date().toISOString().replace(/[:.]/g, '-');
+      doc.save(`Blog_Statistics_${timestamp}.pdf`);
+    } catch (error) {
+      console.error('Error generating statistics PDF:', error);
+      alert('Failed to generate statistics PDF.');
+    } finally {
+      this.isGeneratingPdf = false;
+    }
+  }
+
+  private async addChartToPdf(doc: jsPDF, chartId: string, y: number, title?: string): Promise<void> {
+    return new Promise(resolve => {
+      setTimeout(() => {
+        try {
+          const chart = Chart.getChart(chartId);
+          if (!chart) return resolve();
+
+          const canvas = document.getElementById(chartId) as HTMLCanvasElement;
+          if (!canvas) return resolve();
+
+          if (title) {
+            doc.setFontSize(14).text(title, 105, y - 5, { align: 'center' });
+          }
+
+          const tempCanvas = document.createElement('canvas');
+          tempCanvas.width = canvas.width * 2;
+          tempCanvas.height = canvas.height * 2;
+
+          const ctx = tempCanvas.getContext('2d');
+          if (!ctx) return resolve();
+
+          ctx.scale(2, 2);
+          ctx.drawImage(canvas, 0, 0);
+
+          const img = tempCanvas.toDataURL('image/png', 1.0);
+          doc.addImage(img, 'PNG', 15, y, 180, 100);
+          resolve();
+        } catch (error) {
+          console.error(`Error rendering chart ${chartId}`, error);
+          resolve();
+        }
+      }, 300);
+    });
+  }
+}

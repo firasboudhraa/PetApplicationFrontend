@@ -41,8 +41,7 @@ export class BlogComponentComponent implements OnInit {
     this.postService.getPosts().subscribe(
       (data) => {
         this.posts = data;
-        this.totalPages = Math.ceil(this.posts.length / this.postsPerPage);
-        this.filteredPosts = this.paginatePosts();
+        this.applyFilters(); // Apply filters after fetching the posts
         this.fetchUserNames();
         this.fetchCommentsCount();
       },
@@ -52,10 +51,36 @@ export class BlogComponentComponent implements OnInit {
     );
   }
 
-  paginatePosts(): Post[] {
+  // This method is updated to apply filters and pagination together
+  applyFilters(): void {
+    let filtered = [...this.posts];
+
+    // Filter by category
+    if (this.selectedTypes.length > 0) {
+      filtered = filtered.filter(post => this.selectedTypes.includes(post.type));
+    }
+
+    // Filter by search text
+    if (this.searchText.trim() !== '') {
+      filtered = filtered.filter(post =>
+        post.title.toLowerCase().includes(this.searchText.toLowerCase()) ||
+        post.type.toLowerCase().includes(this.searchText.toLowerCase()) ||
+        post.content.toLowerCase().includes(this.searchText.toLowerCase()) ||
+        (this.userNames.has(post.userId) && this.userNames.get(post.userId)?.toLowerCase().includes(this.searchText.toLowerCase()))
+      );
+    }
+
+    this.filteredPosts = filtered;
+    this.totalPages = Math.ceil(this.filteredPosts.length / this.postsPerPage);
+    this.currentPage = 1; // Reset to the first page when filters change
+    this.paginatePosts(); // Apply pagination after filters are applied
+  }
+
+  // Paginate posts based on the current page
+  paginatePosts(): void {
     const start = (this.currentPage - 1) * this.postsPerPage;
     const end = start + this.postsPerPage;
-    return this.posts.slice(start, end);
+    this.filteredPosts = this.filteredPosts.slice(start, end); // Slice based on current page
   }
 
   fetchUserNames(): void {
@@ -91,30 +116,7 @@ export class BlogComponentComponent implements OnInit {
     } else {
       this.selectedTypes = this.selectedTypes.filter(cat => cat !== type);
     }
-    this.applyFilters();
-  }
-
-  applyFilters(): void {
-    let filtered = [...this.posts];
-
-    // Filter by category
-    if (this.selectedTypes.length > 0) {
-      filtered = filtered.filter(post => this.selectedTypes.includes(post.type));
-    }
-
-    // Filter by search text
-    if (this.searchText.trim() !== '') {
-      filtered = filtered.filter(post =>
-        post.title.toLowerCase().includes(this.searchText.toLowerCase()) ||
-        post.type.toLowerCase().includes(this.searchText.toLowerCase()) ||
-        post.content.toLowerCase().includes(this.searchText.toLowerCase()) ||
-        (this.userNames.has(post.userId) && this.userNames.get(post.userId)?.toLowerCase().includes(this.searchText.toLowerCase()))
-      );
-    }
-
-    this.filteredPosts = filtered;
-    this.totalPages = Math.ceil(this.filteredPosts.length / this.postsPerPage);
-    this.currentPage = 1; // Reset to the first page when filters change
+    this.applyFilters(); // Reapply filters when categories change
   }
 
   formatCategory(category: string): string {
@@ -131,6 +133,8 @@ export class BlogComponentComponent implements OnInit {
     } else if (order === 'oldest') {
       this.filteredPosts.sort((a, b) => new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime());
     }
+    this.filteredPosts = [...this.filteredPosts]; // Force re-rendering after sorting
+    this.paginatePosts(); // Reapply pagination after sorting
   }
 
   sortByNumber(criteria: string): void {
@@ -142,6 +146,8 @@ export class BlogComponentComponent implements OnInit {
         this.filteredPosts.sort((a, b) => b.comments - a.comments);
         break;
     }
+    this.filteredPosts = [...this.filteredPosts]; // Force re-rendering after sorting
+    this.paginatePosts(); // Reapply pagination after sorting
   }
 
   getCardColor(index: number): string {
@@ -179,7 +185,7 @@ export class BlogComponentComponent implements OnInit {
   goToPage(page: number): void {
     if (page >= 1 && page <= this.totalPages) {
       this.currentPage = page;
-      this.filteredPosts = this.paginatePosts();
+      this.paginatePosts(); // Reapply pagination when changing page
     }
   }
 

@@ -26,6 +26,7 @@
     "aos": "^2.3.4",
     "bootstrap": "^5.3.3",
     "chart.js": "^4.4.9",
+    "chartjs-plugin-datalabels": "^2.2.0",
     "flaticon": "^0.1.0",
     "jquery": "^3.7.1",
     "jspdf": "^3.0.1",
