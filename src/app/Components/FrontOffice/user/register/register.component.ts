@@ -10,12 +10,12 @@ import { Router } from '@angular/router';
 })
 export class RegisterComponent implements OnInit {
 
-  registerForm!: FormGroup;  // Add `!` here to tell TypeScript it's initialized later.
+  registerForm!: FormGroup;  
   errorMessage: string = '';
   successMessage: string = '';
   showModal: boolean = false;
   modalMessage: string = '';
-  modalType: 'success' | 'error' = 'success';  // To differentiate between success and error modals
+  modalType: 'success' | 'error' = 'success';  
 
   constructor(private authService: AuthService, private router: Router) { }
 
@@ -36,16 +36,16 @@ export class RegisterComponent implements OnInit {
       this.authService.register(formData).subscribe({
         next: () => {
           this.modalMessage = 'Registration successful! Check your email for activation.';
-          this.modalType = 'success';  // Set modal type to success
+          this.modalType = 'success'; 
           this.showModal = true;
 
           setTimeout(() => {
             this.showModal = false;
-          }, 3000);  // Delay to let the user read the success message
+          }, 3000);  
         },
         error: (error) => {
           this.modalMessage = error.error?.message || 'Registration failed. Please try again.';
-          this.modalType = 'error';  // Set modal type to error
+          this.modalType = 'error'; 
           this.showModal = true;
 
           setTimeout(() => {
@@ -55,7 +55,7 @@ export class RegisterComponent implements OnInit {
       });
     } else {
       this.modalMessage = 'Please fill out all fields correctly.';
-      this.modalType = 'error';  // Set modal type to error
+      this.modalType = 'error'; 
       this.showModal = true;
 
       setTimeout(() => {

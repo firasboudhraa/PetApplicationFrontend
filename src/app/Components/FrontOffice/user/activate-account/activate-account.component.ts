@@ -26,6 +26,7 @@ export class ActivateAccountComponent implements OnInit {
     this.route.queryParams.subscribe(params => {
       if (params['code']) {
         this.activationCode = params['code'];
+        // Show the code and activation button instead of auto-submitting
         this.showActivationButton = true;
       }
     });
