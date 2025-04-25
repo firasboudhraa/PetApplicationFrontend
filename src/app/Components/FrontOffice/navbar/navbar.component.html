@@ -42,10 +42,62 @@
             </a>
           </div>
         </li>
-        
+        <li class="nav-item">
+          <button class="btn btn-success" (click)="toggleBasket()">
+            🛒
+          </button>
+        </li>
           <li class="nav-item" > <a routerLink="/login" class="nav-link"> <i class="fa fa-user mr-2"></i> </a>
           </li>      
         </ul>
       </div>
     </div>
 </nav>
+<!-- Fenêtre du panier -->
+<div [ngClass]="{'cart-window': true, 'show': showBasket}">
+  <div class="cart-content">
+    <h2>Panier</h2>
+
+    <!-- Champ pour entrer l'ID du panier -->
+    <div class="mb-3">
+      <input type="number" [(ngModel)]="basketId" placeholder="Entrez l'ID du panier" class="form-control" />
+      <button (click)="loadBasketById()" class="btn btn-primary mt-2">Charger le panier</button>
+    </div>
+
+    <!-- Liste des produits dans le panier -->
+    <ul class="cart-items">
+      <li *ngFor="let product of basket?.productDetailsList" class="d-flex align-items-center mb-3">
+        <img [src]="product.imageUrl" alt="Image" width="50" height="50" class="me-2 rounded" />
+
+        <div class="flex-grow-1">
+          <h6 class="mb-0 fw-bold">{{ product.nom }}</h6>
+          <p class="mb-1 text-muted">{{ product.prix }} TND</p>
+
+          <!-- Contrôle de la quantité -->
+          <div class="quantity-controls">
+            <button class="btn btn-sm btn-outline-secondary" (click)="decreaseQuantity(product)" [disabled]="product.quantity <= 1" >−</button>
+            <span class="mx-2">{{ product.quantity || 1 }}</span>
+            <button class="btn btn-sm btn-outline-secondary" (click)="increaseQuantity(product)" [disabled]="product.quantity >= product.stock" >+</button>
+          </div>
+        </div>
+
+        <!-- Bouton supprimer -->
+        <span class="ms-auto remove-item" (click)="confirmRemoveItem(product.id_Product)">
+          <i class="fa fa-trash text-danger"></i>
+        </span>
+      </li>
+    </ul>
+
+    <!-- Total du panier -->
+    <div class="mt-3 text-end">
+      <h5 class="fw-bold">Total : {{ totalPrice }} TND</h5>
+    </div>
+
+    <!-- Actions -->
+    <div class="mt-4 d-flex flex-column gap-2">
+      <button class="btn btn-danger" (click)="clearBasket()">Vider le panier</button>
+      <button class="btn btn-success" routerLink="/payment">Procéder au paiement</button>
+      <button class="btn btn-secondary" (click)="toggleBasket()">Fermer</button>
+    </div>
+  </div>
+</div>

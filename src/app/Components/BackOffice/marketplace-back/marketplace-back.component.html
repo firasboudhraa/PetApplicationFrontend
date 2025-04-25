@@ -1,0 +1,40 @@
+
+<br>
+<br>
+<br>
+<br>
+<br>
+<!-- Bouton pour afficher le formulaire de création -->
+<div class="add-button-container">
+    <button class="add-btn" (click)="toggleCreateForm()">+ Add Marketplace</button>
+  </div>
+  
+
+  
+  <!-- Recherche -->
+  <div class="input-container animated-fade">
+    <label for="marketplaceId">Search by ID:</label>
+    <input type="text" id="marketplaceId" [(ngModel)]="marketplaceId" placeholder="Marketplace ID">
+    <button (click)="searchMarketplaceById()" class="search-btn">Search</button>
+
+  </div>
+  
+  <!-- Affichage du marketplace -->
+  <div *ngIf="uniqueMarketplace" class="marketplace-details-card animated-fade">
+    <h2 class="section-title">Marketplace Details</h2>
+    <div class="marketplace-details">
+      <p><strong>Name:</strong> {{ uniqueMarketplace.name }}</p>
+      <p><strong>Description:</strong> {{ uniqueMarketplace.description }}</p>
+      <p><strong>Statut:</strong> {{ uniqueMarketplace.statut }}</p>
+  
+      <div class="crud-buttons">
+        <button (click)="editMarketplace(uniqueMarketplace.id_Marketplace)" class="crud-btn edit-btn">Edit</button>
+        <button *ngIf="uniqueMarketplace?.id_Marketplace"
+        (click)="deleteMarketplace(uniqueMarketplace.id_Marketplace)"
+        class="crud-btn delete-btn">
+  Delete
+</button>        
+        
+      </div>
+    </div>
+  </div>

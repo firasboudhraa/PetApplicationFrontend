@@ -42,6 +42,7 @@ testem.log
 Thumbs.db
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 #env variables
 .env
 .env.*.local
@@ -55,4 +56,7 @@ src/environments/
 =======
 # environment variables
 >>>>>>> PetService
+=======
+#environment variables
+>>>>>>> Marketplace
 /src/environments/environment.ts
