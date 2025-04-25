@@ -46,6 +46,9 @@ export class BlogComponentComponent implements OnInit {
         this.applyFilters(); // Apply filters after fetching the posts
         this.fetchUserNames();
         this.fetchCommentsCount();
+        this.posts.sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
+        this.applyFilters(); // Apply filters after sorting
+
       },
       (error) => {
         console.error('Error fetching posts', error);
