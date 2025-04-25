@@ -11,4 +11,6 @@ export const environment = {
 
   AiapiKey: 'Key',
   paypalClientId: 'ClientID',
+  apiUrl: 'http://localhost:8222/api/',
+  websocketUrl: 'http://localhost:8092/ws-notifications',
 }
