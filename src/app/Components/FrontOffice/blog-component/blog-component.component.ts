@@ -20,6 +20,8 @@ export class BlogComponentComponent implements OnInit {
   postsPerPage: number = 5;
   totalPages: number = 1;
   showFilterDropdown = false;
+  paginatedPosts: Post[] = [];
+
 
   categories = [
     { label: 'Help & Advice', value: 'HELP_ADVICE' },
@@ -76,13 +78,12 @@ export class BlogComponentComponent implements OnInit {
     this.paginatePosts(); // Apply pagination after filters are applied
   }
 
-  // Paginate posts based on the current page
   paginatePosts(): void {
     const start = (this.currentPage - 1) * this.postsPerPage;
     const end = start + this.postsPerPage;
-    this.filteredPosts = this.filteredPosts.slice(start, end); // Slice based on current page
+    this.paginatedPosts = this.filteredPosts.slice(start, end); // ✅ This keeps filteredPosts intact
   }
-
+  
   fetchUserNames(): void {
     this.posts.forEach(post => {
       this.userService.getUserById(post.userId).subscribe(

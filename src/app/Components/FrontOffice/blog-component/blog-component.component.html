@@ -67,7 +67,7 @@
     <!-- Posts Section -->
     <section class="dark">
       <div class="container py-4">
-        <article *ngFor="let post of filteredPosts; let i = index" class="postcard dark" [ngClass]="getCardColor(i)">
+        <article *ngFor="let post of paginatedPosts; let i = index" class="postcard dark" [ngClass]="getCardColor(i)">
          
           <div class="postcard__img-container">
             <img class="postcard__img" [src]="'http://localhost:8082/posts/images/' + post.imageUrl"  alt="Image of post" />
