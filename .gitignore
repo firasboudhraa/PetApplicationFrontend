@@ -40,3 +40,15 @@ testem.log
 # System files
 .DS_Store
 Thumbs.db
+
+#env variables
+.env
+.env.*.local
+.env.local
+.env.development.local
+/src/assets/environment.ts
+/src/environments/environment.ts
+src/environments/
+# Local environment files
+\src\environments\environment.ts
+/src/environments/environment.ts

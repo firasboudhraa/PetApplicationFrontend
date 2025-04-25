@@ -1,0 +1,31 @@
+/* Notification Icon */
+.navbar .fa-bell {
+  font-size: 20px;
+  position: relative;
+}
+
+.navbar .badge {
+  position: absolute;
+  top: 20px;
+  right: 10px; 
+  font-size: 12px;
+  background-color: #dc3545;
+  color: white;
+  border-radius: 50%;
+  padding: 3px 6px;
+}
+
+/* Dropdown Menu */
+.dropdown-menu {
+  max-height: 300px;
+  overflow-y: auto;
+}
+
+.dropdown-item {
+  font-size: 14px;
+  white-space: nowrap;
+}
+
+.dropdown-item:hover {
+  background-color: #f8f9fa;
+}

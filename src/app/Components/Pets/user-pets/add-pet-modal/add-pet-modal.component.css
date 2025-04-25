@@ -1,0 +1,20 @@
+.custom-modal .modal-body {
+    max-height: 70vh; /* adjust as needed */
+    overflow-y: auto;
+  }
+
+  #autocomplete {
+    z-index: 2100; /* optional, if needed */
+  }
+  .pac-container {
+    z-index: 2000 !important; /* higher than Bootstrap modal (1050) */
+
+  }
+  .modal-backdrop {
+    z-index: 1040;
+  }
+ 
+  #add-pet-modal{
+    z-index: 5;
+ 
+  }

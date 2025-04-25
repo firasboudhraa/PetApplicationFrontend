@@ -1,0 +1,888 @@
+@import url("https://fonts.googleapis.com/css2?family=Baloo+2&display=swap");
+
+.post-meta {
+    background-color: #ffffff; /* Tailwind gray-100 */
+    color: #000000; /* Tailwind gray-700 */
+    border-radius: 6px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-size: 0.9rem;
+    
+  }
+  
+  .author-meta,
+  .date-meta {
+    font-style: normal;
+    padding-right:280px
+}
+  
+/* 🌿 Styles Généraux */
+body {
+    font-family: "Baloo 2", cursive;
+    font-size: 16px;
+    color: #1e4d2b; /* Vert Foncé */
+    background-color: #f0fdf4; /* Vert Très Clair */
+    text-rendering: optimizeLegibility;
+    font-weight: italic;
+    margin: 0;
+    padding: 0;
+}
+
+/* 🎨 Modes Sombre et Clair */
+body.dark {
+    background-color: #3E3B37; /* Brun Taupe */
+    color: #EADBC8; /* Sable Clair */
+}
+
+body.light {
+    background-color: #f0fdf4; /* Vert Très Clair */
+    color: #1e4d2b; /* Vert Foncé */
+}
+
+/* 🌟 Container Principal */
+.container-fluid {
+    background-color: inherit;
+    padding: 20px;
+}
+
+/* 🏷️ Titre Principal */
+.section-title {
+    text-align: center;
+    color: #000000; /* Vert Clair */
+    font-style: italic;
+}
+
+.section-title h2 {
+    font-size: 2.2rem;
+    font-weight: bold;
+    text-transform: uppercase;
+    color: #2e7d32; /* Vert Pro */
+}
+
+.section-title p {
+    font-size: 1.2rem;
+    text-align: center;
+}
+
+/* 🎨 Boutons */
+.btn {
+    font-size: 16px;
+    font-weight: bold;
+    padding: 10px 15px;
+    border-radius: 8px;
+    transition: all 0.3s ease-in-out;
+    text-transform: uppercase;
+    background-color: #42bc48;
+    color: white;
+    border: none;
+}
+
+.btn:hover {
+    background-color: #1e4d2b;
+}
+
+/* 🔍 Barre de Recherche & Filtres */
+.search-bar {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-top: 10px;
+}
+
+.search-bar input {
+    width: 55%;
+    padding: 8px;
+    border: 2px solid #66bb6a;
+    border-radius: 6px;
+    outline: none;
+    font-size: 14px;
+}
+
+.search-bar .btn-refresh,
+.search-bar .btn-sort {
+    background-color: #66bb6a;
+    color: white;
+    border: none;
+    padding: 8px 15px;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.search-bar .btn-refresh:hover,
+.search-bar .btn-sort:hover {
+    background-color: #2e7d32;
+}
+
+/* ✅ Filtres */
+.form-group label {
+    font-weight: bold;
+    color: #1a1b27;
+    
+}
+
+.form-check-input {
+    margin-right: 6px;
+    margin-left: 50px;
+
+}
+
+.form-check-label {
+    font-size: 14px;
+    padding-left: 500px;
+    margin-left: 40px;
+
+}
+
+/* 📌 Cartes */
+.postcard {
+    display: flex;
+    flex-wrap: wrap;
+    border-radius: 12px;
+    margin-bottom: 2rem;
+    overflow: hidden;
+    position: relative;
+    box-shadow: 0 4px 15px -10px rgba(0, 0, 0, 0.4);
+    transition: transform 0.3s ease;
+    background-color: #ffffff;
+    z-index: 1;
+}
+
+.postcard.dark {
+    background-color: #ffffff;
+    color: #0b0907;
+}
+
+.postcard.light {
+    background-color: #f0fdf4;
+}
+
+.postcard__title {
+    font-size: 1.8rem;
+    color: #2e7d32 !important;
+}
+
+.postcard__img {
+    max-height: 180px;
+    width: 100%;
+    object-fit: cover;
+    border-radius: 8px;
+}
+
+.postcard__bar {
+    width: 50px;
+    height: 8px;
+    margin: 10px 0;
+    border-radius: 5px;
+    background-color: #66bb6a;
+    transition: width 0.3s ease;
+}
+
+.postcard:hover {
+    transform: scale(1.02);
+}
+
+.postcard:hover .postcard__bar {
+    width: 120px;
+}
+.postcard__subtitle time {
+  background-color: #f3f4f6; /* Tailwind gray-100 */
+  color: #374151; /* Tailwind gray-700 */
+  padding: 4px 8px;
+  border-radius: 6px;
+  display: inline-block;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  letter-spacing: 0.3px;
+  font-style: normal;
+}
+
+
+.postcard__text {
+    padding: 1.5rem;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    font-size: 18px;
+    text-align: justify;
+}
+
+/* 🎭 Tags */
+@import url("https://fonts.googleapis.com/css2?family=Baloo+2&display=swap");
+
+/* 🌿 Styles Généraux */
+body {
+    font-family: "Baloo 2", cursive;
+    font-size: 16px;
+    color: #1e4d2b; /* Vert Foncé */
+    background-color: #f0fdf4; /* Vert Très Clair */
+    text-rendering: optimizeLegibility;
+    font-weight: italic;
+    margin: 0;
+    padding: 0;
+}
+
+/* 🎨 Modes Sombre et Clair */
+body.dark {
+    background-color: #3E3B37; /* Brun Taupe */
+    color: #EADBC8; /* Sable Clair */
+}
+
+body.light {
+    background-color: #f0fdf4; /* Vert Très Clair */
+    color: #1e4d2b; /* Vert Foncé */
+}
+
+/* 🌟 Container Principal */
+.container-fluid {
+    background-color: inherit;
+    padding: 20px;
+}
+
+/* 🏷️ Titre Principal */
+.section-title {
+    text-align: center;
+    color: #000000; /* Vert Clair */
+    font-style: italic;
+}
+
+.section-title h2 {
+    font-size: 2.2rem;
+    font-weight: bold;
+    text-transform: uppercase;
+    color: #2e7d32; /* Vert Pro */
+}
+
+.section-title p {
+    font-size: 1.2rem;
+    text-align: center;
+}
+
+/* 🎨 Boutons */
+.btn {
+    font-size: 16px;
+    font-weight: bold;
+    padding: 10px 15px;
+    border-radius: 8px;
+    transition: all 0.3s ease-in-out;
+    text-transform: uppercase;
+    background-color: #42bc48;
+    color: white;
+    border: none;
+}
+
+.btn:hover {
+    background-color: #1e4d2b;
+}
+
+/* 🔍 Barre de Recherche & Filtres */
+.search-bar {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 20px;
+    flex-wrap: wrap;
+    margin-top: 10px;
+}
+
+.search-bar input {
+    width: 90%;
+    padding: 8px;
+    border: 2px solid #66bb6a;
+    border-radius: 60px;
+    outline: none;
+    font-size: 14px;
+}
+
+.search-bar .btn-refresh,
+.search-bar .btn-sort {
+    background-color: #dce0dd;
+    color: rgb(0, 0, 0);
+    border: none;
+
+    padding: 8px 15px;
+    border-radius: 60px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.search-bar .btn-refresh:hover,
+.search-bar .btn-sort:hover {
+    background-color: #2e7d32;
+}
+
+/* ✅ Filtres */
+.form-group label {
+    font-weight: bold;
+    color: #1a1b27;
+    margin-left: 50px;
+    
+}
+
+.form-check-input {
+    margin-right: 8px;
+}
+
+.form-check-label {
+    font-size: 14px;
+}
+
+/* 📌 Cartes */
+.postcard {
+    display: flex;
+    flex-wrap: wrap;
+    border-radius: 12px;
+    margin-bottom: 2rem;
+    overflow: hidden;
+    position: relative;
+    box-shadow: 0 4px 15px -10px rgba(0, 0, 0, 0.4);
+    transition: transform 0.3s ease;
+    background-color: #ffffff;
+    z-index: 1;
+}
+
+.postcard.dark {
+    background-color: #ffffff;
+    color: #0b0907;
+}
+
+.postcard.light {
+    background-color: #f0fdf4;
+}
+
+.postcard__title {
+    font-size: 1.8rem;
+    color: #2e7d32 !important;
+}
+
+.postcard__img {
+    max-height: 180px;
+    width: 100%;
+    object-fit: cover;
+    border-radius: 8px;
+}
+
+.postcard__bar {
+    width: 50px;
+    height: 8px;
+    margin: 10px 0;
+    border-radius: 5px;
+    background-color: #66bb6a;
+    transition: width 0.3s ease;
+}
+
+.postcard:hover {
+    transform: scale(1.02);
+}
+
+.postcard:hover .postcard__bar {
+    width: 120px;
+}
+
+.postcard__text {
+    padding: 1.5rem;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    font-size: 18px;
+    text-align: justify;
+}
+
+/* 🎭 Tags */
+.postcard__tagbox {
+    display: flex;
+    flex-wrap: wrap;
+    font-size: 14px;
+    margin-top: 10px;
+    justify-content: center;
+}
+
+.tag__item {
+    display: inline-block;
+    background: rgba(102, 187, 106, 0.15);
+    border-radius: 6px;
+    padding: 6px 14px;
+    margin: 0 6px 6px 0;
+    transition: background-color 0.3s;
+    color: #1e4d2b;
+}
+
+.tag__item:hover {
+    background: rgba(102, 187, 106, 0.35);
+}
+
+/* 📱 Responsive */
+@media screen and (max-width: 768px) {
+    .search-bar input {
+        width: 100%;
+    }
+
+
+    /* 🌟 Glowing Animation */
+@keyframes shine {
+    0% {
+        box-shadow: 0 0 5px rgba(255, 255, 255, 0.4), 0 0 10px rgba(255, 255, 255, 0.6), 0 0 15px rgba(255, 255, 255, 0.8);
+    }
+    50% {
+        box-shadow: 0 0 15px rgba(255, 255, 255, 0.8), 0 0 20px rgba(255, 255, 255, 0.8), 0 0 30px rgba(255, 255, 255, 1);
+    }
+    100% {
+        box-shadow: 0 0 5px rgba(255, 255, 255, 0.4), 0 0 10px rgba(255, 255, 255, 0.6), 0 0 15px rgba(255, 255, 255, 0.8);
+    }
+}
+
+/* 🌟 Shining Button */
+.shining-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px 15px;
+    border-radius: 8px;
+    background-color: #2e7d32;
+    color: white;
+    font-size: 16px;
+    font-weight: bold;
+    text-transform: uppercase;
+    text-decoration: none;
+    box-shadow: 0 0 5px rgba(255, 255, 255, 0.4), 0 0 10px rgba(255, 255, 255, 0.6), 0 0 15px rgba(255, 255, 255, 0.8);
+    animation: shine 2s infinite;
+    transition: all 0.3s ease-in-out;
+}
+
+.shining-btn:hover {
+    background-color: #1e4d2b; /* Darker green on hover */
+    box-shadow: 0 0 20px rgba(255, 255, 255, 1), 0 0 30px rgba(255, 255, 255, 1), 0 0 40px rgba(255, 255, 255, 1);
+}
+
+/* For the icon */
+.shining-btn i {
+    margin-right: 10px;
+}
+
+}
+
+
+.tag__item {
+    display: inline-block;
+    background: rgba(102, 187, 106, 0.15);
+    border-radius: 6px;
+    padding: 6px 14px;
+    margin: 0 6px 6px 0;
+    transition: background-color 0.3s;
+    color: #1e4d2b;
+}
+
+.tag__item:hover {
+    background: rgba(102, 187, 106, 0.35);
+}
+
+/* 📱 Responsive */
+@media screen and (max-width: 768px) {
+    .search-bar input {
+        width: 100%;
+    }
+
+
+    
+}
+.pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 40px;
+  }
+  
+  .pagination__button {
+    background-color: #1e4d2b;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    cursor: pointer;
+    border-radius: 5px;
+    margin: 0 5px;
+  }
+  
+  .pagination__button:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+  }
+  
+  .pagination__button:hover {
+    background-color: #66bb6a;
+  }
+  
+  .pagination__page-info {
+    font-size: 1rem;
+    font-weight: 500;
+    color: #3e3b37;
+  }
+  
+  .pagination__first, .pagination__last {
+    font-size: 1.2rem;
+  }
+  
+  .pagination__prev, .pagination__next {
+    font-size: 1.4rem;
+  }
+
+
+  .post-image {
+    max-width: 100%;
+    height: auto;
+    border-radius: 8px;
+    margin-top: 10px;
+    
+  }
+  
+
+
+  
+  /* Titre et contenu du post */
+  .post-header {
+    margin-bottom: 20px;
+  }
+  
+  .post-title {
+    font-size: 2rem;
+    font-weight: bold;
+    color: #1e4d2b; /* Vert foncé */
+  }
+  
+  /* Image du post */
+  .post-image {
+    max-width: 40%;
+    border-radius: 20px;
+    margin-top: 10px;
+    margin-left: auto;
+    margin-right: auto;
+    object-fit: cover; /* Ensures the image fits nicely without distortion */
+  }
+  .button {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background-color: rgb(20, 20, 20);
+    border: none;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0px 0px 0px 4px rgba(180, 160, 255, 0.253);
+    cursor: pointer;
+    transition-duration: 0.3s;
+    overflow: hidden;
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    z-index: 999;  }
+  
+  .svgIcon {
+    width: 12px;
+    transition-duration: 0.3s;
+  }
+  
+  .svgIcon path {
+    fill: white;
+  }
+  
+  .button:hover {
+    width: 140px;
+    border-radius: 50px;
+    transition-duration: 0.3s;
+    background-color: rgb(181, 160, 255);
+    align-items: center;
+  }
+  
+  .button:hover .svgIcon {
+    /* width: 20px; */
+    transition-duration: 0.3s;
+    transform: translateY(-200%);
+  }
+  
+  .button::before {
+    position: absolute;
+    bottom: -20px;
+    content: "Back to Top";
+    color: white;
+    /* transition-duration: .3s; */
+    font-size: 0px;
+  }
+  
+  .button:hover::before {
+    font-size: 13px;
+    opacity: 1;
+    bottom: unset;
+    /* transform: translateY(-30px); */
+    transition-duration: 0.3s;
+  }
+  /* Wrapper that pushes the button to the right */
+/* Wrapper for the Filter Button */
+/* Wrapper for the Filter Button */
+.filter-button-wrapper {
+    display: block;
+    justify-content: flex-end;
+    padding: 0 12rem;
+    margin-bottom: 1rem;
+    position: flex;  /* Ensure the dropdown is positioned relative to this container */
+}
+
+/* Button Style */
+.searchBy {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background-color: #ffffff;
+    border: 1px solid #d1d5db; /* Tailwind's gray-300 */
+    color: #374151; /* Tailwind's gray-700 */
+    padding: 1rem 1rem;
+    font-size: 0.95rem;
+    border-radius: 0.75rem;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+    transition: background-color 0.2s ease, box-shadow 0.2s ease;
+    cursor: pointer;
+}
+
+.searchBy:hover {
+    background-color: #f2fff2;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+.searchBy:focus {
+    outline: none;
+    box-shadow: 0 0 0 2px #6366f1; /* Tailwind's indigo-500 */
+}
+
+/* SVG Icon */
+.searchBy .icon {
+    width: 1.25rem;
+    height: 1.25rem;
+    stroke: currentColor;
+}
+
+/* Dropdown menu positioned below the button */
+/* Dropdown menu positioned below the button */
+.dropdown-menu {
+    position: absolute;
+    right: 0;  /* Align it directly under the button */
+    top: 60%;  /* Position directly below the button */
+    margin-top: 5rem;  /* Adjusted margin-top to move the dropdown a little lower */
+    width: 12rem;
+    background-color: #ffffff;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    border-radius: 0.75rem;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+    z-index: 999;
+    padding: 0.25rem 0.5rem;
+    display: none; /* Initially hidden until the dropdown is toggled */
+}
+
+
+
+
+/* Dropdown item styling */
+.dropdown-item {
+    padding: 0.7rem 1rem;
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: #0e0e0f; /* Tailwind gray-700 */
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    transition: background-color 0.2s ease;
+}
+
+.dropdown-item:hover {
+    background-color: #b9babd; /* Tailwind gray-100 */
+    color: #111827; /* Tailwind gray-900 */
+}
+
+/* Mobile responsiveness */
+@media (max-width: 768px) {
+    .dropdown-menu {
+        right: 0.9rem;
+        width: 90%;
+    }
+}
+
+/* 🌿 Search by Category Styling */
+#category-search-form {
+    background-color: #ffffff;
+    padding: 10px;
+    border-radius: 20px;
+    box-shadow: 5px 4px 10px rgba(0, 0, 0, 0.1);
+    flex-wrap: wrap;
+}
+#category-search-form:hover {
+    background-color: #f4fef4;
+}
+
+
+#category-search-form .form-group {
+    margin-bottom: 1px;
+}
+
+
+/* 🎯 Category Filter Labels */
+#category-search-form .form-check {
+    display: flex;
+    align-items: center;
+    gap: 4px; /* tight space between checkbox and label */
+    margin-bottom: 6px; /* controls vertical spacing between items */
+}
+
+#category-search-form .form-check-input {
+    margin: 20px;
+    padding: 10; /* checkboxes don’t need padding */
+}
+
+#category-search-form .form-check-label {
+    font-size: 15px;
+    font-weight: 500; /* valid font-weight value */
+    color: #0b0c0b; /* dark green/black */
+    padding: 0; /* remove excess spacing */
+}
+
+
+
+/* 💬 Filter Button */
+.filter-button-wrapper {
+    position: relative;
+}
+
+
+.category-inline-container {
+    display: flex;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+  }
+  /* Chat Button Styles */
+.chat-btn {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background-color: #4285f4;
+    color: white;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+    z-index: 1000;
+    transition: all 0.3s ease;
+    /* Prevent any inherited styles */
+    appearance: none;
+    -webkit-appearance: none;
+    /* Custom tooltip */
+  }
+  
+  /* Custom tooltip implementation */
+  .chat-btn::after {
+    content: attr(title);
+    position: absolute;
+    bottom: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #333;
+    color: white;
+    padding: 5px 10px;
+    border-radius: 4px;
+    font-size: 14px;
+    white-space: nowrap;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s;
+    margin-bottom: 10px;
+  }
+  
+  .chat-btn:hover::after {
+    opacity: 1;
+  }
+  
+  .chat-btn:hover {
+    background-color: #3367d6;
+    transform: scale(1.1);
+  }
+  
+  .chat-icon {
+    width: 24px;
+    height: 24px;
+    fill: currentColor;
+  }
+  
+  /* Scroll to top button - ensure distinct styling */
+  .scroll-top-btn {
+    bottom: 90px;
+    /* Make sure it has different classes */
+  }
+  
+  /* Responsive adjustments */
+  @media (max-width: 768px) {
+    .chat-btn {
+      width: 45px;
+      height: 45px;
+      bottom: 20px;
+      right: 20px;
+    }
+    
+    .scroll-top-btn {
+      bottom: 80px;
+    }
+  }
+  
+  /* Responsive Search Input Styling */
+.row {
+    margin-left: 0;
+    margin-right: 0;
+  }
+  
+  .col-md-6 {
+    padding-left: 0;
+    padding-right: 0;
+  }
+  
+  input.form-control {
+    font-size: 1rem;
+    padding: 0.75rem 1.25rem;
+    border: 1px solid #ced4da;
+    border-radius: 0.375rem;
+    transition: all 0.3s ease;
+    width: 100%;
+  }
+  
+  input.form-control:focus {
+    border-color: #007bff;
+    box-shadow: 0 0 0 0.2rem rgba(38, 143, 255, 0.25);
+    outline: none;
+  }
+  
+  input.form-control::placeholder {
+    color: #6c757d;
+    font-style: italic;
+  }
+  
+  @media (max-width: 767px) {
+    .col-md-6.offset-md-3 {
+      margin-left: 0;
+      margin-right: 0;
+      width: 90%;
+      max-width: 100%;
+    }
+  }
+  
+  @media (min-width: 768px) and (max-width: 991px) {
+    .col-md-6.offset-md-3 {
+      width: 75%;
+    }
+  }
+  
+  @media (min-width: 992px) {
+    .col-md-6.offset-md-3 {
+      width: 50%;
+    }
+  }
+  

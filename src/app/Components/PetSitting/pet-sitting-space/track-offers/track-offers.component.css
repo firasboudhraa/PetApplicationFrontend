@@ -1,0 +1,282 @@
+/* Container Styling */
+.track-offers-container {
+  padding: 20px;
+  background: #f9f9f9;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Title */
+.title {
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+/* Tabs */
+.tabs {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+.tab-button {
+  padding: 10px 20px;
+  margin: 0 5px;
+  border: none;
+  border-radius: 5px;
+  background: #007bff;
+  color: #fff;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.tab-button.active {
+  background: #0056b3;
+}
+
+.tab-button:hover {
+  background: #0056b3;
+}
+
+/* Offers List */
+.offers-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: center;
+}
+
+/* Offer Card */
+.offer-card {
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 15px;
+  text-align: center;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.offer-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+}
+
+.offer-card h3 {
+  font-size: 20px;
+  margin-bottom: 10px;
+}
+
+.offer-card p {
+  font-size: 14px;
+  margin-bottom: 10px;
+}
+
+.offer-card .btn {
+  margin: 5px;
+  padding: 8px 15px;
+  font-size: 14px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.offer-card .btn-success {
+  background: #28a745;
+  color: #fff;
+}
+
+.offer-card .btn-success:hover {
+  background: #218838;
+}
+
+.offer-card .btn-danger {
+  background: #dc3545;
+  color: #fff;
+}
+
+.offer-card .btn-danger:hover {
+  background: #c82333;
+}
+
+/* Horizontal Offer Card */
+.offer-card.horizontal {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 15px;
+  margin-bottom: 20px;
+  width: 100%;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.offer-card.horizontal:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+}
+
+.offer-details {
+  flex: 2;
+  padding-right: 20px;
+}
+
+.offer-details h3 {
+  font-size: 20px;
+  margin-bottom: 10px;
+}
+
+.offer-details p {
+  font-size: 14px;
+  margin-bottom: 5px;
+}
+
+.no-offers {
+  font-size: 16px;
+  color: #666;
+  text-align: center;
+  margin-top: 20px;
+}
+
+/* Progress Tracker */
+.progress-tracker {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex: 1;
+  margin: 0 20px;
+  position: relative;
+}
+
+.step {
+  text-align: center;
+  flex: 1;
+  position: relative;
+}
+
+/* Default Circle Style */
+.circle {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background: #ccc; /* Default color */
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto;
+  font-weight: bold;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+/* Pending Status */
+.circle.pending {
+  background: #ffc107; /* Yellow for Pending */
+}
+
+/* Confirmed Status */
+.circle.confirmed {
+  background: #28a745; /* Green for Confirmed */
+}
+
+/* Rejected Status */
+.circle.rejected {
+  background: #dc3545; /* Red for Rejected */
+}
+
+/* Active Circle Style */
+.step.active .circle {
+  transform: scale(1.2);
+}
+
+.step p {
+  margin-top: 10px;
+  font-size: 14px;
+  color: #666;
+}
+
+.step.active p {
+  font-weight: bold;
+}
+
+/* Connecting Lines */
+.step::after {
+  content: '';
+  position: absolute;
+  top: 15px;
+  right: -50%;
+  width: 100%;
+  height: 4px;
+  background: #ccc;
+  z-index: -1;
+  transition: background-color 0.3s ease;
+}
+
+.step.active::after {
+  background: #007bff;
+}
+
+.step:last-child::after {
+  display: none;
+}
+
+/* Actions */
+.actions {
+  flex: 1;
+  text-align: center;
+}
+
+.actions .btn {
+  margin: 5px;
+  padding: 8px 15px;
+  font-size: 14px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.actions .btn-success {
+  background: #28a745;
+  color: #fff;
+}
+
+.actions .btn-success:hover {
+  background: #218838;
+}
+
+.actions .btn-danger {
+  background: #dc3545;
+  color: #fff;
+}
+
+.actions .btn-danger:hover {
+  background: #c82333;
+}
+
+/* Status Colors */
+.circle.pending {
+  background: #ffc107; /* Yellow for Pending */
+}
+
+.circle.confirmed {
+  background: #28a745; /* Green for Confirmed */
+}
+
+.circle.rejected {
+  background: #dc3545; /* Red for Rejected */
+}
+
+/* Pet Image */
+.pet-image {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-bottom: 10px;
+}

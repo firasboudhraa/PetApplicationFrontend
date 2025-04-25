@@ -1,0 +1,246 @@
+<div class="container col-12">
+  <div class="card">
+    <div class="card-header">
+      <ul
+        class="nav nav-tabs card-header-tabs"
+        id="adoptionRequestTabs"
+        role="tablist"
+      >
+        <li class="nav-item" role="presentation">
+          <a
+            class="nav-link"
+            [class.active]="activeTab === 'pending'"
+            (click)="setActiveTab('pending')"
+            id="pending-tab"
+            role="tab"
+            aria-controls="pending"
+            aria-selected="true"
+          >
+            Pending
+          </a>
+        </li>
+        <li class="nav-item" role="presentation">
+          <a
+            class="nav-link"
+            [class.active]="activeTab === 'confirmed'"
+            (click)="setActiveTab('confirmed')"
+            id="confirmed-tab"
+            role="tab"
+            aria-controls="confirmed"
+            aria-selected="false"
+          >
+            Confirmed
+          </a>
+        </li>
+        <li class="nav-item" role="presentation">
+          <a
+            class="nav-link"
+            [class.active]="activeTab === 'rejected'"
+            (click)="setActiveTab('rejected')"
+            id="rejected-tab"
+            role="tab"
+            aria-controls="rejected"
+            aria-selected="false"
+          >
+            Rejected
+          </a>
+        </li>
+      </ul>
+    </div>
+    <div class="card-body">
+      <div class="tab-content" id="adoptionRequestTabsContent">
+        <!-- Pending Tab -->
+        <div
+          class="tab-pane fade"
+          [class.show]="activeTab === 'pending'"
+          [class.active]="activeTab === 'pending'"
+          id="pending"
+          role="tabpanel"
+          aria-labelledby="pending-tab"
+        >
+          <div *ngIf="pendingRequests.length > 0; else noPending">
+            <table class="table table-striped">
+              <thead>
+                <tr>
+                  <th scope="col">Pet image</th>
+                  <th scope="col">Pet Name</th>
+                  <th scope="col">Location</th>
+                  <th scope="col">Message</th>
+                  <th scope="col">Date</th>
+                  <th scope="col">Time</th>
+                  <th scope="col">Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let request of pendingRequests">
+                  <td>
+                    <img
+                      [src]="request.adoptedPet.imagePath"
+                      alt="Avatar"
+                      class="avatar-img"
+                    />
+                    <span *ngIf="request.isChangedByPetOwner" class="badge-gold" title="Change Requested">
+                      ✨By owner
+                    </span>
+                    <span *ngIf="request.isChangedByRequestOwner" class="badge-gold" title="Change Requested">
+                      ✨By Requester
+                    </span>
+                  </td>
+                  <td [ngClass]="{'highlight-changed': request.changedFields?.includes('adoptedPet')}">
+                    {{ request.adoptedPet.name }}
+                  </td>
+              
+                  <td [ngClass]="{'highlight-changed': request.changedFields?.includes('location')}">
+                    {{ request.location }}
+                  </td>
+              
+                  <td [ngClass]="{'highlight-changed': request.changedFields?.includes('message')}">
+                    {{ request.message }}
+                  </td>
+              
+                  <td [ngClass]="{'highlight-changed': request.changedFields?.includes('date')}">
+                    {{ request.date }}
+                  </td>
+              
+                  <td [ngClass]="{'highlight-changed': request.changedFields?.includes('time')}">
+                    {{ request.time }}
+                  </td>
+                  <td>
+                    <!-- FAB Button -->
+                    <button mat-fab color="primary" (click)=" toggleMenu(request.id)" matTooltip="Actions" matTooltipPosition="right">
+                      <mat-icon>add</mat-icon>
+                    </button>
+
+                    <!-- FAB Menu -->
+                    <div *ngIf="request.id == requestId" class="fab-menu">
+                      <!-- Edit Button (Yellow) -->
+                      <button mat-mini-fab class="right" color="accent" matTooltip="Edit" (click)="redirectToEdit(request.id)" matTooltipPosition="right" style="background-color: #ffc107; color: #000;">
+                        <mat-icon>edit</mat-icon>
+                      </button>
+
+                      <!-- Reject Button (Red) -->
+                      <button mat-mini-fab class="left" color="warn" (click)="rejectRequest()" matTooltip="Reject" matTooltipPosition="right" style="background-color: #dc3545; color: #fff;">
+                        <mat-icon>cancel</mat-icon>
+                      </button>
+
+                      <!-- Confirm Button (Green) -->
+                      <button mat-mini-fab class="top" color="primary" (click)="confirmRequest(request.id)" matTooltip="Confirm" matTooltipPosition="right" style="background-color: #28a745; color: #fff;">
+                        <mat-icon>check</mat-icon>
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <ng-template #noPending>
+            <p>No pending adoption requests</p>
+          </ng-template>
+        </div>
+
+        <!-- Confirmed Tab -->
+        <div
+          class="tab-pane fade"
+          [class.show]="activeTab === 'confirmed'"
+          [class.active]="activeTab === 'confirmed'"
+          id="confirmed"
+          role="tabpanel"
+          aria-labelledby="confirmed-tab"
+        >
+          <div *ngIf="confirmedRequests.length > 0; else noConfirmed">
+            <table class="table table-striped">
+              <thead>
+                <tr>
+                  <th scope="col">Pet image</th>
+                  <th scope="col">Pet Name</th>
+                  <th scope="col">Location</th>
+                  <th scope="col">Message</th>
+                  <th scope="col">Date</th>
+                  <th scope="col">Time</th>
+                  <th scope="col">Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let request of confirmedRequests">
+                  <td>
+                    <img
+                      [src]="request.adoptedPet.imagePath"
+                      alt="Avatar"
+                      class="avatar-img"
+                    />
+                    
+                  </td>
+                  <td>{{ request.adoptedPet.name }}</td>
+                  <td>{{ request.location }}</td>
+                  <td>{{ request.message }}</td>
+                  <td>{{ request.date }}</td>
+                  <td>{{ request.time }}</td>
+                  <td>
+                    <button
+                      class="btn btn-warning"
+                      
+                    >
+                      Show progress
+                    </button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <ng-template #noConfirmed>
+            <p>No confirmed adoption requests</p>
+          </ng-template>
+        </div>
+
+        <!-- Rejected Tab -->
+        <div
+          class="tab-pane fade"
+          [class.show]="activeTab === 'rejected'"
+          [class.active]="activeTab === 'rejected'"
+          id="rejected"
+          role="tabpanel"
+          aria-labelledby="rejected-tab"
+        >
+          <div *ngIf="rejectedRequests.length > 0; else noRejected">
+            <table class="table table-striped">
+              <thead>
+                <tr>
+                  <th scope="col">Pet image</th>
+                  <th scope="col">Pet Name</th>
+                  <th scope="col">Location</th>
+                  <th scope="col">Message</th>
+                  <th scope="col">Date</th>
+                  <th scope="col">Time</th>
+                  <th scope="col">Reason of rejection</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let request of rejectedRequests">
+                  <td>
+                    <img
+                      [src]="request.adoptedPet.imagePath"
+                      alt="Avatar"
+                      class="avatar-img"
+                    />
+                  </td>
+                  <td>{{ request.adoptedPet.name }}</td>
+                  <td>{{ request.location }}</td>
+                  <td>{{ request.message }}</td>
+                  <td>{{ request.date }}</td>
+                  <td>{{ request.time }}</td>
+                  <td>
+                      {{ request.rejectionReason }}
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <ng-template #noRejected>
+            <p>No rejected adoption requests</p>
+          </ng-template>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+

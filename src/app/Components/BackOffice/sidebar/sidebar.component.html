@@ -57,16 +57,32 @@
             </a>
           </li>
           <li class="nav-item">
-            <a data-bs-toggle="collapse" href="#forms">
+            <a (click)="togglePetsSubmenu()" role="button" [attr.aria-expanded]="isPetsSubmenuOpen" aria-controls="petsSubmenu">
               <i class="fas fa-dog"></i>
               <p>Pets</p>
+              <span class="caret"></span>
             </a>
+            <div [ngClass]="isPetsSubmenuOpen? 'collapse show' : 'collapse'" id="petsSubmenu">
+              <ul class="nav nav-collapse">
+                <li>
+                  <a routerLink="my-pets">
+                    <span class="sub-item">My Pets</span>
+                  </a>
+                </li>
+                <li>
+                  <a routerLink="adoption-request">
+                    <span class="sub-item">My adoption request</span>
+                  </a>
+                </li>
+              </ul>
+            </div>
           </li>
           <li class="nav-item">
-            <a data-bs-toggle="collapse" href="#tables">
-              <i class="fas  fa-newspaper"></i>
+            <a class="nav-link" routerLink="/dashboard/posts" routerLinkActive="active">
+              <i class="fas fa-newspaper"></i>
               <p>Posts</p>
             </a>
+            
           </li>
           <li class="nav-item">
             <a data-bs-toggle="collapse" href="#maps">
