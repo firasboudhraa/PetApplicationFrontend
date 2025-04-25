@@ -1,1 +1,5 @@
-/* You can add global styles to this file, and also import other style files */
+.blur-effect {
+    filter: blur(5px);
+    transition: filter 0.3s ease-in-out;
+    overflow: hidden;
+  }

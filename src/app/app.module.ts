@@ -1,16 +1,12 @@
-import { NgModule, Component } from '@angular/core';
+import { NgModule, Component, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { AboutComponentComponent } from './Components/FrontOffice/about-component/about-component.component';
 import { BlogComponentComponent } from './Components/FrontOffice/blog-component/blog-component.component';
-import { HomeComponentComponent } from './Components/home-component/home-component.component';
-import { VetComponentComponent } from './Components/vet-component/vet-component.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import {HttpClientModule} from '@angular/common/http';
-import { FooterComponentComponent } from './Components/FrontOffice/footer/footer-component.component';
-import { NavbarComponent } from './Components/navbar/navbar.component';
 import { ContactInfoComponent } from './Components/FrontOffice/contact-info/contact-info.component';
 import { PostDetailComponent } from './Components/FrontOffice/post-detail/post-detail.component';
 import { AddPostComponent } from './Components/FrontOffice/add-post/add-post.component';
@@ -23,7 +19,6 @@ import { GeminiChatComponent } from './Components/FrontOffice/gemini-chat/gemini
 import { PickerModule } from '@ctrl/ngx-emoji-mart';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { CommentService } from './services/comments.service';
 import { BaseChartDirective } from 'ng2-charts';
 import { Chart, registerables } from 'chart.js';
 import { PopoverModule } from 'ngx-bootstrap/popover';
@@ -31,16 +26,42 @@ import { PopoverModule } from 'ngx-bootstrap/popover';
 
 
 Chart.register(...registerables);
+import { FooterComponent } from './Components/FrontOffice/footer/footer.component';
+import { HomeComponent } from './Components/FrontOffice/home/home.component';
+import { ServiceComponent } from './Components/FrontOffice/service/service.component';
+import { AddServiceComponent } from './Components/FrontOffice/add-service/add-service.component';
+import { DetailServiceComponent } from './Components/FrontOffice/detail-service/detail-service.component';
+import { UsersComponent } from './Components/BackOffice/dashboard/users/users.component';
+import { PetCardComponent } from './Components/Pets/user-pets/pet-card/pet-card.component';
+import { AddPetModalComponent } from './Components/Pets/user-pets/add-pet-modal/add-pet-modal.component';
+import { PetDetailModalComponent } from './Components/Pets/user-pets/pet-detail-modal/pet-detail-modal.component';
+import { EditPetModalComponent } from './Components/Pets/user-pets/edit-pet-modal/edit-pet-modal.component';
+import { UserPetsComponent } from './Components/Pets/user-pets/user-pets.component';
+import { PublicPetsComponent } from './Components/Pets/public-pets/public-pets.component';
+import { PublicPetCardComponent } from './Components/Pets/public-pets/public-pet-card/public-pet-card.component';
+import { PublicPetDetailModalComponent } from 'src/app/Components/Pets/public-pets/public-pet-detail-modal/public-pet-detail-modal.component';
+import { AdoptionRequestComponent } from './Components/AdoptionRequest/adoption-request/adoption-request.component';
+import { AdoptionRequestDashbordComponent } from './Components/AdoptionRequest/adoption-request-dashbord/adoption-request-dashbord.component';
+import { SentRequestComponent } from './Components/AdoptionRequest/adoption-request-dashbord/sent-request/sent-request.component';
+import { ReceivedRequestComponent } from './Components/AdoptionRequest/adoption-request-dashbord/received-request/received-request.component';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { EditAdoptionRequestComponent } from './Components/AdoptionRequest/edit-adoption-request/edit-adoption-request.component';
+import { ChatPopupComponent } from './Components/chat-popup/chat-popup.component';
+import { LookForASitterFormComponent } from './Components/PetSitting/look-for-asitter-form/look-for-asitter-form.component';
+import { PetSittingSpaceComponent } from './Components/PetSitting/pet-sitting-space/pet-sitting-space.component';
+import { DisplayOffersComponent } from './Components/PetSitting/pet-sitting-space/display-offers/display-offers.component';
+import { TrackOffersComponent } from './Components/PetSitting/pet-sitting-space/track-offers/track-offers.component';
+import { NavbarComponent } from './Components/FrontOffice/navbar/navbar.component';
 
 
 @NgModule({
   declarations: [
-    AppComponent,
     AboutComponentComponent,
     BlogComponentComponent,
-    HomeComponentComponent,
-    VetComponentComponent,
-    FooterComponentComponent,
+    AppComponent,
+    HomeComponent,
     NavbarComponent,
     ContactInfoComponent,
     PostDetailComponent,
@@ -51,8 +72,37 @@ Chart.register(...registerables);
     SidebarComponent,
     PostsComponent,
     GeminiChatComponent,
-
-  ],
+    FooterComponent,
+    HomeComponent,
+    ServiceComponent,
+    AddServiceComponent,
+    DetailServiceComponent,
+    PetCardComponent,
+    AddServiceComponent,
+    DetailServiceComponent,
+    ServiceComponent,
+    AddPetModalComponent,
+    PetDetailModalComponent,
+    EditPetModalComponent,
+    UserPetsComponent,
+    PublicPetsComponent,
+    PublicPetCardComponent,
+    PublicPetDetailModalComponent,
+    AdoptionRequestComponent,
+    AdoptionRequestDashbordComponent,
+    SentRequestComponent,
+    ReceivedRequestComponent,
+    DashboardComponent,
+    UsersComponent,
+    SidebarComponent,
+    HeaderComponent,
+    EditAdoptionRequestComponent,
+    ChatPopupComponent,
+    LookForASitterFormComponent,
+    PetSittingSpaceComponent,
+    DisplayOffersComponent,
+    TrackOffersComponent,
+    ],
   imports: [
     BrowserAnimationsModule,  
     BrowserModule,
@@ -64,10 +114,15 @@ Chart.register(...registerables);
     MatSnackBarModule,
     BaseChartDirective,
     PopoverModule.forRoot(),
+    BrowserAnimationsModule,
+    MatButtonModule,
+    MatIconModule,
+    MatTooltipModule
 
 
 
   ],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
   providers: [],
   bootstrap: [AppComponent]
 })

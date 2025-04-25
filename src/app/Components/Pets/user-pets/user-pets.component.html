@@ -1,0 +1,162 @@
+<div class="page-container mt-5">
+  <div class="page-header d-flex gap-3 align-items-center flex-wrap">
+    <!-- Species Filter -->
+    <div class="dropdown filter-dropdown">
+      <button
+        class="btn btn-light dropdown-toggle"
+        type="button"
+        id="speciesDropdown"
+        data-bs-toggle="dropdown"
+        aria-expanded="false"
+      >
+        <i class="fas fa-filter"></i> Species
+      </button>
+      <ul class="dropdown-menu p-2" style="min-width: 250px;" aria-labelledby="speciesDropdown">
+        <!-- Search input inside dropdown -->
+        <li class="mb-2">
+          <input
+            type="text"
+            class="form-control"
+            placeholder="Search species..."
+            [(ngModel)]="speciesSearchTerm"
+            (input)="updateFilteredSpecies()"
+          />
+        </li>
+        <!-- 'All' option -->
+        <li><a class="dropdown-item" (click)="setSpeciesFilter('')">All</a></li>
+        <!-- Filtered and limited species list -->
+        <li *ngFor="let option of displayedSpecies">
+          <a class="dropdown-item" (click)="setSpeciesFilter(option.value)">
+            {{ option.label }}
+          </a>
+        </li>
+        <li *ngIf="!showAllSpecies && !speciesSearchTerm">
+          <a class="dropdown-item text-primary fw-bold" (click)="showAllSpeciesOptions()">
+            Other...
+          </a>
+        </li>
+      </ul>
+    </div>
+    
+  
+    <!-- Gender Filter (Same style) -->
+    <div class="dropdown filter-dropdown">
+      <button class="btn btn-light dropdown-toggle" type="button" id="genderDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+        <i class="fas fa-venus-mars"></i> Gender
+      </button>
+      <ul class="dropdown-menu" aria-labelledby="genderDropdown">
+        <li><a class="dropdown-item" (click)="setGenderFilter('')">All</a></li>
+        <li><a class="dropdown-item" (click)="setGenderFilter('Male')">Male</a></li>
+        <li><a class="dropdown-item" (click)="setGenderFilter('Female')">Female</a></li>
+      </ul>
+    </div>
+  
+    <!-- Adoption Status Filter (Same style) -->
+    <div class="dropdown filter-dropdown">
+      <button class="btn btn-light dropdown-toggle" type="button" id="adoptionDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+        <i class="fas fa-heart"></i> Adoption
+      </button>
+      <ul class="dropdown-menu" aria-labelledby="adoptionDropdown">
+        <li><a class="dropdown-item" (click)="setAdoptionFilter('')">All</a></li>
+        <li><a class="dropdown-item" (click)="setAdoptionFilter('true')">For Adoption</a></li>
+        <li><a class="dropdown-item" (click)="setAdoptionFilter('false')">Not For Adoption</a></li>
+      </ul>
+    </div>
+  
+    <!-- Search bar -->
+    <input
+      type="text"
+      class="form-control w-25"
+      placeholder="Search pets..."
+      [(ngModel)]="searchKeyword"
+      (input)="filterPets()"
+    />
+  
+    <button type="button" class="btn btn-primary modal-btn" (click)="openModal()">Add a Pet</button>
+  </div>
+  
+  
+
+  <section class="ftco-section pt-5">
+    <div class="container">
+      <div class="card-container">
+        <ng-container *ngFor="let pet of pets">
+          <div>
+            <app-pet-card
+              [pet]="pet"
+              (click)="openDetailModal(pet)"
+            ></app-pet-card>
+          </div>
+        </ng-container>
+      </div>
+
+      <!--Pagination -->
+      <div class="row mt-5">
+        <div class="col-md-3">
+          <label for="itemsPerPage">Pets per page:  </label>
+          <select id="itemsPerPage" class="form-select" [(ngModel)]="itemsPerPage" (ngModelChange)="changeItemsPerPage($event)">
+            <option *ngFor="let option of itemsPerPageOptions" [value]="option">{{ option }}</option>
+          </select>
+        </div>
+        <div class="col text-center">
+          <div class="block-27">
+            <ul>
+              <li>
+                <a
+                  href="#"
+                  (click)="$event.preventDefault(); changePage(currentPage - 1)"
+                  >&lt;</a
+                >
+              </li>
+              <li
+                *ngFor="let page of getIndexArray(totalPages); let i = index"
+                [class.active]="i + 1 === currentPage"
+              >
+                <a
+                  href="#"
+                  (click)="$event.preventDefault(); changePage(i + 1)"
+                  >{{ i + 1 }}</a
+                >
+              </li>
+              <li>
+                <a
+                  href="#"
+                  (click)="$event.preventDefault(); changePage(currentPage + 1)"
+                  >&gt;</a
+                >
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- Modal HTML -->
+
+<app-add-pet-modal
+  id="add-pet-modal"
+  [isVisible]="showModal"
+  (close)="closeModal()"
+  (petAdded)="loadPetsAfterChange()"
+>
+</app-add-pet-modal>
+
+<app-edit-pet-modal
+  id="edit-pet-modal"
+  [isVisible]="showEditModal"
+  (close)="closeEditModal()"
+  [pet]="selectedPet"
+  (petEdited)="loadPetsAfterChange()"
+>
+</app-edit-pet-modal>
+
+<app-pet-detail-modal
+  [isVisible]="showDetail"
+  (close)="closeDetailModal()"
+  (passToEdit)="openEditModal()"
+  [pet]="selectedPet"
+  (petRemoved)="loadPetsAfterChange()"
+>
+</app-pet-detail-modal>
