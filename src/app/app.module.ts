@@ -25,9 +25,6 @@ import { DetailServiceComponent } from './Components/FrontOffice/PetService/deta
 import { AppointmentComponent } from './Components/FrontOffice/PetService/appointment/appointment.component';
 import { PetServiceService } from './Services/pet-service.service';
 import { AvailableSlotsComponent } from './Components/FrontOffice/PetService/available-slots/available-slots.component';
-import { DashboardComponent } from './Components/BackOffice/dashboard/dashboard.component';
-import { HeaderComponent } from './Components/BackOffice/header/header.component';
-import { SidebarComponent } from './Components/BackOffice/sidebar/sidebar.component';
 import { PostsComponent } from './Components/BackOffice/dashboard/posts/posts.component';
 import { GeminiChatComponent } from './Components/FrontOffice/gemini-chat/gemini-chat.component';
 import { PickerModule } from '@ctrl/ngx-emoji-mart';
@@ -42,6 +39,20 @@ import { HTTP_INTERCEPTORS } from '@angular/common/http';
 Chart.register(...registerables);
 import { FooterComponent } from './Components/FrontOffice/footer/footer.component';
 import { HomeComponent } from './Components/FrontOffice/home/home.component';
+import { MarketplaceComponent } from './Components/FrontOffice/marketplace/marketplace.component';
+import { ProduitComponent } from './Components/FrontOffice/produit/produit.component';
+import { FormulaireProduitComponent } from './Components/FrontOffice/formulaire-produit/formulaire-produit.component';
+import { BasketComponent } from './Components/FrontOffice/basket/basket.component';
+import { EditProductComponent } from './Components/FrontOffice/edit-product/edit-product.component';
+import { ProdDetailComponent } from './Components/FrontOffice/prod-detail/prod-detail.component';
+import { PaymentComponent } from './Components/FrontOffice/form-payment/form-payment.component';
+import { DashboardComponent } from './Components/BackOffice/dashboard/dashboard.component';
+import { SidebarComponent } from './Components/BackOffice/sidebar/sidebar.component';
+import { HeaderComponent } from './Components/BackOffice/header/header.component';
+import { MarketplaceBackComponent } from './Components/BackOffice/marketplace-back/marketplace-back.component';
+import { BasketBackComponent } from './Components/BackOffice/basket-back/basket-back.component';
+import { PaymentBackComponent } from './Components/BackOffice/payment-back/payment-back.component';
+import { ProductBackComponent } from './Components/BackOffice/product-back/product-back.component';
 
 import { PetCardComponent } from './Components/Pets/user-pets/pet-card/pet-card.component';
 import { AddPetModalComponent } from './Components/Pets/user-pets/add-pet-modal/add-pet-modal.component';
@@ -200,6 +211,21 @@ UsersCarnetComponent,
     UpdateServiceComponent,
     MapViewComponent,
     
+    MarketplaceComponent,
+    ProduitComponent,
+    FormulaireProduitComponent,
+    BasketComponent,
+    EditProductComponent,
+    ProdDetailComponent,
+    PaymentComponent,
+    DashboardComponent,
+    SidebarComponent,
+    HeaderComponent,
+    MarketplaceBackComponent,
+    BasketBackComponent,
+    PaymentBackComponent,
+    ProductBackComponent
+
   ],
   imports: [
     CommonModule,

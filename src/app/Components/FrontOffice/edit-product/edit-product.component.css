@@ -1,0 +1,92 @@
+form {
+    background-color: #f0fff4;
+    border: 2px solid #38a169;
+    border-radius: 12px;
+    padding: 30px;
+    box-shadow: 0 4px 12px rgba(56, 161, 105, 0.2);
+    max-width: 700px;
+    margin: 30px auto;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  }
+  
+  .form-group {
+    margin-bottom: 20px;
+  }
+  
+  label {
+    font-weight: 600;
+    color: #2f855a;
+    display: block;
+    margin-bottom: 6px;
+  }
+  
+  input[type="text"],
+  input[type="number"],
+  textarea,
+  select {
+    width: 100%;
+    padding: 10px 14px;
+    border: 2px solid #c6f6d5;
+    border-radius: 8px;
+    background-color: #ffffff;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  }
+  
+  input[type="text"]:focus,
+  input[type="number"]:focus,
+  textarea:focus,
+  select:focus {
+    border-color: #38a169;
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(72, 187, 120, 0.3);
+  }
+  
+  .text-danger {
+    color: #e53e3e;
+    font-size: 0.875rem;
+    margin-top: 5px;
+  }
+  
+  .current-category {
+    font-style: italic;
+    color: #276749;
+  }
+  
+  button {
+    padding: 10px 20px;
+    margin-right: 10px;
+    border-radius: 8px;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    border: none;
+  }
+  
+  .btn-primary {
+    background-color: #38a169;
+    color: white;
+  }
+  
+  .btn-primary:disabled {
+    background-color: #9ae6b4;
+    cursor: not-allowed;
+  }
+  
+  .btn-primary:hover:not(:disabled) {
+    background-color: #2f855a;
+  }
+  
+  .btn-secondary {
+    background-color: #e2e8f0;
+    color: #2d3748;
+  }
+  
+  .btn-secondary:hover {
+    background-color: #cbd5e0;
+  }
+  
+  img.img-thumbnail {
+    border-radius: 8px;
+    margin-top: 10px;
+    border: 2px solid #38a169;
+  }
+  

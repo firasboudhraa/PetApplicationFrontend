@@ -1,0 +1,81 @@
+<div class="container cart-container">
+    <!-- Bouton Retour aux Produits -->
+    <div class="text-left mb-3">
+      <button class="btn btn-secondary" (click)="goToProducts()">⬅ Retour aux Produits</button>
+    </div>
+  
+    <h2>🛒 Vos Paniers</h2>
+  
+    <table class="table">
+      <thead>
+        <tr>
+          <th>ID Panier</th>
+          <th>Date de création</th>
+          <th>Produits</th>
+          <th>Total</th>
+          <th>Statut</th>
+          <th>Mode Paiement</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let basket of baskets">
+          <td>{{ basket.id_Basket }}</td>
+          <td>{{ basket.dateCreation | date: 'short' }}</td>
+          <td>
+            <span *ngFor="let id of basket.productIds; let i = index">
+              {{ id }}<span *ngIf="i < basket.productIds.length - 1">, </span>
+            </span>
+          </td>
+          <td>{{ basket.total }} TND</td>
+          <td>{{ basket.statut }}</td>
+          <td>{{ basket.modePaiement }}</td>
+          <td>
+            <button class="btn btn-primary btn-sm" (click)="editBasket(basket)">✏ Modifier</button>
+            <button class="btn btn-danger btn-sm" (click)="deleteBasket(basket.id_Basket!)">🗑 Supprimer</button>
+            <button class="btn btn-warning btn-sm" (click)="clearBasket(basket.id_Basket!)">🧹 Vider</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  
+    <div *ngIf="baskets.length === 0" class="empty-cart mt-3">
+      <p>Il n'y a aucun panier pour le moment 🛍</p>
+    </div>
+  
+    <div class="cart-footer mt-4">
+      <h4>Total global : {{ calculateTotalPrice() }} TND</h4>
+    </div>
+  
+    <!-- Formulaire -->
+    <div class="basket-form mt-5">
+      <h4>{{ editing ? 'Modifier un panier' : 'Ajouter un nouveau panier' }}</h4>
+      <form (ngSubmit)="submitBasket()">
+        <div class="form-group">
+          <label for="statut">Statut</label>
+          <input id="statut" class="form-control" [(ngModel)]="selectedBasket.statut" name="statut" required />
+        </div>
+  
+        <div class="form-group">
+          <label for="modePaiement">Mode de Paiement</label>
+          <input id="modePaiement" class="form-control" [(ngModel)]="selectedBasket.modePaiement" name="modePaiement" required />
+        </div>
+  
+        <div class="form-group">
+          <label for="total">Total</label>
+          <input id="total" type="number" class="form-control" [(ngModel)]="selectedBasket.total" name="total" required />
+        </div>
+  
+        <div class="form-group">
+          <label for="productIdsInput">IDs Produits (séparés par virgule)</label>
+          <input id="productIdsInput" class="form-control" [(ngModel)]="productIdsInput" name="productIdsInput" required />
+        </div>
+  
+        <button type="submit" class="btn btn-success mt-3">
+          {{ editing ? 'Mettre à jour' : 'Créer' }}
+        </button>
+        <button type="button" class="btn btn-secondary mt-3 ml-2" (click)="resetForm()">Annuler</button>
+      </form>
+    </div>
+  </div>
+  

@@ -1,0 +1,130 @@
+/* Container principal */
+.container {
+    padding: 3rem 4rem 3rem 6rem; /* top right bottom left */
+    background: linear-gradient(to right, #e3f2fd, #ffffff);
+    font-family: 'Poppins', sans-serif;
+    min-height: 100vh;
+  }
+  
+  
+  /* Titre principal */
+  h2 {
+    color: #0d47a1;
+    font-size: 2.2rem;
+    text-align: center;
+    margin-bottom: 2rem;
+    font-weight: 600;
+  }
+  
+  /* Tableau de paiements */
+  .payment-table {
+    width: 90%;
+    margin: 0 auto;
+    border-collapse: collapse;
+    background-color: #ffffff;
+    border-radius: 16px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    animation: fadeIn 0.8s ease-in-out;
+  }
+  
+  /* En-tête du tableau */
+  .payment-table thead {
+    background-color: #1565c0;
+    color: #fff;
+    font-weight: 600;
+  }
+  
+  .payment-table th, .payment-table td {
+    padding: 1rem;
+    text-align: center;
+    transition: all 0.3s ease;
+  }
+  
+  /* Effet hover ligne */
+  .payment-table tr:hover {
+    background-color: #e3f2fd;
+    transform: scale(1.01);
+  }
+  
+  /* Groupe de boutons */
+  .btn-group {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+  }
+  
+  /* Bouton supprimer stylé */
+  .btn-delete {
+    background-color: #e53935;
+    color: #fff;
+    border: none;
+    padding: 0.6rem 1.2rem;
+    border-radius: 30px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: 0.3s ease;
+    box-shadow: 0 4px 10px rgba(229, 57, 53, 0.4);
+  }
+  
+  .btn-delete:hover {
+    background-color: #c62828;
+    transform: translateY(-2px);
+  }
+  
+  /* Badge dynamique */
+  .badge-success, .badge-pending, .badge-failed {
+    padding: 0.4rem 1rem;
+    border-radius: 30px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    display: inline-block;
+  }
+  
+  .badge-success {
+    background-color: #43a047;
+    color: white;
+  }
+  
+  .badge-pending {
+    background-color: #ffb300;
+    color: white;
+  }
+  
+  .badge-failed {
+    background-color: #e53935;
+    color: white;
+  }
+  
+  /* Aucune donnée */
+  .no-data {
+    color: #78909c;
+    font-size: 18px;
+    text-align: center;
+    margin-top: 2rem;
+  }
+  
+  /* Animation fadeIn */
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  /* Responsive */
+  @media screen and (max-width: 768px) {
+    .payment-table {
+      font-size: 0.9rem;
+    }
+  
+    .btn-group {
+      flex-direction: column;
+      gap: 8px;
+    }
+  }
+  
