@@ -41,6 +41,7 @@ testem.log
 .DS_Store
 Thumbs.db
 
+<<<<<<< HEAD
 #env variables
 .env
 .env.*.local
@@ -51,4 +52,7 @@ Thumbs.db
 src/environments/
 # Local environment files
 \src\environments\environment.ts
+=======
+# environment variables
+>>>>>>> PetService
 /src/environments/environment.ts

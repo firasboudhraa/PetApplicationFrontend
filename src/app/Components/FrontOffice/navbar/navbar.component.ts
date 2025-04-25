@@ -1,6 +1,6 @@
 import { Component, ElementRef, HostListener, OnInit, ViewChild } from '@angular/core';
 import { NotificationService } from 'src/app/Services/notification.service';
-import { Notification } from 'src/app/models/notification';
+import { NotificationM } from 'src/app/models/notification';
 
 @Component({
   selector: 'app-navbar',
@@ -8,7 +8,7 @@ import { Notification } from 'src/app/models/notification';
   styleUrls: ['./navbar.component.css'],
 })
 export class NavbarComponent implements OnInit {
-  notifications: Notification[] = [];
+  notifications: NotificationM[] = [];
   dropdownOpen = false;
   userId :number = 1; 
 
@@ -30,7 +30,7 @@ export class NavbarComponent implements OnInit {
   
     this.notificationService.connect(`${this.userId}`);
   }
-  removeDuplicates(notifs: Notification[]): Notification[] {
+  removeDuplicates(notifs: NotificationM[]): NotificationM[] {
     const seen = new Set();
     return notifs.filter((n) => {
       if (seen.has(n.id)) return false;
@@ -48,7 +48,7 @@ export class NavbarComponent implements OnInit {
     this.dropdownOpen = !this.dropdownOpen;
   }
 
-  markAsRead(notification: Notification): void {
+  markAsRead(notification: NotificationM): void {
     if (!notification.seen) {
       this.notificationService.markAsSeen(notification.id).subscribe(() => {
         notification.seen = true; // Mark as seen in the UI
