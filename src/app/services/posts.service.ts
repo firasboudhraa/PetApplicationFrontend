@@ -3,7 +3,7 @@ import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Post } from 'src/app/models/Post';
 import { environment } from 'src/environments/environment';
-import { UserService } from 'src/app/services/user.service';
+import { UserService } from 'src/app/Services/user.service';
 import { UserDTO } from 'src/app/models/userDTO';
 
 @Injectable({

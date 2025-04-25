@@ -1,8 +1,8 @@
 import { Component, OnInit, AfterViewInit, HostListener } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { PostsService } from 'src/app/services/posts.service';
-import { UserService } from 'src/app/services/user.service';
-import { CommentService } from 'src/app/services/comments.service';
+import { PostsService } from 'src/app/Services/posts.service';
+import { UserService } from 'src/app/Services/user.service';
+import { CommentService } from 'src/app/Services/comments.service';
 import { Post } from 'src/app/models/Post';
 import { Comment } from 'src/app/models/Comment';
 import { UserDTO } from 'src/app/models/userDTO';

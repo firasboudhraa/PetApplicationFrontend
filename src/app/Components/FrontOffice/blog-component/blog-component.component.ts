@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { PostsService } from 'src/app/services/posts.service';
+import { PostsService } from 'src/app/Services/posts.service';
 import { Post } from 'src/app/models/Post';
-import { UserService } from 'src/app/services/user.service';
+import { UserService } from 'src/app/Services/user.service';
 import { UserDTO } from 'src/app/models/userDTO';
-import { CommentService } from 'src/app/services/comments.service';
+import { CommentService } from 'src/app/Services/comments.service';
 
 @Component({
   selector: 'app-blog-component',

@@ -1,0 +1,48 @@
+<div class="container mt-5">
+    <h2 class="mb-4">📁 Carnets Médicaux</h2>
+  
+    <!-- Barre de recherche -->
+    <input type="text"
+           class="form-control mb-4"
+           placeholder="🔍 Rechercher un carnet par nom..."
+           [(ngModel)]="searchText" />
+  
+    <div class="row">
+      <div class="col-md-6 mb-4" *ngFor="let carnet of filteredCarnets">
+        <div class="card shadow-sm border border-primary-subtle">
+          <div class="card-body">
+            <h5 class="card-title text-primary-emphasis">🩺 {{ carnet.name }}</h5>
+  
+            <div *ngIf="carnet.medicalRecords && carnet.medicalRecords.length > 0; else noRecords">
+              <h6 class="text-muted mt-3">🗂 Historique Médical</h6>
+              <div *ngFor="let record of carnet.medicalRecords" class="mb-2">
+                <div class="border rounded p-2 bg-light">
+                  <p><strong>Type:</strong> {{ record.type }}</p>
+                  <p><strong>Date:</strong> {{ record.dateTime | date:'dd/MM/yyyy' }}</p>
+                  <p><strong>Description:</strong> {{ record.description }}</p>
+                  <p><strong>Vétérinaire:</strong> {{ record.veterinarian_id || 'Non précisé' }}</p>
+                  <p><strong>Prochaine visite:</strong> {{ record.next_due_date ? (record.next_due_date | date:'dd/MM/yyyy') : 'Non précisée' }}</p>
+                </div>
+              </div>
+            </div>
+            <ng-template #noRecords>
+              <p class="text-muted">📌 Aucun historique médical disponible.</p>
+            </ng-template>
+  
+            <!-- Boutons -->
+            <div class="mt-3 d-flex justify-content-end">
+              <button class="btn btn-danger btn-sm me-2" (click)="deleteCarnet(carnet)">🗑 Supprimer</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  
+    <!-- Bouton ajouter un carnet -->
+    <div class="text-end">
+      <button class="btn btn-primary mt-4" (click)="navigateToMedicalNotebookForm()">
+        ➕ Ajouter un Carnet
+      </button>
+    </div>
+  </div>
+  
