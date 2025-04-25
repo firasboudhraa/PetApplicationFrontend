@@ -3,8 +3,8 @@ import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Post } from 'src/app/models/Post';
 import { environment } from 'src/environments/environment';
-import { UserService } from 'src/app/Services/user.service';
-import { UserDTO } from 'src/app/models/userDTO';
+import { UserService } from 'src/app/Components/FrontOffice/user/service_user/user.service';
+import { User } from '../Components/FrontOffice/user/models/user_model';
 
 @Injectable({
   providedIn: 'root'
@@ -69,8 +69,8 @@ export class PostsService {
             const formattedDate = now.toLocaleDateString('en-GB');
   
             this.userService.getUserById(userId).subscribe({
-              next: (user: UserDTO) => {
-                const userName = user.name;
+              next: (user: User) => {
+                const userName = user.firstName + ' ' + user.lastName;
   
                 // Set the appropriate message prefix based on post type
                 let messagePrefix = '';

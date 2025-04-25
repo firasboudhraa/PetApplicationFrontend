@@ -28,8 +28,6 @@ import { EditrecordComponent } from './editrecord/editrecord.component';
 import { DetailComponent } from './detail/detail.component';
 import { Chat } from 'openai/resources/chat';
 import { ChatAIComponent } from './chat-ai/chat-ai.component';
-import { DashboardComponent } from './Components/BackOffice/dashboard/dashboard.component';
-import { UsersComponent } from './Components/BackOffice/dashboard/users/users.component';
 import { LoginComponent } from './Components/FrontOffice/user/login/login.component';
 import { RegisterComponent } from './Components/FrontOffice/user/register/register.component';
 import { UserProfileComponent } from './Components/FrontOffice/user/user-profile/user-profile.component';
@@ -40,12 +38,36 @@ import { ForgotPasswordComponent } from './Components/FrontOffice/user/forgot-pa
 import { ResetPasswordComponent } from './Components/FrontOffice/user/reset-password/reset-password.component';
 import { ActivateAccountComponent } from './Components/FrontOffice/user/activate-account/activate-account.component';
 import { UsersCarnetComponent } from './Components/BackOffice/dashboard/users/users-carnet/users-carnet.component';
+import { DonationComponent } from './Components/FrontOffice/EventDonation/donation/donation.component';
+import { EventComponent } from './Components/FrontOffice/EventDonation/event/event.component';
+import { EventDetailComponent } from './Components/FrontOffice/EventDonation/event-detail/event-detail.component';
+import { AddDonationComponent } from './Components/FrontOffice/EventDonation/add-donation/add-donation.component';
+import { AddEventComponent } from './Components/BackOffice/dashboard/add-event/add-event.component';
+
+import { DashboardComponent } from './Components/BackOffice/dashboard/dashboard.component';
+import { UsersComponent } from './Components/BackOffice/dashboard/users/users.component';
+import { EventbackComponent } from './Components/BackOffice/dashboard/eventback/eventback.component';
+import { UpdateEventComponent } from './Components/BackOffice/dashboard/update-event/update-event.component';
 
 const routes: Routes = [
   { path: 'about', component: AboutComponentComponent },
   { path: 'blog', component: BlogComponentComponent },
   { path: 'post/:id', component: PostDetailComponent },
   { path: 'add-post', component: AddPostComponent },
+  { path: 'home', component: HomeComponent },
+  {path:'donation', component:DonationComponent},
+  {path:'event', component:EventComponent},
+  {path:'event-detail/:id', component:EventDetailComponent},
+  {path:'add-donation/:id', component:AddDonationComponent},
+  {path:'dashboard', component:DashboardComponent,
+    children:[
+      {path:'users', component:UsersComponent},
+      {path:'eventback', component:EventbackComponent},
+      {path:'update-event/:id', component:UpdateEventComponent},
+      {path:'add-event', component:AddEventComponent},
+    ]
+  },
+  {path:'',redirectTo:'home',pathMatch:'full'},
 
   { path: 'gemini', component: GeminiChatComponent },
   { path: '', redirectTo: 'home', pathMatch: 'full' },

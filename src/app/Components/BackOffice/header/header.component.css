@@ -84,6 +84,27 @@ warning-color : #ffa534
 danger-color : #f3545d
 
 -------------------------------------------------------------------*/
+
+.main-header {
+  background: #fff;
+  min-height: 60px;
+  width: calc(100% - 250px);
+  position: fixed;
+  margin-left: 250px;
+  z-index: 1001;
+  top: 0; /* Ajouté pour s'assurer que le header reste en haut */
+}
+
+.main-panel {
+  position: relative;
+  width: calc(100% - 265px);
+  height: 100vh;
+  min-height: 100%;
+  float: right;
+  transition: all 0.3s;
+  margin-top: 60px; /* Ajouté pour laisser de l'espace pour le header */
+}
+
 .alert,
 .brand,
 .btn-simple,

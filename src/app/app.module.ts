@@ -11,6 +11,12 @@ import { ContactInfoComponent } from './Components/FrontOffice/contact-info/cont
 import { PostDetailComponent } from './Components/FrontOffice/post-detail/post-detail.component';
 import { AddPostComponent } from './Components/FrontOffice/add-post/add-post.component';
 import { ModifyPostComponent } from './Components/FrontOffice/modify-post/modify-post.component';
+import { DonationComponent } from './Components/FrontOffice/EventDonation/donation/donation.component';
+import { AddDonationComponent } from './Components/FrontOffice/EventDonation/add-donation/add-donation.component';
+import { EventComponent } from './Components/FrontOffice/EventDonation/event/event.component';
+import { EventDetailComponent } from './Components/FrontOffice/EventDonation/event-detail/event-detail.component';
+import { RangePipe } from './Components/FrontOffice/EventDonation/event/range.pipe';
+
 import { DashboardComponent } from './Components/BackOffice/dashboard/dashboard.component';
 import { HeaderComponent } from './Components/BackOffice/header/header.component';
 import { SidebarComponent } from './Components/BackOffice/sidebar/sidebar.component';
@@ -18,7 +24,6 @@ import { PostsComponent } from './Components/BackOffice/dashboard/posts/posts.co
 import { GeminiChatComponent } from './Components/FrontOffice/gemini-chat/gemini-chat.component';
 import { PickerModule } from '@ctrl/ngx-emoji-mart';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { BaseChartDirective } from 'ng2-charts';
 import { Chart, registerables } from 'chart.js';
 import { PopoverModule } from 'ngx-bootstrap/popover';
@@ -73,6 +78,13 @@ import { UserProfileModalComponent } from './Components/FrontOffice/user/user-pr
 import { ResetPasswordComponent } from './Components/FrontOffice/user/reset-password/reset-password.component';
 import { ForgotPasswordComponent } from './Components/FrontOffice/user/forgot-password/forgot-password.component';
 import { UsersCarnetComponent } from './Components/BackOffice/dashboard/users/users-carnet/users-carnet.component';
+import { EventbackComponent } from './Components/BackOffice/dashboard/eventback/eventback.component';
+import { UpdateEventComponent } from './Components/BackOffice/dashboard/update-event/update-event.component';
+import { AddEventComponent } from './Components/BackOffice/dashboard/add-event/add-event.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { LeaderboardComponent } from './Components/FrontOffice/EventDonation/leaderboard/leaderboard.component';
+import { Nl2BrPipe } from './Components/BackOffice/dashboard/add-event/nl2br.pipe';
+
 @NgModule({
   declarations: [
     AboutComponentComponent,
@@ -105,6 +117,11 @@ import { UsersCarnetComponent } from './Components/BackOffice/dashboard/users/us
     ReceivedRequestComponent,
     MedicalnotebookComponent,
     MedicalnotebookFormComponent,
+    DonationComponent,
+    AddDonationComponent,
+    EventComponent,
+    EventDetailComponent,
+    RangePipe,
     DashboardComponent,
     UsersComponent,
     SidebarComponent,
@@ -130,7 +147,12 @@ import { UsersCarnetComponent } from './Components/BackOffice/dashboard/users/us
     ResetPasswordComponent ,
   ForgotPasswordComponent,
 UsersComponent,
-UsersCarnetComponent
+UsersCarnetComponent,
+    EventbackComponent,
+    UpdateEventComponent,
+    AddEventComponent,
+    LeaderboardComponent,
+    Nl2BrPipe
   ],
   imports: [
     BrowserAnimationsModule,  
@@ -149,6 +171,7 @@ UsersCarnetComponent
     NgChartsModule ,
     FullCalendarModule, 
 
+    BrowserAnimationsModule,
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   providers: [],
