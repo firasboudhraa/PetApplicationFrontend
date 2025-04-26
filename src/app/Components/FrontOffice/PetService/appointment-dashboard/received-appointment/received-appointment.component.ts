@@ -80,8 +80,11 @@ intervalRef: any;
 
   fetchAppointments(): void {
     const userId= this.authService.getDecodedToken()?.userId;
-    const roles = this.authService.getUserRoles(); 
-    const hasServiceProviderRole = roles.includes('ROLE_SERVICE_PROVIDER');
+    if (userId !== undefined) {
+      this.idProvider = userId;
+    } else {
+      console.error('User ID is undefined');
+    }
      
     this.petService.getServicesWithAppointmentsByProviderId(this.idProvider).subscribe(async (services: any[]) => {
       console.log('Services:', services);
