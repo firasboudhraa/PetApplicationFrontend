@@ -13,7 +13,7 @@
 
           <div class="mb-2">
             <span class="badge bg-info text-dark fs-6">
-              🧾 {{ record.type }}
+              � {{ record.type }}
             </span>
           </div>
 
@@ -46,8 +46,13 @@
   </div>
 
   <div class="text-center mt-5">
-    <button class="btn btn-success btn-lg shadow-sm px-4" (click)="generatePDF()">
-      📄 Exporter en PDF
-    </button>
+    <div class="d-flex justify-content-center gap-3">
+      <button class="btn btn-success btn-lg shadow-sm px-4" (click)="generatePDF()">
+        📄 Exporter en PDF
+      </button>
+      <button class="btn btn-outline-secondary btn-lg shadow-sm px-4" (click)="retour()">
+        ↩️ Retour
+      </button>
+    </div>
   </div>
 </div>

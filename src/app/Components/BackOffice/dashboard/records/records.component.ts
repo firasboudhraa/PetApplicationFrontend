@@ -8,6 +8,24 @@ import { Record } from 'src/app/models/records';  // Assure-toi d'importer le bo
   styleUrls: ['./records.component.css']
 })
 export class RecordsComponent implements OnInit {
+deleteRecord(record: any) {
+
+    const recordId = record.id;
+    console.log('Suppression de l’enregistrement avec ID :', recordId);
+  
+    this.medicalRecordService.deleteMedicalRecord(recordId).subscribe({
+      next: () => {
+        console.log('Enregistrement supprimé avec succès.');
+        this.loadMedicalRecords(); // Recharge les enregistrements affichés
+      },
+      error: (error) => {
+        console.error('Erreur lors de la suppression :', error);
+      }
+    });
+  }
+editRecord(arg0: number) {
+throw new Error('Method not implemented.');
+}
   medicalRecords: Record[] = [];  // Utilisation du modèle Record explicite
 
 
@@ -18,26 +36,34 @@ export class RecordsComponent implements OnInit {
     this.loadMedicalRecords();
   }
 
-  // Charger les carnets médicaux depuis le service
-  loadMedicalRecords(): void {
-    this.medicalRecordService.getAllRecords().subscribe(
-      (response) => {
-        this.medicalRecords = response.map((item: any) => ({
-          id: item.id, // Add 'id' property
-          date: item.date, // Add 'date' property
-          dateTime: item.date, // Map 'date' to 'dateTime'
-          type: item.type,
-          description: item.description,
-          next_due_date: item.next_due_date,
-          carnet_id: item.carnet_id,
-          poids: item.poids,
-          nextDate: item.next_due_date, // Map 'next_due_date' to 'nextDate'
-          imageUrl: item.imageUrl || '' // Add 'imageUrl' property with a default value
-        })); // Stocker la réponse dans la variable
-      },
-      (error) => {
-        console.error('Erreur lors de la récupération des carnets médicaux', error);
-      }
-    );
+  loadMedicalRecords() {
+    this.medicalRecordService.getAllRecords().subscribe(data => {
+      console.log('DATA REÇUE :', data);
+  
+      this.medicalRecords = data.map((record: any) => {
+        console.log("Record reçu :", record);
+  
+        // Remap _id vers id si nécessaire
+        if (record._id && !record.id) {
+          record.id = record._id;
+        }
+  
+        // Utiliser imagePath si imageUrl est null
+        const imageName = record.imageUrl && record.imageUrl.trim() !== ''
+          ? record.imageUrl
+          : record.imagePath && record.imagePath.trim() !== ''
+            ? record.imagePath
+            : null;
+  
+        record.imageUrl = imageName;
+  
+        return record;
+      });
+    }, error => {
+      console.error('Erreur lors du chargement des enregistrements médicaux :', error);
+    });
   }
-}
+  
+  
+  
+}  

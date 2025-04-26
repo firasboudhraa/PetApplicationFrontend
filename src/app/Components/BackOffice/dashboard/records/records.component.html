@@ -1,33 +1,53 @@
 <div class="container py-5">
-    <h2 class="mb-4 text-center text-dark fw-bold">
-      📋 Gestion des Carnets Médicaux
-    </h2>
-  
-    <div *ngIf="medicalRecords.length === 0" class="alert alert-info text-center">
-      Aucun carnet médical disponible pour le moment.
-    </div>
-  
-    <div class="row gy-4">
-      <div class="col-md-6 col-lg-4" *ngFor="let record of medicalRecords">
-        <div class="card border-0 shadow-sm h-100">
-          <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
-            <span><i class="bi bi-journal-medical me-2"></i>Carnet ID: {{ record.carnet_id }}</span>
-            <span class="badge bg-light text-dark">{{ record.type }}</span>
+  <h2 class="mb-4 text-center text-dark fw-bold">
+    📋 Medical Records Management
+  </h2>
+
+  <div *ngIf="medicalRecords.length === 0" class="alert alert-info text-center">
+    No medical records available at the moment.
+  </div>
+
+  <div class="row gy-4">
+    <div class="col-md-6 col-lg-4" *ngFor="let record of medicalRecords">
+      <div class="card border-0 shadow-sm h-100 d-flex flex-column">
+        <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
+          <span><i class="bi bi-journal-medical me-2"></i>Record ID: {{ record.carnet_id }}</span>
+          <span class="badge bg-light text-dark">{{ record.type }}</span>
+        </div>
+
+        <div class="card-body">
+          <p><i class="bi bi-calendar-date me-2"></i><strong>Date:</strong> {{ record.date | date: 'dd/MM/yyyy' }}</p>
+          <p><i class="bi bi-info-circle me-2"></i><strong>Description:</strong> {{ record.description }}</p>
+          <p><i class="bi bi-calendar-check me-2"></i><strong>Type:</strong> {{ record.type }}</p>
+
+          <div *ngIf="record.imageUrl" class="text-center mb-3">
+            <div class="mb-2 text-secondary small">📎 ordonnance</div>
+            <img
+              [src]="'http://localhost:8071/record/images/' + record.imageUrl"
+              alt="Prescription"
+              class="img-fluid rounded-3 border shadow-sm"
+              style="max-height: 200px; object-fit: cover;"
+              crossorigin="anonymous"
+            />
           </div>
-          <div class="card-body">
-            <p><i class="bi bi-calendar-date me-2"></i><strong>Date :</strong> {{ record.date | date: 'dd/MM/yyyy' }}</p>
-            <p><i class="bi bi-info-circle me-2"></i><strong>Description :</strong> {{ record.description }}</p>
-            <p><i class="bi bi-calendar-check me-2"></i><strong>type :</strong> {{ record.type }}</p>
-          </div>
-          
+        </div>
+
+        <!-- Boutons Modifier / Supprimer -->
+        <div class="card-footer bg-light border-top mt-auto d-flex justify-content-between">
+          <button class="btn btn-outline-primary btn-sm" (click)="editRecord(record.id)">
+            ✏️ Modifier
+          </button>
+          <button class="btn btn-outline-danger btn-sm" (click)="deleteRecord(record)">
+            🗑️ Supprimer
+          </button>
         </div>
       </div>
     </div>
-  
-    <div class="d-flex justify-content-center mt-5">
-      <button class="btn btn-success btn-lg px-4">
-        ➕ Ajouter un nouveau carnet
-      </button>
-    </div>
   </div>
-  
+
+  <div class="d-flex justify-content-center mt-5">
+    <button class="btn btn-success btn-lg px-4">
+      ➕ Add New Record
+    </button>
+  </div>
+</div>
