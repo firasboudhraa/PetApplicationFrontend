@@ -1,0 +1,53 @@
+<section class="ftco-section bg-light py-5">
+  <div class="container">
+    <div class="row justify-content-center">
+      <!-- Service Details Card -->
+      <div class="col-md-8">
+        <div class="service-detail-card bg-white shadow-lg rounded-lg p-5 transition-all hover:shadow-xl">
+          
+          <!-- Service Header -->
+          <div class="text-center mb-5">
+            <h2 class="font-bold text-gray-900 text-3xl mb-2">{{ service.name }}</h2>
+            <div class="flex justify-center items-center w-20 h-20 mx-auto mb-4 bg-gradient-to-r from-blue-500 to-indigo-600 rounded-full">
+              <span class="flaticon-customer-service text-white text-2xl"></span>
+            </div>
+            <p class="text-gray-600 text-lg">{{ service.description }}</p>
+          </div>
+
+          <!-- Service Info -->
+          <div class="grid grid-cols-2 gap-5 text-center mb-5">
+            <div class="bg-gray-100 p-3 rounded-lg shadow">
+              <h4 class="text-lg font-semibold text-gray-800">💰 Price</h4>
+              <p class="text-gray-600">{{ service.price }}TND</p>
+            </div>
+            <div class="bg-gray-100 p-3 rounded-lg shadow">
+              <h4 class="text-lg font-semibold text-gray-800">⏳ Duration</h4>
+              <p class="text-gray-600">{{ service.durationInMinutes }} min</p>
+            </div>
+          </div>
+
+          <!-- Date Range -->
+          <div class="text-center mb-5">
+            <h4 class="text-lg font-semibold text-gray-800">📅 Available From</h4>
+            <p class="text-gray-600">{{ service.startDate | date:'h:mm:a' }} ➝ {{ service.endDate | date:'h:m:a' }}</p>
+          </div>
+
+          <!-- Location and Map Section -->
+          <div class="mt-6 flex items-center">
+            <!-- Loader positioned first, followed by Location text -->
+            <div class="loader cursor-pointer mr-3" (click)="openMap()" title="View on Map"></div>
+            <p class="text-gray-700 font-medium">📍 Location: {{ service.address }}</p>
+          </div>
+          <div id="map" class="mt-4 rounded-lg shadow" style="height: 250px;" *ngIf="mapOpened"></div>
+
+          <!-- Available Slots -->
+          <div class="text-center">
+            <button class="btn btn-primary" [routerLink]="['/full-calendar',service.idService]">
+              View Available Times
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

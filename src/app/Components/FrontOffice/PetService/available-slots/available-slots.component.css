@@ -1,0 +1,69 @@
+/* FullCalendar Container */
+.full-calendar-container {
+    width: 95%;
+    max-width: 1200px;
+    margin: auto;
+    padding: 20px;
+    background: rgba(255, 255, 255, 0.1); /* Glassmorphism effect */
+    backdrop-filter: blur(10px);
+    border-radius: 15px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+  }
+  
+  /* Custom Calendar Header */
+  .fc-header-toolbar {
+    background: linear-gradient(45deg, #4A90E2, #50C878);
+    color: white;
+    padding: 10px;
+    border-radius: 10px;
+    font-weight: bold;
+  }
+  
+  /* Change Event Colors */
+  .fc-daygrid-event {
+    background: #FF5733 !important;
+    color: white !important;
+    border-radius: 8px;
+    font-weight: bold;
+    padding: 5px;
+    transition: transform 0.3s ease-in-out;
+  }
+  
+  /* Hover effect for events */
+  .fc-daygrid-event:hover {
+    transform: scale(1.1);
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
+  }
+  
+  /* Style for the active day */
+  .fc-daygrid-day {
+    transition: background 0.3s ease-in-out;
+  }
+  
+  .fc-daygrid-day:hover {
+    background: rgba(255, 255, 255, 0.2);
+    cursor: pointer;
+  }
+  
+  /* Customize Buttons */
+  .fc-button {
+    background: #007BFF !important;
+    color: white !important;
+    border: none !important;
+    border-radius: 5px !important;
+    padding: 8px 15px !important;
+    transition: background 0.3s ease-in-out;
+  }
+  
+  .fc-button:hover {
+    background: #0056b3 !important;
+  }  
+  
+  /* Responsive Design */
+  @media (max-width: 768px) {
+    .full-calendar-container {
+      width: 100%;
+      padding: 10px;
+    }
+  }
+  

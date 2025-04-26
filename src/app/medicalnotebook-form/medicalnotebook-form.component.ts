@@ -4,6 +4,7 @@ import { Pet } from '../models/pet';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MedicalService } from '../Services/medical.service';
 import { cl } from '@fullcalendar/core/internal-common';
+import { PetdataServiceService } from '../Services/petdata-service.service';
 
 @Component({
   selector: 'app-medicalnotebook-form',
@@ -13,16 +14,17 @@ import { cl } from '@fullcalendar/core/internal-common';
 export class MedicalnotebookFormComponent implements OnInit {
   carnetForm!: FormGroup;
   recordForm!: FormGroup;
+  userId : number = 1; 
   carnets: any[] = [{
      id: 2,
       pet_id: 12 
   }];
   records: any[] = [];
   pets: Pet[] = [
-    { id: 1, name: 'Rex', imagePath: 'assets/dog1.jpg', species: 'Chien', age: 3, color: 'Marron', sex: 'Mâle', ownerId: 101, description: 'Chien affectueux et joueur.', forAdoption: false, location: 'Paris' },
-    { id: 2, name: 'Misty', imagePath: 'assets/cat1.jpg', species: 'Chat', age: 2, color: 'Gris', sex: 'Femelle', ownerId: 102, description: 'Chat calme et doux.', forAdoption: true, location: 'Lyon' },
-    { id: 3, name: 'Charlie', imagePath: 'assets/dog2.jpg', species: 'Chien', age: 5, color: 'Noir', sex: 'Mâle', ownerId: 103, description: 'Chien énergique et intelligent.', forAdoption: false, location: 'Marseille' },
-    { id: 4, name: 'miomioe', imagePath: 'assets/dog2.jpg', species: 'chatton', age: 5, color: 'blanc', sex: 'Mâle', ownerId: 106, description: 'Chien énergique et intelligent.', forAdoption: false, location: 'Marseille' },
+    { id: 1, name: 'Rex', imagePath: 'assets/dog1.jpg', species: 'Chien', age: 3, color: 'Marron', sex: 'Mâle', ownerId: 101, description: 'Chien affectueux et joueur.', forAdoption: false, location: 'Paris' ,adoptionRequests: []},
+    { id: 2, name: 'Misty', imagePath: 'assets/cat1.jpg', species: 'Chat', age: 2, color: 'Gris', sex: 'Femelle', ownerId: 102, description: 'Chat calme et doux.', forAdoption: true, location: 'Lyon' ,adoptionRequests: []},
+    { id: 3, name: 'Charlie', imagePath: 'assets/dog2.jpg', species: 'Chien', age: 5, color: 'Noir', sex: 'Mâle', ownerId: 103, description: 'Chien énergique et intelligent.', forAdoption: false, location: 'Marseille' ,adoptionRequests: []},
+    { id: 4, name: 'miomioe', imagePath: 'assets/dog2.jpg', species: 'chatton', age: 5, color: 'blanc', sex: 'Mâle', ownerId: 106, description: 'Chien énergique et intelligent.', forAdoption: false, location: 'Marseille' ,adoptionRequests: []},
 
   ];  
   id!: string; // ID du carnet ou record en cours d’édition
@@ -34,7 +36,8 @@ retour(){
     private fb: FormBuilder,
     private act: ActivatedRoute,
     private rt: Router,
-    private medicalService: MedicalService
+    private medicalService: MedicalService,
+    private petDataService : PetdataServiceService
   ) {}
 
   ngOnInit(): void {
@@ -171,7 +174,7 @@ retour(){
 
   /** 🔹 Charger la liste des animaux */
   loadPets() {
-    this.medicalService.getAllPets().subscribe(
+    this.petDataService.getPetsByOwnerId(this.userId).subscribe(
       (data) => (this.pets = data),
       (error) => console.error("Erreur de chargement des animaux", error)
     );

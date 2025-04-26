@@ -1,0 +1,143 @@
+/* Global styles */
+body {
+    font-family: 'Poppins', sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+/* Hero Section */
+.hero-wrap {
+    background-image: url('https://via.placeholder.com/1500x600'); /* Replace with your image */
+    background-size: cover;
+    background-position: center;
+    height: 450px;
+    position: relative;
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    animation: fadeIn 2s ease-out; /* Hero section fade-in */
+}
+
+.hero-wrap .overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(245, 244, 244, 0.5);
+}
+
+.hero-wrap .container {
+    z-index: 1;
+    position: relative;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    animation: slideIn 1s ease-out; /* Container slide-up effect */
+}
+
+.hero-wrap .container h1 {
+    font-size: 3.5rem;
+    font-weight: 600;
+    color: transparent;
+    background: linear-gradient(to right, #158d15, #539562); /* Dégradé du vert foncé au vert clair */
+    -webkit-background-clip: text; /* Applique le dégradé uniquement sur le texte */
+    background-clip: text; /* Assure la compatibilité avec d'autres navigateurs */
+    text-shadow: 3px 3px 6px rgba(89, 115, 81, 0.6);
+    animation: textGlow 2s ease-out infinite alternate; /* Animation de surbrillance sur le texte */
+}
+
+.hero-wrap .container p {
+    font-size: 1.5rem;
+    font-weight: 300;
+    color: transparent;
+    background: linear-gradient(to right, #006400, #28a745); /* Dégradé similaire pour le texte */
+    -webkit-background-clip: text;
+    background-clip: text;
+    text-shadow: 2px 2px 5px rgba(240, 223, 223, 0.6);
+    animation: textFadeIn 2s ease-out 0.5s forwards; /* Fade-in pour le paragraphe */
+}
+
+/* Button styling */
+.btn-primary {
+    background-color: #28a745; /* Green */
+    border-color: #28a745;
+    padding: 12px 30px;
+    font-size: 1.25rem;
+    font-weight: 500;
+    border-radius: 30px;
+    transition: all 0.3s ease-in-out;
+    animation: buttonPulse 2s ease-out infinite alternate; /* Pulsation du bouton */
+}
+
+.btn-primary:hover {
+    background-color: #218838; /* Darker green on hover */
+    border-color: #218838;
+}
+
+.btn-primary:focus {
+    outline: none;
+    box-shadow: 0 0 0 0.2rem rgba(40, 167, 69, 0.5); /* Slight green outline */
+}
+
+/* Section styling */
+.ftco-section {
+    padding: 60px 0;
+}
+
+.ftco-section .container {
+    max-width: 1200px;
+}
+
+/* Keyframes for Animations */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes slideIn {
+    from {
+        transform: translateY(50px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+@keyframes textGlow {
+    0% {
+        text-shadow: 3px 3px 6px rgba(89, 115, 81, 0.6);
+    }
+    100% {
+        text-shadow: 5px 5px 12px rgba(0, 128, 0, 0.8);
+    }
+}
+
+@keyframes textFadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes buttonPulse {
+    0% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.05);
+    }
+    100% {
+        transform: scale(1);
+    }
+}

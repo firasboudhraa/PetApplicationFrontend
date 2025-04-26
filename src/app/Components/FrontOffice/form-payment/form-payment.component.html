@@ -1,0 +1,17 @@
+<br>
+<br>
+<div class="payment-form">
+  <h2>Paiement</h2>
+
+  <!-- Élément carte Stripe -->
+  <label for="card-element">Informations de carte</label>
+  <div id="card-element" style="border: 1px solid #ccc; padding: 10px; border-radius: 6px;"></div>
+
+  <!-- Zone pour afficher les erreurs -->
+  <div id="card-errors" role="alert" style="color: red; margin-top: 10px;"></div>
+
+  <button (click)="payNow()" class="pay-button">Payer {{ total | number:'1.2-2' }} DTN</button>
+</div>
+
+<br>
+<br>

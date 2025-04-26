@@ -1,0 +1,41 @@
+<div class="verification-container">
+  <div class="verification-card">
+    <h2>Account Activation</h2>
+    
+    <div *ngIf="showActivationButton">
+      <p>We found your activation code. Please confirm to activate your account:</p>
+      
+      <div class="code-display mb-3">
+        <span class="code-digit" *ngFor="let digit of activationCode.split('')">
+          {{ digit }}
+        </span>
+      </div>
+
+      <div *ngIf="errorMessage" class="alert alert-danger">
+        {{ errorMessage }}
+      </div>
+
+      <button class="btn btn-primary confirm-btn" 
+              (click)="onConfirmCode()"
+              [disabled]="isLoading">
+        <span *ngIf="!isLoading">Confirm Activation</span>
+        <span *ngIf="isLoading">
+          <span class="spinner-border spinner-border-sm" role="status"></span>
+          Activating...
+        </span>
+      </button>
+    </div>
+
+    <div *ngIf="successMessage" class="alert alert-success mt-3">
+      {{ successMessage }}
+    </div>
+
+    <div class="resend-link mt-3" *ngIf="!successMessage && showActivationButton">
+      <p>Need a new code? 
+        <a href="" (click)="onResendCode()" [class.disabled]="isLoading">
+          Resend Activation Code
+        </a>
+      </p>
+    </div>
+  </div>
+</div>

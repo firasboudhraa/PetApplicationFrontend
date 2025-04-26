@@ -1,0 +1,198 @@
+:host {
+    display: block;
+    padding: 3rem 4rem 3rem 9rem;  
+    background: linear-gradient(to right, #e3f2fd, #ffffff);
+    color: #0d1b2a;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    box-sizing: border-box;
+  }
+  
+  
+  /* Container principal */
+  .product-dashboard {
+    max-width: 1200px;
+    margin: 2rem auto;
+    padding: 3rem 4rem 3rem 6rem; /* top right bottom left */
+    background: linear-gradient(to right, #e3f2fd, #ffffff);
+    color: #0d1b2a;
+    font-family: 'Poppins', sans-serif;
+    box-sizing: border-box;
+    border-radius: 16px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    min-height: 100vh;
+  }
+  
+  /* Titres */
+  h3, h4 {
+    color: #1565c0;
+    margin-bottom: 1rem;
+    border-bottom: 2px solid #90caf9;
+    padding-bottom: 0.5rem;
+    text-align: center;
+    font-weight: 600;
+  }
+  
+  /* Formulaire d'ajout de produit */
+  .product-form {
+    background-color: #f5faff;
+    padding: 1.5rem;
+    border-radius: 10px;
+    margin-bottom: 2rem;
+    box-shadow: 0 0 8px rgba(21, 101, 192, 0.15);
+  }
+  
+  .product-form .form-group {
+    margin-bottom: 1rem;
+  }
+  
+  .product-form label {
+    display: block;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+  }
+  
+  .product-form input {
+    width: 100%;
+    padding: 0.75rem;
+    border: 2px solid #ddd;
+    border-radius: 8px;
+    font-size: 1rem;
+  }
+  
+  .product-form .btn-submit {
+    background-color: #1565c0;
+    color: white;
+    padding: 0.8rem 2rem;
+    border: none;
+    border-radius: 30px;
+    font-size: 1.1rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 10px rgba(21, 101, 192, 0.3);
+    margin-top: 1.5rem;
+  }
+  
+  .product-form .btn-submit:hover {
+    background-color: #0d47a1;
+    transform: translateY(-2px);
+  }
+  
+  /* Liste des produits */
+  .product-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 2.5rem;
+    background-color: #ffffff;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 4px 12px rgba(13, 27, 42, 0.1);
+    font-size: 1rem;
+  }
+  
+  .product-table thead {
+    background-color: #1565c0;
+    color: white;
+    font-weight: 600;
+  }
+  
+  .product-table th,
+  .product-table td {
+    padding: 1rem;
+    text-align: left;
+    border-bottom: 1px solid #e0e0e0;
+    transition: all 0.3s ease;
+  }
+  
+  .product-table tr:hover {
+    background-color: #e3f2fd;
+    transform: scale(1.01);
+  }
+  
+  .product-table img {
+    border-radius: 50%;
+  }
+  
+  /* Boutons */
+  .btn-main {
+    background-color: #1565c0;
+    color: white;
+    padding: 0.8rem 2rem;
+    border: none;
+    border-radius: 30px;
+    font-size: 1.1rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 10px rgba(21, 101, 192, 0.3);
+    margin-bottom: 1.5rem;
+  }
+  
+  .btn-main:hover {
+    background-color: #0d47a1;
+    transform: translateY(-2px);
+  }
+  
+  /* Pagination */
+  button[disabled] {
+    background-color: #b0bec5;
+    cursor: not-allowed;
+  }
+  
+  button {
+    padding: 0.8rem;
+    font-size: 1rem;
+    margin: 0.5rem;
+    border-radius: 8px;
+    border: 2px solid #1565c0;
+    background-color: white;
+    transition: all 0.3s ease;
+  }
+  
+  button:hover {
+    background-color: #1565c0;
+    color: white;
+    transform: translateY(-2px);
+  }
+  
+  button[disabled]:hover {
+    transform: none;
+  }
+  
+  /* Error and Loading Messages */
+  .error-message,
+  .loading-message {
+    text-align: center;
+    font-size: 1.2rem;
+    color: #d32f2f;
+  }
+  
+  .loading-message {
+    color: #1565c0;
+  }
+  
+  /* Mobile responsive adjustments */
+  @media (max-width: 600px) {
+    .product-dashboard {
+      padding: 2rem;
+    }
+  
+    .product-form {
+      padding: 1rem;
+    }
+  
+    .product-table th, .product-table td {
+      padding: 0.5rem;
+    }
+  
+    .product-table {
+      font-size: 0.9rem;
+    }
+  
+    .btn-main, .product-form .btn-submit {
+      width: 100%;
+    }
+  
+    .error-message, .loading-message {
+      font-size: 1rem;
+    }
+  }
+  

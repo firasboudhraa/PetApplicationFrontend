@@ -1,0 +1,188 @@
+.chat-toggle {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background: linear-gradient(90deg, #007bff, #0056b3); /* Blue gradient */
+    color: #fff;
+    border: none;
+    border-radius: 50%;
+    font-size: 30px; /* Icon size */
+    cursor: pointer;
+    z-index: 1000;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Subtle shadow */
+    transition: all 0.3s ease; /* Smooth transition for hover effects */
+    display: flex;
+    align-items: center;
+    justify-content: center; /* Centers the icon */
+}
+
+.chat-toggle:hover {
+    background: linear-gradient(90deg, #0056b3, #003f7f); /* Darker gradient on hover */
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3); /* Enhanced shadow on hover */
+    transform: scale(1.1); /* Slight zoom effect */
+}
+
+.chat-toggle:focus {
+    outline: none; /* Remove default focus outline */
+    box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.5); /* Add a focus ring */
+}
+
+.chat-popup {
+    position: fixed;
+    bottom: 90px;
+    right: 20px;
+    width: 400px;
+    background: #fff;
+    border: 1px solid #ddd;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    max-height: 60vh;
+    z-index: 1000;
+}
+
+.chat-header {
+    background: linear-gradient(90deg, #007bff, #0056b3); /* Professional blue gradient */
+    color: #fff;
+    padding: 15px;
+    font-weight: bold;
+    font-size: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.chat-header .title {
+    display: flex;
+    align-items: center;
+    gap: 10px; /* Space between icon and text */
+}
+
+.chat-header .title i {
+    font-size: 20px; /* Icon size */
+}
+
+.chat-header .close-btn {
+    background: transparent;
+    border: none;
+    color: #fff;
+    font-size: 18px;
+    cursor: pointer;
+    transition: color 0.3s ease;
+}
+
+.chat-header .close-btn:hover {
+    color: #ff5252; /* Subtle red hover effect */
+}
+
+.chat-body {
+    flex: 1;
+    overflow-y: auto;
+    padding: 10px;
+    background-color: #f8f9fa; /* Light gray background */
+}
+
+.chat-body .user {
+    text-align: right;
+    color: #007bff; /* Primary blue */
+    margin-bottom: 5px;
+    display: inline-block;
+    border: 1px solid #007bff;
+    border-radius: 5px;
+    padding: 2px 5px;
+    background-color: #e9f5ff; /* Light blue background */
+    float: right;
+    clear: both;
+}
+
+.chat-body .bot {
+    text-align: left;
+    color: #28a745; /* Green for bot messages */
+    margin-bottom: 5px;
+    display: inline-block;
+    border: 1px solid #28a745;
+    border-radius: 5px;
+    padding: 2px 5px;
+    background-color: #e9f9ee; /* Light green background */
+    float: left;
+    clear: both;
+}
+
+.chat-input {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    border-top: 1px solid #ddd;
+    background-color: #fff;
+}
+
+.chat-input input {
+    flex: 1;
+    padding: 5px;
+}
+
+.chat-input button {
+    margin-left: 5px;
+    padding: 5px 10px;
+}
+
+.chat-input-field {
+    flex: 1;
+    padding: 10px 15px;
+    border: 1px solid #ddd;
+    border-radius: 25px;
+    font-size: 14px;
+    outline: none;
+    background-color: #f8f9fa; /* Light gray background */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+}
+
+.chat-input-field:focus {
+    border-color: #007bff; /* Blue focus border */
+    box-shadow: 0 2px 8px rgba(0, 123, 255, 0.3);
+}
+
+.chat-send-btn {
+    margin-left: 10px;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 50%;
+    background: linear-gradient(90deg, #007bff, #0056b3); /* Blue gradient */
+    color: #fff;
+    font-size: 16px;
+    cursor: pointer;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+}
+
+.chat-send-btn:hover {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.chat-send-btn i {
+    font-size: 16px;
+}
+.mute-btn {
+    position: fixed; 
+    bottom: 100px; 
+    right: -20px;
+    background: #007bff; 
+    border: none;
+    color: #fff;
+    font-size: 18px;
+    cursor: pointer;
+    padding: 10px 15px; 
+    border-radius: 20px 0px 0px 20px;
+    transition: right 0.3s ease, background-color 0.3s ease, color 0.3s ease; 
+    z-index: 1000; 
+}
+
+.mute-btn:hover {
+    background: #0056b3; 
+    color: #fff; 
+    right: 0px;
+
+}

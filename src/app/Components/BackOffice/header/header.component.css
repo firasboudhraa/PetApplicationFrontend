@@ -84,6 +84,39 @@ warning-color : #ffa534
 danger-color : #f3545d
 
 -------------------------------------------------------------------*/
+
+.main-header {
+  background: #fff;
+  min-height: 60px;
+  width: calc(100% - 250px);
+  position: fixed;
+  margin-left: 250px;
+  z-index: 1001;
+  top: 0; /* Ajouté pour s'assurer que le header reste en haut */
+}
+
+.main-panel {
+  position: relative;
+  width: calc(100% - 265px);
+  height: 100vh;
+  min-height: 100%;
+  float: right;
+  transition: all 0.3s;
+  margin-top: 60px; /* Ajouté pour laisser de l'espace pour le header */
+}
+
+.notif-recent {
+  background-color: #d4edda;
+  border-left: 4px solid #28a745;
+  font-weight: 500;
+}
+
+.notif-scroll {
+  max-height: 400px;
+  overflow-y: auto;
+}
+
+
 .alert,
 .brand,
 .btn-simple,
@@ -139,6 +172,20 @@ h3 {
 h4 {
   font-size: 1.48rem;
 }
+
+.notif-unread {
+  background-color: #e8f0fe; /* Light blue */
+  font-weight: 500;
+}
+
+.notif-recent {
+  background-color: #d4edda; /* light green */
+  border-left: 4px solid #28a745; /* solid green bar for emphasis */
+  font-weight: 500;
+}
+
+
+
 .h5,
 h5 {
   font-size: 1.3rem;

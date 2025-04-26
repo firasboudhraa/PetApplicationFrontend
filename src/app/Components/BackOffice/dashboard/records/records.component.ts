@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { FormGroup } from '@angular/forms';
 import { MedicalService } from 'src/app/Services/medical.service';
 import { Record } from 'src/app/models/records';  // Assure-toi d'importer le bon modèle
 
@@ -34,6 +35,7 @@ throw new Error('Method not implemented.');
   ngOnInit(): void {
     // Appeler la méthode du service pour récupérer les carnets médicaux
     this.loadMedicalRecords();
+    this.loadCarnets();
   }
 
   loadMedicalRecords() {
@@ -64,6 +66,84 @@ throw new Error('Method not implemented.');
     });
   }
   
-  
+  loadCarnets(): void {
+    this.medicalRecordService.getAllCarnets().subscribe({
+      next: (response) => {
+        console.log('Carnets récupérés:', response); // Vérifiez que vous recevez la liste correcte
+        this.carnets = response; // Assurez-vous que 'carnets' est un tableau
+      },
+      error: (error) => {
+        console.error('Erreur lors du chargement des carnets:', error);
+      }
+    });
+  }
+  carnets!: any[];
+  recordForm!: FormGroup; // Déclaration du formulaire
+
+  // Variables à ajouter
+showAddForm: boolean = false;
+selectedImage: File | null = null;
+
+// Fonction pour afficher/cacher le formulaire
+toggleAddForm(): void {
+  this.showAddForm = true;
+}
+
+// Fonction pour annuler l'ajout
+cancelAdd(): void {
+  this.showAddForm = false;
+  this.recordForm.reset();
+  this.selectedImage = null;
+}
+
+// Fonction pour sauvegarder un record
+saveRecord(): void {
+  if (this.recordForm.valid) {
+    const formData = new FormData();
+
+    const formatDateTime = (date: any): string => {
+      if (!date) return '';
+      const d = new Date(date);
+      return isNaN(d.getTime()) ? '' : d.toISOString().slice(0, 19);
+    };
+
+    formData.append('dateTime', formatDateTime(this.recordForm.get('date')?.value));
+    formData.append('type', this.recordForm.get('type')?.value);
+    formData.append('description', this.recordForm.get('description')?.value);
+    formData.append('veterinarian_id', this.recordForm.get('veterinarian_id')?.value);
+    formData.append('nextDueDate', formatDateTime(this.recordForm.get('next_due_date')?.value));
+    formData.append('carnetId', this.recordForm.get('carnet_id')?.value);
+    formData.append('poids', this.recordForm.get('poids')?.value);
+
+    if (this.selectedImage) {
+      formData.append('image', this.selectedImage);
+    }
+
+    this.medicalRecordService.createMedicalRecordWithFile(formData).subscribe({
+      next: (response) => {
+        console.log('Record médical ajouté avec succès :', response);
+        alert('Record ajouté avec succès ✅');
+        this.loadMedicalRecords(); // <-- Recharge la liste si tu as cette fonction
+        this.cancelAdd(); // <-- Cache le formulaire
+      },
+      error: (err) => {
+        console.error('Erreur complète :', err);
+        alert(`Erreur : ${err.error?.message || 'Vérifiez les champs'}`);
+      }
+    });
+  } else {
+    alert('Veuillez remplir tous les champs obligatoires');
+  }
+}
+
+// Fonction pour récupérer l'image uploadée
+onFileSelected(event: Event): void {
+  const input = event.target as HTMLInputElement;
+  if (input.files && input.files.length > 0) {
+    this.selectedImage = input.files[0];
+    console.log('Image sélectionnée :', this.selectedImage);
+  }
+}
+
   
 }  

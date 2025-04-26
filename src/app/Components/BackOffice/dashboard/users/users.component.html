@@ -1,13 +1,12 @@
+<!--
 <div class="container mt-5">
   <h2 class="mb-4">📁 Carnets Médicaux</h2>
 
-  <!-- Barre de recherche -->
   <input type="text"
          class="form-control mb-4"
          placeholder="🔍 Rechercher un carnet par nom..."
          [(ngModel)]="searchText" />
 
-  <!-- Formulaire Ajouter un carnet -->
   <form *ngIf="showForm" [formGroup]="carnetForm" class="mb-4" (ngSubmit)="saveCarnet()">
     <fieldset class="border p-3 rounded">
       <legend>🩺 Ajouter un Carnet Médical</legend>
@@ -27,7 +26,6 @@
     </fieldset>
   </form>
 
-  <!-- Liste des carnets -->
   <div class="row">
     <div class="col-md-6 mb-4" *ngFor="let carnet of filteredCarnets">
       <div class="card shadow-sm border border-primary-subtle">
@@ -59,10 +57,10 @@
     </div>
   </div>
 
-  <!-- Bouton Afficher formulaire -->
   <div class="text-end">
     <button class="btn btn-primary mt-4" (click)="showForm = !showForm">
       ➕ Ajouter un Carnet
     </button>
   </div>
 </div>
+-->

@@ -1,3 +1,5 @@
+import { AdoptionRequest } from "./adoptionRequest";
+
 export interface Pet {
     id: number;
     name: string;
@@ -10,5 +12,6 @@ export interface Pet {
     description:string;
     forAdoption: boolean;
     location:string ;
+    adoptionRequests: AdoptionRequest[];
   }
   

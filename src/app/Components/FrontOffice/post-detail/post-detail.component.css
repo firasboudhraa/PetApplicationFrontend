@@ -1,0 +1,542 @@
+/* Styles principaux du conteneur du post */
+
+body {
+  overflow: visible !important;
+}
+
+@import "~@ctrl/ngx-emoji-mart/picker"; 
+.post-detail-container {
+  font-family: Arial, sans-serif;
+  max-width: 1200px;
+  margin: 20px auto;
+  background-color: #ffffff; /* Fond blanc */
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  width: 90%;
+  overflow: visible !important;
+
+}
+
+/* Titre et contenu du post */
+.post-header {
+  margin-bottom: 20px;
+}
+
+.post-title {
+  font-size: 2rem;
+  font-weight: bold;
+  color: #1e4d2b; /* Vert foncé */
+}
+
+/* Image du post */
+.post-image {
+  max-width: 60%;
+  border-radius: 8px;
+  margin-top: 10px;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  object-fit: cover; /* Ensures the image fits nicely without distortion */
+}
+
+/* Boutons de modification et suppression */
+.modify-post-button {
+  background-color: #0d00ff; /* Vert professionnel */
+  color: white;
+  border: none;
+  padding: 6px 12px; /* Smaller padding */
+  border-radius: 4px; /* Smaller radius */
+  cursor: pointer;
+  font-size: 14px; /* Smaller font size */
+  display: inline-flex;
+  align-items: center;
+  margin-right: 8px;
+}
+
+.modify-post-button i {
+  margin-right: 6px;
+}
+
+.modify-post-button:hover {
+  background-color: #1e4d2b; /* Vert foncé */
+}
+
+.delete-post-button {
+  background-color: red;
+  color: white;
+  border: none;
+  padding: 6px 12px; /* Smaller padding */
+  border-radius: 4px; /* Smaller radius */
+  cursor: pointer;
+  font-size: 14px; /* Smaller font size */
+  display: inline-flex;
+  align-items: center;
+}
+
+.delete-post-button i {
+  margin-right: 6px;
+}
+
+.delete-post-button:hover {
+  background-color: darkred;
+}
+
+/* Contenu du post */
+.post-content {
+  font-size: 1.1rem;
+  margin: 10px 0;
+  color: #2e2e2e; /* Gris foncé */
+}
+
+.post-author {
+  font-size: 0.9rem;
+  color: #8a8787; /* Vert professionnel */
+}
+
+/* Date du post */
+time {
+  display: block;
+  font-size: 0.9rem;
+  color: #757575; /* Vert clair */
+  margin-top: 10px;
+}
+
+time i {
+  margin-right: 5px;
+}
+
+
+
+/* Section des commentaires */
+.comments-section {
+  margin-top: 30px;
+}
+
+.comments-title {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #000000;
+}
+
+.post-comment {
+  background-color: #f0fdf4; /* Vert très clair */
+  margin-top: 15px;
+  padding: 10px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.comment-author {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #2e7d32;
+}
+
+.comment-content {
+  font-size: 1.1rem;
+  margin-top: 5px;
+  color: #2e2e2e;
+}
+
+/* Section pour ajouter un commentaire */
+.add-comment {
+  margin-top: 20px;
+}
+
+textarea {
+  width: 100%;
+  padding: 8px; /* Smaller padding */
+  border: 1px solid #81c784; /* Bord vert clair */
+  border-radius: 4px; /* Smaller radius */
+  font-size: 1rem;
+  color: #2e2e2e;
+  background-color: #ffffff;
+}
+
+button {
+  margin-top: 10px;
+  padding: 6px 12px; /* Smaller padding */
+  background-color: #2e7d32;
+  color: white;
+  border: none;
+  border-radius: 4px; /* Smaller radius */
+  font-size: 14px; /* Smaller font size */
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #1e4d2b;
+}
+
+/* Popup des likes */
+.likes-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 999; /* Adjust or add a lower value for modal popups */
+
+}
+
+.likes-modal-content {
+  background-color: #ffffff;
+  padding: 20px;
+  border-radius: 8px;
+  width: 600px;
+  text-align: center;
+}
+
+.likes-list {
+  list-style: none;
+  padding: 0;
+}
+
+.likes-list-item {
+  margin: 10px 0;
+  font-size: 2.1rem;
+  color: #2e2e2e;
+}
+
+/* Section pour les likes des commentaires */
+.comment-likes-section {
+  margin-top: 10px;
+  display: flex;
+  align-items: center;
+}
+
+.like-button {
+  background-color: #2e7d32;
+  color: white;
+  padding: 5px 10px;
+  font-size: 14px; /* Smaller font size */
+  border: none;
+  border-radius: 4px; /* Smaller radius */
+  cursor: pointer;
+}
+
+.like-button:hover {
+  background-color: #1e4d2b;
+}
+
+.likes-count {
+  margin-left: 10px;
+  font-size: 14px;
+  color: #1e4d2b;
+}
+  
+/* Bouton pour fermer la popup des likes */
+.likes-modal-close {
+  position: absolute;
+  top: 280px;
+  right: 630px;
+  font-size: 24px; /* Increase size for better visibility */
+  cursor: pointer;
+  color: #ff0101; /* Color for the close button */
+  z-index: 10; /* Ensure it's above modal content */
+}
+
+.likes-modal-close:hover {
+  color: #1e4d2b; /* Change color on hover for better UX */
+}
+
+.button {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background-color: rgb(20, 20, 20);
+  border: none;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0px 0px 0px 4px rgba(180, 160, 255, 0.253);
+  cursor: pointer;
+  transition-duration: 0.3s;
+  overflow: hidden;
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  z-index: 999;
+}
+.svgIcon {
+  width: 12px;
+  transition-duration: 0.3s;
+}
+
+.svgIcon path {
+  fill: white;
+}
+
+.button:hover {
+  width: 140px;
+  border-radius: 50px;
+  transition-duration: 0.3s;
+  background-color: rgb(181, 160, 255);
+  align-items: center;
+}
+
+.button:hover .svgIcon {
+  /* width: 20px; */
+  transition-duration: 0.3s;
+  transform: translateY(-200%);
+}
+
+.button::before {
+  position: absolute;
+  bottom: -20px;
+  content: "Back to Top";
+  color: white;
+  /* transition-duration: .3s; */
+  font-size: 0px;
+}
+
+.button:hover::before {
+  font-size: 13px;
+  opacity: 1;
+  bottom: unset;
+  /* transform: translateY(-30px); */
+  transition-duration: 0.3s;
+}
+
+
+
+
+
+#heart {
+  display: none;
+}
+
+
+
+.delete-comment-button {
+  background-color: transparent;
+  border: 2px solid #f44336; /* Red border */
+  color: #f44336; /* Red text */
+  padding: 5px 10px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.delete-comment-button:hover {
+  background-color: #f44336; /* Red background on hover */
+  color: white; /* White text on hover */
+}
+
+.red-button {
+  /* Optional: Additional styling for the red button if needed */
+}
+/* Style for the emoji button */
+.btn-emoji {
+  background-color: #000000;
+  border: 1px solid #81c784;
+  border-radius: 50%;
+  font-size: 1rem;
+  padding: 8px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.3s ease;
+}
+
+
+/* Style for the emoji picker popup */
+.emoji-picker-popup {
+  right: 0;
+  z-index: 1000;
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+  background: white;
+  border: 1px solid #e9ecef;
+  overflow: hidden;
+
+  /* Adjust the width and height to make the popup smaller */
+  width: 450px; /* Adjust the width to your preference */
+  height: 450px; /* Adjust the height to your preference */
+
+  /* Reduce padding and font size */
+  padding: 10px; /* Decrease padding */
+  font-size: 14px; /* Decrease font size */
+
+  /* Optional: Adjust the grid or layout to fit the smaller size */
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(30px, 1fr)); /* Adjust grid layout */
+  grid-gap: 5px; /* Adjust grid gap */
+
+  /* Add scrollbars if the content exceeds the size */
+  overflow-y: auto; /* Adds a vertical scrollbar if the content overflows */
+  overflow-x: auto; /* Adds a vertical scrollbar if the content overflows */
+  max-height: 100%; /* Ensures the height stays within the defined limit */
+}
+
+
+
+
+.snackbar-success {
+  background-color: #4caf50; /* Green background */
+  color: white;
+}
+
+.snackbar-error {
+  background-color: #f44336; /* Red background */
+  color: white;
+}
+.mat-snack-bar-container {
+  z-index: 99999999999 !important;
+}
+
+
+
+
+.notification {
+  position: fixed;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: green;
+  color: white;
+  padding: 8px 15px; /* Reduced padding for smaller size */
+  border-radius: 4px;
+  z-index: 1000;
+  font-size: 14px; /* Smaller font size */
+  animation: fadeInOut 3s ease-out forwards;
+}
+
+@keyframes fadeInOut {
+  0% {
+    opacity: 0;
+    top: -50px;
+  }
+  30% {
+    opacity: 1;
+    top: 20px;
+  }
+  80% {
+    opacity: 1;
+    top: 20px;
+  }
+  100% {
+    opacity: 0;
+    top: -50px;
+  }
+}
+/* Backdrop */
+.custom-modal-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5); /* Semi-transparent black background */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+}
+
+/* Modal Box */
+.custom-modal {
+  background-color: white;
+  border-radius: 8px;
+  padding: 20px;
+  max-width: 90%; /* Allows modal to take up to 90% of the screen width */
+  width: 500px; /* Default width */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  box-sizing: border-box;
+}
+
+/* Modal Header */
+.custom-modal h3 {
+  font-size: 1.5rem;
+  margin-bottom: 15px;
+  color: #333;
+  font-weight: 600;
+}
+
+/* Modal Content */
+.custom-modal p {
+  font-size: 1rem;
+  color: #555;
+  margin-bottom: 20px;
+}
+
+/* Buttons Container */
+.modal-buttons {
+  display: flex;
+  justify-content: space-between;
+  gap: 15px;
+}
+
+/* Button Styles */
+.btn {
+  padding: 10px 20px;
+  font-size: 1rem;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.btn-secondary {
+  background-color: #ccc;
+  color: #333;
+}
+
+.btn-secondary:hover {
+  background-color: #999;
+}
+
+.btn-danger {
+  background-color: #d9534f;
+  color: white;
+}
+
+.btn-danger:hover {
+  background-color: #c9302c;
+}
+
+/* Responsiveness */
+@media (max-width: 768px) {
+  .custom-modal {
+    width: 80%; /* Modal will take 80% of screen width on smaller devices */
+  }
+
+  .modal-buttons {
+    flex-direction: column; /* Stack buttons vertically on smaller screens */
+  }
+
+  .modal-buttons button {
+    width: 100%; /* Make buttons full width on small screens */
+    margin-bottom: 10px; /* Space between buttons */
+  }
+
+  .btn-secondary {
+    margin-bottom: 10px;
+  }
+}
+
+@media (max-width: 480px) {
+  .custom-modal {
+    width: 90%; /* Modal takes 90% width on very small devices */
+    padding: 15px;
+  }
+
+  .custom-modal h3 {
+    font-size: 1.25rem; /* Smaller heading font size on mobile */
+  }
+
+  .custom-modal p {
+    font-size: 0.9rem; /* Smaller text for mobile */
+  }
+
+  .btn {
+    font-size: 0.9rem; /* Slightly smaller buttons on mobile */
+  }
+}

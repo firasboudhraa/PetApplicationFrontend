@@ -1,0 +1,74 @@
+<div class="pet-sitting-space-container">
+    <h2 class="title">Find a Pet Sitting Offer</h2>
+  
+    <!-- Search and Filter Section -->
+    <div class="search-filter-section">
+      <input
+        type="text"
+        class="search-bar"
+        placeholder="Search by location, pet type, or sitter name..."
+      />
+      <div class="filter-dropdown">
+        <button
+          class="btn btn-light dropdown-toggle"
+          type="button"
+          id="filterDropdown"
+          data-bs-toggle="dropdown"
+          aria-expanded="false"
+        >
+          <i class="fas fa-filter"></i> Filter
+        </button>
+        <ul class="dropdown-menu" aria-labelledby="filterDropdown">
+          <li><a class="dropdown-item" (click)="applyFilter('')">All</a></li>
+          <li><a class="dropdown-item" (click)="applyFilter('cat')">Cat</a></li>
+          <li><a class="dropdown-item" (click)="applyFilter('dog')">Dog</a></li>
+          <li><a class="dropdown-item" (click)="applyFilter('bird')">Bird</a></li>
+          <li><a class="dropdown-item" (click)="applyFilter('other')">Other</a></li>
+        </ul>
+      </div>
+    </div>
+  
+    <!-- Offers Section -->
+    <div class="offers-grid">
+      <div class="offer-card" *ngFor="let offer of offers" (click)="toggleFlip(offer.id)">
+        <div class="card-inner" [class.flipped]="offer.isFlipped">
+          <!-- Front Side -->
+          <div class="card-front" [style.backgroundImage]="'url(' + getImageUrl(offer.pet.imagePath) + ')'">
+            <!-- Tag for Number of Days -->
+            <div class="offer-tag">
+              {{ calculateDays(offer.startDate, offer.endDate) }} Days
+            </div>
+  
+            <!-- Free or Paid Tag -->
+            <div class="offer-price-tag">
+              <i class="fas" [ngClass]="offer.offerType === 'Free' ? 'fa-gift' : 'fa-coins'"></i>
+              {{ offer.offerType === 'Free' ? 'Free' : offer.amountPerDay + ' TND/Day' }}
+            </div>
+          </div>
+  
+          <!-- Back Side -->
+          <div class="card-back">
+            <div class="offer-details">
+              <h3 class="offer-title">{{ offer.pet.name }}</h3>
+              <p class="offer-location"><i class="fas fa-map-marker-alt"></i> {{ offer.locationInLetters }}</p>
+              <p class="offer-dates">
+                <i class="fas fa-calendar-alt"></i><strong>From</strong>  {{ offer.startDate }} - <strong>To</strong>  {{ offer.endDate }}
+              </p>
+              <div class="row g-1">
+                <button class="btn btn-primary" (click)="viewPetDetail(offer.pet)">Pet Details</button>
+                <button class="btn btn-success" *ngIf="isOfferSent(offer)" [disabled]="isOfferSent(offer)" >Offer Sent</button>
+                <button class="btn btn-success" *ngIf="!isOfferSent(offer)" (click)="sendOffer(offer.id)">Offer Sitting</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <app-public-pet-detail-modal
+  [isVisible]="showDetailModal"
+  (close)="closeDetailModal()"
+  [pet]="selectedPet"
+  [userId]="userId"
+  ></app-public-pet-detail-modal>

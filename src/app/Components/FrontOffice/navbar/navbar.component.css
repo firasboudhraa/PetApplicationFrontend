@@ -1,0 +1,192 @@
+/* Notification Icon */
+.navbar .fa-bell {
+  font-size: 20px;
+  position: relative;
+}
+
+.navbar .badge {
+  position: absolute;
+  top: 20px;
+  right: 10px; 
+  font-size: 12px;
+  background-color: #dc3545;
+  color: white;
+  border-radius: 50%;
+  padding: 3px 6px;
+}
+
+/* Dropdown Menu */
+.dropdown-menu {
+  max-height: 300px;
+  overflow-y: auto;
+}
+
+.dropdown-item {
+  font-size: 14px;
+  white-space: nowrap;
+}
+
+.dropdown-item:hover {
+  background-color: #f8f9fa;
+}
+/* Style du bouton du panier dans le navbar */
+.navbar .nav-item button {
+    border: none;
+    background-color: transparent;
+    color: #28a745; /* Vert pour le thème */
+    font-size: 2rem; /* Augmenter la taille de l'emoji */
+    transition: transform 0.3s ease, color 0.3s ease;
+    padding: 5px;
+    margin-top: 20px; /* Décaler le bouton vers le bas */
+    margin-left: 40px;
+}
+
+.navbar .nav-item button:hover {
+    transform: scale(1.1); /* Effet d'agrandissement au survol */
+    color: #218838; /* Changer la couleur du vert lors du survol */
+}
+  
+  .nav-item .btn-success:hover {
+    background-color: #2e7d32;
+    transform: scale(1.1);
+    box-shadow: 0 0 10px rgba(76, 175, 80, 0.4);
+  }
+  
+  /* --- Fenêtre du panier (slide-in) --- */
+  .cart-window {
+    position: fixed;
+    top: 70px;
+    right: -400px;
+    width: 320px;
+    max-height: 80vh;
+    background: #f1f8e9;
+    box-shadow: -4px 0 20px rgba(0, 0, 0, 0.1);
+    border-radius: 12px 0 0 12px;
+    transition: right 0.5s ease;
+    overflow-y: auto;
+    z-index: 1050;
+  }
+  
+  /* Fenêtre visible */
+  .cart-window.show {
+    right: 0;
+  }
+  
+  /* Contenu du panier */
+  .cart-content {
+    padding: 20px;
+  }
+  
+  /* Titre Panier */
+  .cart-content h2 {
+    color: #2e7d32;
+    margin-bottom: 15px;
+    font-size: 24px;
+    border-bottom: 2px solid #a5d6a7;
+    padding-bottom: 5px;
+  }
+  
+  /* Liste des items */
+  .cart-items {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 20px 0;
+  }
+  
+  .cart-items li {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #e8f5e9;
+    border-radius: 8px;
+    padding: 10px;
+    margin-bottom: 10px;
+    transition: background 0.3s;
+  }
+  
+  .cart-items li:hover {
+    background: #c8e6c9;
+  }
+  
+  /* Nom de l'article */
+  .item-name {
+    font-size: 16px;
+    color: #33691e;
+  }
+  
+  /* Icône poubelle */
+  .remove-item i {
+    color: #c62828;
+    cursor: pointer;
+    transition: color 0.3s;
+  }
+  
+  .remove-item i:hover {
+    color: #b71c1c;
+  }
+  
+  /* Boutons */
+  .clear-cart,
+  .close-cart {
+    width: 100%;
+    padding: 10px 0;
+    margin-top: 10px;
+    border: none;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 15px;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+  }
+  
+  .clear-cart {
+    background-color: #ef5350;
+    color: white;
+  }
+  
+  .clear-cart:hover {
+    background-color: #c62828;
+    transform: scale(1.02);
+  }
+  
+  .close-cart {
+    background-color: #81c784;
+    color: #1b5e20;
+  }
+  
+  .close-cart:hover {
+    background-color: #66bb6a;
+    transform: scale(1.02);
+  }
+  
+  /* Responsive adaptation */
+  @media (max-width: 768px) {
+    .cart-window {
+      width: 100%;
+      right: -100%;
+      border-radius: 0;
+    }
+  
+    .cart-window.show {
+      right: 0;
+    }
+  }
+
+  .close-cart.payment {
+    background-color: #2e7d32;
+    color: white;
+    font-weight: bold;
+    font-size: 16px;
+    border: none;
+    padding: 12px;
+    border-radius: 10px;
+    margin-top: 15px;
+    transition: background-color 0.3s ease, transform 0.2s;
+  }
+  
+  .close-cart.payment:hover {
+    background-color: #1b5e20;
+    transform: scale(1.03);
+    box-shadow: 0 0 10px rgba(46, 125, 50, 0.3);
+  }
+  
+  

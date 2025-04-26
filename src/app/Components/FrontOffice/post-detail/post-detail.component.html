@@ -1,0 +1,134 @@
+<div *ngIf="post" class="post-detail-container">
+  <!-- Post Content -->
+   
+
+  <div class="post-header">
+    <h2 class="post-title">{{ post.title }}</h2>
+    <img [src]="'http://localhost:8082/posts/images/' + post.imageUrl" alt="Post Image" class="post-image" />
+    <p class="post-content">{{ post.content }}</p>
+    <p class="post-author"><strong>Posted By :</strong> {{ authorName }} </p>
+
+    
+  </div>
+  <time [attr.datetime]="post.createdAt">
+    📅 Posted At :{{ post.createdAt | date: 'medium' }} ,
+    Category : {{ formatCategory(post.type) }}
+  </time>
+ <!-- Map Section: Display only if latitude and longitude are not the default values -->
+ <div *ngIf="latitude !== 36.8065 || longitude !== 10.1815">
+  <h2 class="post-title">Last Seen in </h2>
+  <div id="map" class="map-container"></div>
+</div>
+  <!-- Modify Post Button -->
+  <button class="modify-post-button" [routerLink]="['/modify-post', post.id]">
+    ✏️ 
+  </button>
+
+  <!-- Delete Post Button -->
+  <button class="delete-post-button" (click)="openDeleteModal(post.id)">
+    🗑️ 
+  </button>
+  
+  <div *ngIf="isDeleted" class="notification">
+    Comment deleted successfully!
+  </div>
+  
+  <!-- Likes Section for Post -->
+  <div class="likes-section">
+    <button class="like-icon" (click)="likePost(post.id)">
+      👍 
+    </button>
+    <button class="likes-button" (click)="toggleLikesPopup()" title="Click to see who liked this post">
+      ❤️ {{ post.likes }} Like{{ post.likes > 1 ? 's' : '' }} 
+    </button>
+  </div>
+
+  <!-- Comments Section -->
+  <div class="comments-section">
+    <h3 class="comments-title">
+      💬 Commentaires ({{ comments.length }})
+    </h3>
+    <div *ngFor="let comment of comments" class="post-comment">
+      <p class="comment-author">
+        <strong>👤 {{ commentAuthors.get(comment.userId) }}</strong>
+      </p>
+      <p class="comment-content">{{ comment.content }}</p>
+      <p class="comment-date">
+        📅 {{ comment.createdAt | date: 'medium' }}
+      </p>
+
+      <!-- Likes Section for each Comment -->
+      <div class="comment-likes-section">
+        <button (click)="likeComment(comment.id)" class="like-button">
+          👍 Like
+        </button>
+        <span class="likes-count">{{ comment.likes }} Like{{ comment.likes > 1 ? 's' : '' }}</span>
+      </div>
+
+      <!-- Delete Comment Button -->
+      <button class="delete-comment-button red-button" (click)="deleteComment(comment.id)">
+        🗑️ Delete Comment
+      </button>
+      
+    </div>
+    
+
+    <!-- Add Comment Section -->
+    <div class="add-comment">
+      <textarea [(ngModel)]="newCommentContent" placeholder="Add a comment..." rows="3"></textarea>
+      <button class="btn-emoji" (click)="toggleEmojiPicker()">
+        😊 <i class="bi bi-emoji-smile"></i>
+      </button>
+      
+      <!-- Emoji Picker Popup -->
+<div class="emoji-picker-popup" *ngIf="showEmojiPicker">
+  <emoji-mart 
+    [emoji]="''" 
+    [set]="'facebook'" 
+    [perLine]="10"
+    (emojiClick)="onSelectEmojis($event)">
+  </emoji-mart>
+</div>
+
+      
+      <button (click)="addComment()" > ➕ Post Comment</button>
+    </div>
+  </div>
+
+  <!-- Likes Popup Modal for Post -->
+  <div class="likes-modal" *ngIf="showLikesPopup">
+    <div class="likes-modal-content">
+      <h3 class="likes-modal-title">
+        👥 Liked By :
+      </h3>
+      <ul class="likes-list">
+        <span class="likes-modal-close" (click)="toggleLikesPopup()">×</span>
+        <li *ngFor="let userId of post.likedBy" class="likes-list-item">
+          👤 {{ userNames.get(userId) || 'Loading...' }}
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- Scroll To Top Button -->
+  <button class="button" (click)="scrollToTop()" title="Go to top">
+    <svg class="svgIcon" viewBox="0 0 384 512">
+      <path
+        d="M214.6 41.4c-12.5-12.5-32.8-12.5-45.3 0l-160 160c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L160 141.2V448c0 17.7 14.3 32 32 32s32-14.3 32-32V141.2L329.4 246.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3l-160-160z">
+      </path>
+    </svg>
+  </button>
+
+  <!-- Custom Confirmation Modal -->
+<div *ngIf="showConfirmModal" class="custom-modal-backdrop">
+  <div class="custom-modal">
+    <h3>Confirmer la suppression</h3>
+    <p>Êtes-vous sûr de vouloir supprimer ce post ?</p>
+    <div class="modal-buttons">
+      <button class="btn btn-secondary" (click)="cancelDelete()">Annuler</button>
+      <button class="btn btn-danger" (click)="confirmDelete()">Supprimer</button>
+    </div>
+  </div>
+</div>
+
+</div>

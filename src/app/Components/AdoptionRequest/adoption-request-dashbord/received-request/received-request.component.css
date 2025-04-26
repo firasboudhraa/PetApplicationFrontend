@@ -1,0 +1,121 @@
+.nav-link {
+    cursor: pointer;
+  }
+  .avatar-img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+  }
+  .fab-menu {
+    position: absolute;
+    transform: translate(150%, -70%);
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    overflow: visible;
+  }
+  
+  .fab-menu button {
+    transition: transform 0.3s ease;
+  }
+  
+  button.mat-fab {
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+    z-index: 10;
+  }
+  
+  button.mat-mini-fab {
+    z-index: 9;
+  }
+  
+  button.mat-fab  {
+    background-color: #3f51b5;
+  }
+
+  .fab-container {
+    position: relative;
+  }
+
+
+
+  .fab-container .fab-menu button {
+    transition: transform 0.3s ease;
+  }
+  .badge-gold {
+    
+    background: linear-gradient(45deg, #FFD700, #FFA500);
+    color: #fff;
+    font-size: 0.7rem;
+    font-weight: bold;
+    padding: 3px 3px;
+    border-radius: 12px;
+    white-space: nowrap;
+    box-shadow: 0 0 8px rgba(255, 193, 7, 0.8);
+    animation: popIn 1s ease-in-out;
+    z-index: 2;
+  }
+  
+  @keyframes popIn {
+    0% {
+      transform: scale(0.3);
+      opacity: 0;
+    }
+    80% {
+      transform: scale(1.1);
+      opacity: 1;
+    }
+    100% {
+      transform: scale(1);
+    }
+  }
+
+  @keyframes pulseHighlight {
+    0% {
+      background-color: #fff3cd;
+      transform: scale(1);
+      box-shadow: 0 0 5px rgba(255, 193, 7, 0.5);
+    }
+    50% {
+      background-color: #ffeeba;
+      transform: scale(1.02);
+      box-shadow: 0 0 15px rgba(255, 193, 7, 0.9);
+    }
+    100% {
+      background-color: #fff3cd;
+      transform: scale(1);
+      box-shadow: 0 0 5px rgba(255, 193, 7, 0.5);
+    }
+  }
+  
+  @keyframes fadeOnce {
+    0% {
+      background-color: #d4edda;
+      opacity: 0.6;
+    }
+    100% {
+      background-color: transparent;
+      opacity: 1;
+    }
+  }
+  
+  .highlight-changed {
+    animation: pulseHighlight 2s infinite;
+    font-weight: bold;
+    border-radius: 6px;
+    padding: 6px;
+    position: relative;
+    transition: all 0.4s ease;
+    color: #212529;
+  }
+  
+  .highlight-once {
+    animation: fadeOnce 3s ease-out;
+    font-weight: bold;
+    border-radius: 6px;
+    padding: 6px;
+    color: #155724;
+    background-color: #d4edda;
+  }

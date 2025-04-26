@@ -1,0 +1,18 @@
+<div class="pet-sitting-container">
+  <!-- Sidebar -->
+  <div class="sidebar">
+    <ul>
+      <li [routerLinkActive]="'active'" [routerLink]="'display-offers'">
+        <i class="fas fa-search"></i> Explore Offers
+      </li>
+      <li [routerLinkActive]="'active'" [routerLink]="'track-offers'">
+        <i class="fas fa-map-marker-alt"></i> Track Offers
+      </li>
+    </ul>
+  </div>
+
+  <!-- Main Content -->
+  <div class="main-content">
+    <router-outlet></router-outlet>
+  </div>
+</div>

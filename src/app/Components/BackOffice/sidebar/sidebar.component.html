@@ -1,28 +1,26 @@
 <div class="sidebar" data-background-color="dark">
-    <div class="sidebar-logo">
-      <!-- Logo Header -->
-      <div class="logo-header" data-background-color="dark">
-        <a routerLink="/home" class="logo">
-          <img
-            src="assets/images/logo.png"
-            alt="navbar brand"
-            class="navbar-brand"
-            height="60"
-          />
-        </a>
-        <div class="nav-toggle">
-          <button class="btn btn-toggle toggle-sidebar">
-            <i class="gg-menu-right"></i>
-          </button>
-          <button class="btn btn-toggle sidenav-toggler">
-            <i class="gg-menu-left"></i>
-          </button>
-        </div>
-        <button class="topbar-toggler more">
-          <i class="gg-more-vertical-alt"></i>
+  <div class="sidebar-logo">
+    <!-- Logo Header -->
+    <div class="logo-header" data-background-color="dark">
+      <a routerLink="/home" class="logo">
+        <img
+          src="assets/images/logo.png"
+          alt="navbar brand"
+          class="navbar-brand"
+          height="60"
+        />
+      </a>
+      <div class="nav-toggle">
+        <button class="btn btn-toggle toggle-sidebar">
+          <i class="gg-menu-right"></i>
+        </button>
+        <button class="btn btn-toggle sidenav-toggler">
+          <i class="gg-menu-left"></i>
         </button>
       </div>
-      <!-- End Logo Header -->
+      <button class="topbar-toggler more">
+        <i class="gg-more-vertical-alt"></i>
+      </button>
     </div>
     <div class="sidebar-wrapper scrollbar scrollbar-inner">
       <div class="sidebar-content">
@@ -57,21 +55,75 @@
             </a>
           </li>
           <li class="nav-item">
-            <a data-bs-toggle="collapse" href="#forms">
+            <a data-bs-toggle="collapse" routerLink="services">
+              <i class="fas fa-paw"></i>
+              <p>services</p>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a data-bs-toggle="collapse" routerLink="carnets">
+              <i class="fas fa-paw"></i>
+              <p>Carnets</p>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a (click)="togglePetsSubmenu()" role="button" [attr.aria-expanded]="isPetsSubmenuOpen" aria-controls="petsSubmenu">
               <i class="fas fa-dog"></i>
               <p>Pets</p>
+              <span class="caret"></span>
             </a>
+            <div [ngClass]="isPetsSubmenuOpen? 'collapse show' : 'collapse'" id="petsSubmenu">
+              <ul class="nav nav-collapse">
+                <li>
+                  <a routerLink="my-pets">
+                    <span class="sub-item">My Pets</span>
+                  </a>
+                </li>
+                <li>
+                  <a routerLink="adoption-request">
+                    <span class="sub-item">My adoption request</span>
+                  </a>
+                </li>
+              </ul>
+            </div>
           </li>
           <li class="nav-item">
-            <a data-bs-toggle="collapse" href="#tables">
-              <i class="fas  fa-newspaper"></i>
+            <a class="nav-link" routerLink="/dashboard/posts" routerLinkActive="active">
+              <i class="fas fa-newspaper"></i>
               <p>Posts</p>
             </a>
+            
           </li>
           <li class="nav-item">
-            <a data-bs-toggle="collapse" href="#maps">
+            <a data-bs-toggle="collapse" routerLink="marketplaces">
+              <i class="fas fa-user"></i>
+              <p>Marketplace</p>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a data-bs-toggle="collapse" routerLink="/dashboard/payments">
+              <i class="fas fa-paw"></i>
+              <p>Payments</p>
+            </a>
+          </li>
+          
+          <li class="nav-item">
+            <a routerLink="/dashboard/baskets" class="nav-link">
+              <i class="fas fa-dog"></i>
+              <p>Baskets</p>
+            </a>
+          </li>
+          
+          <li class="nav-item">
+            <a class="nav-link" routerLink="/dashboard/products">
               <i class="fas fa-cube"></i>
               <p>Products</p>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a data-bs-toggle="collapse" routerLink="/dashboard/eventback" routerLinkActive="active">
+              <i class="fas fa-calendar-alt"></i>
+              <p>Events</p>
             </a>
           </li>
           <li class="nav-item">

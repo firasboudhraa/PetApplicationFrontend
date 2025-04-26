@@ -1,0 +1,34 @@
+<div class="chat-app-container">
+    <h1>Chatbot Gemini</h1>
+    <div class="status-message" *ngIf="messages.length === 0">
+      <p>gemini-chat works!</p>
+      <p>Commencez à discuter avec l'IA Gemini en tapant un message ci-dessous.</p>
+    </div>
+ 
+    <div class="chat-container">
+      <div class="message-area">
+        <div *ngFor="let message of messages"
+             [class.user-message]="message.sender === 'user'"
+             [class.bot-message]="message.sender === 'bot'">
+          <div class="message-bubble">
+            {{message.text}}
+          </div>
+        </div>
+        <div *ngIf="isLoading" class="loading-indicator">
+          <div class="spinner"></div>
+          <span>Gemini réfléchit...</span>
+        </div>
+      </div>
+     
+      <div class="input-area">
+        <input [(ngModel)]="userInput"
+               (keyup.enter)="sendMessage()"
+               placeholder="Posez votre question..."
+               [disabled]="isLoading">
+        <button (click)="sendMessage()" [disabled]="isLoading || !userInput.trim()">
+          <span *ngIf="!isLoading">Envoyer</span>
+          <span *ngIf="isLoading">...</span>
+        </button>
+      </div>
+    </div>
+  </div>

@@ -1,0 +1,147 @@
+<section class="hero-wrap hero-wrap-2" style="background-image: url('assets/images/bg_2.jpg');" data-stellar-background-ratio="0.5">
+    <div class="overlay"></div>
+    <div class="container">
+      <div class="row no-gutters slider-text align-items-end">
+        <div class=" pb-5 col-md-9">
+            <p class="breadcrumbs mb-2"><span class="mr-2"><a routerLink="/">Home <i class="ion-ios-arrow-forward"></i></a></span> <span>Services <i class="ion-ios-arrow-forward"></i></span></p>
+          <h1 class="mb-0 bread">Services</h1>
+        </div>
+      </div>
+    </div>
+</section>
+
+<div class="filters-container">
+  <div class="search-bar">
+    <input
+      type="text"
+      [(ngModel)]="filterCriteria"
+      placeholder="🔍 Search services..."
+      (input)="filterServices()"
+    />
+  </div>
+  <div class="advanced-filters">
+    <!-- Price Range Filter -->
+    <div class="filter-group">
+      <label>Price Range (TND):</label>
+      <input type="number" [(ngModel)]="minPrice" placeholder="Min" (input)="filterServices()" />
+      <input type="number" [(ngModel)]="maxPrice" placeholder="Max" (input)="filterServices()" />
+    </div>
+  
+    <!-- Duration Filter -->
+    <div class="filter-group">
+      <label>Duration:</label>
+      <select [(ngModel)]="selectedDuration" (change)="filterServices()">
+        <option value="">All</option>
+        <option value="short">Less than 30 min</option>
+        <option value="medium">30–60 min</option>
+        <option value="long">More than 60 min</option>
+      </select>
+    </div>
+  
+    <!-- Location Filter -->
+    <div class="filter-group">
+      <label>Location:</label>
+      <input type="text" [(ngModel)]="locationFilter" placeholder="City or Address" (input)="filterServices()" />
+    </div>
+  </div>
+  
+
+  <div class="page-size-selector">
+    <label for="pageSize">Show:</label>
+    <select id="pageSize" [(ngModel)]="pageSize" (change)="updatePaginatedServices()">
+      <option *ngFor="let size of pageSizeOptions" [value]="size">{{ size }}</option>
+    </select>
+    <span>per page</span>
+  </div>
+</div>
+
+<div class="services-container">
+  <div *ngFor="let service of paginatedServices" class="service-card">
+    <div class="icon-container">
+      <div class="icon"><i class="fa fa-paw"></i></div>
+    </div>
+
+    <div class="text-content">
+      <h3 class="title">{{ service.name }}</h3>
+
+      <div class="info">
+        <p><i class="fa fa-credit-card"></i> <strong>Price:</strong> {{ service.price  }} TND</p>
+        <p><i class="fa fa-clock"></i> <strong>Duration:</strong> {{ service.durationInMinutes }} min</p>
+        <p *ngIf="service.address"><i class="fa fa-map-marker-alt"></i> <strong>Location:</strong> {{ service.address }}</p>
+      </div>
+
+      <button [routerLink]="['/serviceDetail', service.idService]" class="details-btn">
+        View Details <i class="fa fa-arrow-right"></i>
+      </button>
+    </div>
+  </div>
+</div>
+
+<div class="pagination">
+  <button
+    *ngFor="let page of getPagesArray()"
+    class="pagination-button"
+    [ngClass]="{ 'active': currentPage === page }"
+    (click)="onPageChange(page)"
+  >
+    {{ page }}
+  </button>
+</div>
+
+
+
+
+
+    <section class="ftco-section ftco-no-pt ftco-no-pb">
+      <div class="container">
+          <div class="row d-flex no-gutters">
+              <div class="col-md-5 d-flex">
+                  <div class="img img-video d-flex align-self-stretch align-items-center justify-content-center justify-content-md-center mb-4 mb-sm-0" style="background-image:url(assets/images/about-1.jpg);">
+                  </div>
+              </div>
+              <div class="col-md-7 pl-md-5 py-md-5">
+                  <div class="heading-section pt-md-5">
+              <h2 class="mb-4">Why Choose Us?</h2>
+                  </div>
+                  <div class="row">
+                      <div class="col-md-6 services-2 w-100 d-flex">
+                          <div class="icon d-flex align-items-center justify-content-center"><span class="flaticon-stethoscope"></span></div>
+                          <div class="text pl-3">
+                              <h4>Care Advices</h4>
+                              <p>Far far away, behind the word mountains, far from the countries.</p>
+                          </div>
+                      </div>
+                      <div class="col-md-6 services-2 w-100 d-flex">
+                          <div class="icon d-flex align-items-center justify-content-center"><span class="flaticon-customer-service"></span></div>
+                          <div class="text pl-3">
+                              <h4>Customer Supports</h4>
+                              <p>Far far away, behind the word mountains, far from the countries.</p>
+                          </div>
+                      </div>
+                      <div class="col-md-6 services-2 w-100 d-flex">
+                          <div class="icon d-flex align-items-center justify-content-center"><span class="flaticon-emergency-call"></span></div>
+                          <div class="text pl-3">
+                              <h4>Emergency Services</h4>
+                              <p>Far far away, behind the word mountains, far from the countries.</p>
+                          </div>
+                      </div>
+                      <div class="col-md-6 services-2 w-100 d-flex">
+                          <div class="icon d-flex align-items-center justify-content-center"><span class="flaticon-veterinarian"></span></div>
+                          <div class="text pl-3">
+                              <h4>Veterinary Help</h4>
+                              <p>Far far away, behind the word mountains, far from the countries.</p>
+                          </div>
+                      </div>
+                  </div>
+          </div>
+      </div>
+      </div>
+  </section>
+
+<!-- Floating Action Button -->
+
+<button class="fab" (click)="checkUserBeforeNavigate()">
+  <i class="fa fa-plus"></i>
+</button>
+
+  

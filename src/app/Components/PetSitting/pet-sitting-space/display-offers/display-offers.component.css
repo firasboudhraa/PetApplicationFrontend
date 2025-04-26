@@ -1,0 +1,254 @@
+.pet-sitting-space-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+    background: #f9f9f9;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  .title {
+    text-align: center;
+    font-size: 28px;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 20px;
+  }
+  
+  .search-filter-section {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+  
+  .search-bar {
+    flex: 1;
+    padding: 10px;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin-right: 10px;
+  }
+  
+  .filter-dropdown .btn {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background-color: #007bff;
+    border: none;
+    border-radius: 5px;
+    padding: 8px 15px;
+    font-size: 14px;
+    font-weight: bold;
+    color: #fff;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+  
+  .filter-dropdown .btn:hover {
+    background-color: #0056b3;
+  }
+  
+  .offers-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 20px;
+  }
+  
+  /* Container for the card */
+  .offer-card {
+    perspective: 1000px; /* Enables 3D effect */
+    width: 100%;
+    height: 300px;
+    position: relative;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  
+  .offer-card:hover {
+    transform: translateY(-5px); /* Subtle lift on hover */
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* Coherent shadow */
+  }
+  
+  .card-inner {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    transform-style: preserve-3d;
+    transition: transform 0.6s ease;
+  }
+  
+  .card-inner.flipped {
+    transform: rotateY(180deg); /* Flips the card */
+  }
+  
+  /* Front Side */
+  .card-front {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    backface-visibility: hidden; /* Hides the back side when the front is visible */
+    background-size: cover;
+    background-position: center center; /* Ensures the image is centered */
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow for the front */
+  }
+  
+  /* Back Side */
+  .card-back {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    backface-visibility: hidden;
+    background: linear-gradient(to bottom right, #f9f9f9, #e0e0e0); /* Smooth gradient background */
+    border-radius: 10px;
+    transform: rotateY(180deg); /* Flips the back side */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow for the back */
+  }
+  
+  .offer-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to bottom, rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.7)); /* Gradient overlay */
+    display: flex;
+    align-items: flex-end;
+    padding: 15px;
+    box-sizing: border-box;
+  }
+  
+  .offer-details {
+    color: #333; /* Neutral text color for readability */
+    text-align: center;
+  }
+  
+  .offer-title {
+    font-size: 22px;
+    font-weight: bold;
+    margin-bottom: 10px;
+    color: #007bff; /* Primary color for the title */
+  }
+  
+  .offer-location,
+  .offer-dates {
+    font-size: 16px;
+    margin-bottom: 8px;
+    color: #555; /* Softer color for secondary text */
+  }
+  
+  .offer-location i,
+  .offer-dates i {
+    color: #007bff;
+    margin-right: 5px;
+  }
+  
+  .btn-primary {
+    display: inline-block;
+    padding: 10px 20px;
+    font-size: 14px;
+    font-weight: bold;
+    color: #fff;
+    background-color: #007bff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+  }
+  
+  .btn-primary:hover {
+    background-color: #0056b3;
+    transform: scale(1.05); /* Slight zoom effect on hover */
+  }
+  
+  .offer-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+  }
+  
+  /* Tag for Number of Days */
+  .offer-tag {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    background: #ff4757; /* Attractive red color */
+    color: #fff;
+    font-size: 14px;
+    font-weight: bold;
+    padding: 5px 10px;
+    border-radius: 5px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    z-index: 1;
+  }
+  
+  /* Tag for Free or Paid */
+  .offer-price-tag {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: #007bff; /* Blue for paid offers */
+    color: #fff;
+    font-size: 14px;
+    font-weight: bold;
+    padding: 5px 10px;
+    border-radius: 5px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    display: flex;
+    align-items: center;
+    gap: 5px; /* Space between icon and text */
+    z-index: 1;
+    transition: background-color 0.3s ease;
+  }
+  
+  /* Styling for Free Offers */
+  .offer-price-tag i.fa-gift {
+    color: #28a745; /* Green for free offers */
+  }
+  
+  .offer-price-tag i.fa-coins {
+    color: #ffd700; /* Gold for paid offers */
+  }
+  
+  /* Hover Effect */
+  .offer-price-tag:hover {
+    background-color: #0056b3; /* Darker blue on hover */
+  }
+  
+  /* Animation for the tag */
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(-10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  /* Tag for Free or Paid */
+  .offer-price-tag {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: #007bff; /* Blue for paid offers */
+    color: #fff;
+    font-size: 14px;
+    font-weight: bold;
+    padding: 5px 10px;
+    border-radius: 5px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    z-index: 1;
+    transition: background-color 0.3s ease;
+  }
+  
+  /* Styling for Free Offers */
+  .offer-price-tag:contains('Free') {
+    background: #28a745; /* Green for free offers */
+  }

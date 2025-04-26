@@ -1,0 +1,172 @@
+<div class="full-center">
+    <div class="product-dashboard">
+  
+      <!-- Button to add product -->
+      <button class="btn-main" (click)="toggleProductForm()">Ajouter un produit</button>
+  
+      <!-- Add product form -->
+      <div *ngIf="showAddProductForm" class="product-form">
+        <h3>Ajouter un produit</h3>
+        <form (ngSubmit)="addProduct()">
+          <div class="form-group">
+            <label for="nom">Nom:</label>
+            <input type="text" id="nom" [(ngModel)]="newProduct.nom" name="nom" required />
+          </div>
+          <div class="form-group">
+            <label for="description">Description:</label>
+            <input type="text" id="description" [(ngModel)]="newProduct.description" name="description" required />
+          </div>
+          <div class="form-group">
+            <label for="prix">Prix:</label>
+            <input type="number" id="prix" [(ngModel)]="newProduct.prix" name="prix" required />
+          </div>
+          <div class="form-group">
+            <label for="stock">Stock:</label>
+            <input type="number" id="stock" [(ngModel)]="newProduct.stock" name="stock" required />
+          </div>
+       <!-- Ajout image -->
+  <div class="form-group">
+    <label for="image">Image:</label>
+    <input type="file" id="image" (change)="onFileSelected($event)" accept="image/*" required />
+    <img *ngIf="previewImage" [src]="previewImage" width="100" class="preview-img" />
+  </div>
+  
+  <div class="form-group">
+    <label for="category">Catégorie</label>
+    <select id="category" class="form-control" [(ngModel)]="newProduct.category" name="categorie" required>
+      <option value="">Choisir une catégorie</option>
+      <option value="Alimentation">Alimentation</option>
+      <option value="Accessoires">Accessoires</option>
+      <option value="Hygiène et soins">Hygiène et soins</option>
+      <option value="Santé">Santé</option>
+      <option value="Habitat">Habitat</option>
+    </select>
+  
+  </div>
+          <div class="form-group">
+            <label for="lowStockThreshold">Seuil de faible stock:</label>
+            <input type="number" id="lowStockThreshold" [(ngModel)]="newProduct.lowStockThreshold" name="lowStockThreshold" required />
+          </div>
+          <div>
+            <button class="btn-submit" type="submit">Ajouter</button>
+          </div>
+        </form>
+      </div>
+  
+  
+      <!-- Choose Marketplace Section -->
+      <h3>Choisir une Marketplace</h3>
+      <div style="margin-bottom: 1rem;">
+        <label for="marketplaceId">Marketplace ID :</label>
+        <input type="number" id="marketplaceId" [(ngModel)]="selectedMarketplaceId" />
+        <button class="btn-main" (click)="loadProductsByMarketplace(selectedMarketplaceId)">🔄</button>
+      </div>
+  
+  
+  
+      <!-- Product List Section -->
+      <h3>Product List</h3>
+      <div style="margin-bottom: 1rem;">
+        <input type="text" [(ngModel)]="searchTerm" (ngModelChange)="onSearchTermChange()" placeholder="Rechercher par nom" />
+      </div>
+  
+      <!-- Sort by Stock Button -->
+      <button class="btn-main" (click)="sortByStock()">
+        Trier par stock ({{ isDescending ? 'descendant' : 'ascendant' }})
+      </button>
+      
+      <br><br>
+  
+      <!-- Product Table -->
+      <table class="product-table" *ngIf="filteredProducts.length > 0; else noData">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Description</th>
+            <th>Price</th>
+            <th>Stock</th>
+            <th>Image</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let product of pagedProducts">
+            <td>{{ product.nom }}</td>
+            <td>{{ product.description }}</td>
+            <td>{{ product.prix | currency }}</td>
+            <td>{{ product.stock }}</td>
+            <td><img [src]="product.imageUrl" alt="Image" width="50" height="50" class="me-2 rounded" /></td>
+            <td>
+              <button (click)="editProduct(product)" title="Modifier">✏️</button>
+              <button (click)="deleteProduct(product)" title="Delete">🗑️</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+         <!-- Update product form -->
+         <div *ngIf="showUpdateProductForm && selectedProduct" class="card card-body mt-3">
+          <h3>Modifier un produit</h3>
+          <form (ngSubmit)="updateProduct()">
+            <div class="form-group">
+              <label for="editNom">Nom:</label>
+              <input type="text" id="editNom" [(ngModel)]="selectedProduct.nom" name="editNom" required />
+            </div>
+            <div class="form-group">
+              <label for="editDescription">Description:</label>
+              <input type="text" id="editDescription" [(ngModel)]="selectedProduct.description" name="editDescription" required />
+            </div>
+            <div class="form-group">
+              <label for="editPrix">Prix:</label>
+              <input type="number" id="editPrix" [(ngModel)]="selectedProduct.prix" name="editPrix" required />
+            </div>
+            <div class="form-group">
+              <label for="editStock">Stock:</label>
+              <input type="number" id="editStock" [(ngModel)]="selectedProduct.stock" name="editStock" required />
+            </div>
+            <div class="form-group">
+              <label for="editImage">Image:</label>
+              <input type="file" id="editImage" (change)="onEditFileSelected($event)" accept="image/*" />
+              <img *ngIf="selectedProduct.imageUrl" [src]="selectedProduct.imageUrl" width="100" class="preview-img" />
+            </div>
+            <div class="form-group">
+              <label for="editCategory">Catégorie</label>
+              <select id="editCategory" class="form-control" [(ngModel)]="selectedProduct.category" name="editCategorie" required>
+                <option value="">Choisir une catégorie</option>
+                <option value="Alimentation">Alimentation</option>
+                <option value="Accessoires">Accessoires</option>
+                <option value="Hygiène et soins">Hygiène et soins</option>
+                <option value="Santé">Santé</option>
+                <option value="Habitat">Habitat</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="editLowStockThreshold">Seuil de faible stock:</label>
+              <input type="number" id="editLowStockThreshold" [(ngModel)]="selectedProduct.lowStockThreshold" name="editLowStockThreshold" required />
+            </div>
+            <div>
+              <button class="btn-submit" type="submit">Mettre à jour</button>
+              <button class="btn-cancel" type="button" (click)="cancelEdit()">Annuler</button>
+            </div>
+          </form>
+        </div>
+      <!-- Pagination Controls -->
+      <div *ngIf="filteredProducts.length > 4">
+        <button (click)="changePage(-1)" [disabled]="currentPage === 0">-</button>
+        <span>Page {{ currentPage + 1 }} / {{ totalPages }}</span>
+        <button (click)="changePage(1)" [disabled]="currentPage === totalPages - 1">+</button>
+      </div>
+  
+      <!-- No Products Message -->
+      <ng-template #noData>
+        <p *ngIf="!isLoading">Aucun produit trouvé pour cette marketplace.</p>
+      </ng-template>
+  
+      <!-- Error Message -->
+      <p *ngIf="errorMessage" class="error-message">{{ errorMessage }}</p>
+  
+      <!-- Loading Message -->
+      <p *ngIf="isLoading" class="loading-message">Chargement en cours...</p>
+  
+    </div>
+  </div>
+  

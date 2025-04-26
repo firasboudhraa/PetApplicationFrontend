@@ -1,0 +1,32 @@
+<div class="page-center">
+  <h1 class="title">
+    <i class="fa fa-home"></i> > Google Maps
+  </h1>
+
+  <!-- Search input -->
+  <div class="search-container">
+    <input
+      type="text"
+      [(ngModel)]="searchText"
+      (input)="onSearchInput()"
+      placeholder="Rechercher un service ou un lieu"
+      class="form-control"
+    />
+    <!-- Results List -->
+    <ul *ngIf="searchResults.length > 0" class="autocomplete-list">
+      <li
+        *ngFor="let result of searchResults"
+        (click)="onResultSelected(result)"
+        class="autocomplete-item"
+      >
+        <span *ngIf="result.type === 'service'">🔧 {{ result.data.name }}</span>
+        <span *ngIf="result.type === 'place'">📍 {{ result.data.description }}</span>
+      </li>
+    </ul>
+  </div>
+
+  <!-- Google Map -->
+  <div class="map-container">
+    <div id="map" style="height: 700px; width: 100%; margin-top: 20px; border-radius: 8px;"></div>
+  </div>
+</div>
