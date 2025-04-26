@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MedicalService } from 'src/app/Services/medical.service';
 import { Record } from 'src/app/models/records';  // Assure-toi d'importer le bon modèle
 
@@ -30,13 +30,25 @@ throw new Error('Method not implemented.');
   medicalRecords: Record[] = [];  // Utilisation du modèle Record explicite
 
 
-  constructor(private medicalRecordService: MedicalService) {}
+  constructor(private medicalRecordService: MedicalService,private fb: FormBuilder) {}
+  recordForm!: FormGroup; // Déclaration du formulaire
 
   ngOnInit(): void {
-    // Appeler la méthode du service pour récupérer les carnets médicaux
     this.loadMedicalRecords();
     this.loadCarnets();
+
+    // Initialisation du FormGroup
+    this.recordForm = this.fb.group({
+      date: ['', Validators.required],
+      type: ['', Validators.required],
+      description: ['', [Validators.required, Validators.minLength(30)]],
+      veterinarian_id: ['', Validators.required],
+      next_due_date: [''],
+      carnet_id: ['', Validators.required],
+      poids: ['', [Validators.required, Validators.min(0)]]
+    });
   }
+
 
   loadMedicalRecords() {
     this.medicalRecordService.getAllRecords().subscribe(data => {
@@ -78,7 +90,6 @@ throw new Error('Method not implemented.');
     });
   }
   carnets!: any[];
-  recordForm!: FormGroup; // Déclaration du formulaire
 
   // Variables à ajouter
 showAddForm: boolean = false;
