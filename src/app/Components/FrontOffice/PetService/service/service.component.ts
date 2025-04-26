@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { PetServiceService } from 'src/app/Services/pet-service.service';
 import Swal from 'sweetalert2';
+import  { AuthService } from '../../user/auth/auth.service';
 
 @Component({
   selector: 'app-service',
@@ -23,7 +24,7 @@ selectedDuration: string = '';
 locationFilter: string = '';
 
 
-  constructor(private ps: PetServiceService, private router: Router) {}
+  constructor(private ps: PetServiceService, private router: Router,private authService: AuthService) {}
 
   ngOnInit(): void {
     this.ps.getServices().subscribe(data => {
@@ -82,28 +83,22 @@ locationFilter: string = '';
   getPagesArray(): number[] {
     return Array.from({ length: this.totalPages }, (_, i) => i + 1);
   }
-
   checkUserBeforeNavigate() {
-    const userString = localStorage.getItem('user');
-    if (!userString) {
+    if (!this.authService.isLoggedIn()) {
       this.showAccessDeniedAlert("You must be logged in to access this page.");
       return;
     }
 
-    try {
-      const user = JSON.parse(userString);
-      const hasServiceProviderRole = user.roles.some((role: { name: string }) => role.name === 'SERVICE_PROVIDER');
+    const roles = this.authService.getUserRoles(); 
+    const hasServiceProviderRole = roles.includes('ROLE_SERVICE_PROVIDER'); 
 
-      if (hasServiceProviderRole) {
-        this.router.navigate(['/add-service']);
-      } else {
-        this.showAccessDeniedAlert("You must be a SERVICE PROVIDER to access this page.");
-      }
-    } catch {
-      this.showAccessDeniedAlert("Invalid user data. Please log in again.");
+    if (hasServiceProviderRole) {
+      this.router.navigate(['/add-service']);
+    } else {
+      this.showAccessDeniedAlert("You must be a SERVICE PROVIDER to access this page.");
     }
   }
-
+  
   showAccessDeniedAlert(message: string) {
     Swal.fire({
       title: '🔒 Access Denied!',

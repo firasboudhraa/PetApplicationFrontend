@@ -49,54 +49,21 @@ export class HeaderComponent implements OnInit {
     });
   }
 
-  openNotifications(): void {
-    this.notificationService.markAllAsRead().subscribe(() => {
-      this.notifications.forEach(n => n.isRead = true);
-      this.unreadCount = 0;
 
+    isRecent(notif: Notification): boolean {
+      if (!notif.createdAt) return false;
+      const notifDate = new Date(notif.createdAt);
       const now = new Date();
-      const htmlContent = this.notifications
-        .map((notif) => {
-          const notifDate = new Date(notif.createdAt ?? 0);
-          const diffInMinutes = (now.getTime() - notifDate.getTime()) / (1000 * 60);
-          const isRecent = diffInMinutes < 3 ? 'notif-recent' : '';
-          const formattedDate = this.datePipe.transform(notif.createdAt, 'MMMM dd, yyyy h:mm a');
-
-          return `
-            <li class="list-group-item ${isRecent}">
-              <div class="notif-item d-flex flex-column">
-                <div><i class="fa ${this.getNotificationIcon(notif.type)} me-2"></i>${notif.message}</div>
-                <small class="notif-time text-muted mt-1">${formattedDate}</small>
-              </div>
-            </li>`;
-        }).join('');
-
-      Swal.fire({
-        title: 'Notifications',
-        html: `
-          <style>
-            .notif-recent {
-              background-color: #d4edda !important;
-              border-left: 4px solid #28a745;
-              font-weight: 500;
-            }
-            .notif-scroll {
-              max-height: 400px;
-              overflow-y: auto;
-            }
-          </style>
-          <div class="notif-scroll">
-            <ul class="list-group">${htmlContent}</ul>
-          </div>`,
-        width: '600px',
-        showCloseButton: true,
-        confirmButtonText: 'Close',
-        customClass: {
-          popup: 'notif-popup'
-        }
+      const diffInMinutes = (now.getTime() - notifDate.getTime()) / (1000 * 60);
+      return diffInMinutes < 3;
+    }
+    
+    openNotifications(): void {
+      this.notificationService.markAllAsRead().subscribe(() => {
+        this.notifications.forEach(n => n.isRead = true);
+        this.unreadCount = 0;
       });
-    });
-  }
+    }
 
   getNotificationIcon(type: string): string {
     switch (type) {
