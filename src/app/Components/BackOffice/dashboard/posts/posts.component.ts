@@ -9,6 +9,7 @@ import { jsPDF } from 'jspdf';
 import { Chart, ChartConfiguration, ChartData, ChartType } from 'chart.js';
 import ChartDataLabels from 'chartjs-plugin-datalabels';
 import { User } from 'src/app/Components/FrontOffice/user/models/user_model';
+import Swal from 'sweetalert2';  // Import SweetAlert2
 
 @Component({
   selector: 'app-posts',
@@ -220,14 +221,15 @@ export class PostsComponent implements OnInit {
 
   openConfirmModal(postId: number): void {
     this.selectedPostId = postId;
-    this.showConfirmModal = true;
+    this.showConfirmModal = true;  // Show modal when postId is selected
   }
-
+  
   cancelDelete(): void {
-    this.showConfirmModal = false;
-    this.selectedPostId = null;
+    this.showConfirmModal = false;  // Hide modal when canceling
+    this.selectedPostId = null;  // Clear selected post id
   }
 
+  // SweetAlert for confirmation before deleting a post
   confirmDelete(): void {
     if (this.selectedPostId !== null) {
       const post = this.posts.find(p => p.id === this.selectedPostId);
@@ -236,15 +238,26 @@ export class PostsComponent implements OnInit {
         const author = this.userNames.get(userId) || '';
         const email = this.userEmails.get(userId) || '';
 
-        this.posts = this.posts.filter(p => p.id !== id);
-        this.isDeleted = true;
-        this.showConfirmModal = false;
+        Swal.fire({
+          title: 'Are you sure?',
+          text: `Do you really want to delete the post: "${title}"?`,
+          icon: 'warning',
+          showCancelButton: true,
+          confirmButtonText: 'Yes, delete it!',
+          cancelButtonText: 'No, cancel!',
+        }).then((result) => {
+          if (result.isConfirmed) {
+            this.posts = this.posts.filter(p => p.id !== id);
+            this.isDeleted = true;
+            this.showConfirmModal = false;
 
-        setTimeout(() => (this.isDeleted = false), 3000);
+            setTimeout(() => (this.isDeleted = false), 3000);
 
-        this.postsService.deletePost(id, title, author, email).subscribe({
-          next: () => console.log('Post deleted and email sent.'),
-          error: err => console.error('Failed to delete post:', err)
+            this.postsService.deletePost(id, title, author, email).subscribe({
+              next: () => console.log('Post deleted and email sent.'),
+              error: err => console.error('Failed to delete post:', err)
+            });
+          }
         });
       }
     }
@@ -261,8 +274,36 @@ export class PostsComponent implements OnInit {
   }
 
   deletePost(postId: number): void {
-    this.openConfirmModal(postId);
+    const post = this.posts.find(p => p.id === postId);
+    if (post) {
+      const { id, title, userId } = post;
+      const author = this.userNames.get(userId) || '';
+      const email = this.userEmails.get(userId) || '';
+  
+      // Directly trigger SweetAlert confirmation
+      Swal.fire({
+        title: 'Are you sure?',
+        text: `Do you really want to delete the post: "${title}"?`,
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonText: 'Yes, delete it!',
+        cancelButtonText: 'No, cancel!',
+      }).then((result) => {
+        if (result.isConfirmed) {
+          // Proceed with deletion
+          this.posts = this.posts.filter(p => p.id !== id);
+          this.isDeleted = true;
+          setTimeout(() => (this.isDeleted = false), 3000);
+  
+          this.postsService.deletePost(id, title, author, email).subscribe({
+            next: () => console.log('Post deleted and email sent.'),
+            error: err => console.error('Failed to delete post:', err)
+          });
+        }
+      });
+    }
   }
+  
 
   deleteComment(commentId: number, postId: number): void {
     this.selectedCommentId = commentId;
@@ -312,7 +353,7 @@ export class PostsComponent implements OnInit {
       doc.text(`Email: ${authorEmail}`, 100, y);
       y += 10;
   
-      const splitText = doc.splitTextToSize(post.content || '', 180);
+      const splitText = doc.splitTextToSize( "Content : " +post.content || '', 180);
       doc.text(splitText, 10, y);
       y += splitText.length * 7 + 5;
   
@@ -341,7 +382,6 @@ export class PostsComponent implements OnInit {
   
     doc.save('Blog-Posts&Comments.pdf');
   }
-  
   
   async generateStatisticsPdf(): Promise<void> {
     this.isGeneratingPdf = true;
@@ -379,38 +419,13 @@ export class PostsComponent implements OnInit {
     }
   }
 
-  private async addChartToPdf(doc: jsPDF, chartId: string, y: number, title?: string): Promise<void> {
-    return new Promise(resolve => {
-      setTimeout(() => {
-        try {
-          const chart = Chart.getChart(chartId);
-          if (!chart) return resolve();
+  private async addChartToPdf(doc: jsPDF, chartId: string, y: number, title: string): Promise<void> {
+    doc.setFontSize(14).text(title, 10, y);
 
-          const canvas = document.getElementById(chartId) as HTMLCanvasElement;
-          if (!canvas) return resolve();
-
-          if (title) {
-            doc.setFontSize(14).text(title, 105, y - 5, { align: 'center' });
-          }
-
-          const tempCanvas = document.createElement('canvas');
-          tempCanvas.width = canvas.width * 2;
-          tempCanvas.height = canvas.height * 2;
-
-          const ctx = tempCanvas.getContext('2d');
-          if (!ctx) return resolve();
-
-          ctx.scale(2, 2);
-          ctx.drawImage(canvas, 0, 0);
-
-          const img = tempCanvas.toDataURL('image/png', 1.0);
-          doc.addImage(img, 'PNG', 15, y, 180, 100);
-          resolve();
-        } catch (error) {
-          console.error(`Error rendering chart ${chartId}:`, error);
-          resolve();
-        }
-      }, 300);
-    });
+    const canvas = document.getElementById(chartId) as HTMLCanvasElement;
+    if (canvas) {
+      const imgData = canvas.toDataURL('image/png');
+      doc.addImage(imgData, 'PNG', 10, y + 10, 180, 100);
+    }
   }
 }

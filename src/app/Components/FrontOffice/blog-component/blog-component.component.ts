@@ -221,4 +221,16 @@ export class BlogComponentComponent implements OnInit {
   scrollToTop(): void {
     window.scrollTo({ top: 0, behavior: "smooth" });
   }
+
+
+  onMouseOver(event: MouseEvent): void {
+    const element = event.target as HTMLElement;
+    element.style.backgroundColor = '#4e54c8';
+  }
+  
+  onMouseOut(event: MouseEvent): void {
+    const element = event.target as HTMLElement;
+    element.style.backgroundColor = '';
+  }
+  
 }

@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';  // Ensure you have the environment set correctly
 import { AuthService } from 'src/app/Components/FrontOffice/user/auth/auth.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-add-post',
@@ -60,12 +61,8 @@ export class AddPostComponent implements OnInit, AfterViewInit {
       this.router.navigate(['/login']);
     }
   }
-  
-
-
 
   isDeleted: boolean = false;
-
 
   ngAfterViewInit(): void {
     this.postForm.get('type')?.valueChanges.subscribe(value => {
@@ -123,12 +120,12 @@ export class AddPostComponent implements OnInit, AfterViewInit {
 
   onSubmit(): void {
     if (this.postForm.invalid || !this.selectedFile) return;
-  
+
     console.log('Latitude:', this.latitude);
     console.log('Longitude:', this.longitude);
-  
+
     this.isSubmitting = true;
-  
+
     const formData = new FormData();
     formData.append('title', this.postForm.value.title);
     formData.append('content', this.postForm.value.content);
@@ -136,14 +133,20 @@ export class AddPostComponent implements OnInit, AfterViewInit {
     formData.append('image', this.selectedFile);
     formData.append('latitude', this.latitude.toString());
     formData.append('longitude', this.longitude.toString());
-  
+
     this.postService.addPost(formData, this.userId).subscribe({
       next: () => {
-        this.isDeleted = true; // Show success notification
+        Swal.fire({
+          icon: 'success',
+          title: 'Post Added!',
+          text: 'Your post has been successfully created.',
+          showConfirmButton: false,
+          timer: 2000 // auto close after 2 seconds
+        });
+
         setTimeout(() => {
-          this.isDeleted = false; // Hide notification after 3 seconds
-          this.router.navigate(['/blog']); // Navigate after 3 seconds
-        }, 1000);
+          this.router.navigate(['/blog']);
+        }, 2000);
       },
       error: (err) => {
         this.errorMessage = 'Erreur lors de la publication.';
@@ -151,7 +154,7 @@ export class AddPostComponent implements OnInit, AfterViewInit {
       }
     });
   }
-  
+
   mapTypeToEnum(type: string): string {
     switch (type) {
       case 'success_stories':
@@ -183,7 +186,4 @@ export class AddPostComponent implements OnInit, AfterViewInit {
       this.errorMessage = "Content is empty and can't be enhanced.";
     }
   }
-
-
- 
 }
