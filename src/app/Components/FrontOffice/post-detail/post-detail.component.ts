@@ -9,6 +9,7 @@ import { Router } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ChangeDetectorRef } from '@angular/core';
 import { User } from '../user/models/user_model';
+import { AuthService } from 'src/app/Components/FrontOffice/user/auth/auth.service'; // Ensure correct import path
 
 declare var google: any;  // Ensure Google Maps API types are loaded via @types/google.maps
 
@@ -27,8 +28,6 @@ export class PostDetailComponent implements OnInit, AfterViewInit {
   newCommentContent: string = '';
   reportedComments: Set<Comment> = new Set<Comment>();
   
-  userId: number = 1; // Replace with dynamic user ID
-
   // Map-related properties
   latitude: number | null = null;
   longitude: number | null = null;
@@ -43,6 +42,8 @@ export class PostDetailComponent implements OnInit, AfterViewInit {
   showConfirmModal = false;
   postIdToDelete: number | null = null;
 
+  userId: number = 0;  // Add this to store the logged-in user's ID
+
   constructor(
     private route: ActivatedRoute,
     private postService: PostsService,
@@ -50,17 +51,35 @@ export class PostDetailComponent implements OnInit, AfterViewInit {
     private commentService: CommentService,
     private router: Router,
     private snackBar: MatSnackBar,
-    private changeDetectorRef: ChangeDetectorRef
-
+    private changeDetectorRef: ChangeDetectorRef,
+    private authService: AuthService  // Inject AuthService
   ) {}
 
+  isDeleted: boolean = false;
+  
+
+
+
   ngOnInit(): void {
+    // Retrieve the logged-in user's ID using the AuthService
+    const tokenData = this.authService.getDecodedToken();  // Decodes the JWT token
+    if (tokenData && tokenData.userId) {
+      this.userId = tokenData.userId;
+      console.log('Logged-in user ID:', this.userId);  // Log the logged-in user ID
+    } else {
+      this.router.navigate(['/login']);  // Redirect to login if not authenticated
+      return;  // Prevent further execution
+    }
+  
+    // Retrieve the post ID from the route parameters
     const postId = Number(this.route.snapshot.paramMap.get('id'));
     if (postId) {
-      this.loadPost(postId);
+      this.loadPost(postId);  // Load the post details by ID
+    } else {
+      console.error('Post ID not found in route parameters');
     }
   }
-
+  
   ngAfterViewInit(): void {
     // We'll initialize the map after post is loaded. See loadPost() below.
   }
@@ -70,14 +89,12 @@ export class PostDetailComponent implements OnInit, AfterViewInit {
       next: (post: Post) => {
         if (post) {
           this.post = post;
-          // Set the coordinates from the post
           this.latitude = post.latitude;
           this.longitude = post.longitude;
           this.loadPostAuthor(post.userId);
-          this.loadComments(postId);
+          this.loadComments(postId);  // 👈 comments and authors will be loaded properly inside loadComments
           this.loadLikes(post.likedBy);
-          // After ensuring the post data is loaded, initialize the map.
-          // Use setTimeout to ensure the DOM for the map container is ready.
+  
           setTimeout(() => {
             this.initMap();
           }, 0);
@@ -90,7 +107,7 @@ export class PostDetailComponent implements OnInit, AfterViewInit {
   private loadPostAuthor(userId: number): void {
     this.userService.getUserById(userId).subscribe({
       next: (user: User) => {
-        this.authorName = user.firstName + ' ' + user.lastName + ''+ '\n'+  'Role : '+ user.roles;
+        this.authorName = user.firstName + ' ' + user.lastName + ' (' + this.formatRole(user.roles.map(role => role.toString())) + ')';
       },
       error: (error) => console.error('Error loading post author:', error)
     });
@@ -100,23 +117,31 @@ export class PostDetailComponent implements OnInit, AfterViewInit {
     this.commentService.getCommentsByPostId(postId).subscribe({
       next: (comments: Comment[]) => {
         this.comments = comments;
-        this.loadCommentAuthors();
+        this.loadCommentAuthors(comments);  // ✅ Pass the loaded comments here
       },
       error: (error) => console.error('Error loading comments:', error)
     });
   }
 
-  private loadCommentAuthors(): void {
-    this.comments.forEach(comment => {
-      if (!this.commentAuthors.has(comment.userId)) {
+  private loadCommentAuthors(comments: Comment[]): void {
+    comments.forEach(comment => {
+      console.log('Processing comment userId:', comment.userId); // Log the userId to make sure it's correct
+      
+      if (comment.userId && !this.commentAuthors.has(comment.userId)) {
         this.userService.getUserById(comment.userId).subscribe({
           next: (user: User) => {
+            console.log('Loaded user:', user);  // Log the user data for debugging
             this.commentAuthors.set(comment.userId, user.firstName + ' ' + user.lastName);
+            this.changeDetectorRef.detectChanges(); 
           },
-          error: (error) => console.error('Error loading comment author:', error)
+          error: (error) => {
+            console.error('Error loading comment author for userId:', comment.userId, 'Error:', error); // More detailed error logging
+          }
         });
       }
     });
+  
+    console.log('Final commentAuthors map:', this.commentAuthors); // Check the map after loading users
   }
 
   private loadLikes(userIds: number[]): void {
@@ -125,6 +150,7 @@ export class PostDetailComponent implements OnInit, AfterViewInit {
         this.userService.getUserById(userId).subscribe({
           next: (user: User) => {
             this.userNames.set(userId, user.firstName + ' ' + user.lastName);
+            this.changeDetectorRef.detectChanges(); // 👈 force Angular to refresh view
           },
           error: (error) => console.error('Error loading user likes:', error)
         });
@@ -148,7 +174,6 @@ export class PostDetailComponent implements OnInit, AfterViewInit {
     }
   }
 
-  // Dummy implementation for toggleLikesPopup (to satisfy template calls)
   toggleLikesPopup(): void {
     this.showLikesPopup = !this.showLikesPopup;
   }
@@ -156,10 +181,9 @@ export class PostDetailComponent implements OnInit, AfterViewInit {
   likeComment(commentId: number): void {
     this.commentService.likeComment(commentId, this.userId).subscribe({
       next: () => {
-        // Reload the comments to get the updated like count after the like action
-        const postId = this.post?.id; // Get the current post ID
+        const postId = this.post?.id;
         if (postId) {
-          this.loadComments(postId); // Re-fetch the comments to reflect the updated data
+          this.loadComments(postId); 
         }
       },
       error: (err) => console.error('Error liking comment:', err)
@@ -173,13 +197,12 @@ export class PostDetailComponent implements OnInit, AfterViewInit {
       this.commentService.addComment(this.post.id, this.userId, commentData).subscribe({
         next: () => {
           this.newCommentContent = '';
-          this.loadComments(this.post!.id); // 👈 Re-fetch all comments after adding
+          this.loadComments(this.post!.id); 
         },
         error: (error) => console.error('Error adding comment:', error)
       });
     }
   }
-  
 
   likePost(postId: number): void {
     this.postService.likePost(postId, this.userId).subscribe({
@@ -190,15 +213,11 @@ export class PostDetailComponent implements OnInit, AfterViewInit {
     });
   }
 
-  isDeleted: boolean = false;
-
   deletePostWithoutMail(postId: number): void {
-    if (postId) { // Ensure that postId is provided
-      // Proceed with the deletion first
+    if (postId) {
       this.postService.deletePostWithoutMail(postId).subscribe({
         next: () => {
           console.log('Post deleted successfully');
-          // Now navigate to the blog page after successful deletion
           this.router.navigate(['/blog']);
         },
         error: (error) => {
@@ -207,8 +226,6 @@ export class PostDetailComponent implements OnInit, AfterViewInit {
       });
     }
   }
-  
-  
 
   scrollToTop(): void {
     window.scrollTo({ top: 0, behavior: "smooth" });
@@ -222,21 +239,15 @@ export class PostDetailComponent implements OnInit, AfterViewInit {
       .replace(/\b\w/g, char => char.toUpperCase());
   }
 
-  // Fonction pour basculer l'affichage du picker
   toggleEmojiPicker() {
     this.showEmojiPicker = !this.showEmojiPicker;
-
-    // Get the position of the emoji button
     const emojiButton = document.querySelector('.btn-emoji') as HTMLElement;
     const rect = emojiButton.getBoundingClientRect();
-    
-    // If the emoji picker should be above the button
     const popup = document.querySelector('.emoji-picker-popup') as HTMLElement;
   
     if (popup) {
-      // Adjust the position based on the button's position
-      popup.style.top = `${rect.top - popup.offsetHeight - 8}px`;  // 8px for margin
-      popup.style.left = `${rect.left + rect.width / 2 - popup.offsetWidth / 2}px`;  // Center horizontally
+      popup.style.top = `${rect.top - popup.offsetHeight - 8}px`; 
+      popup.style.left = `${rect.left + rect.width / 2 - popup.offsetWidth / 2}px`; 
     }
   }
 
@@ -248,66 +259,71 @@ export class PostDetailComponent implements OnInit, AfterViewInit {
     }
   }
 
-  showEmojis: boolean = false; // Ajoutez cette méthode pour gérer la sélection d'emoji
+  showEmojis: boolean = false;
 
   onSelectEmojis(event: any): void {
-    const emoji = event.emoji?.native;  // This should directly give you the emoji character
+    const emoji = event.emoji?.native;
     if (emoji) {
-      this.newCommentContent += emoji;  // Append the emoji to the comment content
+      this.newCommentContent += emoji;
     }
   }
 
   deleteComment(commentId: number): void {
     this.commentService.deleteComment(commentId).subscribe({
       next: () => {
-        console.log('Comment deleted successfully!');
         this.isDeleted = true;
         setTimeout(() => {
           this.isDeleted = false;
-        }, 3000); // Hide notification after 3 seconds
-
-        // Re-fetch the updated comments list from the server
-        const postId = this.post?.id; // Get the current post ID
+        }, 3000);
+        const postId = this.post?.id;
         if (postId) {
-          this.loadComments(postId); // Re-fetch the comments to reflect the updated data
+          this.loadComments(postId);
         }
       },
       error: (error) => {
         console.error('Error deleting comment:', error);
-
-        // Show error snackbar
-        console.log('Opening error snackbar...');
         this.snackBar.open('Error deleting comment', '', {
-          duration: 3000, // 3 seconds
-          panelClass: ['snackbar-error'], // Red error snackbar
+          duration: 3000, 
+          panelClass: ['snackbar-error'],
         });
       }
     });
   }
 
-  // Open the confirmation modal
   openDeleteModal(postId: number): void {
     this.postIdToDelete = postId;
     this.showConfirmModal = true;
   }
 
-  // Cancel deletion and close modal
   cancelDelete(): void {
     this.showConfirmModal = false;
     this.postIdToDelete = null;
   }
 
-  // Confirm and delete the post
   confirmDelete(): void {
     if (this.postIdToDelete) {
       this.deletePostWithoutMail(this.postIdToDelete);
-      this.showConfirmModal = false; // Hide the modal after confirming
-      this.postIdToDelete = null; // Reset the post ID to delete
+      this.showConfirmModal = false;
+      this.postIdToDelete = null;
     }
   }
-
-
-
+  private formatRole(roles: string[]): string {
+    return roles.map(role => {
+      switch (role) {
+        case 'SERVICE_PROVIDER':
+          return 'Service Provider';
+        case 'PET_OWNER':
+          return 'Pet Owner';
+        case 'VETERINARIAN':
+          return 'Veterinarian';
+        case 'ADMIN':
+          return 'Administrator';
+        default:
+          return role;
+      }
+    }).join(', ');  // Joining the formatted roles with commas
+  }
+  
 
 
 }

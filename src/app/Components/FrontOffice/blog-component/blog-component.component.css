@@ -44,24 +44,9 @@ body.light {
     padding: 20px;
 }
 
-/* 🏷️ Titre Principal */
-.section-title {
-    text-align: center;
-    color: #000000; /* Vert Clair */
-    font-style: italic;
-}
 
-.section-title h2 {
-    font-size: 2.2rem;
-    font-weight: bold;
-    text-transform: uppercase;
-    color: #2e7d32; /* Vert Pro */
-}
 
-.section-title p {
-    font-size: 1.2rem;
-    text-align: center;
-}
+
 
 /* 🎨 Boutons */
 .btn {
@@ -115,25 +100,7 @@ body.light {
     background-color: #2e7d32;
 }
 
-/* ✅ Filtres */
-.form-group label {
-    font-weight: bold;
-    color: #1a1b27;
-    
-}
 
-.form-check-input {
-    margin-right: 6px;
-    margin-left: 50px;
-
-}
-
-.form-check-label {
-    font-size: 14px;
-    padding-left: 500px;
-    margin-left: 40px;
-
-}
 
 /* 📌 Cartes */
 .postcard {
@@ -243,19 +210,19 @@ body.light {
 .section-title {
     text-align: center;
     color: #000000; /* Vert Clair */
-    font-style: italic;
 }
 
 .section-title h2 {
-    font-size: 2.2rem;
+    font-size: 1.7rem;
     font-weight: bold;
-    text-transform: uppercase;
     color: #2e7d32; /* Vert Pro */
 }
 
 .section-title p {
     font-size: 1.2rem;
-    text-align: center;
+}
+.home-blog {
+    background-color: #f5fff5; /* Light sand color background */
 }
 
 /* 🎨 Boutons */
@@ -311,21 +278,7 @@ body.light {
     background-color: #2e7d32;
 }
 
-/* ✅ Filtres */
-.form-group label {
-    font-weight: bold;
-    color: #1a1b27;
-    margin-left: 50px;
-    
-}
 
-.form-check-input {
-    margin-right: 8px;
-}
-
-.form-check-label {
-    font-size: 14px;
-}
 
 /* 📌 Cartes */
 .postcard {
@@ -660,21 +613,7 @@ body.light {
 }
 
 /* Dropdown menu positioned below the button */
-/* Dropdown menu positioned below the button */
-.dropdown-menu {
-    position: absolute;
-    right: 0;  /* Align it directly under the button */
-    top: 60%;  /* Position directly below the button */
-    margin-top: 5rem;  /* Adjusted margin-top to move the dropdown a little lower */
-    width: 12rem;
-    background-color: #ffffff;
-    border: 1px solid rgba(0, 0, 0, 0.1);
-    border-radius: 0.75rem;
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
-    z-index: 999;
-    padding: 0.25rem 0.5rem;
-    display: none; /* Initially hidden until the dropdown is toggled */
-}
+
 
 
 
@@ -684,12 +623,13 @@ body.light {
     padding: 0.7rem 1rem;
     font-size: 0.9rem;
     font-weight: 500;
-    color: #0e0e0f; /* Tailwind gray-700 */
+    color: #000000; /* Tailwind gray-700 */
     cursor: pointer;
     display: flex;
     align-items: center;
     gap: 0.5rem;
     transition: background-color 0.2s ease;
+    background-color: rgb(246, 246, 246);
 }
 
 .dropdown-item:hover {
@@ -717,30 +657,66 @@ body.light {
     background-color: #f4fef4;
 }
 
-
-#category-search-form .form-group {
-    margin-bottom: 1px;
+/* Styling for the form container */
+#category-search-form {
+    background-color: #f7f7f7; /* Lighter background for better contrast */
+    border-radius: 12px; /* Slightly more rounded corners for a modern look */
+    padding: 20px 30px; /* Increased padding for a more spacious feel */
+    box-shadow: 0 15px 20px rgba(0, 0, 0, 0.1); /* Soft shadow for depth */
+    max-width: 500px; /* Limiting width for better alignment */
+    margin: 10px ; /* Centered form with some margin */
 }
 
-
-/* 🎯 Category Filter Labels */
-#category-search-form .form-check {
-    display: flex;
-    align-items: center;
-    gap: 4px; /* tight space between checkbox and label */
-    margin-bottom: 6px; /* controls vertical spacing between items */
+/* Label Styling */
+label {
+    font-size: 20px; /* Slightly larger font size for better readability */
+    color: #2c3e50; /* Darker color for better contrast */
+    font-weight: bold; /* Bold text for emphasis */
+    padding-bottom: 10px;
 }
 
-#category-search-form .form-check-input {
-    margin: 20px;
-    padding: 10; /* checkboxes don’t need padding */
+/* Form Check Label Styling */
+.form-check-label {
+    font-size: 15px; /* Slightly larger font size for better readability */
+    color: #333; /* Darker gray for text contrast */
+    cursor: pointer; /* Indicates interactivity */
+    margin-left: 10px; /* Adds space between checkbox and label */
+    transition: color 0.3s ease, transform 0.3s ease; /* Smooth hover effect */
 }
 
-#category-search-form .form-check-label {
-    font-size: 15px;
-    font-weight: 500; /* valid font-weight value */
-    color: #0b0c0b; /* dark green/black */
-    padding: 0; /* remove excess spacing */
+/* Hover effect for label */
+.form-check-label:hover {
+    color: #1afa2d; /* Green hover color to match theme */
+    transform: scale(1.05); /* Subtle zoom effect for focus */
+}
+
+/* Hover effect for checkbox */
+.form-check-input:hover {
+    transform: scale(1.1); /* Slightly increase checkbox size on hover */
+    transition: transform 0.2s ease; /* Smooth hover effect */
+}
+
+/* Container for the category checkboxes */
+.category-inline-container {
+    display: flex; /* Aligns checkboxes and labels in a row */
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+    /* Make form container take up full width on small screens */
+    #category-search-form {
+        padding: 15px 20px; /* Reduced padding for smaller devices */
+        width: 100%;
+    }
+
+    .form-check-label {
+        font-size: 14px; /* Adjust label font size for smaller screens */
+        margin-left: 5px; /* Reduced space between checkbox and label on smaller screens */
+    }
+
+    .category-inline-container {
+        gap: 10px; /* Smaller gap between items on smaller screens */
+    }
 }
 
 
@@ -750,12 +726,6 @@ body.light {
     position: relative;
 }
 
-
-.category-inline-container {
-    display: flex;
-    flex-wrap: nowrap;
-    overflow-x: auto;
-  }
   /* Chat Button Styles */
 .chat-btn {
     position: fixed;
@@ -884,5 +854,72 @@ body.light {
     .col-md-6.offset-md-3 {
       width: 50%;
     }
+
+
+
+    /* Button Styling */
+.btn-add-post {
+    font-size: 18px; /* Appropriate size for readability */
+    font-weight: 600; /* Strong font weight for emphasis */
+    background-color: #28a745; /* Green background for action */
+    color: white; /* White text color for contrast */
+    border: none; /* Remove default border */
+    border-radius: 30px; /* Smooth rounded corners */
+    padding: 12px 30px; /* Adequate padding for better click area */
+    display: flex; /* Flexbox for aligning text and emoji */
+    align-items: center; /* Vertically center align the content */
+    justify-content: center; /* Horizontally center the content */
+    gap: 12px; /* Space between the emoji and text */
+    transition: background-color 0.3s ease, transform 0.2s ease; /* Smooth transition */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Soft shadow for depth */
+}
+
+/* Hover Effect */
+.btn-add-post:hover {
+    background-color: #218838; /* Darker green on hover */
+    transform: translateY(-2px); /* Slight upward movement for interaction */
+}
+
+/* Focus Effect */
+.btn-add-post:focus {
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(40, 167, 69, 0.5); /* Green outline on focus */
+}
+
+/* Emoji Styling */
+.add-post-emoji {
+    font-size: 20px; /* Larger emoji for visual emphasis */
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .btn-add-post {
+        font-size: 16px; /* Smaller font size for mobile */
+        padding: 10px 25px; /* Adjust padding for better fit */
+        gap: 8px; /* Less space between emoji and text */
+    }
+
+    .add-post-emoji {
+        font-size: 18px; /* Slightly smaller emoji on mobile */
+    }
+}
+
+/* Responsive Container Adjustments */
+.row {
+    margin-top: 20px; /* Adds space above the button */
+}
+
+/* Container Styling for Centered Alignment */
+.row.justify-content-center {
+    justify-content: center;
+}
+
+
+.col-md-4 {
+    display: flex; /* Enable flexbox to center the button */
+    justify-content: center; /* Horizontally center the button */
+    align-items: center; /* Vertically center the button */
+}
+
   }
   

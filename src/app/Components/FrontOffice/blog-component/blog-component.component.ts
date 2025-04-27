@@ -1,9 +1,11 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { PostsService } from 'src/app/Services/posts.service';
 import { Post } from 'src/app/models/Post';
 import { UserService } from 'src/app/Components/FrontOffice/user/service_user/user.service';
 import { CommentService } from 'src/app/Services/comments.service';
 import { User } from '../user/models/user_model';
+import { AuthService } from 'src/app/Components/FrontOffice/user/auth/auth.service'; // Import AuthService
 
 @Component({
   selector: 'app-blog-component',
@@ -22,17 +24,20 @@ export class BlogComponentComponent implements OnInit {
   showFilterDropdown = false;
   paginatedPosts: Post[] = [];
 
-
   categories = [
     { label: 'Help & Advice', value: 'HELP_ADVICE' },
     { label: 'Lost & Found', value: 'LOST_FOUND' },
-    { label: 'Success Stories', value: 'SUCCESS_STORIES' }
+    { label: 'Success Stories', value: 'SUCCESS_STORIES' },
+    { label: 'My Posts', value: 'my_posts' } // Category for filtering user-specific posts
   ];
 
+  // Inject AuthService and Router for redirection
   constructor(
     private postService: PostsService,
     private userService: UserService,
-    private commentService: CommentService
+    private commentService: CommentService,
+    public authService: AuthService,  // Add AuthService here
+    private router: Router  // Add Router for navigation
   ) {}
 
   ngOnInit(): void {
@@ -48,7 +53,6 @@ export class BlogComponentComponent implements OnInit {
         this.fetchCommentsCount();
         this.posts.sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
         this.applyFilters(); // Apply filters after sorting
-
       },
       (error) => {
         console.error('Error fetching posts', error);
@@ -56,13 +60,34 @@ export class BlogComponentComponent implements OnInit {
     );
   }
 
-  // This method is updated to apply filters and pagination together
+  // Handle "Add Post" click
+  onAddPostClick(): void {
+    if (this.authService.isLoggedIn()) {
+      // If logged in, proceed to Add Post page
+      this.router.navigate(['/add-post']);
+    } else {
+      // If not logged in, store the desired route and redirect to login
+      localStorage.setItem('returnUrl', '/add-post');
+      this.router.navigate(['/login']);
+    }
+  }
+
+  // Apply filters (your existing filter logic remains the same)
   applyFilters(): void {
     let filtered = [...this.posts];
 
+    // Get the current user ID from AuthService
+    const currentUserId = this.authService.getDecodedToken()?.userId;
+
     // Filter by category
     if (this.selectedTypes.length > 0) {
-      filtered = filtered.filter(post => this.selectedTypes.includes(post.type));
+      filtered = filtered.filter(post => {
+        if (this.selectedTypes.includes('my_posts')) {
+          // If the category is 'my_posts', filter by the current user ID
+          return post.userId === currentUserId;
+        }
+        return this.selectedTypes.includes(post.type);
+      });
     }
 
     // Filter by search text
@@ -86,7 +111,7 @@ export class BlogComponentComponent implements OnInit {
     const end = start + this.postsPerPage;
     this.paginatedPosts = this.filteredPosts.slice(start, end); // ✅ This keeps filteredPosts intact
   }
-  
+
   fetchUserNames(): void {
     this.posts.forEach(post => {
       this.userService.getUserById(post.userId).subscribe(
