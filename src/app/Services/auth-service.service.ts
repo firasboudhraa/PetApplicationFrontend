@@ -1,22 +1,12 @@
 import { Injectable } from '@angular/core';
 import { jwtDecode } from 'jwt-decode';
 
-export interface Role {
-  roleId: number;
-  name: string; // RoleEnum: 'USER' | 'ADMIN' | etc.
-  permissions: string[]; // e.g., ['ADMIN_READ', 'ADMIN_UPDATE']
-}
-
 export interface UserPayload {
-  id: number;
-  firstName: string;
-  lastName: string;
-  email: string;
-  roles: Role[];
-  enabled: boolean;
-  accountLocked: boolean;
-  exp?: number;
+  roles: string[];
+  userId: number;
+  sub: string;
   iat?: number;
+  exp?: number;
 }
 
 @Injectable({

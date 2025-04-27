@@ -1,5 +1,7 @@
 import { Component, EventEmitter, Input, Output, SimpleChanges } from '@angular/core';
 import { Router } from '@angular/router';
+import { User } from 'src/app/Components/FrontOffice/user/models/user_model';
+import { UserService } from 'src/app/Components/FrontOffice/user/service_user/user.service';
 import { Pet } from 'src/app/models/pet';
 import { GoogleMapsLoaderService } from 'src/app/Services/google-maps-loader.service';
 import { PetdataServiceService } from 'src/app/Services/petdata-service.service';
@@ -18,27 +20,22 @@ export class PublicPetDetailModalComponent {
 
   confirmationShowed: boolean = false;
   mapOpened: boolean = false;
+  petOwnerName:string = '' ; 
 
   private apiUrl = 'http://localhost:8222/api/v1/pet/images';
-  constructor(private petDataService : PetdataServiceService , private router:Router , private mapsLoader: GoogleMapsLoaderService){}
+  constructor(private petDataService : PetdataServiceService , private router:Router,private userSerice:UserService , private mapsLoader: GoogleMapsLoaderService){}
   ngOnInit(): void {
     this.mapsLoader.load().then(() => {
       this.initMap();
     }).catch(err => {
       console.error('Google Maps failed to load', err);
-    });  }
+    });  
+
+  
+  }
 
     ngOnChanges(changes: SimpleChanges): void {
-      // if (changes['isVisible'] && changes['isVisible'].currentValue === true) {
-      //   // Delay to ensure modal is rendered in DOM
-      //   setTimeout(() => {
-      //     this.mapsLoader.load().then(() => {
-      //       this.initMap();
-      //     }).catch(err => {
-      //       console.error('Google Maps failed to load', err);
-      //     });
-      //   }, 300);
-      // }
+
       if(this.pet.location) {
 
         const [latStr, lngStr] = this.pet.location.split(',').map(coord => coord.trim());
@@ -51,8 +48,17 @@ export class PublicPetDetailModalComponent {
       }else {
         this.humanReadableLocation = 'Unknown location';
       }
+      this.userSerice.getUserById(this.pet.ownerId).subscribe({
+        next:(data) => {
+          this.petOwnerName =  this.capitalizeFirstLetter(data.lastName) + ' ' + this.capitalizeFirstLetter(data.firstName) ; 
+        }
+      })
     }
-
+     capitalizeFirstLetter(text: string): string {
+      if (!text) return '';
+      return text.charAt(0).toUpperCase() + text.slice(1);
+    }
+    
     initMap() {
       const mapElement = document.getElementById('map');
       if (!mapElement || !this.pet?.location) return;

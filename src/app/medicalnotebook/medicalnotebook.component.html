@@ -1,16 +1,16 @@
 <div class="container-fluid mt-5">
-  <h2 class="mb-4 text-center" style="color: #4e73df;">Liste des Carnets Médicaux</h2>
+  <h2 class="mb-4 text-center" style="color: #4e73df;">List of Medical Notebooks</h2>
 
   <div class="row">
-    <!-- 🧭 Filtres à gauche et boutons sous les filtres -->
+    <!-- 🧭 Filters on the left and buttons below -->
     <div class="col-md-3">
       <div class="bg-white p-3 rounded-4 shadow-sm sticky-top" style="top: 80px;">
-        <h5 class="text-center mb-3 text-primary">🔍 Filtres</h5>
+        <h5 class="text-center mb-3 text-primary">🔍 Filters</h5>
 
-        <input type="text" class="form-control mb-3" placeholder="🔎 Nom..." [(ngModel)]="searchText" />
+        <input type="text" class="form-control mb-3" placeholder="🔎 Name..." [(ngModel)]="searchText" />
         <input type="date" class="form-control mb-3" [(ngModel)]="searchDate" />
         <select class="form-select mb-3" [(ngModel)]="searchType">
-          <option value="">📂 Tous les types de soins</option>
+          <option value="">📂 All care types</option>
           <option value="VACCINATION">VACCINATION</option>
           <option value="SURGERY">SURGERY</option>
           <option value="CHECKUP">CHECKUP</option>
@@ -18,21 +18,21 @@
           <option value="OTHER">OTHER</option>
         </select>
 
-        <input type="text" class="form-control mb-3" placeholder="🧑‍⚕️ Vétérinaire..." [(ngModel)]="searchVet" />
+        <input type="text" class="form-control mb-3" placeholder="🧑‍⚕️ Veterinarian..." [(ngModel)]="searchVet" />
         <input type="month" class="form-control mb-3" [(ngModel)]="searchMonth" />
 
-        <button class="btn btn-secondary w-100" (click)="resetFilters()">🔄 Réinitialiser</button>
+        <button class="btn btn-secondary w-100" (click)="resetFilters()">🔄 Reset</button>
 
-        <!-- 🧭 Boutons sous le filtre -->
+        <!-- 🧭 Buttons below filters -->
         <div class="button-container mt-4">
-          <button class="btn btn-primary mb-2" (click)="navigateToMedicalNotebookForm()">➕ Ajouter un Carnet</button>
-          <button class="btn btn-primary mb-2" (click)="navigateToMedicalNotebookStats()">📊 Stats</button>
-          <button class="btn btn-primary mb-2" (click)="navigateToagenda()">🗓 Agenda</button>
+          <button class="btn btn-primary mb-2" (click)="navigateToMedicalNotebookForm()">➕ Add a Notebook</button>
+          <button class="btn btn-primary mb-2" (click)="navigateToMedicalNotebookStats()">📊 Stats and Assistance</button>
+          <button class="btn btn-primary mb-2" (click)="navigateToagenda()">🗓 Schedule</button>
         </div>
       </div>
     </div>
 
-    <!-- 🗂 Liste des carnets à droite -->
+    <!-- 🗂 List of notebooks on the right -->
     <div class="col-md-9">
       <div class="row">
         <div class="col-md-6 mb-4" *ngFor="let carnet of filteredCarnets; let i = index">
@@ -40,41 +40,41 @@
             <!-- 📸 Image -->
             <img 
               [src]="carnet.photoUrl || 'https://img.freepik.com/photos-gratuite/chien-carlin-isole-fond-blanc_2829-11416.jpg?w=740'"
-              alt="Photo du carnet"
+              alt="Notebook photo"
               class="img-thumbnail rounded-circle me-3"
               style="width: 120px; height: 120px; object-fit: cover; border: 3px solid #4e73df;"
             >
 
-            <!-- 📝 Contenu -->
+            <!-- 📝 Content -->
             <div class="flex-grow-1">
               <h5 class="text-primary text-center" style="font-size: 1.3rem; font-weight: bold;">
-                {{ carnet.name || 'Nom du carnet' }}
+                {{ carnet.name || 'Notebook name' }}
               </h5>
 
               <div *ngIf="!expandedIndex[i]" class="card-text">
-                <p class="mb-1"><strong>Historique Médical :</strong></p>
+                <p class="mb-1"><strong>Medical History:</strong></p>
                 <div *ngIf="carnet.medicalRecords?.length > 0">
-                  <p><strong>Type :</strong> {{ carnet.medicalRecords[0].type }}</p>
-                  <p><strong>Date :</strong> {{ carnet.medicalRecords[0].dateTime | date: 'dd/MM/yyyy' }}</p>
-                  <p><strong>Description :</strong> {{ carnet.medicalRecords[0].description }}</p>
-                  <p><strong>Vétérinaire :</strong> {{ carnet.medicalRecords[0].veterinarian_id || 'Non spécifié' }}</p>
+                  <p><strong>Type:</strong> {{ carnet.medicalRecords[0].type }}</p>
+                  <p><strong>Date:</strong> {{ carnet.medicalRecords[0].dateTime | date: 'dd/MM/yyyy' }}</p>
+                  <p><strong>Description:</strong> {{ carnet.medicalRecords[0].description }}</p>
+                  <p><strong>Veterinarian:</strong> {{ carnet.medicalRecords[0].veterinarian_id || 'Not specified' }}</p>
                 </div>
                 <div *ngIf="!carnet.medicalRecords?.length">
-                  <p>Aucun enregistrement médical.</p>
+                  <p>No medical records available.</p>
                 </div>
               </div>
 
               <div *ngIf="expandedIndex[i]" class="card-text">
-                <p><strong>Historique Médical :</strong></p>
+                <p><strong>Medical History:</strong></p>
                 <div *ngFor="let record of carnet.medicalRecords" class="mb-3 border-top pt-2">
-                  <p><strong>Type :</strong> {{ record.type }}</p>
-                  <p><strong>Date :</strong> {{ record.dateTime | date: 'dd/MM/yyyy' }}</p>
-                  <p><strong>Description :</strong> {{ record.description }}</p>
-                  <p><strong>Vétérinaire :</strong> {{ record.veterinarian_id || 'Non spécifié' }}</p>
-                  <p><strong>Poids :</strong> {{ record.poids || 'Non spécifié' }}</p>
+                  <p><strong>Type:</strong> {{ record.type }}</p>
+                  <p><strong>Date:</strong> {{ record.dateTime | date: 'dd/MM/yyyy' }}</p>
+                  <p><strong>Description:</strong> {{ record.description }}</p>
+                  <p><strong>Veterinarian:</strong> {{ record.veterinarian_id || 'Not specified' }}</p>
+                  <p><strong>Weight:</strong> {{ record.poids || 'Not specified' }}</p>
 
                   <button class="btn btn-sm btn-outline-warning mt-1" (click)="editRecord(record.id)">
-                    ✏️ Modifier
+                    ✏️ Edit
                   </button>
                 </div>
               </div>
@@ -82,10 +82,10 @@
               <!-- 🎛 Actions -->
               <div class="d-flex justify-content-between align-items-center mt-3">
                 <button class="btn btn-outline-info btn-sm" (click)="goToDetails(carnet)">
-                  👁 Voir plus
+                  👁 View more
                 </button>
                 <button class="btn btn-sm btn-danger" (click)="deleteCarnet(carnet)">
-                  🗑 Supprimer
+                  🗑 Delete
                 </button>
               </div>
             </div>

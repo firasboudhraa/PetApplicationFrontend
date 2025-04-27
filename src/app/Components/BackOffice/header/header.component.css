@@ -105,6 +105,18 @@ danger-color : #f3545d
   margin-top: 60px; /* Ajouté pour laisser de l'espace pour le header */
 }
 
+.notif-recent {
+  background-color: #d4edda;
+  border-left: 4px solid #28a745;
+  font-weight: 500;
+}
+
+.notif-scroll {
+  max-height: 400px;
+  overflow-y: auto;
+}
+
+
 .alert,
 .brand,
 .btn-simple,

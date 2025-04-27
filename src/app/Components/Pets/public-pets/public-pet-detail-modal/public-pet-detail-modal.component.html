@@ -25,7 +25,7 @@
             </div>
             <div class="d-flex justify-content-between align-items-center mt-4">
               <div>
-                <h6><strong>Owner name:</strong> {{ pet.ownerId }}</h6>
+                <h6><strong>Owner name:</strong> {{this.petOwnerName }}  </h6>
               </div>
               <!-- Make Adoption Request Button with Gradient Animation -->
               <button class="btn btn-sm animated-button" *ngIf="pet.forAdoption && userId!=pet.ownerId" (click)="redirectToRequest(pet.id,pet.ownerId,userId)">

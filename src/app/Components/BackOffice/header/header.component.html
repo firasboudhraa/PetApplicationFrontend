@@ -38,18 +38,12 @@
               <i class="fa fa-search search-icon"></i>
             </button>
           </div>
-          <input
-            type="text"
-            placeholder="Search ..."
-            class="form-control"
-          />
+          <input type="text" placeholder="Search ..." class="form-control" />
         </div>
       </nav>
 
       <ul class="navbar-nav topbar-nav ms-md-auto align-items-center">
-        <li
-          class="nav-item topbar-icon dropdown hidden-caret d-flex d-lg-none"
-        >
+        <li class="nav-item topbar-icon dropdown hidden-caret d-flex d-lg-none">
           <a
             class="nav-link dropdown-toggle"
             data-bs-toggle="dropdown"
@@ -87,8 +81,7 @@
           <ul
             class="dropdown-menu messages-notif-box animated fadeIn"
             aria-labelledby="messageDropdown"
-          >
-          </ul>
+          ></ul>
         </li>
         <li class="nav-item topbar-icon dropdown hidden-caret">
           <a
@@ -99,19 +92,43 @@
             data-bs-toggle="dropdown"
             aria-haspopup="true"
             aria-expanded="false"
-            (click)="openNotifications()"
           >
             <i class="fa fa-bell"></i>
             <!-- Display the number of notifications dynamically -->
             <span class="notification">{{ unreadCount }}</span>
           </a>
-          <ul class="dropdown-menu notif-box animated fadeIn" aria-labelledby="notifDropdown">
+          <ul
+            class="dropdown-menu notif-box animated fadeIn"
+            aria-labelledby="notifDropdown"
+          >
             <li>
               <div class="dropdown-title">
                 You have {{ unreadCount }} new notifications
               </div>
             </li>
             <li>
+              <div class="notif-scroll">
+                <ul class="list-group">
+                  <li
+                    *ngFor="let notif of notifications"
+                    class="list-group-item"
+                    [ngClass]="{ 'notif-recent': isRecent(notif) }"
+                  >
+                    <div class="notif-item d-flex flex-column">
+                      <div>
+                        <i
+                          class="fa"
+                          [ngClass]="getNotificationIcon(notif.type)"
+                        ></i>
+                        {{ notif.message }}
+                      </div>
+                      <small class="notif-time text-muted mt-1">{{
+                        notif.createdAt | date : "MMMM dd, yyyy h:mm a"
+                      }}</small>
+                    </div>
+                  </li>
+                </ul>
+              </div>
             </li>
             <li>
               <a class="see-all" href="javascript:void(0);">
@@ -120,8 +137,8 @@
               </a>
             </li>
           </ul>
-        </li>                    
-        
+        </li>
+
         <li class="nav-item topbar-icon dropdown hidden-caret">
           <a
             class="nav-link"

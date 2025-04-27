@@ -27,7 +27,7 @@ import { PetServiceService } from './Services/pet-service.service';
 import { AvailableSlotsComponent } from './Components/FrontOffice/PetService/available-slots/available-slots.component';
 import { PostsComponent } from './Components/BackOffice/dashboard/posts/posts.component';
 import { GeminiChatComponent } from './Components/FrontOffice/gemini-chat/gemini-chat.component';
-import { PickerModule } from '@ctrl/ngx-emoji-mart';
+import { EmojiModule } from '@ctrl/ngx-emoji-mart/ngx-emoji';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { BaseChartDirective } from 'ng2-charts';
 import { Chart, registerables } from 'chart.js';
@@ -235,7 +235,7 @@ UsersCarnetComponent,
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
-    PickerModule,
+    EmojiModule,
     MatSnackBarModule,
     PopoverModule.forRoot(),
     BrowserAnimationsModule,

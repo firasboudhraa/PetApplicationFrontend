@@ -1,33 +1,141 @@
 <div class="container py-5">
-    <h2 class="mb-4 text-center text-dark fw-bold">
-      📋 Gestion des Carnets Médicaux
-    </h2>
-  
+  <h2 class="mb-4 text-center text-dark fw-bold">
+    📋 Medical Records Management
+  </h2>
+
+  <!-- Affichage conditionnel : soit le formulaire, soit la liste -->
+  <div *ngIf="!showAddForm">
     <div *ngIf="medicalRecords.length === 0" class="alert alert-info text-center">
-      Aucun carnet médical disponible pour le moment.
+      No medical records available at the moment.
     </div>
-  
+
     <div class="row gy-4">
       <div class="col-md-6 col-lg-4" *ngFor="let record of medicalRecords">
-        <div class="card border-0 shadow-sm h-100">
+        <div class="card border-0 shadow-sm h-100 d-flex flex-column">
           <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
-            <span><i class="bi bi-journal-medical me-2"></i>Carnet ID: {{ record.carnet_id }}</span>
+            <span><i class="bi bi-journal-medical me-2"></i>Record ID: {{ record.carnet_id }}</span>
             <span class="badge bg-light text-dark">{{ record.type }}</span>
           </div>
+
           <div class="card-body">
-            <p><i class="bi bi-calendar-date me-2"></i><strong>Date :</strong> {{ record.date | date: 'dd/MM/yyyy' }}</p>
-            <p><i class="bi bi-info-circle me-2"></i><strong>Description :</strong> {{ record.description }}</p>
-            <p><i class="bi bi-calendar-check me-2"></i><strong>type :</strong> {{ record.type }}</p>
+            <p><i class="bi bi-calendar-date me-2"></i><strong>Date:</strong> {{ record.date | date: 'dd/MM/yyyy' }}</p>
+            <p><i class="bi bi-info-circle me-2"></i><strong>Description:</strong> {{ record.description }}</p>
+            <p><i class="bi bi-calendar-check me-2"></i><strong>Type:</strong> {{ record.type }}</p>
+
+            <div *ngIf="record.imageUrl" class="text-center mb-3">
+              <div class="mb-2 text-secondary small">📎 ordonnance</div>
+              <img
+                [src]="'http://localhost:8071/record/images/' + record.imageUrl"
+                alt="Prescription"
+                class="img-fluid rounded-3 border shadow-sm"
+                style="max-height: 200px; object-fit: cover;"
+                crossorigin="anonymous"
+              />
+            </div>
           </div>
-          
+
+          <div class="card-footer bg-light border-top mt-auto d-flex justify-content-between">
+            <button class="btn btn-outline-primary btn-sm" (click)="editRecord(record.id)">
+              ✏️ Modifier
+            </button>
+            <button class="btn btn-outline-danger btn-sm" (click)="deleteRecord(record)">
+              🗑️ Supprimer
+            </button>
+          </div>
         </div>
       </div>
     </div>
-  
+
     <div class="d-flex justify-content-center mt-5">
-      <button class="btn btn-success btn-lg px-4">
-        ➕ Ajouter un nouveau carnet
+      <button class="btn btn-success btn-lg px-4" (click)="toggleAddForm()">
+        ➕ Add New Record
       </button>
     </div>
   </div>
-  
+
+  <!-- Formulaire d'ajout d'un record -->
+  <div *ngIf="showAddForm">
+    <h2 class="mb-3 text-center">📂 Add a Medical Record</h2>
+    <form [formGroup]="recordForm" class="mb-4" (ngSubmit)="saveRecord()">
+      <fieldset class="border p-3 rounded">
+        <legend>📄 New Medical Record</legend>
+
+        <div class="mb-3">
+          <label>Date</label>
+          <input class="form-control" formControlName="date" type="date" required />
+          <div *ngIf="recordForm.controls['date'].invalid && recordForm.controls['date'].touched" class="text-danger">
+            Date is required.
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <label>Type of service</label>
+          <select class="form-select" formControlName="type">
+            <option value="VACCINATION">Vaccination</option>
+            <option value="SURGERY">Surgery</option>
+            <option value="CHECKUP">Check-up</option>
+            <option value="MEDICATION">Medication</option>
+            <option value="OTHER">Other</option>
+          </select>
+        </div>
+
+        <div class="mb-3">
+          <label>Description</label>
+          <input class="form-control" formControlName="description" placeholder="Description" required />
+          <div *ngIf="recordForm.controls['description'].invalid && recordForm.controls['description'].touched" class="text-danger">
+            The description must be at least 30 characters long.
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <label>Veterinarian ID</label>
+          <input class="form-control" formControlName="veterinarian_id" placeholder="Veterinarian ID" required />
+          <div *ngIf="recordForm.controls['veterinarian_id'].invalid && recordForm.controls['veterinarian_id'].touched" class="text-danger">
+            Veterinarian ID is required.
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <label>Follow-up date (optional)</label>
+          <input class="form-control" formControlName="next_due_date" type="date" />
+        </div>
+
+        <div class="mb-3">
+          <label>Select a notebook</label>
+          <select class="form-select" formControlName="carnet_id">
+            <option value="" disabled selected>-- Select a notebook --</option>
+            <option *ngFor="let carnet of carnets" [value]="carnet.id">
+              {{ carnet.name }}
+            </option>
+          </select>
+          <div *ngIf="recordForm.controls['carnet_id'].invalid && recordForm.controls['carnet_id'].touched" class="text-danger">
+            Please select a notebook.
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <label>Pet's weight (kg)</label>
+          <input class="form-control" formControlName="poids" type="number" min="0" required />
+          <div *ngIf="recordForm.controls['poids'].invalid && recordForm.controls['poids'].touched" class="text-danger">
+            Weight is required.
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <label for="imageUpload">Add an image (optional)</label>
+          <input
+            id="imageUpload"
+            type="file"
+            class="form-control"
+            (change)="onFileSelected($event)"
+          />
+        </div>
+
+        <div class="d-flex justify-content-center gap-3">
+          <button type="submit" class="btn btn-primary" [disabled]="recordForm.invalid">➕ Add Record</button>
+          <button type="button" class="btn btn-secondary" (click)="cancelAdd()">❌ Cancel</button>
+        </div>
+      </fieldset>
+    </form>
+  </div>
+</div>

@@ -11,6 +11,9 @@ import { Router } from '@angular/router'; // Import Router for navigation
 export class MapViewComponent implements AfterViewInit {
   services: any[] = [];
   map: any;
+  searchText: string = '';
+searchResults: any[] = [];
+autocompleteService: any; // For Google Places Autocomplete
 
   constructor(
     private petService: PetServiceService,
@@ -50,7 +53,75 @@ export class MapViewComponent implements AfterViewInit {
       center: defaultCenter,
       zoom: 12
     });
+    this.autocompleteService = new google.maps.places.AutocompleteService();
   }
+
+  onSearchInput() {
+    const query = this.searchText.trim();
+    this.searchResults = [];
+  
+    if (!query) return;
+  
+    // 🔧 Search services first
+    const matchedServices = this.services
+      .filter(service => service.name.toLowerCase().includes(query.toLowerCase()))
+      .map(service => ({
+        type: 'service',
+        data: service
+      }));
+  
+    // 📍 Then search places using Google Places
+    this.autocompleteService.getPlacePredictions({ input: query }, (predictions: google.maps.places.AutocompletePrediction[] | null, status: google.maps.places.PlacesServiceStatus) => {
+      if (status === google.maps.places.PlacesServiceStatus.OK && predictions) {
+        const places = predictions.map(prediction => ({
+          type: 'place',
+          data: prediction
+        }));
+  
+        // Combine results
+        this.searchResults = [...matchedServices, ...places];
+      } else {
+        // If Google fails, show only services
+        this.searchResults = matchedServices;
+      }
+    });
+  }
+
+  onResultSelected(result: any) {
+    this.searchText = result.type === 'service' ? result.data.name : result.data.description;
+    this.searchResults = [];
+  
+    if (result.type === 'service') {
+      this.geocodeAddress(result.data.address, google.maps).then((location) => {
+        if (location) {
+          this.map.setCenter(location);
+          this.map.setZoom(15);
+          new google.maps.Marker({
+            position: location,
+            map: this.map,
+            title: result.data.name
+          });
+        }
+      });
+    }
+  
+    if (result.type === 'place') {
+      const placesService = new google.maps.places.PlacesService(this.map);
+      placesService.getDetails({ placeId: result.data.place_id }, (place, status) => {
+        if (status === google.maps.places.PlacesServiceStatus.OK && place && place.geometry) {
+          this.map.setCenter(place.geometry.location);
+          this.map.setZoom(15);
+          new google.maps.Marker({
+            position: place.geometry.location,
+            map: this.map,
+            title: place.name
+          });
+        }
+      });
+    }
+  }
+  
+  
 
   addMarkersToMap(googleMaps: any) {
     const bounds = new googleMaps.LatLngBounds();

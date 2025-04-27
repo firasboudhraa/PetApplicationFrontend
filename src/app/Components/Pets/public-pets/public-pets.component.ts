@@ -75,12 +75,16 @@ export class PublicPetsComponent {
   }
   speciesSearchTerm: string = '';
   displayedSpecies: { label: string; value: string }[] = [];
+  prefernce : any = { temperame:"Friendly" , size: "Small" , age: "Adult" } ;
+
   ngOnInit(): void {
+
     this.petDataService.getPets().subscribe((data) => {
       this.allPets = data;
       this.totalItems = this.allPets.length;
       this.filterPets();
     }); 
+    
     this.petSpecies = this.ps.speciesOption ;
     this.updateFilteredSpecies(); 
 

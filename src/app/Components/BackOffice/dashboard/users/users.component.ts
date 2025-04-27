@@ -1,29 +1,56 @@
 import { Component, OnInit } from '@angular/core';
-import { User } from "../../../FrontOffice/user/models/user_model";
-import { adminService } from 'src/app/Components/FrontOffice/user/service_user/admin.Service';
+import { ActivatedRoute, Router } from '@angular/router';
+import { MedicalService } from 'src/app/Services/medical.service';
+import { forkJoin, map, catchError, of } from 'rxjs';
 
 @Component({
   selector: 'app-users',
   templateUrl: './users.component.html',
   styleUrls: ['./users.component.css']
 })
-export class UsersComponent implements OnInit {
-  users: User[] = [];
-  filteredUsers: User[] = [];
-  selectedRole: string = 'all';
-  noUsersForRole: boolean = false;
+export class UsersComponent  {
 
-  constructor(private adminService: adminService) {}
+  /*carnets: any[] = [];
+  searchText: string = ''; // Pour la recherche
+  id!: number;
+
+  constructor(
+    private router: Router,
+    private medicalService: MedicalService,
+    private act: ActivatedRoute
+  ) {}
 
   ngOnInit(): void {
-    this.loadUsers();
+    this.id = this.act.snapshot.params['id'];
+    this.loadCarnets();
   }
 
-  loadUsers(): void {
-    this.adminService.getAllUsers().subscribe({
-      next: (users) => {
-        this.users = users;
-        this.filteredUsers = [...users];
+  // Charge tous les carnets avec leurs records
+  loadCarnets(): void {
+    this.medicalService.getAllCarnets().subscribe({
+      next: (data) => {
+        const carnetRequests = data.map(carnet =>
+          this.medicalService.getMedicalRecordsByCarnetId(carnet.id).pipe(
+            map(records => {
+              carnet.medicalRecords = Array.isArray(records) ? records : [];
+              return carnet;
+            }),
+            catchError(err => {
+              console.error(`Erreur records carnet ${carnet.id}:`, err);
+              carnet.medicalRecords = [];
+              return of(carnet);
+            })
+          )
+        );
+
+        forkJoin(carnetRequests).subscribe({
+          next: (carnetsWithRecords) => {
+            this.carnets = carnetsWithRecords;
+          },
+          error: (err) => {
+            console.error('Erreur chargement carnets avec forkJoin:', err);
+          }
+        });
       },
       error: (err) => {
         console.error('Error fetching users:', err);
@@ -31,38 +58,33 @@ export class UsersComponent implements OnInit {
     });
   }
 
-  filterUsers(): void {
-    if (this.selectedRole === 'all') {
-      this.filteredUsers = [...this.users];
-      this.noUsersForRole = false;
-    } else {
-      const filtered = this.users.filter(user =>
-        user.roles.some(role =>
-          role.name.toLowerCase() === this.selectedRole.toLowerCase()
-        )
-      );
+  // Getter pour le filtre
+  get filteredCarnets(): any[] {
+    if (!this.searchText) return this.carnets;
+    const search = this.searchText.toLowerCase();
+    return this.carnets.filter(c =>
+      c.name?.toLowerCase().includes(search)
+    );
+  }
 
-      this.filteredUsers = filtered;
-      this.noUsersForRole = filtered.length === 0;
+  // Suppression carnet
+  deleteCarnet(carnet: any): void {
+    if (!carnet?.id) {
+      console.error('ID carnet manquant.');
+      return;
     }
+
+    this.medicalService.deleteCarnet(carnet.id).subscribe({
+      next: () => {
+        this.loadCarnets();
+      },
+      error: (err) => {
+        console.error(`Erreur suppression carnet ${carnet.id}`, err);
+      }
+    });
   }
 
-  deleteUser(userId: number): void {
-    if (confirm('Are you sure you want to delete this user?')) {
-      this.adminService.deleteUser(userId).subscribe({
-        next: () => {
-          this.users = this.users.filter(user => user.id !== userId);
-          this.filteredUsers = this.filteredUsers.filter(user => user.id !== userId);
-        },
-        error: (err) => {
-          console.error('Error deleting user:', err);
-          // Handle error (show message to user)
-        }
-      });
-    }
-  }
-
-  createNewUser(): void {
-    console.log('Creating new user...');
-  }
+  navigateToMedicalNotebookForm(): void {
+    this.router.navigate(['/add-carnet']); // Ajuste la route selon ton app
+  }*/
 }

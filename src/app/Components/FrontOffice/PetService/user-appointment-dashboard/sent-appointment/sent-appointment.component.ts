@@ -3,6 +3,7 @@ import { AppointmentService } from 'src/app/Services/appointment.service';
 import { GoogleMapsLoaderService } from 'src/app/Services/google-map-loader.service';
 import { PetServiceService } from 'src/app/Services/pet-service.service';
 import Swal from 'sweetalert2';
+import  { AuthService } from '../../../user/auth/auth.service';
 
 @Component({
   selector: 'app-sent-appointment',
@@ -14,7 +15,7 @@ export class SentAppointmentComponent {
   confirmedAppointments: any[] = [];
   rejectedAppointments: any[] = [];
   activeTab: string = 'pending';
-  idOwner: number = 3;
+  idOwner!:number ;
   reason: string = '';
   combinedPending: { appointment: any; service: any }[] = [];
   combinedConfirmed: { appointment: any; service: any }[] = [];
@@ -27,6 +28,7 @@ export class SentAppointmentComponent {
     private appointmentService: AppointmentService,
     private petService: PetServiceService,
     private mapsLoader: GoogleMapsLoaderService,
+    private authService:AuthService
   ) {}
 
   ngOnInit(): void {
@@ -71,6 +73,14 @@ export class SentAppointmentComponent {
   }
 
   fetchAppointments(): void {
+    const userId = this.authService.getDecodedToken()?.userId;
+    console.log("user ID :", userId);
+    if (userId !== undefined) {
+      this.idOwner = userId;
+      console.log("user ID :", this.idOwner);
+    } else {
+      console.error('User ID is undefined');
+    }
     this.appointmentService.getAppointmentsByUserId(this.idOwner).subscribe(async (appointments: any[]) => {
       console.log('Appointments:', appointments);
 

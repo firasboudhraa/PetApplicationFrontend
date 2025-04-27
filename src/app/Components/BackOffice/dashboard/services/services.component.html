@@ -4,14 +4,14 @@
     <i class="fa fa-home"></i> > Services
   </h1>
 
-  <!-- Add Service Button -->
-  <button class="mr-5 btn btn-primary" [routerLink]="['/dashboard/ajout-service']">Add Service</button>
-
-    <!-- View All Services on Map Button -->
+  <!-- Action Buttons -->
+  <div class="button-group" style="margin-bottom: 20px;">
+    <button class="mr-5 btn btn-primary" [routerLink]="['/dashboard/ajout-service']">Add Service</button>
     <button class="btn btn-map-view" [routerLink]="['/dashboard/map-view']">
-      <i class="fa fa-map-marker-alt"></i> View All Services on Map
+      <i class="fa fa-map-marker"></i> View All Services on Map
     </button>
-    
+  </div>
+
   <!-- Services Table -->
   <div class="services-container">
     <table class="services-table">
@@ -31,19 +31,19 @@
           <td>{{ service.durationInMinutes }} min</td>
           <td>
             <span *ngIf="service.address">
-              <i class="fa fa-map-marker-alt"></i> {{ service.address }}
+              <i class="fa fa-map-marker"></i> {{ service.address }}
             </span>
             <span *ngIf="!service.address">-</span>
           </td>
           <td>
             <button *ngIf="service.address" class="btn-map" (click)="serviceClicked(service)">
-              <i class="fa fa-map-marker-alt"></i>
+              <i class="fa fa-map-marker"></i>
             </button>
             <button class="btn btn-warning" [routerLink]="['/dashboard/update-service', service.idService]">
-              <i class="fa fa-pencil-alt"></i>
+              <i class="fa fa-pencil"></i>
             </button>
             <button class="btn btn-danger rounded" (click)="deleteService(service.idService)">
-              <i class="fa fa-trash-alt"></i>
+              <i class="fa fa-trash"></i>
             </button>
           </td>
         </tr>
@@ -58,8 +58,33 @@
     *ngFor="let page of getPagesArray()"
     class="pagination-button"
     [ngClass]="{ 'active': currentPage === page }"
-    (click)="onPageChange(page)"
-  >
+    (click)="onPageChange(page)">
     {{ page }}
   </button>
+</div>
+
+<!-- Charts Section -->
+<div class="charts-section" style="margin-top: 40px;">
+  <div class="chart-container" style="margin-bottom: 40px;">
+    <canvas baseChart
+            [data]="servicesCountChartData"
+            [options]="servicesCountChartOptions"
+            [type]="'doughnut'"> <!-- Explicitly set to 'doughnut' -->
+    </canvas>
+  </div>
+  <div class="chart-container">
+    <canvas baseChart
+            [data]="servicesPerDayChartData"
+            [options]="servicesPerDayChartOptions"
+            [type]="'bar'"> <!-- Explicitly set to 'bar' -->
+    </canvas>
+  </div>
+    <!-- Most Booked Services Chart -->
+    <div class="chart-container">
+      <canvas baseChart
+              [data]="mostBookedServicesChartData"
+              [options]="mostBookedServicesChartOptions"
+              [type]="'bar'"> <!-- Explicitly set to 'bar' for a bar chart -->
+      </canvas>
+    </div>
 </div>
