@@ -14,22 +14,35 @@ export class DisplayOffersComponent {
   userId: number = 3;
   private imageServerUrl = 'http://localhost:8222/api/v1/pet/images';
   showDetailModal: boolean = false;
+  searchText: string = '';
+  selectedSpecie: string = '';
+  selectedOfferType: string = '';
+  selectedSex: string = '';
+
+  displayedOffers: (PetSittingOffer & { isFlipped: boolean })[] = [];
+  offersToShow = 3;
+
+  allOffers: (PetSittingOffer & { isFlipped: boolean })[] = [];
+
   offers: (PetSittingOffer & { isFlipped: boolean })[] = []; // Add isFlipped dynamically
 
   constructor(private petSittingOfferService: PetSittingOfferService, private mapService: GoogleMapsLoaderService,private renderer: Renderer2) {}
 
   ngOnInit(): void {
     this.petSittingOfferService.getAvailablePetSittingOffers(this.userId).subscribe(async (response) => {
-      this.offers = await Promise.all(
+      this.allOffers = await Promise.all(
         response.map(async (offer) => ({
           ...offer,
-          locationInLetters: await this.mapService.getLocationInLetters(offer.pet.location), // Await the result
+          locationInLetters: await this.mapService.getLocationInLetters(offer.pet.location),
           isFlipped: false,
         }))
       );
-      console.log(this.offers);
+      this.offers = [...this.allOffers]; // Initially, show all
+      this.displayedOffers = this.offers.slice(0, this.offersToShow);
+
     });
   }
+  
   closeDetailModal(): void {
     this.renderer.removeClass(document.querySelector('.pet-sitting-space-container'), 'blur-effect');
     this.renderer.removeClass(document.querySelector('app-navbar'), 'blur-effect');
@@ -57,8 +70,40 @@ export class DisplayOffersComponent {
     return `${this.imageServerUrl}/${filename}`;
   }
 
-  applyFilter(filter: string): void {
-    console.log('Filter applied:', filter);
+  applyFilter(type?: string, value?: string): void {
+    if (type === 'specie') {
+      this.selectedSpecie = value || '';
+    } else if (type === 'offerType') {
+      this.selectedOfferType = value || '';
+    } else if (type === 'sex') {
+      this.selectedSex = value || '';
+    }
+  
+    this.offers = this.allOffers.filter(offer => {
+      const matchesSearch = this.searchText
+        ? (offer.pet.name?.toLowerCase().includes(this.searchText.toLowerCase()) ||
+           offer.locationInLetters?.toLowerCase().includes(this.searchText.toLowerCase()) ||
+           offer.pet.species?.toLowerCase().includes(this.searchText.toLowerCase()))
+        : true;
+  
+      const matchesSpecie = this.selectedSpecie ? offer.pet.species?.toLowerCase() === this.selectedSpecie.toLowerCase() : true;
+      const matchesOfferType = this.selectedOfferType ? offer.offerType?.toLowerCase() === this.selectedOfferType.toLowerCase() : true;
+      const matchesSex = this.selectedSex ? offer.pet.sex?.toLowerCase() === this.selectedSex.toLowerCase() : true;
+  
+      return matchesSearch && matchesSpecie && matchesOfferType && matchesSex;
+    });
+    this.displayedOffers = this.offers.slice(0, this.offersToShow);
+
+  }
+  showMoreOffers() {
+    this.offersToShow += 6; 
+    this.displayedOffers = this.offers.slice(0, this.offersToShow);
+  }
+  clearFilters(): void {
+    this.searchText = '';
+    this.selectedSpecie = '';
+    this.selectedOfferType = '';
+    this.offers = [...this.allOffers];
   }
   selectedPet!: Pet ;
   viewPetDetail(pet: Pet): void {

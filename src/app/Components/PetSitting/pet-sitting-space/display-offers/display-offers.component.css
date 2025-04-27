@@ -59,15 +59,20 @@
   /* Container for the card */
   .offer-card {
     perspective: 1000px; /* Enables 3D effect */
-    width: 100%;
+    width: 20vw;
     height: 300px;
     position: relative;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
+    cursor: pointer;
   }
   
   .offer-card:hover {
     transform: translateY(-5px); /* Subtle lift on hover */
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* Coherent shadow */
+  }
+  .show-more-container {
+    text-align: center;
+    margin-top: 40px;
   }
   
   .card-inner {

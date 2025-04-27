@@ -24,6 +24,12 @@
   margin: 2rem auto;
   z-index: 1050;
 }
+.ftco-section{
+  background-color: #ffffff;
+  background-image: url("https://www.transparenttextures.com/patterns/foggy-birds.png");
+  opacity: 0.95;
+
+}
 
 .custom-modal {
   position: fixed;
