@@ -73,6 +73,7 @@ import { ServiceProfileDashboardComponent } from './Components/BackOffice/servic
 import { AddServiceProfileComponent } from './Components/BackOffice/service-profile/add-service-profile/add-service-profile.component';
 import { AppointmentsProfileComponent } from './Components/BackOffice/service-profile/appointments-profile/appointments-profile.component';
 import { StatsProfileComponent } from './Components/BackOffice/service-profile/stats-profile/stats-profile.component';
+import { MatchingPetComponent } from './Components/Pets/Matching/matching-pet/matching-pet.component';
 
 const routes: Routes = [
   { path: 'about', component: AboutComponentComponent },
@@ -176,6 +177,8 @@ const routes: Routes = [
   { path: 'prefModal/:id', component: UserProfileModalComponent },
   { path: 'forgot-password', component: ForgotPasswordComponent },
   { path: 'reset-password', component: ResetPasswordComponent },
+  { path: 'matching-pets', component: MatchingPetComponent },
+
 
   {
     path: 'activate_account',

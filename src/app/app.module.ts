@@ -124,6 +124,9 @@ import { AddServiceProfileComponent } from './Components/BackOffice/service-prof
 import { AppointmentsProfileComponent } from './Components/BackOffice/service-profile/appointments-profile/appointments-profile.component';
 import { StatsProfileComponent } from './Components/BackOffice/service-profile/stats-profile/stats-profile.component';
 import { ServiceDetailModalComponent } from './Components/FrontOffice/PetService/service/service-detail-modal/service-detail-modal.component';
+import { MatchingPetComponent } from './Components/Pets/Matching/matching-pet/matching-pet.component';
+import { MatchingDetailModalComponent } from './Components/Pets/Matching/matching-detail-modal/matching-detail-modal.component';
+
 
 @NgModule({
   declarations: [
@@ -217,7 +220,9 @@ import { ServiceDetailModalComponent } from './Components/FrontOffice/PetService
     AddServiceProfileComponent,
     AppointmentsProfileComponent,
     StatsProfileComponent,
-    ServiceDetailModalComponent
+    ServiceDetailModalComponent,
+    MatchingPetComponent,
+    MatchingDetailModalComponent
 
   ],
   imports: [

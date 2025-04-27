@@ -1,6 +1,7 @@
 import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';  // Import necessary modules
 import { UserService } from '../service_user/user.service';  // Import UserService
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-user-profile-modal',
@@ -19,7 +20,8 @@ export class UserProfileModalComponent implements OnInit {
 
   constructor(
     private fb: FormBuilder, 
-    private userService: UserService
+    private userService: UserService,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -79,7 +81,7 @@ onSubmit(): void {
           console.log('Preferences Submitted:', this.prefrencesForm.value);
 
           this.isLoading = false;
-          this.close(); // Close the modal after successful submission
+          this.router.navigate(['/matching-pets']);
         },
         error: (err) => {
           console.error('Failed to update preferences:', err);
@@ -94,4 +96,6 @@ onSubmit(): void {
     });
   }
 }
+
+
 }
