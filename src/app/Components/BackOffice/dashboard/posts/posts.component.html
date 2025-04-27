@@ -1,9 +1,12 @@
 <div class="container">
   <h2>Liste des Posts</h2>
 
-  <button class="btn btn-primary" (click)="toggleCharts(); scrollToStatistics()">
-    {{ showCharts ? 'Hide Statistics' : 'Show Statistics' }}
+  
+  <button class="btn btn-primary" (click)="hoverToStatistics()">
+    Go to Statistics
   </button>
+
+
   <button class="btn btn-primary" (click)="generatePdf()">Download Blog PDF</button>
   
 
@@ -15,6 +18,7 @@
         <th>Image</th>
         <th>Titre</th>
         <th>Auteur</th>
+        <th>Email</th> <!-- Added Email column -->
         <th>Type</th>
         <th>Likes</th>
         <th>Commentaires</th>
@@ -32,6 +36,7 @@
           </td>
           <td>{{ post.title }}</td>
           <td>{{ userNames.get(post.userId) }}</td>
+          <td>{{ userEmails.get(post.userId) }}</td> <!-- Display email here -->
           <td>{{ post.type }}</td>
           <td>{{ likeCounts[post.id] || 0 }}</td>
           <td>{{ commentCounts[post.id] || 0 }}</td>
@@ -87,9 +92,7 @@ id="contributorsChart"
 </canvas>
 
 
-  <button class="btn btn-primary" (click)="toggleCharts(); scrollToStatistics()">
-    {{ showCharts ? 'Hide Statistics' : 'Show Statistics' }}
-  </button>
+
   <button (click)="generateStatisticsPdf()" class="btn btn-primary">Download Statistics PDF</button>
 
 
