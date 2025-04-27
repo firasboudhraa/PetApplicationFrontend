@@ -56,6 +56,7 @@
     "chart.js": "^4.4.9",
     "chartjs-plugin-datalabels": "^2.2.0",
     "date-fns": "^4.1.0",
+    "emoji-mart": "^5.6.0",
     "flaticon": "^0.1.0",
     "gsap": "^3.12.7",
     "html2canvas": "^1.4.1",

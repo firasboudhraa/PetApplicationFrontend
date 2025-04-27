@@ -238,7 +238,6 @@ export class PostDetailComponent implements OnInit, AfterViewInit {
       .replace(/_/g, ' ')
       .replace(/\b\w/g, char => char.toUpperCase());
   }
-
   toggleEmojiPicker() {
     this.showEmojiPicker = !this.showEmojiPicker;
     const emojiButton = document.querySelector('.btn-emoji') as HTMLElement;
@@ -246,11 +245,11 @@ export class PostDetailComponent implements OnInit, AfterViewInit {
     const popup = document.querySelector('.emoji-picker-popup') as HTMLElement;
   
     if (popup) {
-      popup.style.top = `${rect.top - popup.offsetHeight - 8}px`; 
-      popup.style.left = `${rect.left + rect.width / 2 - popup.offsetWidth / 2}px`; 
+      popup.style.top = `${rect.top - popup.offsetHeight - 8}px`; // Adjust this as needed
+      popup.style.left = `${rect.left + rect.width / 2 - popup.offsetWidth / 2}px`; // Adjust this as needed
     }
   }
-
+  
   @HostListener('document:click', ['$event'])
   onClickOutside(event: Event) {
     if (!(event.target as HTMLElement).closest('.emoji-picker-popup') &&

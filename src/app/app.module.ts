@@ -1,4 +1,4 @@
-import { NgModule, Component, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -6,8 +6,8 @@ import { AboutComponentComponent } from './Components/FrontOffice/about-componen
 import { BlogComponentComponent } from './Components/FrontOffice/blog-component/blog-component.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CarouselModule } from 'ngx-owl-carousel-o';
-import { MatMenuModule } from '@angular/material/menu'; // Import MatMenuModule
-import {HttpClientModule} from '@angular/common/http';
+import { MatMenuModule } from '@angular/material/menu'; 
+import { HttpClientModule } from '@angular/common/http';
 import { PostDetailComponent } from './Components/FrontOffice/post-detail/post-detail.component';
 import { AddPostComponent } from './Components/FrontOffice/add-post/add-post.component';
 import { ModifyPostComponent } from './Components/FrontOffice/modify-post/modify-post.component';
@@ -28,13 +28,13 @@ import { AvailableSlotsComponent } from './Components/FrontOffice/PetService/ava
 import { PostsComponent } from './Components/BackOffice/dashboard/posts/posts.component';
 import { GeminiChatComponent } from './Components/FrontOffice/gemini-chat/gemini-chat.component';
 import { EmojiModule } from '@ctrl/ngx-emoji-mart/ngx-emoji';
+import { PickerModule } from '@ctrl/ngx-emoji-mart'; // Use only this if needed
+
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { BaseChartDirective } from 'ng2-charts';
 import { Chart, registerables } from 'chart.js';
 import { PopoverModule } from 'ngx-bootstrap/popover';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
-
-
 
 Chart.register(...registerables);
 import { FooterComponent } from './Components/FrontOffice/footer/footer.component';
@@ -75,7 +75,6 @@ import { PetSittingSpaceComponent } from './Components/PetSitting/pet-sitting-sp
 import { DisplayOffersComponent } from './Components/PetSitting/pet-sitting-space/display-offers/display-offers.component';
 import { TrackOffersComponent } from './Components/PetSitting/pet-sitting-space/track-offers/track-offers.component';
 import { NavbarComponent } from './Components/FrontOffice/navbar/navbar.component';
-
 
 import { MedicalnotebookComponent } from './medicalnotebook/medicalnotebook.component';
 import { MedicalnotebookFormComponent } from './medicalnotebook-form/medicalnotebook-form.component';
@@ -125,7 +124,6 @@ import { AddServiceProfileComponent } from './Components/BackOffice/service-prof
 import { AppointmentsProfileComponent } from './Components/BackOffice/service-profile/appointments-profile/appointments-profile.component';
 import { StatsProfileComponent } from './Components/BackOffice/service-profile/stats-profile/stats-profile.component';
 
-
 @NgModule({
   declarations: [
     AboutComponentComponent,
@@ -143,7 +141,6 @@ import { StatsProfileComponent } from './Components/BackOffice/service-profile/s
     PostsComponent,
     GeminiChatComponent,
     FooterComponent,
-    HomeComponent,
     PetCardComponent,
     AddPetModalComponent,
     PetDetailModalComponent,
@@ -163,10 +160,6 @@ import { StatsProfileComponent } from './Components/BackOffice/service-profile/s
     EventComponent,
     EventDetailComponent,
     RangePipe,
-    DashboardComponent,
-    UsersComponent,
-    SidebarComponent,
-    HeaderComponent,
     EditAdoptionRequestComponent,
     ChatPopupComponent,
     LookForASitterFormComponent,
@@ -179,35 +172,25 @@ import { StatsProfileComponent } from './Components/BackOffice/service-profile/s
     EditrecordComponent,
     DetailComponent,
     ChatAIComponent,
-    /*user components*/
     RegisterComponent,
     UserProfileComponent,
     LoginComponent,
     UserProfileModalComponent,
     EditProfileComponent,
-    ResetPasswordComponent ,
-  ForgotPasswordComponent,
-UsersComponent,
-UsersCarnetComponent,
+    ResetPasswordComponent,
+    ForgotPasswordComponent,
+    UsersCarnetComponent,
     EventbackComponent,
     UpdateEventComponent,
     AddEventComponent,
     LeaderboardComponent,
     Nl2BrPipe,
     ActivateAccountComponent,
-
     ServiceComponent,
     AddServiceComponent,
     DetailServiceComponent,
     AppointmentComponent,
     AvailableSlotsComponent,
-    DashboardComponent,
-    UsersComponent,
-    SidebarComponent,
-    DashboardComponent,
-    UsersComponent,
-    SidebarComponent,
-    HeaderComponent,
     ServicesComponent,
     AppointmentDashboardComponent,
     ReceivedAppointmentComponent,
@@ -216,7 +199,6 @@ UsersCarnetComponent,
     AjoutServiceComponent,
     UpdateServiceComponent,
     MapViewComponent,
-    
     MarketplaceComponent,
     ProduitComponent,
     FormulaireProduitComponent,
@@ -224,9 +206,6 @@ UsersCarnetComponent,
     EditProductComponent,
     ProdDetailComponent,
     PaymentComponent,
-    DashboardComponent,
-    SidebarComponent,
-    HeaderComponent,
     MarketplaceBackComponent,
     BasketBackComponent,
     PaymentBackComponent,
@@ -237,36 +216,29 @@ UsersCarnetComponent,
     AddServiceProfileComponent,
     AppointmentsProfileComponent,
     StatsProfileComponent
-
   ],
   imports: [
     CommonModule,
-    BrowserAnimationsModule,  
+    BrowserAnimationsModule,
     BrowserModule,
     AppRoutingModule,
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
-    EmojiModule,
+    EmojiModule, 
+    PickerModule,// Use EmojiModule here
     MatSnackBarModule,
     PopoverModule.forRoot(),
-    BrowserAnimationsModule,
-    MatButtonModule,
-    MatIconModule,
-    MatTooltipModule,
-    NgChartsModule ,
+    NgChartsModule,
     FullCalendarModule,
-    BrowserAnimationsModule,
     ToastrModule.forRoot(),
-    CarouselModule,
-    BrowserAnimationsModule,
     CarouselModule,
     NgxPaginationModule,
     MatTooltipModule,
-    MatMenuModule, // Include MatMenuModule here
-    MatButtonModule, // Include MatButtonModule for buttons
+    MatMenuModule,
+    MatButtonModule,
     MatIconModule,
-    
+    RouterModule,
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   providers: [
@@ -274,8 +246,9 @@ UsersCarnetComponent,
       provide: HTTP_INTERCEPTORS,
       useClass: AuthInterceptor,
       multi: true
-
-    },PetServiceService, DatePipe
+    },
+    PetServiceService,
+    DatePipe
   ],
   bootstrap: [AppComponent]
 })
