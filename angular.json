@@ -32,7 +32,9 @@
               "src/assets/css/magnific-popup.css",
               "src/assets/css/owl.carousel.min.css",
               "src/assets/css/owl.theme.default.min.css",
-              "src/assets/css/style.css"
+              "src/assets/css/style.css",
+              "node_modules/emoji-mart/css/emoji-mart.css"
+
             ],
             "scripts": [
               "node_modules/bootstrap/dist/js/bootstrap.bundle.min.js",
@@ -111,7 +113,8 @@
             "assets": ["src/favicon.ico", "src/assets"],
             "styles": [
               "@angular/material/prebuilt-themes/indigo-pink.css",
-              "src/styles.css"
+              "src/styles.css",
+              "node_modules/emoji-mart/css/emoji-mart.css"
             ],
             "scripts": []
           }

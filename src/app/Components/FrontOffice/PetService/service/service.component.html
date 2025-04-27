@@ -70,7 +70,7 @@
         <p *ngIf="service.address"><i class="fa fa-map-marker-alt"></i> <strong>Location:</strong> {{ service.address }}</p>
       </div>
 
-      <button [routerLink]="['/serviceDetail', service.idService]" class="details-btn">
+      <button (click)="showDetailModal();selectService(service.idService)" class="details-btn">
         View Details <i class="fa fa-arrow-right"></i>
       </button>
     </div>
@@ -89,7 +89,12 @@
 </div>
 
 
-
+<app-service-detail-modal
+*ngIf="isDetailShowed"
+(closeModal)="showDetailModal()"
+[id]="selectedServiceId"
+>
+</app-service-detail-modal>
 
 
     <section class="ftco-section ftco-no-pt ftco-no-pb">

@@ -1,0 +1,312 @@
+/* Base Styles */
+:host {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: #374151;
+    line-height: 1.5;
+  }
+  
+  /* Modal Overlay */
+  .modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(4px);
+    z-index: 1000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    animation: fadeIn 0.3s ease-out;
+  }
+  
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+  
+  /* Modal Container */
+  .modal-container {
+    width: 90%;
+    max-width: 800px;
+    max-height: 90vh;
+    overflow-y: auto;
+    background-color: white;
+    border-radius: 12px;
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 
+                0 10px 10px -5px rgba(0, 0, 0, 0.04);
+    animation: slideIn 0.3s ease-out;
+  }
+  
+  @keyframes slideIn {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  /* Modal Header */
+  .modal-header {
+    padding: 1.25rem 1.5rem;
+    background: linear-gradient(135deg, #4f46e5 0%, #6366f1 100%);
+    color: white;
+    border-top-left-radius: 12px;
+    border-top-right-radius: 12px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .modal-title {
+    font-size: 1.25rem;
+    font-weight: 600;
+    margin: 0;
+  }
+  
+  .close-button {
+    background: none;
+    border: none;
+    color: white;
+    font-size: 1.25rem;
+    cursor: pointer;
+    transition: color 0.2s;
+  }
+  
+  .close-button:hover {
+    color: #e0e7ff;
+  }
+  
+  /* Modal Body */
+  .modal-body {
+    padding: 1.5rem;
+  }
+  
+  /* Service Header */
+  .service-header {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+  }
+  
+  .service-icon {
+    width: 3.5rem;
+    height: 3.5rem;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #3b82f6 0%, #6366f1 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 1.5rem;
+    flex-shrink: 0;
+  }
+  
+  .service-name {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #1f2937;
+    margin: 0;
+  }
+  
+  .service-description {
+    color: #4b5563;
+    margin: 1rem 0 1.5rem;
+    line-height: 1.6;
+  }
+  
+  /* Info Cards */
+  .info-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+  }
+  
+  .info-card {
+    padding: 1rem;
+    border-radius: 8px;
+    border: 1px solid #e5e7eb;
+    transition: all 0.2s;
+  }
+  
+  .info-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  }
+  
+  .info-label {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: #4b5563;
+    font-size: 0.875rem;
+    margin-bottom: 0.25rem;
+  }
+  
+  .info-value {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: #1f2937;
+  }
+  
+  /* Availability */
+  .availability-card {
+    background-color: #f9fafb;
+    border-radius: 8px;
+    padding: 1.25rem;
+    margin-bottom: 1.5rem;
+    border: 1px solid #e5e7eb;
+  }
+  
+  .availability-header {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+    color: #1f2937;
+    font-weight: 600;
+  }
+  
+  .time-slots {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+  }
+  
+  .time-slot {
+    flex: 1;
+    text-align: center;
+    padding: 0.5rem;
+    border-radius: 6px;
+    background-color: #e0e7ff;
+    color: #4338ca;
+    font-weight: 600;
+  }
+  
+  .time-arrow {
+    color: #9ca3af;
+  }
+  
+  /* Location */
+  .location-section {
+    margin-bottom: 1.5rem;
+  }
+  
+  .location-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.5rem;
+  }
+  
+  .location-title {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: #1f2937;
+    font-weight: 600;
+  }
+  
+  .map-toggle {
+    background: none;
+    border: none;
+    color: #3b82f6;
+    font-size: 0.875rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+    padding: 0.25rem 0.5rem;
+    border-radius: 4px;
+    transition: background-color 0.2s;
+  }
+  
+  .map-toggle:hover {
+    background-color: #f0f4ff;
+  }
+  
+  .address {
+    color: #4b5563;
+    margin-left: 1.75rem;
+    margin-bottom: 1rem;
+  }
+  
+  #map {
+    height: 300px;
+    border-radius: 8px;
+    overflow: hidden;
+    border: 1px solid #e5e7eb;
+    background-color: #f3f4f6;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #6b7280;
+  }
+  
+  .map-placeholder {
+    text-align: center;
+    padding: 1rem;
+  }
+  
+  .map-placeholder i {
+    font-size: 2rem;
+    color: #6b7280;
+    margin-bottom: 0.5rem;
+  }
+  
+  /* CTA Button */
+  .cta-button {
+    width: 100%;
+    padding: 0.75rem;
+    background: linear-gradient(135deg, #4f46e5 0%, #6366f1 100%);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: all 0.2s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+  }
+  
+  .cta-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 6px -1px rgba(79, 70, 229, 0.3);
+  }
+  
+  /* Responsive Adjustments */
+  @media (min-width: 768px) {
+    .modal-container {
+      width: 85%;
+      max-width: 900px;
+    }
+    
+    .modal-body {
+      padding: 2rem;
+    }
+    
+    .service-name {
+      font-size: 1.75rem;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .info-grid {
+      grid-template-columns: 1fr;
+    }
+    
+    .time-slots {
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+  }

@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { PetServiceService } from 'src/app/Services/pet-service.service';
 import Swal from 'sweetalert2';
 import  { AuthService } from '../../user/auth/auth.service';
+import { cl } from '@fullcalendar/core/internal-common';
 
 @Component({
   selector: 'app-service',
@@ -22,8 +23,11 @@ export class ServiceComponent {
 maxPrice: number | null = null;
 selectedDuration: string = '';
 locationFilter: string = '';
-
-
+isDetailShowed: boolean = false ;
+selectedServiceId!:number ;
+showDetailModal(){
+  this.isDetailShowed = !this.isDetailShowed ;
+}
   constructor(private ps: PetServiceService, private router: Router,private authService: AuthService) {}
 
   ngOnInit(): void {
@@ -34,7 +38,9 @@ locationFilter: string = '';
       this.updatePaginatedServices();
     });
   }
-
+  selectService(id:number){
+    this.selectedServiceId = id ;
+  }
   filterServices(): void {
     this.filteredServices = this.services.filter(service => {
       const matchesName = this.filterCriteria
