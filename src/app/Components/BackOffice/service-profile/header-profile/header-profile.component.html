@@ -8,11 +8,25 @@
     </div>
   
     <div class="header-right">
-      <!-- Notification Bell -->
-      <div class="notifications">
-        <i class="fa fa-bell"></i>
-        <i class="fa fa-caret-down"></i>
-      </div>
+        <!-- Notification Bell -->
+        <div class="notifications" (click)="toggleDropdown($event)">
+          <i class="fa fa-bell"></i>
+          <i class="fa fa-caret-down" *ngIf="dropdownOpen"></i>
+          <div class="notification-count" *ngIf="unseenCount > 0">{{ unseenCount }}</div>
+        </div>
+
+        <!-- Dropdown Menu for Notifications -->
+        <div class="notification-dropdown" *ngIf="dropdownOpen" #dropdownRef>
+          <ul>
+            <li *ngFor="let notification of notifications" (click)="markAsRead(notification)">
+              <div class="notification-item" [class.read]="notification.seen">
+                <p>{{ notification.message }}</p>
+                <span *ngIf="!notification.seen" class="unread-indicator"></span>
+              </div>
+            </li>
+          </ul>
+        </div>
+
   
       <!-- User Profile with Rounded Image -->
       <div class="user-profile">
