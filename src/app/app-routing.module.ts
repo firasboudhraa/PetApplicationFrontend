@@ -147,6 +147,7 @@ const routes: Routes = [
     path: 'petSittingSpace',
     component: PetSittingSpaceComponent,
     children: [
+      { path: '', redirectTo: 'display-offers', pathMatch: 'full' },
       { path: 'display-offers', component: DisplayOffersComponent },
       { path: 'track-offers', component: TrackOffersComponent },
     ],

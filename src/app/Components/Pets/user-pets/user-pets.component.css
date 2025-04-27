@@ -50,6 +50,10 @@
 .page-container{
   display: flex ;
   flex-direction: column;
+    background-color: #ffffff;
+    background-image: url("https://www.transparenttextures.com/patterns/foggy-birds.png");
+    opacity: 0.95;
+
 
 }
 #itemsPerPage {

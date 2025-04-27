@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { cl } from '@fullcalendar/core/internal-common';
+import { Observable } from 'rxjs';
+import { UserService } from 'src/app/Components/FrontOffice/user/service_user/user.service';
 import { PetSittingOfferService } from 'src/app/Services/pet-sitting-offer.service';
 import Swal from 'sweetalert2';
 
@@ -14,7 +17,7 @@ export class TrackOffersComponent implements OnInit {
   userId: number = 1; 
   private imageServerUrl = 'http://localhost:8222/api/v1/pet/images';
 
-  constructor( private petSittingService :PetSittingOfferService) {}
+  constructor( private petSittingService :PetSittingOfferService , private userService:UserService) {}
 
   ngOnInit(): void {
     
@@ -25,22 +28,59 @@ export class TrackOffersComponent implements OnInit {
   setActiveTab(tab: string): void {
     this.activeTab = tab;
   }
-
   fetchSentOffers(): void {
-    this.petSittingService.getSentPetSittingOffers(this.userId).subscribe((response) => {
-      this.sentOffers = response;
-      console.log('Sent offers:', this.sentOffers);
-    });
+    this.petSittingService.getSentPetSittingOffers(this.userId).subscribe(async (response) => {
+      this.sentOffers = await Promise.all(
+        response.map(async (offer) => {
+          // Get the owner's full name asynchronously
+          const user = await this.userService.getUserById(offer.pet.ownerId).toPromise();
+          if (user) {
 
+            const userName = this.capitalizeFirstLetter(user.lastName) + this.capitalizeFirstLetter(user.firstName) ;
+            return { ...offer, userName }; 
+          }else return offer ;
+          
+        })
+      );
+  
+    });
   }
+  capitalizeFirstLetter(text: string): string {
+    if (!text) return '';
+    return text.charAt(0).toUpperCase() + text.slice(1);
+  }
+  
 
   fetchReceivedOffers(): void {
-    this.petSittingService.getReceivedPetSittingOffers(this.userId).subscribe((response) => {
-      this.receivedOffers = response;
-      console.log('Received offers:', this.receivedOffers);
-    }
-    );
+    this.petSittingService.getReceivedPetSittingOffers(this.userId).subscribe(async (response) => {
+      this.receivedOffers = await Promise.all(
+        response.map(async (offer) => {
+          offer.userRequestStatuses = await Promise.all(
+            offer.userRequestStatuses.map(async (s) => {
+              try{
+
+                const user = await this.userService.getUserById(s.userId).toPromise();
+              
+              if (user) {
+                const userName = this.capitalizeFirstLetter(user.lastName) + ' ' + this.capitalizeFirstLetter(user.firstName);
+                console.log({ ...s, userName })
+                return { ...s, userName }; 
+              }
+              }catch{
+                
+              }
+              return s; 
+            })
+          );
+          return offer;  
+        })
+      );
+    });
   }
+  
+  
+
+  
 
   cancelOffer(offerId: number): void {
     Swal.fire({

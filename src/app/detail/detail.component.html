@@ -1,6 +1,6 @@
 <div #pdfContent class="container my-5">
   <h2 class="text-center mb-5 display-6 fw-bold text-gradient">
-    📝 Historique médical de <span class="text-primary">{{ name }}</span>
+    📝 Medical History of <span class="text-primary">{{ name }}</span>
   </h2>
 
   <div class="row g-4 justify-content-center">
@@ -13,19 +13,19 @@
 
           <div class="mb-2">
             <span class="badge bg-info text-dark fs-6">
-              🧾 {{ record.type }}
+              🐾 {{ record.type }}
             </span>
           </div>
 
-          <p class="mb-1"><strong>📄 Description :</strong> {{ record.description }}</p>
-          <p class="mb-1"><strong>👨‍⚕️ Vétérinaire :</strong> {{ record.veterinarian_id || 'Non spécifié' }}</p>
-          <p class="mb-3"><strong>⚖️ Poids :</strong> {{ record.poids || 'Non spécifié' }} kg</p>
+          <p class="mb-1"><strong>📄 Description:</strong> {{ record.description }}</p>
+          <p class="mb-1"><strong>👨‍⚕️ Veterinarian:</strong> {{ record.veterinarian_id || 'Not specified' }}</p>
+          <p class="mb-3"><strong>⚖️ Weight:</strong> {{ record.poids || 'Not specified' }} kg</p>
 
           <div *ngIf="record.imagePath" class="text-center mb-3">
-            <div class="mb-2 text-secondary small">📎 Ordonnance</div>
+            <div class="mb-2 text-secondary small">📎 Prescription</div>
             <img 
               [src]="'http://localhost:8071/record/images/' + record.imagePath"
-              alt="Ordonnance"
+              alt="Prescription"
               class="img-fluid rounded-3 border shadow-sm"
               style="max-height: 200px; object-fit: cover;"
               crossorigin="anonymous"
@@ -34,10 +34,10 @@
 
           <div class="mt-auto d-flex justify-content-between">
             <button class="btn btn-outline-primary btn-sm px-3" (click)="editRecord(record)">
-              ✏️ Modifier
+              ✏️ Edit
             </button>
             <button class="btn btn-outline-danger btn-sm px-3" (click)="deleteRecord(record)">
-              🗑️ Supprimer
+              🗑️ Delete
             </button>
           </div>
         </div>
@@ -46,8 +46,13 @@
   </div>
 
   <div class="text-center mt-5">
-    <button class="btn btn-success btn-lg shadow-sm px-4" (click)="generatePDF()">
-      📄 Exporter en PDF
-    </button>
+    <div class="d-flex justify-content-center gap-3">
+      <button class="btn btn-success btn-lg shadow-sm px-4" (click)="generatePDF()">
+        📄 Export to PDF
+      </button>
+      <button class="btn btn-outline-secondary btn-lg shadow-sm px-4" (click)="retour()">
+        ↩️ Back
+      </button>
+    </div>
   </div>
 </div>

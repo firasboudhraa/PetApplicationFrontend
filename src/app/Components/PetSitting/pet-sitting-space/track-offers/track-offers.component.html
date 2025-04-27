@@ -32,10 +32,10 @@
           <img [src]="getImageUrl(offer.pet.imagePath)" alt="{{ offer.pet.name }}" class="pet-image" />
 
           <h3>{{ offer.pet.name }}</h3>
-          <p><strong>To:</strong> {{ offer.pet.ownerId }}</p>
+          <p><strong>To:</strong> {{ offer.userName }}</p>
           <p><strong>From:</strong> {{ offer.startDate }} <strong>To:</strong> {{ offer.endDate }}</p>
-          <p><strong>Price:</strong> {{ offer.amountPerDay || 'Free' }} TND</p>
-        </div>
+          <p *ngIf="offer.amountPerDay"><strong>Price:</strong> {{offer.amountPerDay}} TND</p>
+          <p *ngIf="!offer.amountPerDay"><strong>Price:</strong>  Free </p>        </div>
         
         <!-- Progress Tracker -->
         <div class="progress-tracker">
@@ -86,9 +86,10 @@
             <img [src]="getImageUrl(offer.pet.imagePath)" alt="{{ offer.pet.name }}" class="pet-image" />
 
             <h3>{{ offer.pet.name }}</h3>
-            <p><strong>From:</strong> {{ requestState.userId }}</p>
+            <p><strong>From:</strong> {{ requestState.userName }}</p>
             <p><strong>From:</strong> {{ offer.startDate }} <strong>To:</strong> {{ offer.endDate }}</p>
-            <p><strong>Price:</strong> {{ offer.amountPerDay || 'Free' }} TND</p>
+            <p *ngIf="offer.amountPerDay"><strong>Price:</strong> {{offer.amountPerDay}} TND </p>
+            <p *ngIf="!offer.amountPerDay"><strong>Price:</strong>  Free </p>
           </div>
 
           <!-- Progress Tracker -->
