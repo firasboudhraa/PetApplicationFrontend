@@ -1,0 +1,40 @@
+<!-- Sidebar and Header -->
+<app-sidebar-profile></app-sidebar-profile>
+<app-header-profile></app-header-profile>
+<div class="container">
+  <!-- Stats Overview Section -->
+  <div class="stats-overview">
+    <h1></h1>
+    <div class="stat-cards">
+      <div class="stat-card">
+        <h2>Total Services</h2>
+        <p>{{ totalServices }}</p>
+      </div>
+      <div class="stat-card">
+        <h2>Total Appointments</h2>
+        <p>{{ totalAppointments }}</p>
+      </div>
+      <div class="stat-card">
+        <h2>Confirmed Appointments</h2>
+        <p>{{ confirmedAppointments }}</p>
+      </div>
+      <div class="stat-card">
+        <h2>Canceled Appointments</h2>
+        <p>{{ canceledAppointments }}</p>
+      </div>
+    </div>
+    
+
+    <!-- Pie Chart Section -->
+    <div class="chart-container">
+      <h3>Appointments Overview</h3>
+      <canvas
+        baseChart
+        [data]="barChartData"
+        [labels]="barChartLabels"
+        [options]="barChartOptions"
+        [type]="barChartType"
+      ></canvas>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,113 @@
+/* Sidebar container */
+.sidebar-container {
+    width: 250px;
+    height: 100vh;
+    background-color: #2c3e50;
+    color: #fff;
+    display: flex;
+    flex-direction: column;
+    padding: 30px 20px 20px; /* Added padding to move everything down */
+    position: fixed;
+    top: 0;
+    left: 0;
+    box-shadow: 2px 0px 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* Sidebar header */
+  .sidebar-header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 30px;
+  }
+  
+  .sidebar-logo {
+    width: 100px;
+    height: 100px;
+    margin-bottom: 10px;
+    margin-right: 30px;
+  }
+  
+  .sidebar-header h2 {
+    font-size: 18px;
+    font-weight: 600;
+    text-align: center;
+  }
+  
+/* Stylish Sidebar Title (Pages) */
+.sidebar-title {
+    margin-top: 80px; 
+    margin-bottom: 20px; 
+  }
+  
+  .sidebar-title h3 {
+    font-size: 18px; /* Smaller title size */
+    font-weight: 700;
+    color: #ecf0f1;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin: 0;
+    padding-bottom: 10px; /* Slight space under the title */
+    position: relative;
+  }
+  
+  /* Adding an underline effect */
+  .sidebar-title h3::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 50px;
+    height: 3px;
+    background-color: #1abc9c; /* Vibrant underline color */
+    border-radius: 3px;
+    transform: scaleX(0);
+    transition: transform 0.3s ease;
+  }
+  
+  /* Hover effect on the title */
+  .sidebar-title h3:hover::after {
+    transform: scaleX(1); /* Underline expands on hover */
+  }
+  
+  /* Sidebar Navigation */
+  .sidebar-nav {
+    list-style-type: none;
+    padding: 0;
+    margin-top: 20px; /* Added margin-top to move the nav down */
+  }
+  
+  .sidebar-nav li {
+    margin: 10px 0;
+  }
+  
+  .sidebar-nav a {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    color: #ecf0f1;
+    font-size: 16px;
+    padding: 10px;
+    border-radius: 8px;
+    transition: background-color 0.3s ease;
+  }
+  
+  .sidebar-nav a:hover {
+    background-color: #34495e;
+  }
+  
+  .sidebar-nav a i {
+    margin-right: 10px;
+    font-size: 18px;
+  }
+  
+  /* Active Link */
+  .sidebar-nav a.active {
+    background-color: #1abc9c;
+    color: #fff;
+  }
+
+
+
+
+  

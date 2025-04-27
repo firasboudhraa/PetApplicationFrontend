@@ -1,0 +1,24 @@
+<div class="header-container">
+    <div class="header-left">
+      <!-- Search Bar with Icon -->
+      <div class="search-container">
+        <input type="text" class="search-input" placeholder="Search..." />
+        <i class="fa fa-search search-icon"></i>
+      </div>
+    </div>
+  
+    <div class="header-right">
+      <!-- Notification Bell -->
+      <div class="notifications">
+        <i class="fa fa-bell"></i>
+        <i class="fa fa-caret-down"></i>
+      </div>
+  
+      <!-- User Profile with Rounded Image -->
+      <div class="user-profile">
+        <img *ngIf="profileImageUrl" [src]="profileImageUrl" alt="User" class="user-avatar" />
+        <div *ngIf="!profileImageUrl" class="default-avatar">No Image</div>
+      </div>
+    </div>
+  </div>
+  

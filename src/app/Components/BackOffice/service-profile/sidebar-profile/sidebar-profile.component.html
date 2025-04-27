@@ -1,0 +1,38 @@
+<div class="sidebar-container">
+    <div class="sidebar-header">
+      <img src="assets/images/logo.png" alt="Logo" class="sidebar-logo" />
+      <div *ngIf="user" class="user-name mr-2">
+        <h2>{{ user.firstName }} {{ user.lastName }}</h2>
+    </div>
+    </div>
+
+      <!-- Display user name below the logo -->
+
+  
+    <!-- Stylish Title for the Pages Section -->
+    <div class="sidebar-title">
+      <h3>Pages</h3>
+    </div>
+  
+    <ul class="sidebar-nav">
+      <li>
+        <a routerLink="/service-dashboard" routerLinkActive="active">
+          <i class="fa fa-dashboard"></i>
+          Dashboard
+        </a>
+      </li>
+      <li>
+        <a routerLink="/stats-dashboard" routerLinkActive="active">
+          <i class="fa fa-chart-line"></i>
+          Stats
+        </a>
+      </li>
+      <li>
+        <a routerLink="/appointments-dashboard" routerLinkActive="active">
+          <i class="fa fa-calendar-check"></i>
+          Appointments
+        </a>
+      </li>
+    </ul>
+  </div>
+  

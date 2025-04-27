@@ -118,6 +118,12 @@ import { UpdateServiceComponent } from './Components/BackOffice/dashboard/update
 import { MapViewComponent } from './Components/BackOffice/dashboard/map-view/map-view.component'; 
 import { CommonModule } from '@angular/common';
 import { ChatPopupComponent } from './Components/FrontOffice/PetService/chat-popup/chat-popup.component';
+import { ServiceProfileDashboardComponent } from './Components/BackOffice/service-profile/service-profile-dashboard/service-profile-dashboard.component';
+import { HeaderProfileComponent } from './Components/BackOffice/service-profile/header-profile/header-profile.component';
+import { SidebarProfileComponent } from './Components/BackOffice/service-profile/sidebar-profile/sidebar-profile.component';
+import { AddServiceProfileComponent } from './Components/BackOffice/service-profile/add-service-profile/add-service-profile.component';
+import { AppointmentsProfileComponent } from './Components/BackOffice/service-profile/appointments-profile/appointments-profile.component';
+import { StatsProfileComponent } from './Components/BackOffice/service-profile/stats-profile/stats-profile.component';
 
 
 @NgModule({
@@ -224,7 +230,13 @@ UsersCarnetComponent,
     MarketplaceBackComponent,
     BasketBackComponent,
     PaymentBackComponent,
-    ProductBackComponent
+    ProductBackComponent,
+    ServiceProfileDashboardComponent,
+    HeaderProfileComponent,
+    SidebarProfileComponent,
+    AddServiceProfileComponent,
+    AppointmentsProfileComponent,
+    StatsProfileComponent
 
   ],
   imports: [

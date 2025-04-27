@@ -1,0 +1,71 @@
+<app-sidebar-profile></app-sidebar-profile>
+<app-header-profile></app-header-profile>
+
+<div class="dashboard-content">
+  <div class="dashboard-header">
+    <div class="header-left">
+      <i class="fas fa-briefcase header-icon"></i>
+      <h1 class="dashboard-title">My Services</h1>
+    </div>
+  </div>
+
+  <div class="cards-grid">
+    <div
+      class="flip-card"
+      *ngFor="let service of displayedServices"
+    >
+      <div
+        class="flip-card-inner"
+        [class.flip-card-flipped]="service.isFlipped"
+      >
+        <!-- Front Side -->
+        <div class="flip-card-front">
+          <!-- Edit & Delete buttons -->
+          <div class="card-buttons">
+            <button class="edit-btn">✏️</button>
+            <button class="delete-btn" (click)="onDeleteService(service.idService)">🗑️</button>
+          </div>
+
+          <h2 class="service-title">{{ service.name }}</h2>
+          <p class="service-description">{{ service.description }}</p>
+          <button class="view-details-button" (click)="flipCard(service)">
+            View Details
+          </button>
+        </div>
+
+        <!-- Back Side for More Details -->
+        <div class="flip-card-back">
+          <h3 class="service-title-back">{{ service.name }}</h3>
+          <p><strong>Price:</strong> {{ service.price }} TND</p>
+          <p><strong>Duration:</strong> {{ service.durationInMinutes }} min</p>
+          <p><strong>Address:</strong> {{ service.address }}</p>
+          <p>
+            <strong>Appointments:</strong>
+            {{ service.appointments?.length || 0 }}
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="show-more-container" *ngIf="services.length > 6">
+    <button
+      class="show-more-button"
+      *ngIf="itemsToShow < services.length"
+      (click)="showMore()"
+    >
+      Show More
+    </button>
+    <button
+      class="show-less-button"
+      *ngIf="itemsToShow >= services.length"
+      (click)="showLess()"
+    >
+      Show Less
+    </button>
+  </div>
+</div>
+
+<button class="fab" routerLink="/add-service-dashboard">
+    <i class="fa fa-plus"></i>
+  </button>

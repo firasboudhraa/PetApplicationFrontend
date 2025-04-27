@@ -1,0 +1,75 @@
+.container {
+    display: flex;
+    margin-left: 350px; /* Sidebar offset */
+    padding: 80px 30px 30px; /* Top padding for header, some side padding */
+    width: calc(100% - 250px);
+    min-height: 100vh;
+    flex-direction: column;
+    gap: 20px;
+  }
+  
+  .container {
+    padding: 20px;
+  }
+/* Heading Styling for Stats Overview */
+.stats-overview h1 {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: #007bff;  /* Blue color for prominence */
+    text-align: center;
+    margin-bottom: 30px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    position: relative;
+}
+
+/* Add a subtle shadow effect for depth */
+.stats-overview h1::after {
+    content: '';
+    position: absolute;
+    bottom: -5px;
+    left: 0;
+    width: 100%;
+    height: 4px;
+    background: linear-gradient(to right, #007bff, #28a745); /* Gradient underline */
+    border-radius: 2px;
+}
+
+  
+  .stat-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 20px;
+  }
+  
+  .stat-card {
+    background-color: #f9f9f9;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    text-align: center;
+  }
+  
+  .stat-card h2 {
+    font-size: 1.5rem;
+    margin-bottom: 10px;
+  }
+  
+  .stat-card p {
+    font-size: 2rem;
+    font-weight: bold;
+    color: #333;
+  }
+  
+  .chart-container {
+    margin-top: 40px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  canvas {
+    width: 100% !important;
+    height: 400px !important;
+  }
+  
