@@ -36,9 +36,8 @@ navigateToMedicalNotebookStats() {
 
   carnets !: any[] 
   id!:number
-  
- 
-  goToDetails(carnetRecu: any) {
+
+    goToDetails(carnetRecu: any) {
     console.log('📦 Carnet reçu en paramètre:', carnetRecu);
   
     this.medicalService.getAllCarnets().subscribe({
@@ -94,6 +93,7 @@ navigateToMedicalNotebookStats() {
     this.loadRecords();
   }
   
+
   filtered_Carnets: FullCarnetResponse[] = [];
   allCarnets: FullCarnetResponse[] = [];
 
@@ -198,7 +198,7 @@ navigateToMedicalNotebookStats() {
           type: item.type,
           description: item.description,
           next_due_date: item.next_due_date,
-          carnet_id: item.carnet_id,
+          carnet_Id: item.carnet_id,
           poids: item.poids,
           nextDate: item.next_due_date ? new Date(item.next_due_date).toISOString() : '', // Add 'nextDate' property
           imageUrl: item.imageUrl || '', // Add 'imageUrl' property with a default value

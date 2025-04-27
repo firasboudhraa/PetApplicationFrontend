@@ -8,7 +8,7 @@ date: string|number|Date;
    type: RecordTypeEnum;
   description: string;
   next_due_date: Date;
-  carnet_id: string;
+  carnet_Id: string;
   poids: number;
   imageUrl:string;
 }
