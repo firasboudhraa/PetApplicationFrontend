@@ -1,0 +1,88 @@
+<div class="modal-overlay" (click)="onClose()">
+    <div class="modal-container" (click)="$event.stopPropagation()">
+      <!-- Modal Header -->
+      <div class="modal-header">
+        <h2 class="modal-title">Service Details</h2>
+        <button class="close-button" (click)="onClose()">
+          <i class="fas fa-times"></i>
+        </button>
+      </div>
+      
+      <!-- Modal Body -->
+      <div class="modal-body">
+        <!-- Service Header -->
+        <div class="service-header">
+          <div class="service-icon">
+            <i class="fas fa-concierge-bell"></i>
+          </div>
+          <h3 class="service-name">{{service.name}}</h3>
+        </div>
+        
+        <p class="service-description">
+         <strong>Description :</strong> {{service.description}}
+        </p>
+        
+        <!-- Info Grid -->
+        <div class="info-grid">
+          <div class="info-card">
+            <div class="info-label">
+              <i class="fas fa-tag"></i>
+              <span>Price</span>
+            </div>
+            <div class="info-value">{{service.price}} TND</div>
+          </div>
+          
+          <div class="info-card">
+            <div class="info-label">
+              <i class="far fa-clock"></i>
+              <span>Duration</span>
+            </div>
+            <div class="info-value">{{service.durationInMinutes}} min</div>
+          </div>
+        </div>
+        
+        <!-- Availability -->
+        <div class="availability-card">
+          <div class="availability-header">
+            <i class="far fa-calendar-alt"></i>
+            <span>Availability</span>
+          </div>
+          <div class="time-slots">
+            <div class="time-slot">{{service.startDate | date:'h:mm a'}}</div>
+            <div class="time-arrow">
+              <i class="fas fa-arrow-right"></i>
+            </div>
+            <div class="time-slot">{{service.endDate | date:'h:mm a'}}</div>
+          </div>
+        </div>
+        
+        <!-- Location -->
+        <div class="location-section">
+          <div class="location-header">
+            <div class="location-title">
+              <i class="fas fa-map-marker-alt" style="color: #ef4444;"></i>
+              <span>Location</span>
+            </div>
+            <button class="map-toggle" (click)="openMap()">
+              <i class="fas fa-map"></i>
+              <span>{{mapOpened ? 'Hide' : 'View'}} Map</span>
+            </button>
+          </div>
+          <p class="address">{{service.address}}</p>
+          <div id="map" *ngIf="mapOpened">
+            <!-- Map implementation would go here -->
+            <div class="map-placeholder">
+              <i class="fas fa-map-marked-alt"></i>
+              <p>Map would display here</p>
+            </div>
+          </div>
+        </div>
+        
+        <!-- CTA Button -->
+        <button class="cta-button" [routerLink]="['/full-calendar',service.idService]">
+          <i class="far fa-calendar-check"></i>
+          <span>Book Appointment</span>
+        </button>
+      </div>
+    </div>
+  </div>
