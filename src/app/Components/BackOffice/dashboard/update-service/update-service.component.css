@@ -1,160 +1,104 @@
-:root {
-    --primary: #4caf50;
-    --dark: #1e1e2f;
-    --light: #f4f4f9;
-    --accent: #ffcc00;
-  }
-  
-  body {
-    font-family: 'Segoe UI', sans-serif;
-  }
-  
-  .page-center {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column; /* Optional, if not already set */
-    min-height: 80vh;
-  } 
-  
-  .title {
-    font-size: 2rem;
-    font-weight: bold;
-    display: flex;
-    align-items: center;
-    gap: 10px;  /* Adjusts the space between the icon and the text */
-    color: var(--accent); /* Optional: use your theme's color */
-    margin-right: 700px; /* Space below the title */
-    margin-left: 200px;
-    margin-top: 60px; /* Space below the title */
-    padding: 20px; /* Space around the title */
-  }
-  
-  .title i {
-    font-size: 2rem; /* Size of the icon */
-    color: var(--primary); /* Optional: use your theme's color */
-  }
+/* Main container that holds the sidebar, header, and form */
+.content-wrapper {
+  display: flex;
+  margin-left: 250px; /* Adjust this according to the width of your sidebar */
+  padding-top: 70px;  /* Adjust this according to the height of your header */
+  width: calc(100% - 250px);  /* Adjust this if the sidebar is resizable */
+  min-height: 100vh;  /* Ensure full screen height */
+  background-color: #f7f7f7;  /* Light background */
+}
 
+.page-center {
+  width: 100%;
+  max-width: 1200px;  /* Restrict the form width */
+  margin: 0 auto;
+  padding: 30px;
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
 
-  /* Main container */
-.add-service-container {
-    max-width: 600px;
-    margin: 50px auto;
-    padding: 30px;
-    background: white;
-    border-radius: 12px;
-    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
-    transition: 0.3s ease-in-out;
-  }
-  
-  /* Hover effect for the card */
-  .add-service-container:hover {
-    transform: scale(1.02);
-    box-shadow: 0px 6px 15px rgba(0, 0, 0, 0.15);
-  }
-  
-  /* Title */
-  .form-title {
-    text-align: center;
-    margin-bottom: 20px;
-    font-size: 22px;
-    font-weight: bold;
-    color: #333;
-  }
-  
-  /* Form structure */
-  .form-group {
-    position: relative;
-    margin-bottom: 20px;
-  }
-  
-  /* Floating Labels */
-  .floating-label input,
-  .floating-label textarea {
-    width: 100%;
-    padding: 12px;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-    transition: 0.3s;
-    font-size: 16px;
-  }
-  
-  .floating-label label {
-    position: absolute;
-    top: 14px;
-    left: 12px;
-    font-size: 14px;
-    color: #aaa;
-    transition: 0.3s;
-  }
-  
-  /* Floating effect when input is focused */
-  .floating-label input:focus,
-  .floating-label textarea:focus {
-    border-color: #28a745;
-    outline: none;
-  }
-  
-  .floating-label input:focus + label,
-  .floating-label textarea:focus + label,
-  .floating-label input:not(:placeholder-shown) + label,
-  .floating-label textarea:not(:placeholder-shown) + label {
-    top: -10px;
-    left: 10px;
-    font-size: 12px;
-    color: #28a745;
-    background: white;
-    padding: 2px 5px;
-  }
-  
-  /* Form row (for side-by-side inputs) */
-  .form-row {
-    display: flex;
-    gap: 15px;
-  }
-  
-  .form-row .form-group {
-    flex: 1;
-  }
-  
-  /* Button */
-  .btn-submit {
-    width: 100%;
-    padding: 12px;
-    border: none;
-    border-radius: 8px;
-    font-size: 18px;
-    font-weight: bold;
-    background-color: #28a745;
-    color: white;
-    cursor: pointer;
-    transition: 0.3s ease-in-out;
-  }
-  
-  .btn-submit:disabled {
-    background-color: #ddd;
-    cursor: not-allowed;
-  }
-  
-  .btn-submit:hover {
-    background-color: #218838;
-  }
-  
-  /* Loading spinner */
-  .loading-spinner {
-    border: 3px solid #f3f3f3;
-    border-top: 3px solid #fff;
-    border-radius: 50%;
-    width: 18px;
-    height: 18px;
-    animation: spin 0.6s linear infinite;
-    display: inline-block;
-    margin-right: 8px;
-  }
-  
-  @keyframes spin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
-  }
-  
+.title {
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 20px;
+  color: #333;
+}
 
+.form-group {
+  margin-bottom: 20px;
+}
+
+.floating-label {
+  position: relative;
+  margin-bottom: 20px;
+}
+
+.floating-label input,
+.floating-label textarea {
+  width: 100%;
+  padding: 12px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.floating-label label {
+  position: absolute;
+  top: 0px;
+  left: 12px;
+  font-size: 14px;
+  color: #aaa;
+  transition: all 0.2s ease-in-out;
+}
+
+.floating-label input:focus,
+.floating-label textarea:focus {
+  border-color: #007bff;
+}
+
+.floating-label input:focus + label,
+.floating-label textarea:focus + label {
+  top: -10px;
+  left: 10px;
+  font-size: 12px;
+  color: #007bff;
+}
+
+.btn-submit {
+  width: 100%;
+  padding: 12px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.btn-submit:disabled {
+  background-color: #cccccc;
+}
+
+.text-danger {
+  font-size: 12px;
+  color: #dc3545;
+}
+
+/* Make sure the map is responsive */
+#map {
+  border-radius: 8px;
+  margin-top: 20px;
+  background-color: #e0e0e0; /* Light grey background for map */
+}
+
+.form-row {
+  display: flex;
+  gap: 20px; /* Adjust this value to control the space between the inputs */
+  flex-wrap: wrap; /* This ensures they wrap correctly if the screen is too narrow */
+}
+
+.form-row .form-group {
+  flex: 1; /* Makes each form group take equal space */
+  min-width: 200px; /* Optional: adds a minimum width to prevent inputs from becoming too small */
+}

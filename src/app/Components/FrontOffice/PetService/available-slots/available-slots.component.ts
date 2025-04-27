@@ -8,7 +8,9 @@ import  { ActivatedRoute, Router } from '@angular/router';
 import  { PetServiceService } from 'src/app/Services/pet-service.service';
 import Swal from 'sweetalert2';
 import  { AppointmentService } from 'src/app/Services/appointment.service';
-import  { AuthService, UserPayload } from 'src/app/Services/auth-service.service';
+import  { PetdataServiceService } from 'src/app/Services/petdata-service.service';
+import  { AuthService } from '../../user/auth/auth.service';
+import type { Pet } from 'src/app/models/pet';
 
 @Component({
   selector: 'app-available-slots',
@@ -19,18 +21,18 @@ export class AvailableSlotsComponent {
   id!:number
   selectedSlot: any = null;  
   userId: number | null = null ; 
-  user: UserPayload | null = null;
 
   private apiUrl = 'http://localhost:8222/api/v1/pet/images';
   
     constructor(private ps: PetServiceService, 
                 private Act: ActivatedRoute ,
                 private as: AppointmentService,
-                private authService: AuthService
+                private authService: AuthService,
+                private petDataService:PetdataServiceService
     ) { }
   
     ngOnInit(): void {
-      this.user = this.authService.getUserFromToken();
+      this.userId = this.authService.getDecodedToken()?.userId ?? 0;
       this.id = this.Act.snapshot.params['id'];
         this.ps.getAvailableSlots(this.id).subscribe((data) => {
           const events = data.map((slot: any) => {  
@@ -82,7 +84,7 @@ export class AvailableSlotsComponent {
   }
   
   handleEventClick(arg: any) {
-   /* this.selectedSlot = new Date(arg.event.startStr);
+    this.selectedSlot = new Date(arg.event.startStr);
     const formattedDate = this.selectedSlot.toLocaleString('en-GB', {
       year: 'numeric',
       month: 'long',
@@ -90,6 +92,9 @@ export class AvailableSlotsComponent {
       hour: '2-digit',
       minute: '2-digit'
     });
+
+    this.userId = this.authService.getDecodedToken()?.userId ?? 0;
+
   
     // Fetch pets dynamically using the userId
     this.petDataService.getPetsByOwnerId(this.userId).subscribe((pets: Pet[]) => {
@@ -184,9 +189,8 @@ export class AvailableSlotsComponent {
           }
         }
       });
-    });*/
+    });
   }
-  
   
   
 }

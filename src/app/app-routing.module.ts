@@ -69,6 +69,10 @@ import { MarketplaceBackComponent } from './Components/BackOffice/marketplace-ba
 import { BasketBackComponent } from './Components/BackOffice/basket-back/basket-back.component';
 import { PaymentBackComponent } from './Components/BackOffice/payment-back/payment-back.component';
 import { ProductBackComponent } from './Components/BackOffice/product-back/product-back.component';
+import { ServiceProfileDashboardComponent } from './Components/BackOffice/service-profile/service-profile-dashboard/service-profile-dashboard.component';
+import { AddServiceProfileComponent } from './Components/BackOffice/service-profile/add-service-profile/add-service-profile.component';
+import { AppointmentsProfileComponent } from './Components/BackOffice/service-profile/appointments-profile/appointments-profile.component';
+import { StatsProfileComponent } from './Components/BackOffice/service-profile/stats-profile/stats-profile.component';
 
 const routes: Routes = [
   { path: 'about', component: AboutComponentComponent },
@@ -104,6 +108,10 @@ const routes: Routes = [
      { path: 'carnets', component: UsersCarnetComponent }
     ]
   },
+  {path:'service-dashboard',component:ServiceProfileDashboardComponent},
+  {path:'add-service-dashboard',component:AddServiceProfileComponent},
+  {path:'appointments-dashboard',component:AppointmentsProfileComponent},
+  {path:'stats-dashboard',component:StatsProfileComponent},
   { path: 'marketplace', component: MarketplaceComponent },
   { path: 'produit', component: ProduitComponent },
   { path: 'formproduit', component: FormulaireProduitComponent },

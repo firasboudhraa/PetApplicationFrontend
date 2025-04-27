@@ -44,37 +44,40 @@ throw new Error('Method not implemented.');
       description: ['', [Validators.required, Validators.minLength(30)]],
       veterinarian_id: ['', Validators.required],
       next_due_date: [''],
-      carnet_id: ['', Validators.required],
+      carnet_Id: ['', Validators.required],
       poids: ['', [Validators.required, Validators.min(0)]]
     });
   }
 
 
   loadMedicalRecords() {
-    this.medicalRecordService.getAllRecords().subscribe(data => {
-      console.log('DATA REÇUE :', data);
-  
-      this.medicalRecords = data.map((record: any) => {
-        console.log("Record reçu :", record);
-  
-        // Remap _id vers id si nécessaire
-        if (record._id && !record.id) {
-          record.id = record._id;
-        }
-  
-        // Utiliser imagePath si imageUrl est null
-        const imageName = record.imageUrl && record.imageUrl.trim() !== ''
-          ? record.imageUrl
-          : record.imagePath && record.imagePath.trim() !== ''
-            ? record.imagePath
-            : null;
-  
-        record.imageUrl = imageName;
-  
-        return record;
-      });
-    }, error => {
-      console.error('Erreur lors du chargement des enregistrements médicaux :', error);
+    this.medicalRecordService.getAllRecords().subscribe({
+      next: (data) => {
+        console.log('DATA REÇUE :', data);
+    
+        this.medicalRecords = data.map((record: any) => {
+          console.log("Record reçu :", record);
+    
+          // Remap _id vers id si nécessaire
+          if (record._id && !record.id) {
+            record.id = record._id;
+          }
+    
+          // Utiliser imagePath si imageUrl est null
+          const imageName = record.imageUrl && record.imageUrl.trim() !== ''
+            ? record.imageUrl
+            : record.imagePath && record.imagePath.trim() !== ''
+              ? record.imagePath
+              : null;
+    
+          record.imageUrl = imageName;
+    
+          return record;
+        });
+      },
+      error: (error) => {
+        console.error('Erreur lors du chargement des enregistrements médicaux :', error);
+      }
     });
   }
   

@@ -21,6 +21,7 @@ private apiUrl = 'http://localhost:8222/api/appointments/';
   getAppointmentsByProviderId(providerId: number): Observable<any[]> {
     return this.http.get<any[]>(this.apiUrl + 'service/' + providerId);
   }
+  
   createAppointment(appointment: any): Observable<any> {
     return this.http.post<any>(this.apiUrl + 'addAppointment', appointment);
   }

@@ -17,7 +17,13 @@ export class AppComponent {
         filter((event: Event): event is NavigationEnd => event instanceof NavigationEnd)
       )
       .subscribe(event => {
-        this.showLayout = !event.urlAfterRedirects.startsWith('/dashboard');
+        this.showLayout = !(
+          event.urlAfterRedirects.startsWith('/dashboard') || 
+          event.urlAfterRedirects.startsWith('/service-dashboard') ||
+           event.urlAfterRedirects.startsWith('/add-service-dashboard') ||
+           event.urlAfterRedirects.startsWith('/appointments-dashboard') ||
+           event.urlAfterRedirects.startsWith('/stats-dashboard')
+        );
       });
   }
 }

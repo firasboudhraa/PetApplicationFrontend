@@ -1,8 +1,9 @@
-<div class="page-center">
+<div class="content-wrapper">
+  <div class="page-center">
     <h1 class="title">
       <i class="fa fa-home"></i> > Services > Add Service
     </h1>
-  
+
     <form [formGroup]="serviceForm" (ngSubmit)="onSubmit()">
       <div class="form-group floating-label">
         <input type="text" id="name" class="form-control" formControlName="name" required />
@@ -11,7 +12,7 @@
           Service name is required.
         </small>
       </div>
-  
+
       <div class="form-group floating-label">
         <textarea id="description" class="form-control" formControlName="description" required></textarea>
         <label for="description">Description</label>
@@ -19,7 +20,7 @@
           Description is required.
         </small>
       </div>
-  
+
       <div class="form-row">
         <div class="form-group floating-label">
           <input type="number" id="price" class="form-control" formControlName="price" required />
@@ -28,7 +29,7 @@
             Price must be greater than 0.
           </small>
         </div>
-  
+
         <div class="form-group floating-label">
           <input type="number" id="duration" class="form-control" formControlName="durationInMinutes" required />
           <label for="duration">Duration (minutes)</label>
@@ -37,7 +38,7 @@
           </small>
         </div>
       </div>
-  
+
       <div class="form-group floating-label">
         <input
           type="text"
@@ -52,27 +53,27 @@
         </small>
       </div>
       <div id="map" style="height: 300px; width: 100%; margin-top: 20px; border-radius: 8px;"></div>
-      
-  
+      <br/>
+
       <div class="form-row">
         <div class="form-group floating-label">
           <input type="datetime-local" id="startDate" class="form-control" formControlName="startDate" required />
           <label for="startDate">Start Date</label>
         </div>
-  
+
         <div class="form-group floating-label">
           <input type="datetime-local" id="endDate" class="form-control" formControlName="endDate" required />
           <label for="endDate">End Date</label>
         </div>
       </div>
-  
+
       <small *ngIf="serviceForm.errors?.['dateRangeInvalid']" class="text-danger">
         End Date must be after Start Date.
       </small>
-  
+
       <button type="submit" class="btn btn-submit" [disabled]="serviceForm.invalid || loading">
         <span *ngIf="loading" class="loading-spinner"></span> Submit
       </button>
     </form>
   </div>
-  
+</div>

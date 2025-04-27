@@ -1,3 +1,4 @@
+<br>
 <div class="container py-5">
   <h2 class="mb-4 text-center text-dark fw-bold">
     📋 Medical Records Management
@@ -13,7 +14,7 @@
       <div class="col-md-6 col-lg-4" *ngFor="let record of medicalRecords">
         <div class="card border-0 shadow-sm h-100 d-flex flex-column">
           <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
-            <span><i class="bi bi-journal-medical me-2"></i>Record ID: {{ record.carnet_id }}</span>
+            <span><i class="bi bi-journal-medical me-2"></i>name {{ record.carnet_Id }}</span>
             <span class="badge bg-light text-dark">{{ record.type }}</span>
           </div>
 
@@ -21,6 +22,7 @@
             <p><i class="bi bi-calendar-date me-2"></i><strong>Date:</strong> {{ record.date | date: 'dd/MM/yyyy' }}</p>
             <p><i class="bi bi-info-circle me-2"></i><strong>Description:</strong> {{ record.description }}</p>
             <p><i class="bi bi-calendar-check me-2"></i><strong>Type:</strong> {{ record.type }}</p>
+            <p><i class="bi bi-calendar-check me-2"></i><strong>poids:</strong> {{ record.poids}}</p>
 
             <div *ngIf="record.imageUrl" class="text-center mb-3">
               <div class="mb-2 text-secondary small">📎 ordonnance</div>
