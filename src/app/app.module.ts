@@ -100,7 +100,6 @@ import { EventbackComponent } from './Components/BackOffice/dashboard/eventback/
 import { UpdateEventComponent } from './Components/BackOffice/dashboard/update-event/update-event.component';
 import { AddEventComponent } from './Components/BackOffice/dashboard/add-event/add-event.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { LeaderboardComponent } from './Components/FrontOffice/EventDonation/leaderboard/leaderboard.component';
 import { Nl2BrPipe } from './Components/BackOffice/dashboard/add-event/nl2br.pipe';
 import { AuthInterceptor } from './Components/FrontOffice/user/auth/jwt.interceptor';
 import { ActivateAccountComponent } from './Components/FrontOffice/user/activate-account/activate-account.component';
@@ -187,7 +186,6 @@ import { MatchingDetailModalComponent } from './Components/Pets/Matching/matchin
     EventbackComponent,
     UpdateEventComponent,
     AddEventComponent,
-    LeaderboardComponent,
     Nl2BrPipe,
     ActivateAccountComponent,
     ServiceComponent,

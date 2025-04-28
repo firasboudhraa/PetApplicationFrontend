@@ -37,7 +37,6 @@ export class EventDetailComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.availableUsers = this.userService.getAllUsers();
     this.id = this.Act.snapshot.params['id'];    
     this.loadEventData();
     this.loadBadgeLevels();

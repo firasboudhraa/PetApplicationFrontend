@@ -1,5 +1,7 @@
 export const environment = {
   production: false,
+  AiapiKey: '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',
+  paypalClientId: 'AcRNmlTOelCjXZB_LhOBQdj4nuEprFipRanFAPL7oe4TQuxaQHau7Zgh_wAB76TpkqbuqNL1OSpqxIzp',
   apiBaseUrl: 'http://127.0.0.1:5000',
   apiGemini: 'AIzaSyDpzYkOOebvdY2pLKZwUm_uSkWR0OPqoZg',
   FACEBOOK_ACCESS_TOKEN:
@@ -9,8 +11,6 @@ export const environment = {
   apiKey: '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', // Store securely
   baseURL: 'https://models.inference.ai.azure.com',
 
-  AiapiKey: 'Key',
-  paypalClientId: 'ClientID',
   apiUrl: 'http://localhost:8222/api/',
   websocketUrl: 'http://localhost:8092/ws-notifications',
   googleApiKey: ''
