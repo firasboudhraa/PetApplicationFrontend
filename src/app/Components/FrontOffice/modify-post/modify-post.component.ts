@@ -1,17 +1,16 @@
-import { Component, OnInit, AfterViewInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { PostsService } from 'src/app/Services/posts.service';
 import { Post } from 'src/app/models/Post';
 import { AuthService } from 'src/app/Components/FrontOffice/user/auth/auth.service'; // Ensure correct import path
-import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-modify-post',
   templateUrl: './modify-post.component.html',
   styleUrls: ['./modify-post.component.css']
 })
-export class ModifyPostComponent implements OnInit, AfterViewInit {
+export class ModifyPostComponent implements OnInit {
   postForm: FormGroup;
   selectedFile: File | null = null;
   imageError: string | null = null;
@@ -163,17 +162,7 @@ export class ModifyPostComponent implements OnInit, AfterViewInit {
       this.postService.updatePost(this.postId, formData, this.userId).subscribe(
         () => {
           this.isSubmitting = false;
-          Swal.fire({
-            icon: 'success',
-            title: 'Post Updated!',
-            text: 'Your post has been successfully updated.',
-            showConfirmButton: false,
-            timer: 2000 // auto close after 2 seconds
-          });
-
-          setTimeout(() => {
-            this.router.navigate(['/blog']);
-          }, 2000);
+          this.router.navigate(['/blog']);
         },
         (error) => {
           this.isSubmitting = false;
