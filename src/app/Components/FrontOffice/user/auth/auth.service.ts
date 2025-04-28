@@ -4,6 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable, tap } from 'rxjs';
 import { Router } from '@angular/router';
 import { jwtDecode } from 'jwt-decode';
+import { User } from '../models/user_model';
 
 interface RegisterRequest {
   firstName: string;
@@ -122,7 +123,16 @@ private extractTokenFromUrl(token: string): string {
   isLoggedIn(): boolean {
     return !!this.getToken();
   }
+  private currentUser: User | null = null;
 
+  setCurrentUser(user: User) {
+    this.currentUser = user;
+  }
+  
+  getCurrentUser(): User | null {
+    return this.currentUser;
+  }
+  
   clearToken(): void {
     localStorage.removeItem(this.tokenKey);
   }

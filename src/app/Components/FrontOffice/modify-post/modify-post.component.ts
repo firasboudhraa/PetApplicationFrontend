@@ -4,6 +4,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { PostsService } from 'src/app/Services/posts.service';
 import { Post } from 'src/app/models/Post';
 import { AuthService } from 'src/app/Components/FrontOffice/user/auth/auth.service'; // Ensure correct import path
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-modify-post',
@@ -147,22 +148,32 @@ export class ModifyPostComponent implements OnInit {
   onSubmit(): void {
     if (this.postForm.valid) {
       this.isSubmitting = true;
-
+  
       const formData = new FormData();
       formData.append('title', this.postForm.get('title')?.value);
       formData.append('content', this.postForm.get('content')?.value);
       formData.append('type', this.mapTypeToEnum(this.postForm.get('type')?.value));
       formData.append('latitude', this.latitude.toString());
       formData.append('longitude', this.longitude.toString());
-
+  
       if (this.selectedFile) {
         formData.append('image', this.selectedFile);
       }
-
+  
       this.postService.updatePost(this.postId, formData, this.userId).subscribe(
         () => {
           this.isSubmitting = false;
-          this.router.navigate(['/blog']);
+          Swal.fire({
+            icon: 'success',
+            title: 'Post Updated!',
+            text: 'Your post has been successfully updated.',
+            timer: 2000,
+            showConfirmButton: false
+          });
+  
+          setTimeout(() => {
+            this.router.navigate(['/blog']);
+          }, 2000);
         },
         (error) => {
           this.isSubmitting = false;
@@ -172,6 +183,7 @@ export class ModifyPostComponent implements OnInit {
       );
     }
   }
+  
 
   mapTypeToEnum(type: string): string {
     switch (type) {

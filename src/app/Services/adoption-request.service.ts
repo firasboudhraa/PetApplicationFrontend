@@ -37,6 +37,9 @@ export class AdoptionRequestService {
   confirmAdoptionRequest(id: number): Observable<any> {
     return this.http.put(`${this.apiUrl}/confirm/${id}`, {});
   }
+  transferPet(adoptionRequestId:number,petId:number,newOwnerId:number): Observable<any>{
+    return this.http.put(`${this.apiUrl}/transferPet/${adoptionRequestId}/${petId}/${newOwnerId}`,{})
+  }
 
 }
 

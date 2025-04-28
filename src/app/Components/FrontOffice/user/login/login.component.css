@@ -1,87 +1,580 @@
-/* Login Form Styles */
+/* Base container styles */
+.container-fluid {
+  height: 100vh;
+  overflow: hidden;
+  position: relative;
+}
+
+.row {
+  height: 100%;
+  position: relative;
+}
+
+/* Animated background gradient */
+.gradient-background {
+  background: linear-gradient(-45deg, #00BD56, #09AA86, #1495BF, #08AD7F);
+  background-size: 400% 400%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  position: relative;
+  animation: gradientBG 15s ease infinite;
+  overflow: hidden;
+  flex-direction: column;
+}
+
+@keyframes gradientBG {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* Floating particles */
+.gradient-background::before,
+.gradient-background::after {
+  content: '';
+  position: absolute;
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.1);
+  animation: float 10s infinite ease-in-out alternate;
+}
+
+.gradient-background::before {
+  top: -100px;
+  left: -100px;
+}
+
+.gradient-background::after {
+  bottom: -100px;
+  right: -100px;
+  animation-delay: 5s;
+}
+
+/* Add more interactive floating elements */
+.gradient-background::after {
+  content: '';
+  box-shadow: 
+    100px 100px 0 -10px rgba(255, 255, 255, 0.07),
+    200px -100px 0 -5px rgba(255, 255, 255, 0.05),
+    -150px 200px 0 0px rgba(255, 255, 255, 0.08);
+}
+
+@keyframes float {
+  0% { transform: translate(0, 0) rotate(0deg) scale(1); }
+  50% { transform: translate(30px, 30px) rotate(10deg) scale(1.1); }
+  100% { transform: translate(0, 0) rotate(0deg) scale(1); }
+}
+
+/* Logo styling with enhanced animation - REDUCED SIZE */
+.logo {
+  max-width: 50%;
+  height: auto;
+  position: relative;
+  z-index: 5;
+  filter: drop-shadow(0 5px 10px rgba(0, 0, 0, 0.25));
+  animation: logoGlow 3s infinite alternate ease-in-out;
+  margin-bottom: 15px;
+}
+
+@keyframes logoGlow {
+  0% { 
+    filter: drop-shadow(0 3px 8px rgba(0, 189, 86, 0.6)); 
+    transform: scale(1);
+  }
+  100% { 
+    filter: drop-shadow(0 5px 15px rgba(20, 149, 191, 0.8)); 
+    transform: scale(1.03);
+  }
+}
+
+/* Welcome text below logo - REDUCED SIZE */
+.welcome-text {
+  color: white;
+  font-size: 1.4rem;
+  font-weight: 600;
+  text-align: center;
+  margin-bottom: 8px;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+  opacity: 0;
+  animation: fadeIn 2s forwards 0.5s;
+  z-index: 5;
+}
+
+/* All rights reserved text - REDUCED SIZE */
+.copyright {
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 0.8rem;
+  position: absolute;
+  bottom: 15px;
+  text-align: center;
+  width: 100%;
+  letter-spacing: 1px;
+  font-weight: 500;
+  text-shadow: 0 1px 5px rgba(0, 0, 0, 0.2);
+  z-index: 5;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(15px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Right column styling with glass effect - ADJUSTED FOR WIDER FORM */
+.col-7 {
+  flex: 0 0 55%; /* Reduced width for the left column */
+  max-width: 55%;
+}
+
+.col-5 {
+  flex: 0 0 45%; /* Increased width for the right column */
+  max-width: 45%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 15px;
+  background-color: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  height: 100%;
+  position: relative;
+}
+
+/* Add subtle pattern */
+.col-5::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: radial-gradient(circle at 20% 20%, rgba(240, 249, 250, 0.2) 0%, transparent 8%),
+                    radial-gradient(circle at 90% 10%, rgba(240, 249, 250, 0.2) 0%, transparent 4%),
+                    radial-gradient(circle at 10% 80%, rgba(240, 249, 250, 0.2) 0%, transparent 6%),
+                    radial-gradient(circle at 80% 70%, rgba(240, 249, 250, 0.2) 0%, transparent 5%);
+  opacity: 0.8;
+  z-index: 0;
+}
+
+/* Enhanced login form - WIDER & SMALLER ELEMENTS */
 .login-form {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    max-width: 400px;
-    margin: 0 auto;
-    padding: 20px;
-    border-radius: 15px;
-    background-color: #c9eed2;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-    border: none;
-    overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 90%; /* Increased width */
+  max-width: 450px; /* Increased max-width */
+  margin: 0 auto;
+  padding: 20px;
+  border-radius: 15px;
+  background: rgba(255, 255, 255, 0.9);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2), 0 0 0 1px rgba(255, 255, 255, 0.1);
+  position: relative;
+  z-index: 5;
+  overflow: hidden;
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.login-form:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.25), 0 0 0 1px rgba(255, 255, 255, 0.1);
+}
+
+/* Form card highlight effect */
+.login-form::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.15), transparent);
+  transform: rotate(30deg);
+  animation: shineEffect 6s infinite;
+  z-index: -1;
+}
+
+@keyframes shineEffect {
+  0% { transform: translateX(-100%) rotate(30deg); }
+  20%, 100% { transform: translateX(100%) rotate(30deg); }
+}
+
+/* Stylish headings - REDUCED SIZE */
+.login-form h3 {
+  color: #00BD56;
+  font-weight: 700;
+  margin-bottom: 0.4rem;
+  font-size: 1.6rem; /* Reduced from 2rem */
+  text-shadow: 0 1px 5px rgba(0, 189, 86, 0.2);
+  letter-spacing: 0.5px;
+}
+
+.login-form h6 {
+  color: #08AD7F;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1.5px; /* Reduced from 2px */
+  margin-bottom: 1rem; /* Reduced from 1.2rem */
+  position: relative;
+  font-size: 0.8rem; /* Added size reduction */
+}
+
+/* Decorative line under welcome text */
+.login-form h6::after {
+  content: '';
+  position: absolute;
+  bottom: -6px; /* Reduced from -8px */
+  left: 50%;
+  transform: translateX(-50%);
+  width: 40px; /* Reduced from 50px */
+  height: 2px; /* Reduced from 3px */
+  background: linear-gradient(90deg, #00BD56, #1495BF);
+  border-radius: 2px;
+}
+
+/* Enhanced image container - REDUCED HEIGHT */
+.image-container {
+  position: relative;
+  width: 100%;
+  height: 150px; /* Reduced from 200px */
+  overflow: hidden;
+  border-radius: 12px; /* Reduced from 15px */
+  margin-bottom: 1.2rem; /* Reduced from 1.5rem */
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+}
+
+/* Image styling with enhanced animations */
+.login-image {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0;
+  transition: opacity 1.5s ease-in-out, transform 10s ease-in-out;
+}
+
+@keyframes imageTransition {
+  0% { opacity: 0; transform: scale(1.2) translateX(-5px); }
+  10% { opacity: 1; }
+  30% { opacity: 1; transform: scale(1) translateX(5px); }
+  40% { opacity: 0; }
+  100% { opacity: 0; }
+}
+
+.image-container img:nth-child(1) {
+  animation: imageTransition 15s infinite;
+  animation-delay: 0s;
+}
+
+.image-container img:nth-child(2) {
+  animation: imageTransition 15s infinite;
+  animation-delay: 5s;
+}
+
+.image-container img:nth-child(3) {
+  animation: imageTransition 15s infinite;
+  animation-delay: 10s;
+}
+
+/* Add subtle 3D border to image container */
+.image-container::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: 12px; /* Reduced from 15px */
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.3); /* Reduced from 2px */
+  pointer-events: none;
+}
+
+/* Form groups with animation - REDUCED MARGINS */
+.form-group {
+  width: 100%;
+  margin-bottom: 15px; /* Reduced from 20px */
+  text-align: left;
+  position: relative;
+  transition: transform 0.3s ease;
+}
+
+.form-group:hover {
+  transform: translateX(3px); /* Reduced from 5px */
+}
+
+/* Stylish labels - REDUCED SIZE */
+.form-group label {
+  font-size: 0.85rem; /* Reduced from 0.9rem */
+  font-weight: 600;
+  color: #1495BF;
+  margin-bottom: 6px; /* Reduced from 8px */
+  display: block;
+  transition: all 0.3s ease;
+  transform-origin: left;
+}
+
+.form-control:focus + label,
+.form-control:not(:placeholder-shown) + label {
+  transform: translateY(-22px) scale(0.8); /* Reduced from -25px */
+  color: #00BD56;
+}
+
+/* Enhanced input fields - REDUCED PADDING */
+.form-control {
+  width: 100%;
+  padding: 10px 15px; /* Reduced from 14px 20px */
+  border: 1px solid rgba(0, 189, 86, 0.2); /* Reduced from 2px */
+  border-radius: 10px; /* Reduced from 12px */
+  font-size: 0.9rem; /* Reduced from 1rem */
+  transition: all 0.3s ease;
+  background-color: rgba(255, 255, 255, 0.9);
+  box-shadow: 0 3px 10px -8px rgba(0, 0, 0, 0.3);
+}
+
+.form-control:focus {
+  border-color: #00BD56;
+  box-shadow: 0 3px 10px -3px rgba(0, 189, 86, 0.4);
+  outline: none;
+  transform: translateY(-1px); /* Reduced from -2px */
+}
+
+/* Error styling - REDUCED SIZE */
+.alert.alert-danger {
+  color: #e74c3c;
+  font-size: 0.75rem; /* Reduced from 0.8rem */
+  margin-top: 4px; /* Reduced from 5px */
+  padding: 4px 8px; /* Reduced from 5px 10px */
+  background: rgba(231, 76, 60, 0.1);
+  border-radius: 3px; /* Reduced from 4px */
+  border-left: 2px solid #e74c3c; /* Reduced from 3px */
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-8px); } /* Reduced from -10px */
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Password toggle icon - ADJUSTED POSITION */
+.password-container {
+  position: relative;
+  width: 100%;
+}
+
+.password-toggle {
+  position: absolute;
+  right: 12px; /* Reduced from 15px */
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;
+  color: #08AD7F;
+  transition: all 0.3s ease;
+  padding: 4px; /* Reduced from 5px */
+  border-radius: 50%;
+  z-index: 10;
+  font-size: 0.9rem; /* Added smaller font size */
+}
+
+.password-toggle:hover {
+  color: #00BD56;
+  background-color: rgba(0, 189, 86, 0.1);
+  transform: translateY(-50%) scale(1.1);
+}
+
+/* Ensure password input has enough right padding for the icon */
+.password-container input {
+  padding-right: 40px; /* Reduced from 45px */
+}
+
+/* Enhanced links - REDUCED SIZE */
+.link {
+  color: #1495BF;
+  text-decoration: none;
+  font-weight: 500;
+  display: inline-block;
+  margin: 6px 10px; /* Reduced from 8px 12px */
+  font-size: 0.8rem; /* Reduced from 0.9rem */
+  position: relative;
+  transition: all 0.3s ease;
+}
+
+.link::after {
+  content: '';
+  position: absolute;
+  width: 0;
+  height: 1px; /* Reduced from 2px */
+  bottom: -1px; /* Reduced from -2px */
+  left: 0;
+  background-color: #00BD56;
+  transition: all 0.3s ease;
+}
+
+.link:hover {
+  color: #00BD56;
+  transform: translateY(-1px); /* Reduced from -2px */
+}
+
+.link:hover::after {
+  width: 100%;
+}
+
+/* Vibrant submit button - REDUCED SIZE */
+.btn-primary {
+  background: linear-gradient(45deg, #1495BF, #00BD56);
+  color: white;
+  padding: 10px 15px; /* Reduced from 14px 20px */
+  width: 100%;
+  border: none;
+  border-radius: 10px; /* Reduced from 12px */
+  cursor: pointer;
+  font-size: 0.95rem; /* Reduced from 1.1rem */
+  font-weight: 600;
+  letter-spacing: 0.8px; /* Reduced from 1px */
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  margin-top: 15px; /* Reduced from 20px */
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 8px 15px rgba(0, 189, 86, 0.3);
+  z-index: 1;
+}
+
+.btn-primary::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, rgba(255,255,255,0), rgba(255,255,255,0.2), rgba(255,255,255,0));
+  transform: skewX(-25deg);
+  transition: all 0.75s ease;
+  z-index: -1;
+}
+
+.btn-primary:hover {
+  transform: translateY(-3px); /* Reduced from -5px */
+  box-shadow: 0 10px 20px rgba(0, 189, 86, 0.4);
+  background: linear-gradient(45deg, #00BD56, #1495BF);
+  color: white !important;
+}
+
+.btn-primary:hover::before {
+  left: 100%;
+  transition: all 0.75s ease;
+}
+
+.btn-primary:active {
+  transform: translateY(0);
+  box-shadow: 0 5px 10px rgba(0, 189, 86, 0.4);
+}
+
+.btn-primary:disabled {
+  background: linear-gradient(45deg, #cccccc, #dddddd);
+  cursor: not-allowed;
+  box-shadow: none;
+}
+
+/* Tagline container - REDUCED SIZE */
+.tagline-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px; /* Reduced from 15px */
+  margin: 15px auto; /* Reduced from 20px */
+  color: white;
+  max-width: 90%;
+}
+
+.icon-wrapper {
+  font-size: 1.8rem; /* Reduced from 2.5rem */
+  animation: wiggle 3s infinite;
+  transform-origin: bottom center;
+}
+
+.icon-wrapper:nth-child(3) {
+  animation-delay: 1.5s;
+}
+
+.tagline {
+  font-size: 1.3rem; /* Reduced from 1.8rem */
+  font-weight: 700;
+  text-align: center;
+  text-shadow: 0 2px 8px rgba(255, 255, 255, 0.2);
+  background: rgba(255, 255, 255, 0.2);
+  padding: 8px 12px; /* Reduced from 10px 15px */
+  border-radius: 20px; /* Reduced from 30px */
+  backdrop-filter: blur(5px);
+}
+
+@keyframes wiggle {
+  0%, 100% { transform: rotate(0); }
+  25% { transform: rotate(-8deg); } /* Reduced from -10deg */
+  75% { transform: rotate(8deg); } /* Reduced from 10deg */
+}
+
+/* Modal adjustments */
+.modal-content {
+  border-radius: 15px !important; /* Reduced from 20px */
+  border: none;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+  padding: 30px !important; /* Reduced from 40px */
+  transform: scale(0.95);
+  animation: modalPop 0.5s forwards cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.modal-title {
+  font-weight: 700;
+  margin-top: 12px; /* Reduced from 15px */
+  font-size: 1.3rem; /* Reduced from 1.5rem */
+}
+
+/* Responsive Adjustments */
+@media (max-width: 992px) {
+  .col-7 {
+    display: none;
   }
   
-  /* Image Styling */
-  .login-form img {
-    width: 100%;
-    height: 180px;
-    object-fit: cover;
-    border-radius: 15px 15px 0 0;
-    margin-bottom: 1rem;
+  .col-5 {
+    flex: 0 0 100%;
+    max-width: 100%;
+    background: linear-gradient(-45deg, #00BD56, #09AA86, #1495BF, #08AD7F);
+    background-size: 400% 400%;
+    animation: gradientBG 15s ease infinite;
   }
   
-  /* Title */
-  .login-form h3 {
-    color: #36c864;
-    font-weight: bold;
-    margin-bottom: 1.5rem;
+  .login-form {
+    backdrop-filter: blur(10px);
+    background: rgba(255, 255, 255, 0.8);
+    width: 80%; /* Increased width for mobile */
   }
   
-  /* Form Groups */
-  .login-form .form-group {
-    width: 100%;
-    margin-bottom: 15px;
-    text-align: left;
+  .copyright {
+    color: rgba(255, 255, 255, 0.9);
+    font-size: 0.7rem; /* Reduced from 0.8rem */
+    position: fixed;
+    bottom: 8px; /* Reduced from 10px */
+    background-color: rgba(0, 0, 0, 0.3);
+    padding: 4px 8px; /* Reduced from 5px 10px */
+    border-radius: 12px; /* Reduced from 15px */
+    backdrop-filter: blur(5px);
+  }
+}
+
+@media (max-width: 576px) {
+  .login-form {
+    padding: 15px; /* Reduced from 20px */
+    margin: 0 15px; /* Reduced from 20px */
+    width: 90%; /* Increase width further */
   }
   
-  /* Input fields */
-  .login-form input.form-control {
-    padding: 12px;
-    border: 1px solid #ccc;
-    border-radius: 6px;
-    font-size: 14px;
+  .image-container {
+    height: 120px; /* Reduced from 150px */
   }
   
-  /* Error messages */
-  .login-form .alert.alert-danger {
-    color: red;
-    font-size: 12px;
-    margin-top: 5px;
-    padding: 5px;
-    background: none;
-    border: none;
+  .btn-primary {
+    padding: 10px; /* Reduced from 12px */
   }
-  
-  /* Links */
-  .login-form a.link {
-    color: #36c864;
-    text-decoration: none;
-    font-weight: 500;
-    display: block;
-    margin-top: 5px;
-    font-size: 14px;
-  }
-  
-  .login-form a.link:hover {
-    text-decoration: underline;
-  }
-  
-  /* Submit Button */
-  .login-form .btn-primary {
-    background-color: #36c864;
-    color: white;
-    padding: 12px;
-    width: 100%;
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
-    font-size: 16px;
-    transition: background 0.3s ease-in-out;
-  }
-  
-  .login-form .btn-primary:hover {
-    background-color: #2ea853;
-  }
-  
+}

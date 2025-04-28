@@ -3,6 +3,7 @@ import { AdoptionRequestService } from 'src/app/Services/adoption-request.servic
 import { GoogleMapsLoaderService } from 'src/app/Services/google-maps-loader.service';
 import Swal from 'sweetalert2';
 import { Router } from '@angular/router';
+import { AuthService } from 'src/app/Components/FrontOffice/user/auth/auth.service';
 
 @Component({
   selector: 'app-received-request',
@@ -13,7 +14,7 @@ export class ReceivedRequestComponent {
 pendingRequests: any[] = [];
   confirmedRequests: any[] = [];
   rejectedRequests: any[] = [];
-  userId:number = 1 ;
+  userId!:any;
   activeTab: string = 'pending'; // Default tab
   private imageApiUrl = 'http://localhost:8222/api/v1/pet/images';
   requestId = 0;
@@ -24,10 +25,12 @@ pendingRequests: any[] = [];
   constructor(
     private adoptionRequestService: AdoptionRequestService,
     private mapsLoader: GoogleMapsLoaderService,
-    private router: Router 
+    private router: Router ,
+    private authService:AuthService ,
   ) {}
 
   ngOnInit(): void {
+    this.userId = this.authService.getDecodedToken() ? this.authService.getDecodedToken()?.userId : 0 ;
     this.mapsLoader.load().then(() => {
       this.fetchAdoptionRequests();
     }).catch(err => {
@@ -134,8 +137,34 @@ pendingRequests: any[] = [];
           });
         });
   }
-
-  
+ 
+  confirmTransfer(adoptionRequestId :number , petId:number ,  newOwnerId:number ){
+    Swal.fire({
+      title: 'Are you sure?',
+      text: "You won't be able to revert this!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Yes, transfer it!',
+      cancelButtonText: 'No, cancel!',
+      position: 'top',
+      toast: true
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.adoptionRequestService.transferPet(adoptionRequestId,petId ,newOwnerId).subscribe(data => {
+          Swal.fire({
+            icon: 'success',
+            title: 'Pet Transfered',
+            text: '✅ The Pet was transfered to the new owner successfully!',
+            position: 'top',
+            timer: 3000,
+            showConfirmButton: false,
+            toast: true
+          });
+          this.fetchAdoptionRequests(); 
+        })
+      }
+      });
+  }
   toggleMenu(requestId: number) {
     this.requestId = this.requestId === requestId ? 0 : requestId;
   }

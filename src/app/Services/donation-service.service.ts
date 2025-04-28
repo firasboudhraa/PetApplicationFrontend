@@ -58,38 +58,4 @@ getUserTopBadge(userId: number): Observable<string> {
   );
 }
 
-getTopDonors(limit: number = 5): Observable<{user: {id: number, name: string}, total: number}[]> {
-  return this.http.get<Donation[]>(`${this.apiUrl}retrieve-all-donations`).pipe(
-    switchMap(donations => {
-      // Grouper les donations par utilisateur
-      const userTotals = new Map<number, number>();
-      
-      donations
-        .filter(d => d.status === 'COMPLETED')
-        .forEach(d => {
-          const current = userTotals.get(d.userId) || 0;
-          userTotals.set(d.userId, current + d.amount);
-        });
-
-      // Convertir en tableau et trier
-      const sortedDonors = Array.from(userTotals.entries())
-        .sort((a, b) => b[1] - a[1])
-        .slice(0, limit);
-
-      // Extraire les IDs des utilisateurs
-      const userIds = sortedDonors.map(([userId]) => userId);
-
-      // Récupérer les noms des utilisateurs
-      return this.userService.getUsersByIds(userIds).pipe(
-        map(users => {
-          return sortedDonors.map(([userId, total]) => ({
-            user: users.find(u => u.id === userId) || {id: userId, name: `User ${userId}`},
-            total
-          }));
-        })
-      );
-    })
-  );
-}
-
 }

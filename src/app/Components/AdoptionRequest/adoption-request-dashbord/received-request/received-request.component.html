@@ -178,9 +178,10 @@
                   <td>
                     <button
                       class="btn btn-warning"
-                      
+                      matTooltip="Transfer pet data and medical notebook to the new owner"
+                      (click)="confirmTransfer(request.id,request.adoptedPet.id,request.requesterUserId )"
                     >
-                      Show progress
+                      Transfer Pet
                     </button>
                   </td>
                 </tr>

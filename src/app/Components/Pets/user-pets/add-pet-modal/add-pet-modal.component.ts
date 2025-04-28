@@ -1,5 +1,6 @@
 import { Component, ElementRef, EventEmitter, Input, Output, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { AuthService } from 'src/app/Components/FrontOffice/user/auth/auth.service';
 import { GoogleMapsLoaderService } from 'src/app/Services/google-maps-loader.service';
 import { PetdataServiceService } from 'src/app/Services/petdata-service.service';
 import Swal from 'sweetalert2';
@@ -15,19 +16,20 @@ export class AddPetModalComponent {
   @Output() close = new EventEmitter<void>();
   @Output() petAdded = new EventEmitter<void>(); 
   @ViewChild('modalBody') modalBody!: ElementRef;
-
+  userId!:any ;
 
   closeModal() {
     this.close.emit();
   }
 
-  constructor(private petDataService: PetdataServiceService , private mapsLoader :GoogleMapsLoaderService) {}
+  constructor(private petDataService: PetdataServiceService ,private authService:AuthService , private mapsLoader :GoogleMapsLoaderService) {}
 
   petForm!: FormGroup;
   selectedImage: File | null = null;
   imageError: string | null = null;
 
   ngOnInit() {
+    this.userId = this.authService.getDecodedToken() ? this.authService.getDecodedToken()?.userId : 0 ;
     this.petForm = new FormGroup({
       name: new FormControl('', Validators.required),
       imagePath: new FormControl('', Validators.required),
@@ -117,7 +119,7 @@ export class AddPetModalComponent {
       formData.append('description', this.petForm.get('description')?.value); 
       formData.append('location', this.petForm.get('location')?.value); 
       formData.append('forAdoption', this.petForm.get('forAdoption')?.value );
-      formData.append('ownerId', '1'); 
+      formData.append('ownerId', this.userId); 
 
       if (this.selectedImage) {
         formData.append('image', this.selectedImage);

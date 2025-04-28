@@ -5,6 +5,7 @@ import { GoogleMapsLoaderService } from 'src/app/Services/google-maps-loader.ser
 import { PetSittingOfferService } from 'src/app/Services/pet-sitting-offer.service';
 import { PetdataServiceService } from 'src/app/Services/petdata-service.service';
 import Swal from 'sweetalert2';
+import { AuthService } from '../../FrontOffice/user/auth/auth.service';
 
 @Component({
   selector: 'app-look-for-asitter-form',
@@ -19,13 +20,15 @@ export class LookForASitterFormComponent implements OnInit {
   isPaid: boolean = false; 
 
   endDate: string = '';
-  userId: number = 1; 
+  userId!: any; 
   private apiUrl = 'http://localhost:8222/api/v1/pet/images';
 
   constructor(private fb: FormBuilder,private petDataService: PetdataServiceService,
+    private authService:AuthService ,
      private petSittingOfferService:PetSittingOfferService) {}
 
   ngOnInit(): void {
+    this.userId = this.authService.getDecodedToken() ? this.authService.getDecodedToken()?.userId : 0 ;
     this.petDataService.getPetsByOwnerId(this.userId).subscribe((data: Pet[]) => {
       this.pets = data;
       console.log(this.pets);

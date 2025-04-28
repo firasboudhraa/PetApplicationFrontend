@@ -32,5 +32,6 @@ export class UserService {
     updateAdoptionPreferences(userId: number, preferences: any): Observable<any> {
       return this.http.post(`${this.apiUrl}/${userId}/adoptionPreferences`, preferences);
     }
+    
   
 }

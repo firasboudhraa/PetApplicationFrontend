@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+import { AuthService } from 'src/app/Components/FrontOffice/user/auth/auth.service';
 import { AdoptionRequestService } from 'src/app/Services/adoption-request.service';
 import { GoogleMapsLoaderService } from 'src/app/Services/google-maps-loader.service';
 import Swal from 'sweetalert2';
@@ -13,7 +14,7 @@ export class SentRequestComponent {
   pendingRequests: any[] = [];
   confirmedRequests: any[] = [];
   rejectedRequests: any[] = [];
-  userId:number = 2 ;
+  userId!:any;
   activeTab: string = 'pending'; // Default tab
   private imageApiUrl = 'http://localhost:8222/api/v1/pet/images';
 
@@ -23,10 +24,13 @@ export class SentRequestComponent {
   constructor(
     private adoptionRequestService: AdoptionRequestService,
     private mapsLoader: GoogleMapsLoaderService,
-    private router: Router
+    private router: Router,
+    private authService:AuthService ,
   ) {}
 
   ngOnInit(): void {
+    this.userId = this.authService.getDecodedToken() ? this.authService.getDecodedToken()?.userId : 0 ;
+
     this.mapsLoader.load().then(() => {
       this.fetchAdoptionRequests();
     }).catch(err => {

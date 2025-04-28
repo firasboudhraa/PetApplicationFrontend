@@ -4,6 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import Swal from 'sweetalert2';
 import { UserService } from 'src/app/Services/user.service';
 import { environment } from 'src/environments/environment';
+import { AuthService } from 'src/app/Services/auth-service.service';
 
 declare var paypal: any;
 
@@ -29,6 +30,7 @@ export class AddDonationComponent implements OnInit, OnDestroy {
     private route: ActivatedRoute,
     private router: Router,
     private userService: UserService,
+    private authService: AuthService
   ) {}
 
   ngOnInit(): void {
@@ -125,15 +127,8 @@ export class AddDonationComponent implements OnInit, OnDestroy {
     }
   }
 
-  private getCurrentUserId(): number {
-    return this.userService.getCurrentUserId();
-  }
-
   private async createOrder(): Promise<string> {
     const userId = this.userService.getCurrentUserId();
-    if (!this.eventId) {
-      throw new Error('Event ID is required');
-    }
 
     try {
       const response = await this.http.post<any>(
@@ -141,12 +136,13 @@ export class AddDonationComponent implements OnInit, OnDestroy {
         {
           amount: this.amount,
           eventId: this.eventId,
-          userId: userId // Assurez-vous que cette propriété est bien envoyée
+          userId: userId
         },
         { 
           headers: { 
             'Content-Type': 'application/json',
-            'Accept': 'application/json'
+            'Accept': 'application/json',
+            'Authorization': `Bearer ${this.authService.getToken()}`
           }
         }
       ).toPromise();
@@ -155,10 +151,10 @@ export class AddDonationComponent implements OnInit, OnDestroy {
       return response.orderId;
     } catch (error) {
       console.error('Create order error:', error);
-      this.showErrorAlert('Failed to create payment order');
+      this.showErrorAlert('Failed to create payment order. Please try again.');
       throw error;
     }
-}
+  }
 
 private async captureOrder(orderId: string): Promise<void> {
   try {

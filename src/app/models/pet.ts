@@ -14,4 +14,11 @@ export interface Pet {
     location:string ;
     adoptionRequests: AdoptionRequest[];
   }
+
+  
+  export interface MatchingPetInfo extends Pet {
+    match_score?: number;
+    reasons?: string[];
+    consideration?: string;
+}
   

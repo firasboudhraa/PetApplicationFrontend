@@ -1,0 +1,74 @@
+<div class="sidebar-container profile-sidebar-container">
+    <!-- User Profile Section -->
+    <div *ngIf="user" class="user-profile-section">
+      <div class="user-pic">
+        <img [src]="getProfilePictureUrl()" 
+             alt="Profile Image" 
+             (error)="handleImageError($event)"
+             class="profile-image" />
+      </div>
+      
+     <!--<div class="user-info">
+        <h2>{{ user.firstName }} {{ user.lastName }}</h2>
+        <p><i class="fa fa-envelope"></i> {{ user.email }}</p>
+        <p><i class="fa fa-user-tag"></i> {{ getRolesAsString() }}</p>
+        <p *ngIf="user.bio"><i class="fa fa-info-circle"></i> {{ user.bio }}</p>
+      </div>
+      
+      <div class="profile-actions">
+        <button type="button" class="btn btn-sm btn-primary" (click)="editProfile()">
+          <i class="fa fa-pencil me-2"></i>
+          Edit
+        </button>
+        <button class="btn btn-sm btn-danger" (click)="supp(user.id)">
+          <i class="fa fa-user-times me-2"></i> Disable
+        </button>
+      </div>
+    </div>
+  --> 
+    <!-- Pages Section -->
+    <div class="sidebar-title">
+ 
+      <h5 class="dashboard-title">{{ user.firstName }} {{ user.lastName }}</h5>
+
+    </div>
+  
+    <ul class="sidebar-nav">
+      <li>
+        <a  routerLinkActive="active">
+            <i class="fa fa-cogs" aria-hidden="true"></i>
+            Edit Profile
+        </a>
+      </li>
+      <li>
+        <a  routerLinkActive="active">
+            <i class="fa fa-paw" aria-hidden="true"></i>
+            My pets
+        </a>
+      </li>
+      <li>
+        <a routerLinkActive="active">
+          <i class="fa fa-calendar-check"></i>
+          my products
+        </a>
+      </li>
+      <li>
+        <button class="btn btn-link" (click)="user_pref()">
+          <i class="fa fa-paw"></i> Adoption
+        </button>
+      </li>
+      <li>
+        <button class="btn btn-link" (click)="logout()">
+            <i class="fa fa-sign-out" aria-hidden="true"></i>
+            Logout
+        </button>
+      </li>
+    </ul>
+  
+    <app-user-profile-modal
+    *ngIf="isAdoptionModalVisible && user"
+    [isVisible]="isAdoptionModalVisible"
+    [userId]="user.id" 
+    (closeModal)="isAdoptionModalVisible = false">
+  </app-user-profile-modal>
+  </div>

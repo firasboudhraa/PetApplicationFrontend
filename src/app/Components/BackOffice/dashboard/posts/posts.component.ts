@@ -6,10 +6,11 @@ import { Post } from 'src/app/models/Post';
 import { Comment } from 'src/app/models/Comment';
 import { Router } from '@angular/router';
 import { jsPDF } from 'jspdf';
-import { ChartConfiguration, ChartData, ChartType } from 'chart.js';
-import { Chart } from 'chart.js';
+import { Chart, ChartConfiguration, ChartData, ChartType } from 'chart.js';
 import ChartDataLabels from 'chartjs-plugin-datalabels';
 import { User } from 'src/app/Components/FrontOffice/user/models/user_model';
+import Swal from 'sweetalert2';
+
 
 @Component({
   selector: 'app-posts',
@@ -21,18 +22,21 @@ export class PostsComponent implements OnInit {
   authors: { [key: number]: User } = {};
   commentCounts: { [key: number]: number } = {};
   likeCounts: { [key: number]: number } = {};
-  userNames: Map<number, string> = new Map();
+  userNames = new Map<number, string>();
+  userEmails = new Map<number, string>();
   postComments: { [key: number]: Comment[] } = {};
+
   showConfirmModal = false;
   showConfirmModalComment = false;
-  selectedCommentId: number | null = null;
   selectedPostId: number | null = null;
+  selectedCommentId: number | null = null;
   isDeleted = false;
   isDeletedComment = false;
   isGeneratingPdf = false;
 
-  // Chart properties
-  showCharts = false;
+  showCharts = true;
+
+  // Chart Data
   activityChartData: ChartData<'bar'> = {
     labels: [],
     datasets: [
@@ -83,13 +87,6 @@ export class PostsComponent implements OnInit {
     setInterval(() => this.loadPosts(), 3000);
   }
 
-  toggleCharts(): void {
-    this.showCharts = !this.showCharts;
-    setTimeout(() => {
-      this.showCharts ? this.scrollToStatistics() : this.scrollToTop();
-    }, 0);
-  }
-
   scrollToTop(): void {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }
@@ -98,21 +95,29 @@ export class PostsComponent implements OnInit {
     document.getElementById('statisticsSection')?.scrollIntoView({ behavior: 'smooth' });
   }
 
-  loadPosts(): void {
+  hoverToStatistics(): void {
+    this.scrollToStatistics();
+  }
+
+  private loadPosts(): void {
     this.postsService.getPosts().subscribe(posts => {
-      this.posts = posts;
-      if (this.showCharts) this.updateCharts();
+      this.posts = posts.sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
+
+      if (this.showCharts) {
+        this.updateCharts();
+      }
 
       posts.forEach(post => {
-        // Load author data
+        // Load Author if not loaded
         if (!this.authors[post.id]) {
           this.userService.getUserById(post.userId).subscribe(user => {
             this.authors[post.id] = user;
-            this.userNames.set(post.userId, user.firstName + ' ' + user.lastName);
+            this.userNames.set(post.userId, `${user.firstName} ${user.lastName}`);
+            this.userEmails.set(post.userId, user.email);
           });
         }
 
-        // Load comments
+        // Load Comments
         this.commentService.getCommentsByPostId(post.id).subscribe({
           next: comments => {
             this.postComments[post.id] = comments || [];
@@ -121,7 +126,7 @@ export class PostsComponent implements OnInit {
             comments.forEach(comment => {
               if (!this.userNames.has(comment.userId)) {
                 this.userService.getUserById(comment.userId).subscribe(user => {
-                  this.userNames.set(comment.userId, user.firstName + ' ' + user.lastName);
+                  this.userNames.set(comment.userId, `${user.firstName} ${user.lastName}`);
                 });
               }
             });
@@ -132,13 +137,13 @@ export class PostsComponent implements OnInit {
           }
         });
 
-        // Likes
+        // Load Likes
         this.likeCounts[post.id] = post.likedBy?.length || 0;
       });
     });
   }
 
-  updateCharts(): void {
+  private updateCharts(): void {
     this.updateActivityChart();
     this.updateContributorsChart();
     this.updateTypeChart();
@@ -181,10 +186,9 @@ export class PostsComponent implements OnInit {
 
     this.contributorsChartData = {
       labels: topContributors.map(([id]) => this.userNames.get(id) || `User ${id}`),
-      datasets: [{
-        ...this.contributorsChartData.datasets[0],
-        data: topContributors.map(([_, count]) => count)
-      }]
+      datasets: [
+        { ...this.contributorsChartData.datasets[0], data: topContributors.map(([_, count]) => count) }
+      ]
     };
   }
 
@@ -227,26 +231,35 @@ export class PostsComponent implements OnInit {
   }
 
   confirmDelete(): void {
-    if (this.selectedPostId) {
-      const postId = this.selectedPostId;
-      this.posts = this.posts.filter(post => post.id !== postId);
-      this.isDeleted = true;
-      this.showConfirmModal = false;
-
-      setTimeout(() => this.isDeleted = false, 3000);
-
-      this.postsService.deletePost(postId).subscribe({
-        next: () => console.log('Post deleted'),
-        error: err => console.error('Delete post failed:', err)
-      });
+    if (this.selectedPostId !== null) {
+      const post = this.posts.find(p => p.id === this.selectedPostId);
+      if (post) {
+        const { id, title, userId } = post;
+        const author = this.userNames.get(userId) || '';
+        const email = this.userEmails.get(userId) || '';
+  
+        this.posts = this.posts.filter(p => p.id !== id);
+        this.isDeleted = true;
+        this.showConfirmModal = false;
+        this.postComments[id] = [];  // Clear comments for the deleted post
+        setTimeout(() => (this.isDeleted = false), 3000);
+  
+        this.postsService.deletePost(id, title, author, email).subscribe({
+          next: () => console.log('Post deleted and email sent.'),
+          error: err => console.error('Failed to delete post:', err)
+        });
+      }
     }
   }
+  
 
-  openCommentsPopup(postId: number): void {
-    if (!this.showConfirmModal) {
-      this.selectedPostId = postId;
-    }
+ openCommentsPopup(postId: number): void {
+  // Prevent opening the comments popup if the confirmation modal is active
+  if (!this.showConfirmModal) {
+    this.selectedPostId = postId;
   }
+}
+
 
   closePopup(): void {
     this.selectedPostId = null;
@@ -269,7 +282,7 @@ export class PostsComponent implements OnInit {
         this.commentCounts[postId] = this.postComments[postId].length;
         this.isDeletedComment = true;
         this.showConfirmModalComment = false;
-        setTimeout(() => this.isDeletedComment = false, 3000);
+        setTimeout(() => (this.isDeletedComment = false), 3000);
       },
       error: err => console.error('Error deleting comment:', err)
     });
@@ -283,49 +296,58 @@ export class PostsComponent implements OnInit {
     const doc = new jsPDF();
     doc.setFontSize(18);
     doc.text('List of Posts and Comments', 10, 10);
+  
     let y = 20;
-
+  
     this.posts.forEach(post => {
       doc.setFont('helvetica', 'bold').setFontSize(16).text(`Post #${post.id}: ${post.title}`, 10, y);
       y += 10;
-
+  
       doc.setFont('helvetica', 'normal').setFontSize(12);
       doc.text(`Type: ${post.type}`, 10, y);
       doc.text(`Likes: ${this.likeCounts[post.id] || 0}`, 100, y);
       doc.text(`Comments: ${this.commentCounts[post.id] || 0}`, 150, y);
       y += 10;
-
+  
+      // ⭐ USE userNames and userEmails maps
+      const authorName = this.userNames.get(post.userId) || 'Unknown';
+      const authorEmail = this.userEmails.get(post.userId) || 'Unknown';
+  
+      doc.text(`Author: ${authorName}`, 10, y);
+      doc.text(`Email: ${authorEmail}`, 100, y);
+      y += 10;
+  
       const splitText = doc.splitTextToSize(post.content || '', 180);
       doc.text(splitText, 10, y);
-      y += splitText.length * 7 + 10;
-
+      y += splitText.length * 7 + 5;
+  
       const comments = this.postComments[post.id] || [];
-      if (comments.length) {
+  
+      if (comments.length > 0) {
         doc.setFont('helvetica', 'bold').setFontSize(14).text('Comments:', 10, y);
         y += 10;
+  
         comments.forEach(comment => {
-          const author = this.userNames.get(comment.userId) || 'Anonymous';
-          const commentLines = doc.splitTextToSize(`${author}: ${comment.content}`, 180);
+          const commentAuthor = this.userNames.get(comment.userId) || 'Anonymous';
+          const commentLines = doc.splitTextToSize(`${commentAuthor}: ${comment.content}`, 180);
           doc.setFont('helvetica', 'normal').setFontSize(12).text(commentLines, 15, y);
           y += commentLines.length * 7 + 5;
         });
-      } else {
-        doc.text('No comments available for this post.', 10, y);
-        y += 10;
       }
-
-      doc.setDrawColor(0).setLineWidth(1.5).line(10, y, 200, y);
+  
+      doc.setDrawColor(0).setLineWidth(1).line(10, y, 200, y);
       y += 15;
-
+  
       if (y > 270) {
         doc.addPage();
         y = 20;
       }
     });
-
+  
     doc.save('Blog-Posts&Comments.pdf');
   }
-
+  
+  
   async generateStatisticsPdf(): Promise<void> {
     this.isGeneratingPdf = true;
 
@@ -390,7 +412,7 @@ export class PostsComponent implements OnInit {
           doc.addImage(img, 'PNG', 15, y, 180, 100);
           resolve();
         } catch (error) {
-          console.error(`Error rendering chart ${chartId}`, error);
+          console.error(`Error rendering chart ${chartId}:`, error);
           resolve();
         }
       }, 300);
