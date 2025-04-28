@@ -120,14 +120,15 @@ export class PostsService {
   
   
   // 🗑 Delete a post
-deletePost(postId: number, title: string, author: string, email: string): Observable<any> {
-  const params = new HttpParams()
-    .set('title', title)
-    .set('author', author)
-    .set('email', email);
-
-  return this.http.delete(`${this.apiUrl}/${postId}`, { params });
-}
+  deletePost(postId: number, title: string, firstName: string, email: string): Observable<any> {
+    const params = new HttpParams()
+      .set('title', title)
+      .set('firstName', firstName)
+      .set('email', email);
+  
+    return this.http.delete(`${this.apiUrl}/${postId}`, { params });
+  }
+  
 
 
   // 🗑 Delete a post without email
