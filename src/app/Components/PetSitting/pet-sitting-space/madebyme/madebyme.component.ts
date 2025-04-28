@@ -1,18 +1,18 @@
 import { Component, Renderer2 } from '@angular/core';
 import { AuthService } from 'src/app/Components/FrontOffice/user/auth/auth.service';
-import { Pet } from 'src/app/models/pet';
 import { PetSittingOffer } from 'src/app/models/petSittingOffer';
-import { GoogleMapsLoaderService } from 'src/app/Services/google-maps-loader.service';
 import { PetSittingOfferService } from 'src/app/Services/pet-sitting-offer.service';
+import { GoogleMapsLoaderService } from 'src/app/Services/google-maps-loader.service';
+import { Pet } from 'src/app/models/pet';
 import Swal from 'sweetalert2';
 
 @Component({
-  selector: 'app-display-offers',
-  templateUrl: './display-offers.component.html',
-  styleUrls: ['./display-offers.component.css']
+  selector: 'app-madebyme',
+  templateUrl: './madebyme.component.html',
+  styleUrls: ['./madebyme.component.css']
 })
-export class DisplayOffersComponent {
-  userId!:any;
+export class MadebymeComponent {
+userId!:any;
   private imageServerUrl = 'http://localhost:8222/api/v1/pet/images';
   showDetailModal: boolean = false;
   searchText: string = '';
@@ -34,7 +34,7 @@ export class DisplayOffersComponent {
   ngOnInit(): void {
     this.userId = this.authService.getDecodedToken() ? this.authService.getDecodedToken()?.userId : 0 ;
 
-    this.petSittingOfferService.getAvailablePetSittingOffers(this.userId).subscribe(async (response) => {
+    this.petSittingOfferService.getAllMadeByUser(this.userId).subscribe(async (response) => {
       this.allOffers = await Promise.all(
         response.map(async (offer) => ({
           ...offer,

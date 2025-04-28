@@ -126,6 +126,7 @@ import { ProfileComponent } from './Components/FrontOffice/user/profile/profile.
 import { SideBarUserComponent } from './Components/FrontOffice/user/side-bar-user/side-bar-user.component';
 
 import { ServiceDetailModalComponent } from './Components/FrontOffice/PetService/service/service-detail-modal/service-detail-modal.component';
+import { MadebymeComponent } from './Components/PetSitting/pet-sitting-space/madebyme/madebyme.component';
 
   @NgModule({
     declarations: [
@@ -223,7 +224,8 @@ import { ServiceDetailModalComponent } from './Components/FrontOffice/PetService
       ServiceDetailModalComponent, 
       SideBarUserComponent,
       ProfileComponent,
-      UsersComponent
+      UsersComponent,
+      MadebymeComponent
     ],
     imports: [
       BrowserAnimationsModule,
