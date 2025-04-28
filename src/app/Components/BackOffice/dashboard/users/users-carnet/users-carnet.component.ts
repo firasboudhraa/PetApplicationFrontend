@@ -4,6 +4,9 @@ import { MedicalService } from 'src/app/Services/medical.service';
 import { forkJoin, map, catchError, of } from 'rxjs';
 import { Pet } from 'src/app/models/pet';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { ChartConfiguration } from 'chart.js';
+import { FullCarnetResponse, Record } from '../../../../../models/records';
+
 
 @Component({
   selector: 'app-users-carnet',
@@ -11,12 +14,30 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
   styleUrls: ['./users-carnet.component.css']
 })
 export class UsersCarnetComponent {
+
+
+  editCarnet(carnet: any) {
+    if (carnet && carnet.id) {
+      console.log('carnet ', carnet.id);
+    } else {
+      console.error('Invalid carnet for editing:', carnet);
+    }
+  }
+
+
   carnets: any[] = [];
   searchText: string = '';
   id!: number;
   records: any[] = [];
   showForm: boolean = false;
   carnetForm!: FormGroup;
+
+  Statcarnets: FullCarnetResponse[] = [];
+    selectedCarnetId: number | null = null;
+    lineChartData: ChartConfiguration<'line'>['data'] | undefined;
+    lineChartOptions: ChartConfiguration<'line'>['options'] = {
+      responsive: true
+    };
 
   pets: Pet[] = [
     { id: 1, name: 'Rex', imagePath: 'assets/dog1.jpg', species: 'Chien', age: 3, color: 'Marron', sex: 'Mâle', ownerId: 101, description: 'Chien affectueux et joueur.', forAdoption: false, location: 'Paris' ,adoptionRequests: []},
@@ -32,6 +53,42 @@ export class UsersCarnetComponent {
     private act: ActivatedRoute,
     private fb: FormBuilder
   ) {}
+  onCarnetSelected(): void {
+    if (this.selectedCarnetId === null) return;
+
+    this.medicalService.getMedicalRecordsByCarnetId(this.selectedCarnetId).subscribe((response: FullCarnetResponse) => {
+      const poidsData = response.medicalRecords
+        .filter((record: Record) =>
+          record.poids > 0 &&
+          record.dateTime &&
+          !isNaN(new Date(record.dateTime).getTime())
+        )
+        .map((record: Record) => ({
+          date: new Date(record.dateTime!).toLocaleDateString(),
+          poids: record.poids
+        }));
+
+      if (poidsData.length > 0) {
+        this.lineChartData = {
+          labels: poidsData.map(p => p.date),
+          datasets: [
+            {
+              label: 'Poids (kg)',
+              data: poidsData.map(p => p.poids),
+              borderColor: '#4e73df',
+              backgroundColor: 'rgba(78, 115, 223, 0.2)',
+              tension: 0.4
+            }
+          ]
+        };
+      } else {
+        this.lineChartData = undefined;
+      }
+    });
+  }
+
+
+  
 
   ngOnInit(): void {
     this.id = this.act.snapshot.params['id'];
@@ -125,4 +182,10 @@ export class UsersCarnetComponent {
       });
     }
   }
+
+
+  editModeId: number | null = null;
+  editedName: string = '';
+
+
 }
