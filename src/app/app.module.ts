@@ -123,6 +123,7 @@
   import { StatsProfileComponent } from './Components/BackOffice/service-profile/stats-profile/stats-profile.component';
 import { MatchingPetComponent } from './Components/Pets/Matching/matching-pet/matching-pet.component';
 import { MatchingDetailModalComponent } from './Components/Pets/Matching/matching-detail-modal/matching-detail-modal.component';
+import { ServiceDetailModalComponent } from './Components/FrontOffice/PetService/service/service-detail-modal/service-detail-modal.component';
 
   @NgModule({
     declarations: [
@@ -217,7 +218,8 @@ import { MatchingDetailModalComponent } from './Components/Pets/Matching/matchin
       AppointmentsProfileComponent,
       StatsProfileComponent,
       MatchingPetComponent,
-      MatchingDetailModalComponent
+      MatchingDetailModalComponent,
+      ServiceDetailModalComponent
     ],
     imports: [
       BrowserAnimationsModule,
