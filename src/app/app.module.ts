@@ -76,34 +76,33 @@
   import { TrackOffersComponent } from './Components/PetSitting/pet-sitting-space/track-offers/track-offers.component';
   import { NavbarComponent } from './Components/FrontOffice/navbar/navbar.component';
 
-  import { MedicalnotebookComponent } from './medicalnotebook/medicalnotebook.component';
-  import { MedicalnotebookFormComponent } from './medicalnotebook-form/medicalnotebook-form.component';
-  import { UsersComponent } from './Components/BackOffice/dashboard/users/users.component';
-  import { RecordsComponent } from './Components/BackOffice/dashboard/records/records.component';
-  import { StatsComponent } from './stats/stats.component';
-  import { NgChartsModule } from 'ng2-charts';
-  import { AgendaComponent } from './agenda/agenda.component';
-  import { FullCalendarModule } from '@fullcalendar/angular';
-  import { EditrecordComponent } from './editrecord/editrecord.component';
-  import { DetailComponent } from './detail/detail.component';
-  import { RouterModule } from '@angular/router';
-  import { ChatAIComponent } from './chat-ai/chat-ai.component';
-  import { RegisterComponent } from './Components/FrontOffice/user/register/register.component';
-  import { UserProfileComponent } from './Components/FrontOffice/user/user-profile/user-profile.component';
-  import { EditProfileComponent } from './Components/FrontOffice/user/edit-profile/edit-profile.component';
-  import { LoginComponent } from './Components/FrontOffice/user/login/login.component';
-  import { UserProfileModalComponent } from './Components/FrontOffice/user/user-profile-modal/user-profile-modal.component';
-  import { ResetPasswordComponent } from './Components/FrontOffice/user/reset-password/reset-password.component';
-  import { ForgotPasswordComponent } from './Components/FrontOffice/user/forgot-password/forgot-password.component';
-  import { UsersCarnetComponent } from './Components/BackOffice/dashboard/users/users-carnet/users-carnet.component';
-  import { EventbackComponent } from './Components/BackOffice/dashboard/eventback/eventback.component';
-  import { UpdateEventComponent } from './Components/BackOffice/dashboard/update-event/update-event.component';
-  import { AddEventComponent } from './Components/BackOffice/dashboard/add-event/add-event.component';
-  import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-  import { Nl2BrPipe } from './Components/BackOffice/dashboard/add-event/nl2br.pipe';
-  import { AuthInterceptor } from './Components/FrontOffice/user/auth/jwt.interceptor';
-  import { ActivateAccountComponent } from './Components/FrontOffice/user/activate-account/activate-account.component';
-  import { ToastrModule } from 'ngx-toastr';
+import { MedicalnotebookComponent } from './medicalnotebook/medicalnotebook.component';
+import { MedicalnotebookFormComponent } from './medicalnotebook-form/medicalnotebook-form.component';
+import { UsersComponent } from './Components/BackOffice/dashboard/users/users.component';
+import { RecordsComponent } from './Components/BackOffice/dashboard/records/records.component';
+import { StatsComponent } from './stats/stats.component';
+import { NgChartsModule } from 'ng2-charts';
+import { AgendaComponent } from './agenda/agenda.component';
+import { FullCalendarModule } from '@fullcalendar/angular';
+import { EditrecordComponent } from './editrecord/editrecord.component';
+import { DetailComponent } from './detail/detail.component';
+import { RouterModule } from '@angular/router';
+import { ChatAIComponent } from './chat-ai/chat-ai.component';
+import { RegisterComponent } from './Components/FrontOffice/user/register/register.component';
+import { EditProfileComponent } from './Components/FrontOffice/user/edit-profile/edit-profile.component';
+import { LoginComponent } from './Components/FrontOffice/user/login/login.component';
+import { UserProfileModalComponent } from './Components/FrontOffice/user/user-profile-modal/user-profile-modal.component';
+import { ResetPasswordComponent } from './Components/FrontOffice/user/reset-password/reset-password.component';
+import { ForgotPasswordComponent } from './Components/FrontOffice/user/forgot-password/forgot-password.component';
+import { UsersCarnetComponent } from './Components/BackOffice/dashboard/users/users-carnet/users-carnet.component';
+import { EventbackComponent } from './Components/BackOffice/dashboard/eventback/eventback.component';
+import { UpdateEventComponent } from './Components/BackOffice/dashboard/update-event/update-event.component';
+import { AddEventComponent } from './Components/BackOffice/dashboard/add-event/add-event.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { Nl2BrPipe } from './Components/BackOffice/dashboard/add-event/nl2br.pipe';
+import { AuthInterceptor } from './Components/FrontOffice/user/auth/jwt.interceptor';
+import { ActivateAccountComponent } from './Components/FrontOffice/user/activate-account/activate-account.component';
+import { ToastrModule } from 'ngx-toastr';
 
   import { ServicesComponent } from './Components/BackOffice/dashboard/services/services.component';
   import { AppointmentDashboardComponent } from './Components/FrontOffice/PetService/appointment-dashboard/appointment-dashboard.component';
@@ -123,6 +122,9 @@
   import { StatsProfileComponent } from './Components/BackOffice/service-profile/stats-profile/stats-profile.component';
 import { MatchingPetComponent } from './Components/Pets/Matching/matching-pet/matching-pet.component';
 import { MatchingDetailModalComponent } from './Components/Pets/Matching/matching-detail-modal/matching-detail-modal.component';
+import { ProfileComponent } from './Components/FrontOffice/user/profile/profile.component';
+import { SideBarUserComponent } from './Components/FrontOffice/user/side-bar-user/side-bar-user.component';
+
 import { ServiceDetailModalComponent } from './Components/FrontOffice/PetService/service/service-detail-modal/service-detail-modal.component';
 
   @NgModule({
@@ -175,7 +177,6 @@ import { ServiceDetailModalComponent } from './Components/FrontOffice/PetService
       DetailComponent,
       ChatAIComponent,
       RegisterComponent,
-      UserProfileComponent,
       LoginComponent,
       UserProfileModalComponent,
       EditProfileComponent,
@@ -219,7 +220,10 @@ import { ServiceDetailModalComponent } from './Components/FrontOffice/PetService
       StatsProfileComponent,
       MatchingPetComponent,
       MatchingDetailModalComponent,
-      ServiceDetailModalComponent
+      ServiceDetailModalComponent, 
+      SideBarUserComponent,
+      ProfileComponent,
+      UsersComponent
     ],
     imports: [
       BrowserAnimationsModule,
@@ -242,6 +246,8 @@ import { ServiceDetailModalComponent } from './Components/FrontOffice/PetService
       MatButtonModule,
       MatIconModule,
       RouterModule,
+
+      
     ],
     schemas: [CUSTOM_ELEMENTS_SCHEMA],
     providers: [

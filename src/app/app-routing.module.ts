@@ -30,7 +30,6 @@ import { Chat } from 'openai/resources/chat';
 import { ChatAIComponent } from './chat-ai/chat-ai.component';
 import { LoginComponent } from './Components/FrontOffice/user/login/login.component';
 import { RegisterComponent } from './Components/FrontOffice/user/register/register.component';
-import { UserProfileComponent } from './Components/FrontOffice/user/user-profile/user-profile.component';
 import { EditProfileComponent } from './Components/FrontOffice/user/edit-profile/edit-profile.component';
 import { AuthGuard } from './Components/FrontOffice/user/auth/auth.guard';
 import { UserProfileModalComponent } from './Components/FrontOffice/user/user-profile-modal/user-profile-modal.component';
@@ -74,6 +73,7 @@ import { AddServiceProfileComponent } from './Components/BackOffice/service-prof
 import { AppointmentsProfileComponent } from './Components/BackOffice/service-profile/appointments-profile/appointments-profile.component';
 import { StatsProfileComponent } from './Components/BackOffice/service-profile/stats-profile/stats-profile.component';
 import { MatchingPetComponent } from './Components/Pets/Matching/matching-pet/matching-pet.component';
+import { ProfileComponent } from './Components/FrontOffice/user/profile/profile.component';
 
 const routes: Routes = [
   { path: 'about', component: AboutComponentComponent },
@@ -172,12 +172,13 @@ const routes: Routes = [
   /*user routes */
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
-  { path: 'profile', component: UserProfileComponent },
   { path: 'editProfile/:id', component: EditProfileComponent },
   { path: 'prefModal/:id', component: UserProfileModalComponent },
   { path: 'forgot-password', component: ForgotPasswordComponent },
   { path: 'reset-password', component: ResetPasswordComponent },
   { path: 'matching-pets', component: MatchingPetComponent },
+  { path: 'profile', component: ProfileComponent },
+
 
 
   {
