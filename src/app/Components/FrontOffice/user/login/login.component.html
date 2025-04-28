@@ -1,60 +1,91 @@
-<form class="login-form card p-4 shadow-lg mx-auto text-center"
-      [formGroup]="loginForm" 
-      (ngSubmit)="save()" 
-      style="max-width: 400px; border-radius: 15px; border: none;">
-
-  <!-- Image inside the card -->
-  <img src="https://hips.hearstapps.com/hmg-prod/images/woman-with-dog-outside-1558449251.jpg" 
-       alt="Login Image" 
-       class="img-fluid mb-3" 
-       style="width: 100%; border-radius: 15px 15px 0 0; object-fit: cover; height: 180px;">
-
-  <h3 class="text-center mb-4" style="color: #36c864;">
-    Login 
-    <span class="flaticon-pawprint-1" style="font-size: 2.5rem; color: #36c864;"></span> 
-  </h3>
-
-  <!-- Email Field -->
-  <div class="form-group">
-    <label for="email">Email</label>
-    <input type="text" id="email" class="form-control" placeholder="Enter your email" formControlName="email">
-    <div *ngIf="loginForm.controls['email'].invalid && loginForm.controls['email'].touched" class="alert alert-danger">
-      <p *ngIf="loginForm.controls['email'].hasError('required')">Email is required</p>
-      <p *ngIf="loginForm.controls['email'].hasError('email')">Email must be valid</p>
+<div class="container-fluid">
+  <div class="row" >
+    <!-- Left side with gradient background -->
+    <div class="col-7 gradient-background">
+      <img src="assets/images/logo.png" alt="Logo" class="logo">
+      <div class="tagline-container">
+        <div class="icon-wrapper">🐶</div>
+        <h2 class="tagline">Because every paw deserves a buddy!</h2>
+        <div class="icon-wrapper">🐱</div>
+      </div>
     </div>
-  </div>
 
-  <!-- Password Field -->
-  <div class="form-group position-relative">
-    <label for="password">Password</label>
+    <!-- Right side with form -->
+    <div class="col-5 d-flex justify-content-center align-items-center">
+      <form class="login-form p-4 mx-auto text-center"
+            [formGroup]="loginForm" 
+            (ngSubmit)="save()" 
+            style="max-width: 400px; border-radius: 15px; border: none; width: 100%">
+            <h3 class="text-center " style="color: #36c864;">Furr EeverBuddy </h3>
+
+        <!-- Image inside the card -->
+        <div class="image-container">
+         
+          <img src="assets/images/gallery-5.jpg" 
+               alt="Login Image 2" 
+               class="login-image">
+          <img src="assets/images/img.jpg"
+               alt="Login Image 3" 
+               class="login-image">
+               <img src="assets/images/bg_2.jpg"
+               alt="Login Image 3" 
+               class="login-image">
+        </div>
+
+        <h3 class="text-center mb-4" style="color: #36c864;">
+          Login 
+          <span class="flaticon-pawprint-1" style="font-size: 2.5rem; color: #36c864;"></span> 
+        </h3>
+
+        <!-- Email Field -->
+        <div class="form-group">
+          <label for="email">Email</label>
+          <input type="text" id="email" class="form-control" placeholder="Enter your email" formControlName="email">
+          <div *ngIf="loginForm.controls['email'].invalid && loginForm.controls['email'].touched" class="alert alert-danger">
+            <p *ngIf="loginForm.controls['email'].hasError('required')">Email is required</p>
+            <p *ngIf="loginForm.controls['email'].hasError('email')">Email must be valid</p>
+          </div>
+        </div>
+
+        <!-- Password Field -->
+      <!-- Password Field -->
+<div class="form-group">
+  <label for="password">Password</label>
+  <div class="password-container">
     <input [type]="showPassword ? 'text' : 'password'"
            id="password"
            class="form-control"
            placeholder="Enter your password"
            formControlName="password">
-           
-           <i class="fa"
-           [ngClass]="showPassword ? 'fa-eye-slash' : 'fa-eye'"
-           (click)="togglePasswordVisibility()"
-           style="position: absolute; right: 50px; top: 50px; cursor: pointer; color: #6c757d;">
-        </i>
-  
-    <div *ngIf="loginForm.controls['password'].invalid && loginForm.controls['password'].touched" class="alert alert-danger">
-      <p *ngIf="loginForm.controls['password'].hasError('required')">Password is required</p>
-      <p *ngIf="loginForm.controls['password'].hasError('minlength')">Password must be at least 8 characters</p>
-    </div>
+    <span class="password-toggle" (click)="togglePasswordVisibility()">
+      {{ showPassword ? '🙈' : '👁️' }}
+    </span>
   </div>
   
+  <div *ngIf="loginForm.controls['password']?.touched && loginForm.controls['password']?.invalid" class="alert alert-danger">
+    <p *ngIf="loginForm.controls['password']?.errors?.['required']">Password is required</p>
+    <p *ngIf="loginForm.controls['password']?.errors?.['minlength']">Minimum 8 characters</p>
+    <p *ngIf="loginForm.controls['password']?.errors?.['pattern']">
+      Must include: uppercase, lowercase, number, and special character
+    </p>
+  </div>
+</div>
+        
 
-  <!-- Links -->
-  <a href="/forgot-password" class="link">Forgot Password?</a>
-<a routerLink="/register" class="link">Create an account</a>
+        <!-- Links -->
+        <a href="/forgot-password" class="link">Forgot Password?</a>
+        <a routerLink="/register" class="link">Create an account</a>
 
-  <!-- Submit Button -->
-  <button class="btn btn-primary mt-3" type="submit" [disabled]="loginForm.invalid">
-    Login
-  </button>
-</form>
+        <!-- Submit Button -->
+        <button class="btn btn-primary mt-3" type="submit" [disabled]="loginForm.invalid">
+          Login
+        </button>
+      </form>
+    </div>
+  </div>
+</div>
+
+
 <!-- Modal -->
 <div class="modal fade show d-block" *ngIf="showModal" tabindex="-1" style="background: rgba(0,0,0,0.5);">
   <div class="modal-dialog modal-lg">
@@ -82,5 +113,6 @@
           {{ modalMessage }}
         </h5>
       </div>
-      
+    </div>
+  </div>
 </div>

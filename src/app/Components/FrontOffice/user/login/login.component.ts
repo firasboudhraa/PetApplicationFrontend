@@ -1,6 +1,6 @@
 // login.component.ts
 import { Component } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from '../auth/auth.service';
 import { Router } from '@angular/router';
 
@@ -13,6 +13,7 @@ export class LoginComponent {
   loginForm = new FormGroup({
     email: new FormControl('', [Validators.email, Validators.required]),
     password: new FormControl('', [Validators.minLength(8), Validators.required]),
+    
   });
 
   showModal = false;
@@ -21,9 +22,19 @@ export class LoginComponent {
   showPassword = false;
 
   constructor(
+    private fb: FormBuilder,
     private authService: AuthService,
     private router: Router
-  ) {}
+  ) {
+    this.loginForm = this.fb.group({
+      email: ['', [Validators.required, Validators.email]],
+      password: ['', [
+        Validators.required,
+        Validators.minLength(8),
+        Validators.pattern(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]+$/)
+      ]]
+    });
+  }
 
   save() {
     if (this.loginForm.valid) {

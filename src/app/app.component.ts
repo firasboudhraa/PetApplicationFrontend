@@ -22,7 +22,12 @@ export class AppComponent {
           event.urlAfterRedirects.startsWith('/service-dashboard') ||
            event.urlAfterRedirects.startsWith('/add-service-dashboard') ||
            event.urlAfterRedirects.startsWith('/appointments-dashboard') ||
-           event.urlAfterRedirects.startsWith('/stats-dashboard')
+           event.urlAfterRedirects.startsWith('/stats-dashboard') ||
+          event.urlAfterRedirects.startsWith('/login') ||
+          event.urlAfterRedirects.startsWith('/register')  
+
+
+
         );
       });
   }
