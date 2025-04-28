@@ -2,6 +2,7 @@ import { Component, Renderer2 } from '@angular/core';
 import { Pet } from 'src/app/models/pet';
 import { PetdataServiceService } from 'src/app/Services/petdata-service.service';
 import { PetsSpeciesService } from 'src/app/Services/shared/pets-species.service';
+import { AuthService } from '../../FrontOffice/user/auth/auth.service';
 
 @Component({
   selector: 'app-public-pets',
@@ -25,8 +26,8 @@ export class PublicPetsComponent {
   showDetail: boolean = false;
   showEditModal: boolean = false;
   isUserPet: boolean = false;
-  userId:number = 2 ; 
-  constructor(private petDataService: PetdataServiceService, private ps : PetsSpeciesService ,private renderer: Renderer2 ) {}
+  userId!:any ; 
+  constructor(private petDataService: PetdataServiceService,private authService:AuthService , private ps : PetsSpeciesService ,private renderer: Renderer2 ) {}
 
   openModal() {
     this.showModal = true;
@@ -78,7 +79,7 @@ export class PublicPetsComponent {
   prefernce : any = { temperame:"Friendly" , size: "Small" , age: "Adult" } ;
 
   ngOnInit(): void {
-
+    this.userId = this.authService.getDecodedToken() ? this.authService.getDecodedToken()?.userId : 0 ;
     this.petDataService.getPets().subscribe((data) => {
       this.allPets = data;
       this.totalItems = this.allPets.length;
