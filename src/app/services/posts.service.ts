@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Post } from 'src/app/models/Post';
 import { environment } from 'src/environments/environment';
@@ -120,9 +120,15 @@ export class PostsService {
   
   
   // 🗑 Delete a post
-  deletePost(postId: number): Observable<void> {
-    return this.http.delete<void>(`${this.apiUrl}/${postId}`);
-  }
+deletePost(postId: number, title: string, author: string, email: string): Observable<any> {
+  const params = new HttpParams()
+    .set('title', title)
+    .set('author', author)
+    .set('email', email);
+
+  return this.http.delete(`${this.apiUrl}/${postId}`, { params });
+}
+
 
   // 🗑 Delete a post without email
   deletePostWithoutMail(postId: number): Observable<void> {
