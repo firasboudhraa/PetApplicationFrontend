@@ -5,6 +5,8 @@ import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';  // Ensure you have the environment set correctly
 import { AuthService } from 'src/app/Components/FrontOffice/user/auth/auth.service';
+import Swal from 'sweetalert2';
+
 
 @Component({
   selector: 'app-add-post',
@@ -139,11 +141,17 @@ export class AddPostComponent implements OnInit, AfterViewInit {
   
     this.postService.addPost(formData, this.userId).subscribe({
       next: () => {
-        this.isDeleted = true; // Show success notification
+        Swal.fire({
+          icon: 'success',
+          title: 'Post Added!',
+          text: 'Your post was successfully added.',
+          timer: 2000,
+          showConfirmButton: false
+        });
+  
         setTimeout(() => {
-          this.isDeleted = false; // Hide notification after 3 seconds
-          this.router.navigate(['/blog']); // Navigate after 3 seconds
-        }, 1000);
+          this.router.navigate(['/blog']); // Redirect after the alert
+        }, 2000); 
       },
       error: (err) => {
         this.errorMessage = 'Erreur lors de la publication.';

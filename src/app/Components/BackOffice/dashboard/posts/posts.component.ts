@@ -9,6 +9,8 @@ import { jsPDF } from 'jspdf';
 import { Chart, ChartConfiguration, ChartData, ChartType } from 'chart.js';
 import ChartDataLabels from 'chartjs-plugin-datalabels';
 import { User } from 'src/app/Components/FrontOffice/user/models/user_model';
+import Swal from 'sweetalert2';
+
 
 @Component({
   selector: 'app-posts',

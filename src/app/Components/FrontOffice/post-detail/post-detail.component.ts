@@ -10,6 +10,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { ChangeDetectorRef } from '@angular/core';
 import { User } from '../user/models/user_model';
 import { AuthService } from 'src/app/Components/FrontOffice/user/auth/auth.service'; // Ensure correct import path
+import Swal from 'sweetalert2';  // Ensure SweetAlert is installed
 
 declare var google: any;  // Ensure Google Maps API types are loaded via @types/google.maps
 
@@ -56,9 +57,6 @@ export class PostDetailComponent implements OnInit, AfterViewInit {
   ) {}
 
   isDeleted: boolean = false;
-  
-
-
 
   ngOnInit(): void {
     // Retrieve the logged-in user's ID using the AuthService
@@ -126,7 +124,6 @@ export class PostDetailComponent implements OnInit, AfterViewInit {
   private loadCommentAuthors(comments: Comment[]): void {
     comments.forEach(comment => {
       console.log('Processing comment userId:', comment.userId); // Log the userId to make sure it's correct
-      
       if (comment.userId && !this.commentAuthors.has(comment.userId)) {
         this.userService.getUserById(comment.userId).subscribe({
           next: (user: User) => {
@@ -140,7 +137,6 @@ export class PostDetailComponent implements OnInit, AfterViewInit {
         });
       }
     });
-  
     console.log('Final commentAuthors map:', this.commentAuthors); // Check the map after loading users
   }
 
@@ -165,7 +161,7 @@ export class PostDetailComponent implements OnInit, AfterViewInit {
         center: { lat: this.latitude, lng: this.longitude },
         zoom: this.zoom
       });
-  
+
       this.marker = new google.maps.Marker({
         position: { lat: this.latitude, lng: this.longitude },
         map: this.map,
@@ -212,19 +208,99 @@ export class PostDetailComponent implements OnInit, AfterViewInit {
       error: (err) => console.error('Error liking post:', err)
     });
   }
+  
+  cancelDelete(): void {
+    this.showConfirmModal = false;
+    this.postIdToDelete = null;
+  }
 
-  deletePostWithoutMail(postId: number): void {
+  openDeleteModal(postId: number): void {
+    Swal.fire({
+      title: 'Êtes-vous sûr?',
+      text: "Cette action est irréversible!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Oui, supprimer!',
+      cancelButtonText: 'Annuler'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.deletePostWithoutMail(postId);  // delete directly after confirm
+      }
+    });
+  }
+  
+  
+  confirmDelete(): void {
+    if (this.postIdToDelete) {
+      Swal.fire({
+        title: 'Are you sure?',
+        text: "This action cannot be undone!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonText: 'Yes, delete it!',
+        cancelButtonText: 'Cancel'
+      }).then((result) => {
+        if (result.isConfirmed) {
+          this.deletePostWithoutMail(this.postIdToDelete!);  // Confirmed deletion
+        }
+      });
+    }
+  }
+  
+
+  private deletePostWithoutMail(postId: number): void {
     if (postId) {
       this.postService.deletePostWithoutMail(postId).subscribe({
         next: () => {
           console.log('Post deleted successfully');
-          this.router.navigate(['/blog']);
+          Swal.fire({
+            title: 'Supprimé!',
+            text: 'Le post a été supprimé avec succès.',
+            icon: 'success',
+            confirmButtonText: 'OK'
+          }).then(() => {
+            this.router.navigate(['/blog']);
+          });
         },
         error: (error) => {
           console.error('Error deleting post:', error);
+          Swal.fire('Erreur!', 'Une erreur est survenue lors de la suppression du post.', 'error');
         }
       });
     }
+  }
+  
+
+  // Add the deleteComment method
+  deleteComment(commentId: number): void {
+    Swal.fire({
+      title: 'Êtes-vous sûr?',
+      text: "Cette action est irréversible!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Oui, supprimer!',
+      cancelButtonText: 'Annuler'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        // Proceed with deletion if confirmed
+        this.commentService.deleteComment(commentId).subscribe({
+          next: () => {
+            this.loadComments(this.post?.id!);  // Reload the comments after deletion
+            Swal.fire('Supprimé!', 'Le commentaire a été supprimé.', 'success'); // Success confirmation
+          },
+          error: (err) => {
+            console.error('Error deleting comment:', err);
+            Swal.fire('Erreur!', 'Une erreur est survenue lors de la suppression.', 'error'); // Error confirmation
+          }
+        });
+      }
+    });
+  }
+  
+
+  // Add the formatRole method
+  formatRole(roles: string[]): string {
+    return roles.join(', ');  // Join the roles with a comma and space
   }
 
   scrollToTop(): void {
@@ -238,6 +314,7 @@ export class PostDetailComponent implements OnInit, AfterViewInit {
       .replace(/_/g, ' ')
       .replace(/\b\w/g, char => char.toUpperCase());
   }
+
   toggleEmojiPicker() {
     this.showEmojiPicker = !this.showEmojiPicker;
     const emojiButton = document.querySelector('.btn-emoji') as HTMLElement;
@@ -249,7 +326,7 @@ export class PostDetailComponent implements OnInit, AfterViewInit {
       popup.style.left = `${rect.left + rect.width / 2 - popup.offsetWidth / 2}px`; // Adjust this as needed
     }
   }
-  
+
   @HostListener('document:click', ['$event'])
   onClickOutside(event: Event) {
     if (!(event.target as HTMLElement).closest('.emoji-picker-popup') &&
@@ -266,63 +343,4 @@ export class PostDetailComponent implements OnInit, AfterViewInit {
       this.newCommentContent += emoji;
     }
   }
-
-  deleteComment(commentId: number): void {
-    this.commentService.deleteComment(commentId).subscribe({
-      next: () => {
-        this.isDeleted = true;
-        setTimeout(() => {
-          this.isDeleted = false;
-        }, 3000);
-        const postId = this.post?.id;
-        if (postId) {
-          this.loadComments(postId);
-        }
-      },
-      error: (error) => {
-        console.error('Error deleting comment:', error);
-        this.snackBar.open('Error deleting comment', '', {
-          duration: 3000, 
-          panelClass: ['snackbar-error'],
-        });
-      }
-    });
-  }
-
-  openDeleteModal(postId: number): void {
-    this.postIdToDelete = postId;
-    this.showConfirmModal = true;
-  }
-
-  cancelDelete(): void {
-    this.showConfirmModal = false;
-    this.postIdToDelete = null;
-  }
-
-  confirmDelete(): void {
-    if (this.postIdToDelete) {
-      this.deletePostWithoutMail(this.postIdToDelete);
-      this.showConfirmModal = false;
-      this.postIdToDelete = null;
-    }
-  }
-  private formatRole(roles: string[]): string {
-    return roles.map(role => {
-      switch (role) {
-        case 'SERVICE_PROVIDER':
-          return 'Service Provider';
-        case 'PET_OWNER':
-          return 'Pet Owner';
-        case 'VETERINARIAN':
-          return 'Veterinarian';
-        case 'ADMIN':
-          return 'Administrator';
-        default:
-          return role;
-      }
-    }).join(', ');  // Joining the formatted roles with commas
-  }
-  
-
-
 }
