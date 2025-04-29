@@ -10,7 +10,7 @@ import Swal from 'sweetalert2';
 import { AppointmentService } from 'src/app/Services/appointment.service';
 import { PetdataServiceService } from 'src/app/Services/petdata-service.service';
 import { AuthService } from '../../user/auth/auth.service';
-import type { Pet } from 'src/app/models/pet';
+import  { Pet } from 'src/app/models/pet';
 
 @Component({
   selector: 'app-available-slots',

@@ -1,0 +1,104 @@
+/* Main container that holds the sidebar, header, and form */
+.content-wrapper {
+    display: flex;
+    margin-left: 250px; /* Adjust this according to the width of your sidebar */
+    padding-top: 70px;  /* Adjust this according to the height of your header */
+    width: calc(100% - 250px);  /* Adjust this if the sidebar is resizable */
+    min-height: 100vh;  /* Ensure full screen height */
+    background-color: #f7f7f7;  /* Light background */
+  }
+  
+  .page-center {
+    width: 100%;
+    max-width: 1200px;  /* Restrict the form width */
+    margin: 0 auto;
+    padding: 30px;
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  .title {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 20px;
+    color: #333;
+  }
+  
+  .form-group {
+    margin-bottom: 20px;
+  }
+  
+  .floating-label {
+    position: relative;
+    margin-bottom: 20px;
+  }
+  
+  .floating-label input,
+  .floating-label textarea {
+    width: 100%;
+    padding: 12px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+  
+  .floating-label label {
+    position: absolute;
+    top: 0px;
+    left: 12px;
+    font-size: 14px;
+    color: #aaa;
+    transition: all 0.2s ease-in-out;
+  }
+  
+  .floating-label input:focus,
+  .floating-label textarea:focus {
+    border-color: #007bff;
+  }
+  
+  .floating-label input:focus + label,
+  .floating-label textarea:focus + label {
+    top: -10px;
+    left: 10px;
+    font-size: 12px;
+    color: #007bff;
+  }
+  
+  .btn-submit {
+    width: 100%;
+    padding: 12px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+  }
+  
+  .btn-submit:disabled {
+    background-color: #cccccc;
+  }
+  
+  .text-danger {
+    font-size: 12px;
+    color: #dc3545;
+  }
+  
+  /* Make sure the map is responsive */
+  #map {
+    border-radius: 8px;
+    margin-top: 20px;
+    background-color: #e0e0e0; /* Light grey background for map */
+  }
+  
+  .form-row {
+    display: flex;
+    gap: 20px; /* Adjust this value to control the space between the inputs */
+    flex-wrap: wrap; /* This ensures they wrap correctly if the screen is too narrow */
+  }
+  
+  .form-row .form-group {
+    flex: 1; /* Makes each form group take equal space */
+    min-width: 200px; /* Optional: adds a minimum width to prevent inputs from becoming too small */
+  }

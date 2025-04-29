@@ -1,4 +1,5 @@
 import { Component, Renderer2 } from '@angular/core';
+import { AuthService } from 'src/app/Components/FrontOffice/user/auth/auth.service';
 import { Pet } from 'src/app/models/pet';
 import { PetSittingOffer } from 'src/app/models/petSittingOffer';
 import { GoogleMapsLoaderService } from 'src/app/Services/google-maps-loader.service';
@@ -11,7 +12,7 @@ import Swal from 'sweetalert2';
   styleUrls: ['./display-offers.component.css']
 })
 export class DisplayOffersComponent {
-  userId: number = 3;
+  userId!:any;
   private imageServerUrl = 'http://localhost:8222/api/v1/pet/images';
   showDetailModal: boolean = false;
   searchText: string = '';
@@ -26,9 +27,13 @@ export class DisplayOffersComponent {
 
   offers: (PetSittingOffer & { isFlipped: boolean })[] = []; // Add isFlipped dynamically
 
-  constructor(private petSittingOfferService: PetSittingOfferService, private mapService: GoogleMapsLoaderService,private renderer: Renderer2) {}
+  constructor(private petSittingOfferService: PetSittingOfferService, 
+    private authService:AuthService ,
+    private mapService: GoogleMapsLoaderService,private renderer: Renderer2) {}
 
   ngOnInit(): void {
+    this.userId = this.authService.getDecodedToken() ? this.authService.getDecodedToken()?.userId : 0 ;
+
     this.petSittingOfferService.getAvailablePetSittingOffers(this.userId).subscribe(async (response) => {
       this.allOffers = await Promise.all(
         response.map(async (offer) => ({

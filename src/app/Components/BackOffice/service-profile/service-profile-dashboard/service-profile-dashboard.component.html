@@ -22,7 +22,7 @@
         <div class="flip-card-front">
           <!-- Edit & Delete buttons -->
           <div class="card-buttons">
-            <button class="edit-btn">✏️</button>
+            <button class="edit-btn" [routerLink]="['/dashboard/update-service', service.idService]">✏️</button>
             <button class="delete-btn" (click)="onDeleteService(service.idService)">🗑️</button>
           </div>
 
