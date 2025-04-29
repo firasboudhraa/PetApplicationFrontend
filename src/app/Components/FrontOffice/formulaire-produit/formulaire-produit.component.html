@@ -1,11 +1,11 @@
 <form [formGroup]="productForm" (ngSubmit)="onSubmit()" enctype="multipart/form-data">
   <div class="form-group">
-    <label for="nom">Nom du produit</label>
+    <label for="nom">Product name</label>
     <input type="text" id="nom" class="form-control" formControlName="nom" />
     <div class="text-danger" *ngIf="productForm.get('nom')?.touched && productForm.get('nom')?.invalid">
-      <div *ngIf="productForm.get('nom')?.errors?.['required']">Le nom est requis.</div>
-      <div *ngIf="productForm.get('nom')?.errors?.['minlength']">Le nom doit contenir au moins 3 caractères.</div>
-      <div *ngIf="productForm.get('nom')?.errors?.['maxlength']">Le nom ne doit pas dépasser 10 caractères.</div>
+      <div *ngIf="productForm.get('nom')?.errors?.['required']">The name is required.</div>
+      <div *ngIf="productForm.get('nom')?.errors?.['minlength']">The name must contain at least 3 characters.</div>
+      <div *ngIf="productForm.get('nom')?.errors?.['maxlength']">The name must not exceed 30 characters.</div>
     </div>
   </div>
 
@@ -13,47 +13,47 @@
     <label for="description">Description</label>
     <textarea id="description" class="form-control" formControlName="description"></textarea>
     <div class="text-danger" *ngIf="productForm.get('description')?.touched && productForm.get('description')?.invalid">
-      <div *ngIf="productForm.get('description')?.errors?.['required']">La description est requise.</div>
-      <div *ngIf="productForm.get('description')?.errors?.['minlength']">La description doit contenir au moins 5 caractères.</div>
-      <div *ngIf="productForm.get('description')?.errors?.['maxlength']">La description ne doit pas dépasser 100 caractères.</div>
+      <div *ngIf="productForm.get('description')?.errors?.['required']">The description is required.</div>
+      <div *ngIf="productForm.get('description')?.errors?.['minlength']">The description must contain at least 3 characters.</div>
+      <div *ngIf="productForm.get('description')?.errors?.['maxlength']">The description must not exceed 100 characters.</div>
     </div>
   </div>
 
   <div class="form-group">
-    <label for="prix">Prix</label>
+    <label for="prix">Price</label>
     <input type="number" id="prix" class="form-control" formControlName="prix" />
     <div *ngIf="productForm.get('prix')?.touched && productForm.get('prix')?.invalid" class="text-danger">
-      <div *ngIf="productForm.get('prix')?.errors?.['required']">Le prix est requis.</div>
-      <div *ngIf="productForm.get('prix')?.errors?.['min']">Le prix doit être supérieur à 0.</div>
+      <div *ngIf="productForm.get('prix')?.errors?.['required']">The price is required.</div>
+      <div *ngIf="productForm.get('prix')?.errors?.['min']">The price must be greater than 0.</div>
     </div>
   </div>
 
   <div class="form-group">
-    <label for="category">Catégorie</label>
+    <label for="category">Category</label>
     <select id="category" class="form-control" formControlName="category">
-      <option value="">Choisir une catégorie</option>
+      <option value="">Choose a category</option>
       <option value="Alimentation">Alimentation</option>
-      <option value="Accessoires">Accessoires</option>
-      <option value="Hygiène et soins">Hygiène et soins</option>
-      <option value="Santé">Santé</option>
+      <option value="Accessoires">Accessories</option>
+      <option value="Hygiène et soins">Hygiene and care</option>
+      <option value="Santé">Health</option>
       <option value="Habitat">Habitat</option>
     </select>
     <div *ngIf="productForm.get('category')?.touched && productForm.get('category')?.invalid" class="text-danger">
-      La catégorie est requise.
+      The category is required
     </div>
   </div>
 
   <div class="form-group">
-    <label for="stock">Stock disponible</label>
+    <label for="stock">Stock available</label>
     <input type="number" id="stock" class="form-control" formControlName="stock" />
     <div *ngIf="productForm.get('stock')?.touched && productForm.get('stock')?.invalid" class="text-danger">
-      <div *ngIf="productForm.get('stock')?.errors?.['required']">Le stock est requis.</div>
-      <div *ngIf="productForm.get('stock')?.errors?.['min']">Le stock ne peut pas être négatif.</div>
+      <div *ngIf="productForm.get('stock')?.errors?.['required']">The stock is required.</div>
+      <div *ngIf="productForm.get('stock')?.errors?.['min']">The stock can not be negatif.</div>
     </div>
   </div>
 
   <div class="form-group">
-    <label for="quantity">Quantité souhaitée</label>
+    <label for="quantity">Quantity</label>
     <input 
       type="number" 
       id="quantity" 
@@ -64,22 +64,22 @@
       required 
     />
     <div class="text-danger" *ngIf="productForm.get('quantity')?.touched && productForm.get('quantity')?.invalid">
-      <div *ngIf="productForm.get('quantity')?.errors?.['required']">La quantité est requise.</div>
-      <div *ngIf="productForm.get('quantity')?.errors?.['pattern']">La quantité doit être égale à 1.</div>
+      <div *ngIf="productForm.get('quantity')?.errors?.['required']">The quantity is required.</div>
+      <div *ngIf="productForm.get('quantity')?.errors?.['pattern']">The quantity has to be equal to 1.</div>
     </div>
   </div>
 
   <div class="form-group">
-    <label for="lowStockThreshold">Seuil d'alerte de stock</label>
+    <label for="lowStockThreshold">Stock alert threshold</label>
     <input type="number" id="lowStockThreshold" class="form-control" formControlName="lowStockThreshold" />
     <div class="text-danger" *ngIf="productForm.get('lowStockThreshold')?.touched && productForm.get('lowStockThreshold')?.invalid">
-      <div *ngIf="productForm.get('lowStockThreshold')?.errors?.['required']">Le seuil est requis.</div>
-      <div *ngIf="productForm.get('lowStockThreshold')?.errors?.['max']">Le seuil ne doit pas dépasser le stock disponible.</div>
+      <div *ngIf="productForm.get('lowStockThreshold')?.errors?.['required']">The threshold is required.</div>
+      <div *ngIf="productForm.get('lowStockThreshold')?.errors?.['max']">The threshold must not exceed the available stock.</div>
     </div>
   </div>
 
   <div class="form-group">
-    <label for="image">Image du produit</label>
+    <label for="image">Product image</label>
     <input type="file" id="image" class="form-control" (change)="onFileSelected($event)" accept="image/*" />
     <div *ngIf="previewImage" class="mt-2">
       <img [src]="previewImage" alt="Aperçu de l'image" class="img-thumbnail" style="max-height: 200px;">
@@ -92,6 +92,6 @@
 
    <!-- Bouton de retour aux produits -->
    <button type="button" class="btn btn-secondary mt-3" (click)="onReturnToProducts()">
-    Retour aux produits
+    Return to products
   </button>
 </form>

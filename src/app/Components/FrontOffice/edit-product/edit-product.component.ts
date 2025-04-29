@@ -41,8 +41,8 @@ export class EditProductComponent implements OnInit {
   loadProduct(): void {
     this.productService.getProductById(this.productId).subscribe(
       (product) => {
-        console.log('Produit récupéré:', product);
-        console.log('Valeur de product.category:', product.category);
+        console.log('Product retrieved:', product);
+        console.log('Value of product.category:', product.category);
 
         const categoryMapping: { [key: string]: string } = {
           alimentation: 'cat1',
@@ -69,7 +69,7 @@ export class EditProductComponent implements OnInit {
         this.imagePreview = `http://localhost:8011/api/products/images/${product.imageUrl}`;
       },
       (error) => {
-        console.error('Erreur lors de la récupération du produit:', error);
+        console.error('Error while retrieving the product:', error);
       }
     );
   }
@@ -104,9 +104,9 @@ export class EditProductComponent implements OnInit {
       const formValues = this.productForm.value;
       const formData = new FormData();
   
-      formData.append('nom', formValues.nom);
+      formData.append('name', formValues.nom);
       formData.append('description', formValues.description);
-      formData.append('prix', Number(formValues.prix).toString()); 
+      formData.append('price', Number(formValues.prix).toString()); 
       formData.append('category', formValues.category);
       formData.append('stock', formValues.stock.toString());
       formData.append('quantity', formValues.lowStockThreshold.toString());
@@ -120,7 +120,7 @@ export class EditProductComponent implements OnInit {
           // SweetAlert2 popup de succès
           Swal.fire({
             icon: 'success',
-            title: 'Produit mis à jour avec succès !',
+            title: 'Product updated successfully !',
             showConfirmButton: false,
             timer: 1500 // Popup qui disparaît après 1,5 seconde
           }).then(() => {
@@ -129,7 +129,7 @@ export class EditProductComponent implements OnInit {
           });
         },
         (error) => {
-          console.error('Erreur lors de la mise à jour du produit:', error);
+          console.error('Error while updating the product:', error);
         }
       );
     }
@@ -142,11 +142,11 @@ export class EditProductComponent implements OnInit {
   getCategoryLabel(categoryValue: string): string {
     const categoryLabels: { [key: string]: string } = {
       cat1: 'Alimentation',
-      cat2: 'Accessoires',
-      cat3: 'Hygiène et soins',
-      cat4: 'Santé',
+      cat2: 'Accessories',
+      cat3: 'Hygiene and care',
+      cat4: 'Health',
       cat5: 'Habitat'
     };
-    return categoryLabels[categoryValue] || 'Inconnue';
+    return categoryLabels[categoryValue] || 'Unknown';
   }
 }

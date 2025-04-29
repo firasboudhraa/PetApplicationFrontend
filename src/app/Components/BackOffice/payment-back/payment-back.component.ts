@@ -72,7 +72,7 @@ export class PaymentBackComponent {
       },
       error: (err) => {
         console.error('Error fetching payments:', err);
-        this.error = 'Erreur lors de la récupération des paiements';
+        this.error = 'Error retrieving payments.';
         this.isLoading = false;
       }
     });
@@ -126,7 +126,7 @@ export class PaymentBackComponent {
   // Créer un paiement
   createPayment(): void {
     if (this.basketId === null || this.userId === null) {
-      this.error = 'Veuillez fournir un ID de panier et un ID d\'utilisateur valides';
+      this.error = 'Please provide a valid basket ID and user ID.';
       return;  // Empêcher la suite de l'exécution si les IDs sont null
     }
 
@@ -138,7 +138,7 @@ export class PaymentBackComponent {
         id_Basket: validBasketId,
         total: 0, // Remplacez par le montant réel
         dateCreation: new Date().toISOString(),
-        statut: 'EN_ATTENTE',
+        statut: 'PENDING',
         quantity: 1,
         modePaiement: this.paymentMethod,
         dateValidation: null,
@@ -165,12 +165,12 @@ export class PaymentBackComponent {
             alert('Payment created and basket validated successfully!');
           },
           error: (err) => {
-            this.error = 'Erreur lors de la validation du panier';
+            this.error = 'Error during cart validation';
           }
         });
       },
       error: (err) => {
-        this.error = 'Erreur lors de la création du paiement';
+        this.error = 'Error during payment creation';
       }
     });
   }
@@ -189,7 +189,7 @@ export class PaymentBackComponent {
         alert('Payment deleted successfully!');
       },
       error: (err) => {
-        this.error = 'Erreur lors de la suppression du paiement';
+        this.error = 'Error during payment deletion';
       }
     });
   }
@@ -215,7 +215,7 @@ export class PaymentBackComponent {
           }
         },
         error: (err) => {
-          this.error = 'Erreur lors de la mise à jour du paiement';
+          this.error = 'Error during payment update';
         }
       });
     }

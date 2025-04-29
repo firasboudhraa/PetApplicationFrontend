@@ -32,7 +32,7 @@ export class BasketBackComponent {
         this.allBaskets = allBaskets;
       },
       (error) => {
-        console.error('Erreur lors de la récupération de tous les paniers:', error);
+        console.error('Error retrieving all baskets:', error);
       }
     );
   }
@@ -49,7 +49,7 @@ export class BasketBackComponent {
           this.products = data; // Assigner les produits récupérés
         },
         (error) => {
-          console.error('Erreur lors de la récupération des produits', error);
+          console.error('Error retrieving all baskets', error);
         }
       );
     }
@@ -59,7 +59,7 @@ export class BasketBackComponent {
  updateBasket(basketId: number): void {
   // Vérifier si l'ID du panier est défini avant de continuer
   if (!basketId) {
-    Swal.fire('Erreur', 'ID de panier invalide.', 'error');
+    Swal.fire('Error', 'Invalid basket ID.', 'error');
     return;
   }
 
@@ -67,7 +67,7 @@ export class BasketBackComponent {
   this.basketService.getBasketById(basketId).subscribe({
     next: (basket) => {
       if (!basket) {
-        Swal.fire('Erreur', 'Le panier sélectionné n\'existe pas.', 'error');
+        Swal.fire('Error', 'The selected basket does not exist.', 'error');
         return;
       }
 
@@ -91,20 +91,20 @@ export class BasketBackComponent {
         next: () => {
           // Si la mise à jour réussit, recharger la liste des paniers et afficher un message de succès
           this.loadAllBaskets();
-          Swal.fire('Panier mis à jour', 'Le panier a été mis à jour avec succès.', 'success');
+          Swal.fire('Basket updated', 'The basket has been successfully updated', 'success');
           this.selectedBasket = null;  // Réinitialiser le panier sélectionné après la mise à jour
         },
         error: (err) => {
           // Si la mise à jour échoue, afficher un message d'erreur
-          Swal.fire('Erreur', 'Une erreur est survenue lors de la mise à jour du panier.', 'error');
-          console.error('Erreur de mise à jour du panier', err);  // Log de l'erreur pour débogage
+          Swal.fire('Error', 'An error occurred while updating the basket...', 'error');
+          console.error('Basket update error.', err);  // Log de l'erreur pour débogage
         }
       });
     },
     error: (err) => {
       // Si la récupération du panier échoue, afficher un message d'erreur
-      Swal.fire('Erreur', 'Impossible de récupérer le panier.', 'error');
-      console.error('Erreur lors de la récupération du panier', err);  // Log de l'erreur pour débogage
+      Swal.fire('Error', 'Unable to retrieve the basket.', 'error');
+      console.error('Error retrieving the basket', err);  // Log de l'erreur pour débogage
     }
   });
 }
@@ -120,16 +120,16 @@ submitUpdate(): void {
     // Appel au service pour mettre à jour le panier
     this.basketService.updateBasket(this.selectedBasket.id_Basket, this.selectedBasket).subscribe({
       next: (updatedBasket) => {
-        Swal.fire('Succès', 'Panier mis à jour avec succès', 'success');
+        Swal.fire('Succes', 'Basket updated successfully.', 'success');
         this.ngOnInit(); // Recharge la liste des paniers après mise à jour
       },
       error: (err) => {
         console.error(err);
-        Swal.fire('Erreur', 'Erreur lors de la mise à jour du panier', 'error');
+        Swal.fire('Error', 'Error updating the basket', 'error');
       }
     });
   } else {
-    Swal.fire('Erreur', 'Aucun panier sélectionné pour la mise à jour', 'error');
+    Swal.fire('Error', 'No basket selected for update.', 'error');
   }
 }
 
@@ -138,18 +138,18 @@ submitUpdate(): void {
 // Supprimer un panier
 deleteBasket(basketId: number): void {
   Swal.fire({
-    title: 'Êtes-vous sûr?',
-    text: 'Cette action est irréversible!',
+    title: 'Are you sure ?',
+    text: 'This action is irreversible!',
     icon: 'warning',
     showCancelButton: true,
     confirmButtonColor: '#d33',
     cancelButtonColor: '#3085d6',
-    confirmButtonText: 'Oui, supprimer!'
+    confirmButtonText: 'Yes, delete!'
   }).then((result) => {
     if (result.isConfirmed) {
       this.basketService.deleteBasket(basketId).subscribe(() => {
         this.loadAllBaskets();
-        Swal.fire('Panier supprimé', 'Le panier a été supprimé avec succès.', 'success');
+        Swal.fire('Basket deleted', 'The cart has been successfully deleted.', 'success');
       });
     }
   });
@@ -171,14 +171,14 @@ loadBaskets(): void {
         basketWithProducts.products = products;
         this.baskets.push(basketWithProducts);
       }, error => {
-        console.error(`Erreur lors de la récupération des produits pour le panier ${basket.id_Basket}`, error);
+        console.error(`Error retrieving products for the cart ${basket.id_Basket}`, error);
         this.baskets.push(basketWithProducts); // Ajout du panier même sans produits
       });
     });
 
     this.loading = false;
   }, error => {
-    console.error('Erreur lors de la récupération des paniers:', error);
+    console.error('Error retrieving the carts:', error);
     this.loading = false;
   });
 }
@@ -187,36 +187,36 @@ loadBaskets(): void {
     const currentDate = new Date().toISOString().slice(0, 16); // Format ISO pour input datetime-local
   
     Swal.fire({
-      title: 'Créer un nouveau panier',
+      title: 'Create a new cart.',
       html: `
-        <label>Date de création</label>
+        <label>Creation date</label>
         <input type="datetime-local" class="swal2-input" value="${currentDate}" disabled>
   <br>
         <br>
 
-        <label>Mode de paiement</label>
+        <label>Payment mode</label>
         <br>
         <br>
         <select id="modePaiement" class="swal2-input">
-          <option value="carte">Carte</option>
+          <option value="carte">Cart</option>
           <option value="stripe">Stripe</option>
           <option value="cash">Cash</option>
         </select>
       
   <br>
    <br>
-        <label>ID utilisateur</label>
-        <input type="number" id="userIdInput" class="swal2-input" placeholder="Entrez l'ID de l\'utilisateur" value="${this.userId || ''}">
+        <label>User ID </label>
+        <input type="number" id="userIdInput" class="swal2-input" placeholder="Enter the user's ID." value="${this.userId || ''}">
       `,
       focusConfirm: false,
       showCancelButton: true,
-      confirmButtonText: 'Créer',
+      confirmButtonText: 'Create',
       preConfirm: () => {
         const modePaiement = (document.getElementById('modePaiement') as HTMLSelectElement).value;
         const userId = parseInt((document.getElementById('userIdInput') as HTMLInputElement).value, 10);
   
         if (isNaN(userId) || userId <= 0) {
-          Swal.showValidationMessage('Veuillez entrer un ID utilisateur valide.');
+          Swal.showValidationMessage('Please enter a valid user ID.');
           return;
         }
   
@@ -234,10 +234,10 @@ loadBaskets(): void {
         const basketData = result.value;
   
         this.basketService.createBasket(basketData).subscribe(() => {
-          Swal.fire('Succès', 'Panier créé avec succès !', 'success');
+          Swal.fire('Succes', 'Cart created successfully !', 'success');
           this.loadBaskets();
         }, error => {
-          Swal.fire('Erreur', 'Erreur lors de la création du panier', 'error');
+          Swal.fire('Error', 'Error creating the cart.', 'error');
           console.error(error);
         });
       }

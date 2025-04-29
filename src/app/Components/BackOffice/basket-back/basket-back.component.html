@@ -3,12 +3,12 @@
   
       <!-- Bouton pour créer un nouveau panier -->
       <button class="create-basket-btn" (click)="createNewBasket()" [disabled]="!userId">
-        Créer un nouveau panier
+        Create a new basket
       </button>
   
-      <h3>Paniers de l'utilisateur</h3>
+      <h3>User's baskets</h3>
   
-      <label for="userIdInput">ID Utilisateur :</label>
+      <label for="userIdInput">User ID :</label>
       <input type="number" [(ngModel)]="userId" (change)="onUserIdChange()" placeholder="Entrer l'ID utilisateur" />
   
       <br /><br />
@@ -17,31 +17,31 @@
       <table class="basket-table">
         <thead>
           <tr>
-            <th>Date de création</th>
-            <th>Date de modification</th>
-            <th>Date de validation</th>
-            <th>Statut</th>
+            <th>Creation date</th>
+            <th>Modification date</th>
+            <th>Validation Date</th>
+            <th>Status</th>
             <th>Total</th>
           </tr>
         </thead>
         <tbody>
           <tr *ngFor="let basket of baskets">
-            <td>{{ basket.dateCreation ? (basket.dateCreation | date) : 'Date non disponible' }}</td>
-            <td>{{ basket.dateModification ? (basket.dateModification | date) : 'Date non disponible' }}</td>
-            <td>{{ basket.dateValidation ? (basket.dateValidation | date) : 'Date non disponible' }}</td>
-            <td>{{ basket.statut || 'Statut non disponible' }}</td>
-            <td>{{ basket.total ? (basket.total | currency : '') : 'Total non disponible' }}</td>
+            <td>{{ basket.dateCreation ? (basket.dateCreation | date) : 'Date not available' }}</td>
+            <td>{{ basket.dateModification ? (basket.dateModification | date) : 'Date not available' }}</td>
+            <td>{{ basket.dateValidation ? (basket.dateValidation | date) : 'Date not available' }}</td>
+            <td>{{ basket.statut || 'Status not available' }}</td>
+            <td>{{ basket.total ? (basket.total | currency : '') : 'Total not available' }}</td>
           </tr>
         </tbody>
       </table>
   
       <!-- Liste de tous les paniers -->
-      <h4>Liste de tous les paniers :</h4>
+      <h4>List of all baskets :</h4>
       <table class="basket-table">
         <thead>
           <tr>
-            <th>ID Utilisateur</th>
-            <th>Date de création</th>
+            <th>User ID </th>
+            <th>Creation date</th>
             <th>Total</th>
             <th>Actions</th>
           </tr>
@@ -64,19 +64,19 @@
   
       <!-- Formulaire de mise à jour -->
       <div *ngIf="selectedBasket" class="update-form">
-        <h4>Modifier le panier</h4>
+        <h4>Edit the basket</h4>
         <form (ngSubmit)="submitUpdate()">
-          <label for="dateValidation">Date de validation :</label>
+          <label for="dateValidation">Validation date :</label>
           <input type="date" [(ngModel)]="selectedBasket.dateValidation" name="dateValidation" />
   
-          <label for="statut">Statut :</label>
+          <label for="statut">Status :</label>
           <input type="text" [(ngModel)]="selectedBasket.statut" name="statut" placeholder="Statut..." />
   
           <label for="total">Total :</label>
           <input type="number" [(ngModel)]="selectedBasket.total" name="total" step="0.01" placeholder="Montant..." />
   
           <br /><br />
-          <button class="create-basket-btn" type="submit">Valider la mise à jour</button>
+          <button class="create-basket-btn" type="submit">Confirm the update</button>
         </form>
       </div>
   
