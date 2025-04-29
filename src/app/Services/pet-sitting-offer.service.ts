@@ -11,7 +11,9 @@ export class PetSittingOfferService {
   private apiUrl = 'http://localhost:8222/api/v1/petSittingOffer'; 
 
   constructor(private http: HttpClient) {}
-
+  getAllMadeByUser(userId:number):Observable<PetSittingOffer[]> {
+    return this.http.get<PetSittingOffer[]>(`${this.apiUrl}/getAllMadeByUser/${userId}`)
+  }
   savePetSittingOffer(petSittingOffer: PetSittingOffer): Observable<PetSittingOffer> {
     return this.http.post<PetSittingOffer>(`${this.apiUrl}`, petSittingOffer);
   }

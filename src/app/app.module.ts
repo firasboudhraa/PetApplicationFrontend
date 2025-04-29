@@ -126,6 +126,10 @@ import { ProfileComponent } from './Components/FrontOffice/user/profile/profile.
 import { SideBarUserComponent } from './Components/FrontOffice/user/side-bar-user/side-bar-user.component';
 
 import { ServiceDetailModalComponent } from './Components/FrontOffice/PetService/service/service-detail-modal/service-detail-modal.component';
+import { MadebymeComponent } from './Components/PetSitting/pet-sitting-space/madebyme/madebyme.component';
+import { ContactComponent } from './Components/FrontOffice/contact/contact.component';
+import { UpdateServiceProfileComponent } from './Components/BackOffice/service-profile/update-service-profile/update-service-profile.component';
+import { AppointmentsProfileUserComponent } from './Components/FrontOffice/user/appointments-profile-user/appointments-profile-user.component';
 import { MyproductsComponent } from './Components/FrontOffice/user/myproducts/myproducts.component';
 
   @NgModule({
@@ -225,6 +229,10 @@ import { MyproductsComponent } from './Components/FrontOffice/user/myproducts/my
       SideBarUserComponent,
       ProfileComponent,
       UsersComponent,
+      MadebymeComponent,
+      ContactComponent,
+      UpdateServiceProfileComponent,
+      AppointmentsProfileUserComponent,
       MyproductsComponent
     ],
     imports: [

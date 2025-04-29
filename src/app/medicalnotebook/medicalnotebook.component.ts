@@ -129,6 +129,15 @@ navigateToMedicalNotebookStats() {
     });
   }
 
+
+  private apiUrlImg = 'http://localhost:8222/api/v1/pet/images';
+
+
+
+  getImageUrl(filename: string): string {
+    return `${this.apiUrlImg}/${filename}`;
+  }
+  
   // Charger la liste des carnets médicaux
   loadCarnets(): void {
     this.medicalService.getAllCarnets().subscribe({
@@ -139,7 +148,7 @@ navigateToMedicalNotebookStats() {
         const carnetRequests = data.map(carnet => {  
           return this.medicalService.getMedicalRecordsByCarnetId(carnet.id).pipe(
             map(response => {
-              console.log('Réponse des records pour le carnet test test', carnet.id, response);  // Affiche la réponse pour vérifier la structure
+              console.log('Réponse des records pour le carnet', carnet.id, response);  // Affiche la réponse pour vérifier la structure
               
               // Vérifier si 'medicalRecords' existe et est un tableau
               if (Array.isArray(response)) {
@@ -149,20 +158,26 @@ navigateToMedicalNotebookStats() {
                   description: record['description'],
                   next_due_date: record['next_due_date'] ? new Date(record['next_due_date']) : new Date(0),
                   carnet_id: record['carnetId'],
-                  poids:record['poids'],
+                  poids: record['poids'],
                 }));
               } else {
                 carnet.medicalHistory = []; // Si 'response' n'est pas un tableau, initialiser avec un tableau vide
               }
-              return response; // Retourner le carnet avec ses records
+  
+              // Ajouter l'URL de la photo pour chaque carnet
+              if (carnet.photoUrl) {
+                carnet.photoUrl = this.getImageUrl(carnet.photoUrl);  // Ajoute l'URL complète de l'image
+              }
+              
+              return carnet; // Retourner le carnet avec ses records et l'URL de la photo
             }),
             catchError(err => {
               console.error('Erreur lors de la récupération des records pour le carnet ID:', carnet.id, err);
-              return of(null); // Retourner null en cas d'erreur
+              return of(carnet); // Retourner le carnet même en cas d'erreur
             })
           );
         });
-    
+  
         // Utilisation de forkJoin pour attendre que toutes les requêtes se terminent
         forkJoin(carnetRequests).subscribe({
           next: (carnetsWithRecords) => {
@@ -362,6 +377,10 @@ expandedIndex: boolean[] = [];
 toggle(index: number): void {
   this.expandedIndex[index] = !this.expandedIndex[index];
 }
+
+
+
+
   
 
 }

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { cl } from '@fullcalendar/core/internal-common';
 import { Observable } from 'rxjs';
+import { AuthService } from 'src/app/Components/FrontOffice/user/auth/auth.service';
 import { UserService } from 'src/app/Components/FrontOffice/user/service_user/user.service';
 import { PetSittingOfferService } from 'src/app/Services/pet-sitting-offer.service';
 import Swal from 'sweetalert2';
@@ -14,13 +15,14 @@ export class TrackOffersComponent implements OnInit {
   activeTab: string = 'sent';
   sentOffers: any[] = []; 
   receivedOffers: any[] = []; 
-  userId: number = 1; 
+  userId!:any ; 
   private imageServerUrl = 'http://localhost:8222/api/v1/pet/images';
 
-  constructor( private petSittingService :PetSittingOfferService , private userService:UserService) {}
+  constructor( private petSittingService :PetSittingOfferService , private userService:UserService,    private authService:AuthService ,
+  ) {}
 
   ngOnInit(): void {
-    
+    this.userId = this.authService.getDecodedToken() ? this.authService.getDecodedToken()?.userId : 0 ;
     this.fetchSentOffers();
     this.fetchReceivedOffers();
   }
@@ -32,7 +34,6 @@ export class TrackOffersComponent implements OnInit {
     this.petSittingService.getSentPetSittingOffers(this.userId).subscribe(async (response) => {
       this.sentOffers = await Promise.all(
         response.map(async (offer) => {
-          // Get the owner's full name asynchronously
           const user = await this.userService.getUserById(offer.pet.ownerId).toPromise();
           if (user) {
 

@@ -24,10 +24,8 @@ export class AppComponent {
            event.urlAfterRedirects.startsWith('/appointments-dashboard') ||
            event.urlAfterRedirects.startsWith('/stats-dashboard') ||
           event.urlAfterRedirects.startsWith('/login') ||
-          event.urlAfterRedirects.startsWith('/register')  
-
-
-
+          event.urlAfterRedirects.startsWith('/register') ||
+          event.urlAfterRedirects.startsWith('/update-service-dashboard')
         );
       });
   }
