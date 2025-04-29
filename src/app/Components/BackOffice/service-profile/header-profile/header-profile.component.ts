@@ -64,6 +64,10 @@ export class HeaderProfileComponent {
     this.notificationService.connect(`${this.userId}`);
   }
 
+  onImageError(event: Event): void {
+    (event.target as HTMLImageElement).src = 'assets/images/avatar.png';
+  }
+  
   removeDuplicates(notifs: NotificationM[]): NotificationM[] {
     const seen = new Set();
     return notifs.filter((n) => {

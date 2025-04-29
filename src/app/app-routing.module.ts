@@ -135,10 +135,9 @@ const routes: Routes = [
 
 
   ]},
-  {path:'',redirectTo:'home',pathMatch:'full'},
 
   { path: 'gemini', component: GeminiChatComponent },
-  { path: '', redirectTo: 'home', pathMatch: 'full' },
+  { path: '', redirectTo: 'login', pathMatch: 'full' },
   { path: 'modify-post/:id', component: ModifyPostComponent },
   { path: 'home', component: HomeComponent },
   { path: 'userPets', component: UserPetsComponent },
@@ -166,7 +165,6 @@ const routes: Routes = [
   { path: 'agenda', component: AgendaComponent },
   { path: 'editrecord/:id', component: EditrecordComponent },
   { path: 'details/:id', component: DetailComponent },
-  { path: '', redirectTo: 'home', pathMatch: 'full' },
   { path: 'adoption-request', component: AdoptionRequestComponent },
   { path: 'edit-adoption-request', component: EditAdoptionRequestComponent },
   { path: 'chat', component: ChatPopupComponent },
@@ -197,7 +195,6 @@ const routes: Routes = [
     data: { title: 'Account Activation' },
   },
 
-  { path: '**', redirectTo: 'home', pathMatch: 'full' },
 
   {
     path: 'admin',

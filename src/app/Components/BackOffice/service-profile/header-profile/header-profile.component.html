@@ -1,38 +1,65 @@
 <div class="header-container">
-    <div class="header-left">
-      <!-- Search Bar with Icon -->
-      <div class="search-container">
-        <input type="text" class="search-input" placeholder="Search..." />
-        <i class="fa fa-search search-icon"></i>
-      </div>
-    </div>
-  
-    <div class="header-right">
-        <!-- Notification Bell -->
-        <div class="notifications" (click)="toggleDropdown($event)">
-          <i class="fa fa-bell"></i>
-          <i class="fa fa-caret-down" *ngIf="dropdownOpen"></i>
-          <div class="notification-count" *ngIf="unseenCount > 0">{{ unseenCount }}</div>
-        </div>
-
-        <!-- Dropdown Menu for Notifications -->
-        <div class="notification-dropdown" *ngIf="dropdownOpen" #dropdownRef>
-          <ul>
-            <li *ngFor="let notification of notifications" (click)="markAsRead(notification)">
-              <div class="notification-item" [class.read]="notification.seen">
-                <p>{{ notification.message }}</p>
-                <span *ngIf="!notification.seen" class="unread-indicator"></span>
-              </div>
-            </li>
-          </ul>
-        </div>
-
-  
-      <!-- User Profile with Rounded Image -->
-      <div class="user-profile">
-        <img *ngIf="profileImageUrl" [src]="profileImageUrl" alt="User" class="user-avatar" />
-        <div *ngIf="!profileImageUrl" class="default-avatar">No Image</div>
-      </div>
+  <div class="header-left">
+    <!-- Search Bar with Icon -->
+    <div class="search-container">
+      <input type="text" class="search-input" placeholder="Search..." />
+      <i class="fa fa-search search-icon"></i>
     </div>
   </div>
-  
+
+  <div class="header-right">
+    <!-- Notification Bell Dropdown -->
+    <div class="notifications dropdown" [ngClass]="{ show: dropdownOpen }">
+      <a
+        class="nav-link dropdown-toggle position-relative"
+        href="#"
+        role="button"
+        (click)="toggleDropdown($event)"
+        aria-haspopup="true"
+        [attr.aria-expanded]="dropdownOpen"
+      >
+        <i class="fa fa-bell"></i>
+        <span *ngIf="unseenCount > 0" class="notification-count">{{
+          unseenCount
+        }}</span>
+      </a>
+
+      <div
+        class="dropdown-menu notification-dropdown"
+        [class.show]="dropdownOpen"
+        #dropdownRef
+      >
+        <h6 class="dropdown-header">Notifications</h6>
+
+        <div
+          *ngIf="notifications.length === 0"
+          class="dropdown-item text-muted no-notifications"
+        >
+          <i class="fa fa-info-circle me-2 text-secondary"></i> No notifications
+        </div>
+
+        <div
+          *ngFor="let notification of notifications"
+          class="dropdown-item notification-item"
+          [ngClass]="{ read: notification.seen }"
+          (click)="markAsRead(notification)"
+        >
+          <p class="mb-0">{{ notification.message }}</p>
+          <span *ngIf="!notification.seen" class="badge bg-primary ms-2"
+            >New</span
+          >
+        </div>
+      </div>
+    </div>
+
+    <!-- User Profile -->
+    <div class="user-profile">
+      <img
+        [src]="profileImageUrl || 'assets/images/avatar.png'"
+        (error)="onImageError($event)"
+        alt="User"
+        class="user-avatar avatar-img rounded-circle"
+      />
+    </div>
+  </div>
+</div>
