@@ -44,12 +44,8 @@
     <div class="col-md-6 mb-4" *ngFor="let carnet of filteredCarnets; let i = index">
       <div class="card shadow border-0 rounded-4 p-3 d-flex flex-row align-items-start carnet-hover" style="transition: 0.3s; min-height: 270px;">
         <!-- 📸 Image -->
-        <img 
-          [src]="carnet.photoUrl || 'https://img.freepik.com/photos-gratuite/chien-carlin-isole-fond-blanc_2829-11416.jpg?w=740'"
-          alt="Notebook photo"
-          class="img-thumbnail rounded-circle me-3"
-          style="width: 120px; height: 120px; object-fit: cover; border: 3px solid #4e73df;"
-        >
+      <img [src]="carnet.imageUrl" alt="Pet Image" class="pet-image" />
+
 
         <!-- 📝 Content -->
         <div class="flex-grow-1">
