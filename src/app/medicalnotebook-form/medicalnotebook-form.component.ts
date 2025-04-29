@@ -174,7 +174,10 @@ retour(){
   /** 🔹 Charger la liste des animaux */
   loadPets() {
     this.petDataService.getPetsByOwnerId(this.userId).subscribe(
-      (data) => (this.pets = data),
+      (data) => (this.pets = data,
+        console.log("Liste des animaux", this.pets)
+
+      ),
       (error) => console.error("Erreur de chargement des animaux", error)
     );
   }
