@@ -61,7 +61,6 @@ retour(){
       date: ['', Validators.required],
       type: ['', Validators.required],
       description: ['', [Validators.required, Validators.minLength(30)]],
-      veterinarian_id: ['', Validators.required],
       next_due_date: [''],
       carnet_id: ['', Validators.required],
       poids: ['', Validators.required] // ✅ Ajouté
@@ -182,7 +181,6 @@ retour(){
   );
 }
 }
-
 
 
 
