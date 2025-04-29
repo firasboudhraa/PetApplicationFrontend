@@ -70,8 +70,8 @@
     font-size: 2rem; /* Augmenter la taille de l'emoji */
     transition: transform 0.3s ease, color 0.3s ease;
     padding: 5px;
-    margin-top: 20px; /* Décaler le bouton vers le bas */
-    margin-left: 40px;
+    margin-top: 10px; /* Décaler le bouton vers le bas */
+    margin-left: 20px;
     
 }
 .nav-link{

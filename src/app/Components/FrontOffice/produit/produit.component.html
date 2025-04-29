@@ -85,7 +85,7 @@
           <p class="card-text">{{ product.description }}</p>
           <p class="card-text"><strong>{{ product.prix }} TND</strong></p>
 
-          <!-- ID du panier spécifique pour chaque produit -->
+
           <div class="form-group basket-select-container">
             <label for="basketInput{{ product.id_Product }}">ID du panier</label>
             <input type="number"
@@ -95,8 +95,9 @@
                    *ngIf="product.id_Product !== undefined"
                    placeholder="Entrez l'ID du panier" />
           </div>
-
+    
           <!-- Actions CRUD -->
+   
           <div class="btn-group mt-2">
             <button class="btn btn-edit"
                     [routerLink]="['/edit-product', product.id_Product]">Modifier</button>
@@ -104,11 +105,12 @@
             <button class="btn btn-delete"
                     *ngIf="product.id_Product"
                     (click)="deleteProduct(product.id_Product)">Supprimer</button>
+                      </div> 
 
             <button class="btn btn-add-to-cart"
                     (click)="addToBasket(product.id_Product)"
                     *ngIf="product.id_Product !== undefined">Ajouter au panier</button>
-          </div>
+         
         </div>
       </div>
     </div>

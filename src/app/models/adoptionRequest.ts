@@ -14,4 +14,5 @@ export interface AdoptionRequest {
     time: string;
     rejectionReason: string;
     changedFields: string[];
+    isTranfered: boolean ;
 }

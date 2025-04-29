@@ -2,6 +2,8 @@ import { Component, Renderer2 } from '@angular/core';
 import { Pet } from 'src/app/models/pet';
 import { PetdataServiceService } from 'src/app/Services/petdata-service.service';
 import { PetsSpeciesService } from 'src/app/Services/shared/pets-species.service';
+import { AuthService } from '../../FrontOffice/user/auth/auth.service';
+import { cl } from '@fullcalendar/core/internal-common';
 
 @Component({
   selector: 'app-user-pets',
@@ -25,8 +27,8 @@ export class UserPetsComponent {
   showModal: boolean = false;
   showDetail: boolean = false;
   showEditModal: boolean = false;
-  userId:number = 1 ; 
-  constructor(private petDataService: PetdataServiceService ,private renderer: Renderer2 , private ps : PetsSpeciesService ) {}
+  userId!: any  ; 
+  constructor(private petDataService: PetdataServiceService , private authService:AuthService ,private renderer: Renderer2 , private ps : PetsSpeciesService ) {}
 
   openModal() {
     this.showModal = true;
@@ -128,6 +130,7 @@ setAdoptionFilter(status: string) {
   speciesSearchTerm: string = '';
   displayedSpecies: { label: string; value: string }[] = [];
   ngOnInit(): void {
+    this.userId = this.authService.getDecodedToken() ? this.authService.getDecodedToken()?.userId : 0 ;
     this.petDataService.getPetsByOwnerId(this.userId).subscribe((data) => {
       this.allPets = data;
       this.totalItems = this.allPets.length;
