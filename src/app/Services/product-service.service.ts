@@ -71,4 +71,19 @@ export class ProductService {
   decreaseQuantityBackend(id: number) {
     return this.http.put<Product>(`${this.baseUrl}/${id}/decrease`, {});
   }
+
+    // Ajouter un produit pour un utilisateur
+    addProductByUser(userId: number, formData: FormData): Observable<Product> {
+      return this.http.post<Product>(`${this.baseUrl}/user/${userId}`, formData);
+    }
+  
+    // Mettre à jour un produit pour un utilisateur
+    updateProductByUser(userId: number, productId: number, productData: FormData): Observable<Product> {
+      return this.http.put<Product>(`${this.baseUrl}/user/${userId}/product/${productId}`, productData);
+    }
+  
+    // Supprimer un produit pour un utilisateur
+    deleteProductByUser(userId: number, productId: number): Observable<void> {
+      return this.http.delete<void>(`${this.baseUrl}/user/${userId}/product/${productId}`);
+    }
 }

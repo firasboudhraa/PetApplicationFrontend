@@ -7,6 +7,7 @@ import { AdoptionRequestService } from 'src/app/Services/adoption-request.servic
 import { GoogleMapsLoaderService } from 'src/app/Services/google-maps-loader.service';
 import { PetdataServiceService } from 'src/app/Services/petdata-service.service';
 import Swal from 'sweetalert2';
+import { AuthService } from '../../FrontOffice/user/auth/auth.service';
 
 @Component({
   selector: 'app-edit-adoption-request',
@@ -25,7 +26,7 @@ export class EditAdoptionRequestComponent {
   minDate: string = '';
   requestId!: number;
   originalAdoptionRequest!: AdoptionRequest ;
-  userId : number = 1;
+  userId!:any;
 
   constructor(
     private fb: FormBuilder,
@@ -33,10 +34,12 @@ export class EditAdoptionRequestComponent {
     private mapsLoader: GoogleMapsLoaderService,
     private petdataService: PetdataServiceService ,
     private adoptionRequestService: AdoptionRequestService,
-    private router: Router
+    private router: Router,
+    private authService:AuthService ,
   ) {}
 
   ngOnInit(): void {
+    this.userId = this.authService.getDecodedToken() ? this.authService.getDecodedToken()?.userId : 0 ;
     this.requestId = Number(this.route.snapshot.queryParamMap.get('requestId'));
 
     //min date start from tomorow

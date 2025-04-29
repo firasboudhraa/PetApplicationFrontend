@@ -154,5 +154,8 @@ clearPendingEmail(): void {
   localStorage.removeItem(this.pendingEmailKey);
 }
 
-
+getCurrentUserId(): number | null {
+  const decoded = this.getDecodedToken();
+  return decoded?.userId || null;
+}
 }

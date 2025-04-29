@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, Output, SimpleChanges } from '@angular/core';
 import { Router } from '@angular/router';
+import { cl } from '@fullcalendar/core/internal-common';
 import { User } from 'src/app/Components/FrontOffice/user/models/user_model';
 import { UserService } from 'src/app/Components/FrontOffice/user/service_user/user.service';
 import { Pet } from 'src/app/models/pet';
@@ -16,7 +17,7 @@ export class PublicPetDetailModalComponent {
 @Input() isVisible: boolean = false;
   @Output() close = new EventEmitter<void>();
   @Input() pet!: Pet; 
-  @Input() userId!:number;
+  @Input() userId!:any;
 
   confirmationShowed: boolean = false;
   mapOpened: boolean = false;
@@ -135,11 +136,30 @@ export class PublicPetDetailModalComponent {
     this.close.emit();
   }
  
-  redirectToRequest(petId:number ,  ownerId:number , userId:number){
+  redirectToRequest(petId:number ,  ownerId:number , userId:any){
     this.closeModal();
-    this.router.navigate(['/adoption-request'], {
-      queryParams: { petId, userId, ownerId }
-    });  }
+    if(userId){
+
+      this.router.navigate(['/adoption-request'], {
+        queryParams: { petId, userId, ownerId }
+      });  
+    }else{
+      Swal.fire({
+        icon: 'warning',
+        title: 'Not Connected',
+        text: 'You must be logged in to make an adoption request.',
+        showCancelButton: true,
+        confirmButtonText: 'Go to Login',
+        cancelButtonText: 'Stay offline'
+
+      }).then((result) => {
+        if (result.isConfirmed) {
+          this.router.navigate(['/login']);
+        }
+      });      
+    }
+  
+  }
 
   
 }

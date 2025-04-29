@@ -10,5 +10,5 @@ export interface Product {
   alertSent: boolean;
   category: string;
   quantity: number;
-
+  userId?: number;
 }

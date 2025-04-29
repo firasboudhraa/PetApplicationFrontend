@@ -129,6 +129,7 @@ import { ServiceDetailModalComponent } from './Components/FrontOffice/PetService
 import { ContactComponent } from './Components/FrontOffice/contact/contact.component';
 import { UpdateServiceProfileComponent } from './Components/BackOffice/service-profile/update-service-profile/update-service-profile.component';
 import { AppointmentsProfileUserComponent } from './Components/FrontOffice/user/appointments-profile-user/appointments-profile-user.component';
+import { MyproductsComponent } from './Components/FrontOffice/user/myproducts/myproducts.component';
 
   @NgModule({
     declarations: [
@@ -229,7 +230,8 @@ import { AppointmentsProfileUserComponent } from './Components/FrontOffice/user/
       UsersComponent,
       ContactComponent,
       UpdateServiceProfileComponent,
-      AppointmentsProfileUserComponent
+      AppointmentsProfileUserComponent,
+      MyproductsComponent
     ],
     imports: [
       BrowserAnimationsModule,

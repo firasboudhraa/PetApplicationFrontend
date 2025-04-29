@@ -27,7 +27,8 @@ export class ProduitComponent implements OnInit {
     lowStockThreshold: 0,
     alertSent: false,
     category: '',
-    quantity: 0
+    quantity: 0,
+    userId: 0
   }; // Initialisation avec les valeurs par défaut de l'interface
   products: Product[] = [];
   selectedBasketId: number = 0;
@@ -241,7 +242,8 @@ export class ProduitComponent implements OnInit {
           lowStockThreshold: 0,
           alertSent: false,
           category: '',
-          quantity: 0
+          quantity: 0,
+          userId: 0
         }; // Réinitialiser
         this.loading = false;
         alert("Produit ajouté avec succès !");
@@ -294,7 +296,8 @@ export class ProduitComponent implements OnInit {
           lowStockThreshold: 0,
           alertSent: false,
           category: '',
-          quantity: 0
+          quantity: 0,
+          userId: 0
         }; // Réinitialiser
         this.loading = false;
         alert("Produit mis à jour avec succès !");

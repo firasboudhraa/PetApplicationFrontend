@@ -36,6 +36,16 @@ navigateToMedicalNotebookStats() {
 
   carnets !: any[] 
   id!:number
+ /* goToDetails(carnet: any) {
+    if (carnet && carnet.id) {
+      console.log('Carnet reçu pour détails:', carnet.id);  // Log de l'objet complet
+      this.router.navigate(['/details', carnet.id]);
+
+      console.log('carnet ', carnet.id);
+    } else {
+      console.error('Invalid carnet for editing:', carnet);
+    }
+  }*/
 
     goToDetails(carnetRecu: any) {
     console.log('📦 Carnet reçu en paramètre:', carnetRecu);
@@ -85,7 +95,7 @@ navigateToMedicalNotebookStats() {
   
   
   ngOnInit(): void {
-    this.id=this.act.snapshot.params['id']
+    this.id = this.act.snapshot.params['id'];
     console.log(this.id)
 
     this.loadCarnets();

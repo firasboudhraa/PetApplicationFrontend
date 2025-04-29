@@ -74,7 +74,7 @@ retour(){
       const selectedPetId = +this.carnetForm.value.pet_id;  // Convertir en nombre
       console.log('ID de l\'animal sélectionné:', selectedPetId);
   
-      const selectedPet = this.pets.find(pet => pet.id === selectedPetId);  // Trouver l'animal sélectionné
+      const selectedPet = this.pets.find(pet => pet.id === selectedPetId); 
   
       // Vérifiez que selectedPet est bien trouvé et contient les bonnes données
       console.log("Animal sélectionné :", selectedPet);
@@ -84,7 +84,6 @@ retour(){
         return;  // Si l'animal n'est pas trouvé, on arrête l'exécution
       }
   
-      // Créer l'objet à envoyer à l'API avec l'ID et le nom de l'animal
       const carnetData = { pet_id: selectedPetId, name: selectedPet.name };
   
       // Appeler l'API pour enregistrer le carnet
@@ -173,12 +172,15 @@ retour(){
   }
 
   /** 🔹 Charger la liste des animaux */
-  loadPets() {
-    this.petDataService.getPetsByOwnerId(this.userId).subscribe(
-      (data) => (this.pets = data),
-      (error) => console.error("Erreur de chargement des animaux", error)
-    );
-  }
+ loadPets() {
+  this.petDataService.getPetsByOwnerId(this.userId).subscribe(
+    (data) => (this.pets = data,
+      console.log("Liste des animaux", this.pets)
+
+    ),
+    (error) => console.error("Erreur de chargement des animaux", error)
+  );
+}
 }
 
 
