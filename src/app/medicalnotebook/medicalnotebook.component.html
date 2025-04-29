@@ -63,7 +63,7 @@
               <p><strong>Type:</strong> {{ carnet.medicalRecords[0].type }}</p>
               <p><strong>Date:</strong> {{ carnet.medicalRecords[0].dateTime | date: 'dd/MM/yyyy' }}</p>
               <p><strong>Description:</strong> {{ carnet.medicalRecords[0].description }}</p>
-              <p><strong>Veterinarian:</strong> {{ carnet.medicalRecords[0].veterinarian_id || 'Not specified' }}</p>
+              <p><strong>poids:</strong> {{ carnet.medicalRecords[0].poids}}</p>
             </div>
             <div *ngIf="!carnet.medicalRecords?.length">
               <p>No medical records available.</p>

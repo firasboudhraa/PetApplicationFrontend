@@ -2,14 +2,14 @@
 <br>
 <br>
 <div class="container">
-  <h2>Historique des Paiements</h2>
+  <h2>Payment History</h2>
 
   <table *ngIf="!isLoading && payments.length > 0" class="payment-table">
     <thead>
       <tr>
-        <th>Montant</th>
-        <th>Statut</th>
-        <th>Moyen de Paiement</th>
+        <th>Amount</th>
+        <th>Status</th>
+        <th>Payent mode</th>
         <th>Date</th>
         <th>Actions</th>
       </tr>
@@ -31,7 +31,7 @@
         <td>
           <div class="btn-group">
             <button class="btn-delete" (click)="deletePayment(payment.id_Payment)">
-              🗑 Supprimer
+              🗑 Delete
             </button>
           </div>
         </td>
@@ -40,6 +40,6 @@
   </table>
 
   <div *ngIf="!isLoading && payments.length === 0" class="no-data">
-    Aucun paiement trouvé.
-  </div>
+    No payment found.
+    </div>
 </div>
