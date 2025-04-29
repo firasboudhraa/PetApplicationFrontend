@@ -6,5 +6,7 @@ export interface Carnet {
   name: string;  // Nom du carnet
   medicalHistory: Record[];  // Liste des records médicaux
   pet_id: string;  // UUID de l'animal
+  photoUrl?: string;  // Ajout de la propriété photoUrl
+
 }
 

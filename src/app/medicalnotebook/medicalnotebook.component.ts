@@ -129,6 +129,13 @@ navigateToMedicalNotebookStats() {
     });
   }
 
+  private apiUrl = 'http://localhost:8222/api/v1/pet/images';
+
+
+  getImageUrl(filename: string): string {
+    return `${this.apiUrl}/${filename}`;
+}
+
   // Charger la liste des carnets médicaux
   loadCarnets(): void {
     this.medicalService.getAllCarnets().subscribe({
@@ -363,5 +370,7 @@ toggle(index: number): void {
   this.expandedIndex[index] = !this.expandedIndex[index];
 }
   
+
+
 
 }

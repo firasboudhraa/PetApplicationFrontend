@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Product } from '../models/product';
+import { HttpHeaders } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
@@ -72,18 +73,30 @@ export class ProductService {
     return this.http.put<Product>(`${this.baseUrl}/${id}/decrease`, {});
   }
 
-    // Ajouter un produit pour un utilisateur
-    addProductByUser(userId: number, formData: FormData): Observable<Product> {
-      return this.http.post<Product>(`${this.baseUrl}/user/${userId}`, formData);
-    }
+  getProductsByUserId(userId: number, headers: HttpHeaders): Observable<Product[]> {
+    return this.http.get<Product[]>(`${this.baseUrl}/user/${userId}`, { headers });
+  }
   
-    // Mettre à jour un produit pour un utilisateur
-    updateProductByUser(userId: number, productId: number, productData: FormData): Observable<Product> {
-      return this.http.put<Product>(`${this.baseUrl}/user/${userId}/product/${productId}`, productData);
-    }
   
-    // Supprimer un produit pour un utilisateur
-    deleteProductByUser(userId: number, productId: number): Observable<void> {
-      return this.http.delete<void>(`${this.baseUrl}/user/${userId}/product/${productId}`);
-    }
+  // Ajouter un produit (par utilisateur)
+  addProductByUser(userId: number, formData: FormData): Observable<Product> {
+    return this.http.post<Product>(`${this.baseUrl}/user/${userId}`, formData);
+  }
+
+  // Modifier un produit (par utilisateur)
+  updateProductByUser(userId: number, productId: number, productData: FormData): Observable<Product> {
+    return this.http.put<Product>(`${this.baseUrl}/user/${userId}/product/${productId}`, productData);
+  }
+
+  // Supprimer un produit (par utilisateur)
+  deleteProductByUser(userId: number, productId: number): Observable<void> {
+    return this.http.delete<void>(`${this.baseUrl}/user/${userId}/product/${productId}`);
+  }
+
+  private getAuthHeaders(): HttpHeaders {
+    const token = localStorage.getItem('token');
+    return new HttpHeaders({
+      Authorization: `Bearer ${token}`
+    });
+  }
 }

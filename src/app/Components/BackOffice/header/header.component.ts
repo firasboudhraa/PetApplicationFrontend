@@ -1,9 +1,13 @@
 import { DatePipe } from '@angular/common';
 import { Component, ElementRef, HostListener, OnInit, ViewChild } from '@angular/core';
 import { Notification } from 'src/app/models/notification';
-import Swal from 'sweetalert2';
+import { User } from 'src/app/Components/FrontOffice/user/models/user_model';
 import { WebsocketService } from '../../../Services/websocket-service.service'
 import { NotificationServiceService } from 'src/app/Services/notification-service.service';
+import { AuthService } from 'src/app/Components/FrontOffice/user/auth/auth.service';
+import { UserService } from 'src/app/Components/FrontOffice/user/service_user/user.service';
+
+
 
 @Component({
   selector: 'app-header',
@@ -11,6 +15,9 @@ import { NotificationServiceService } from 'src/app/Services/notification-servic
   styleUrls: ['./header.component.css']
 })
 export class HeaderComponent implements OnInit {
+   user: User | undefined;
+    userId: number | undefined;
+    profileImageUrl: string = '';
   notifications: Notification[] = [];
   unreadCount!: number;
   dropdownOpen = false;
@@ -20,7 +27,10 @@ export class HeaderComponent implements OnInit {
   constructor(
     private websocketService: WebsocketService,
     private notificationService: NotificationServiceService,
-    private datePipe: DatePipe
+    private datePipe: DatePipe,
+    private authService: AuthService,
+    private userService: UserService
+    
   ) {}
 
   ngOnInit(): void {
@@ -29,16 +39,33 @@ export class HeaderComponent implements OnInit {
       this.notifications = data.sort((a, b) => new Date(b.createdAt ?? 0).getTime() - new Date(a.createdAt ?? 0).getTime());
       this.unreadCount = this.notifications.filter(notif => !notif.isRead).length;
     });
-
-    // 2. Subscribe to WebSocket notifications
+  
+    // 2. Get user information
+    this.userId = this.authService.getDecodedToken()?.userId;
+  
+    if (this.userId) {
+      this.userService.getUserById(this.userId).subscribe({
+        next: (user: User) => {
+          this.user = user;
+          if (user.profileImageUrl) {
+            this.profileImageUrl = `http://localhost:8084${user.profileImageUrl}`;
+          }
+        },
+        error: (err) => {
+          console.error('Error fetching user data:', err);
+        },
+      });
+    }
+  
+    // 3. Subscribe to WebSocket notifications
     this.websocketService.notifications$.subscribe((newNotifs: Notification[]) => {
       this.notifications = this.removeDuplicates([...newNotifs, ...this.notifications]);
       this.unreadCount = this.notifications.filter(n => !n.isRead).length;
     });
-
-    // 3. Connect WebSocket
+  
+    // 4. Connect WebSocket
     this.websocketService.connect();
-  }
+  }  
 
   removeDuplicates(notifs: Notification[]): Notification[] {
     const seen = new Set();

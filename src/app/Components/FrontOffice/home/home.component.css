@@ -1,0 +1,33 @@
+.statistics-section {
+    background: linear-gradient(to right, #f8f9fa, #e9ecef);
+    padding: 60px 0;
+  }
+  
+  .stat-box {
+    background: white;
+    border-radius: 12px;
+    transition: transform 0.3s ease;
+  }
+  
+  .stat-box:hover {
+    transform: translateY(-5px);
+  }
+  
+  .stat-box h2 {
+    font-size: 3rem;
+    font-weight: bold;
+    margin: 0;
+    color: #333;  /* Couleur des titres (noir ou gris foncé) */
+  }
+  
+  .stat-box p {
+    font-size: 1.1rem;
+    color: #333;  /* Couleur des paragraphes (noir ou gris foncé) */
+  }
+  
+  .stat-box .count {
+    font-size: 4rem;
+    font-weight: bold;
+    color: green !important;  /* Couleur des chiffres en vert avec !important */
+  }
+  

@@ -22,7 +22,7 @@
           [(ngModel)]="selectedCategory" 
           (change)="filterProducts()"
         >
-          <option value="">Filtrer par catégorie</option>
+          <option value="">Filter by category</option>
           <option *ngFor="let category of categories" [value]="category">{{ category }}</option>
         </select>
       </div>
@@ -31,7 +31,7 @@
     <!-- Jauge de prix - 4 colonnes -->
     <div class="col-md-4 col-sm-12 mb-2 mb-md-0">
       <div class="form-group">
-        <label class="form-label">Fourchette de prix</label>
+        <label class="form-label">Price range</label>
         <div class="price-range-slider">
           <input type="range" 
                  class="form-range" 
@@ -59,7 +59,7 @@
   <!-- Bouton pour ajouter un nouveau produit -->
   <div class="mb-4">
     <a [routerLink]="['/formproduit']">
-      <button class="btn btn-primary">Ajouter un produit</button>
+      <button class="btn btn-primary">Add product</button>
     </a>
   </div>
 
@@ -87,7 +87,7 @@
 
 
           <div class="form-group basket-select-container">
-            <label for="basketInput{{ product.id_Product }}">ID du panier</label>
+            <label for="basketInput{{ product.id_Product }}">Basket ID</label>
             <input type="number"
                    id="basketInput{{ product.id_Product }}"
                    class="form-control basket-select"
@@ -97,7 +97,7 @@
           </div>
     
           <!-- Actions CRUD -->
-   
+   <!--
           <div class="btn-group mt-2">
             <button class="btn btn-edit"
                     [routerLink]="['/edit-product', product.id_Product]">Modifier</button>
@@ -105,11 +105,11 @@
             <button class="btn btn-delete"
                     *ngIf="product.id_Product"
                     (click)="deleteProduct(product.id_Product)">Supprimer</button>
-                      </div> 
+                      </div> -->
 
             <button class="btn btn-add-to-cart"
                     (click)="addToBasket(product.id_Product)"
-                    *ngIf="product.id_Product !== undefined">Ajouter au panier</button>
+                    *ngIf="product.id_Product !== undefined">Add to cart</button>
          
         </div>
       </div>

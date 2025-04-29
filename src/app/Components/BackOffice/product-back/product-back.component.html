@@ -2,14 +2,14 @@
     <div class="product-dashboard">
   
       <!-- Button to add product -->
-      <button class="btn-main" (click)="toggleProductForm()">Ajouter un produit</button>
+      <button class="btn-main" (click)="toggleProductForm()">Add a product</button>
   
       <!-- Add product form -->
       <div *ngIf="showAddProductForm" class="product-form">
-        <h3>Ajouter un produit</h3>
+        <h3>Add a product</h3>
         <form (ngSubmit)="addProduct()">
           <div class="form-group">
-            <label for="nom">Nom:</label>
+            <label for="nom">Name:</label>
             <input type="text" id="nom" [(ngModel)]="newProduct.nom" name="nom" required />
           </div>
           <div class="form-group">
@@ -17,7 +17,7 @@
             <input type="text" id="description" [(ngModel)]="newProduct.description" name="description" required />
           </div>
           <div class="form-group">
-            <label for="prix">Prix:</label>
+            <label for="prix">Price:</label>
             <input type="number" id="prix" [(ngModel)]="newProduct.prix" name="prix" required />
           </div>
           <div class="form-group">
@@ -32,30 +32,30 @@
   </div>
   
   <div class="form-group">
-    <label for="category">Catégorie</label>
+    <label for="category">Category</label>
     <select id="category" class="form-control" [(ngModel)]="newProduct.category" name="categorie" required>
-      <option value="">Choisir une catégorie</option>
+      <option value="">Choose a category</option>
       <option value="Alimentation">Alimentation</option>
-      <option value="Accessoires">Accessoires</option>
-      <option value="Hygiène et soins">Hygiène et soins</option>
-      <option value="Santé">Santé</option>
+      <option value="Accessoires">Accessories</option>
+      <option value="Hygiène et soins">Hygiene and Care</option>
+      <option value="Santé">Health </option>
       <option value="Habitat">Habitat</option>
     </select>
   
   </div>
           <div class="form-group">
-            <label for="lowStockThreshold">Seuil de faible stock:</label>
+            <label for="lowStockThreshold">Low stock threshold:</label>
             <input type="number" id="lowStockThreshold" [(ngModel)]="newProduct.lowStockThreshold" name="lowStockThreshold" required />
           </div>
           <div>
-            <button class="btn-submit" type="submit">Ajouter</button>
+            <button class="btn-submit" type="submit">Add</button>
           </div>
         </form>
       </div>
   
   
       <!-- Choose Marketplace Section -->
-      <h3>Choisir une Marketplace</h3>
+      <h3>Choose a Marketplace</h3>
       <div style="margin-bottom: 1rem;">
         <label for="marketplaceId">Marketplace ID :</label>
         <input type="number" id="marketplaceId" [(ngModel)]="selectedMarketplaceId" />
@@ -67,12 +67,12 @@
       <!-- Product List Section -->
       <h3>Product List</h3>
       <div style="margin-bottom: 1rem;">
-        <input type="text" [(ngModel)]="searchTerm" (ngModelChange)="onSearchTermChange()" placeholder="Rechercher par nom" />
+        <input type="text" [(ngModel)]="searchTerm" (ngModelChange)="onSearchTermChange()" placeholder="Search by name" />
       </div>
   
       <!-- Sort by Stock Button -->
       <button class="btn-main" (click)="sortByStock()">
-        Trier par stock ({{ isDescending ? 'descendant' : 'ascendant' }})
+        Sort by stock ({{ isDescending ? 'descending' : 'ascending' }})
       </button>
       
       <br><br>
@@ -105,10 +105,10 @@
       </table>
          <!-- Update product form -->
          <div *ngIf="showUpdateProductForm && selectedProduct" class="card card-body mt-3">
-          <h3>Modifier un produit</h3>
+          <h3>Edit product</h3>
           <form (ngSubmit)="updateProduct()">
             <div class="form-group">
-              <label for="editNom">Nom:</label>
+              <label for="editNom">Name:</label>
               <input type="text" id="editNom" [(ngModel)]="selectedProduct.nom" name="editNom" required />
             </div>
             <div class="form-group">
@@ -116,7 +116,7 @@
               <input type="text" id="editDescription" [(ngModel)]="selectedProduct.description" name="editDescription" required />
             </div>
             <div class="form-group">
-              <label for="editPrix">Prix:</label>
+              <label for="editPrix">Price:</label>
               <input type="number" id="editPrix" [(ngModel)]="selectedProduct.prix" name="editPrix" required />
             </div>
             <div class="form-group">
@@ -129,23 +129,23 @@
               <img *ngIf="selectedProduct.imageUrl" [src]="selectedProduct.imageUrl" width="100" class="preview-img" />
             </div>
             <div class="form-group">
-              <label for="editCategory">Catégorie</label>
+              <label for="editCategory">Category</label>
               <select id="editCategory" class="form-control" [(ngModel)]="selectedProduct.category" name="editCategorie" required>
-                <option value="">Choisir une catégorie</option>
+                <option value="">Choose a category</option>
                 <option value="Alimentation">Alimentation</option>
-                <option value="Accessoires">Accessoires</option>
-                <option value="Hygiène et soins">Hygiène et soins</option>
-                <option value="Santé">Santé</option>
+                <option value="Accessoires">Accessories</option>
+                <option value="Hygiène et soins">Hygiene and Care</option>
+                <option value="Santé">Health </option>
                 <option value="Habitat">Habitat</option>
               </select>
             </div>
             <div class="form-group">
-              <label for="editLowStockThreshold">Seuil de faible stock:</label>
+              <label for="editLowStockThreshold">Low stock threshold:</label>
               <input type="number" id="editLowStockThreshold" [(ngModel)]="selectedProduct.lowStockThreshold" name="editLowStockThreshold" required />
             </div>
             <div>
-              <button class="btn-submit" type="submit">Mettre à jour</button>
-              <button class="btn-cancel" type="button" (click)="cancelEdit()">Annuler</button>
+              <button class="btn-submit" type="submit">Save edits</button>
+              <button class="btn-cancel" type="button" (click)="cancelEdit()">Cancel</button>
             </div>
           </form>
         </div>
@@ -158,14 +158,14 @@
   
       <!-- No Products Message -->
       <ng-template #noData>
-        <p *ngIf="!isLoading">Aucun produit trouvé pour cette marketplace.</p>
+        <p *ngIf="!isLoading">No products found for this marketplace.</p>
       </ng-template>
   
       <!-- Error Message -->
       <p *ngIf="errorMessage" class="error-message">{{ errorMessage }}</p>
   
       <!-- Loading Message -->
-      <p *ngIf="isLoading" class="loading-message">Chargement en cours...</p>
+      <p *ngIf="isLoading" class="loading-message">Loading...</p>
   
     </div>
   </div>

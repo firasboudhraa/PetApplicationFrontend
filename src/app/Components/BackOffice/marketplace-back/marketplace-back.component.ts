@@ -43,7 +43,7 @@ export class MarketplaceBackComponent {
       html:
         `<input id="swal-name" class="swal2-input" placeholder="Name">` +
         `<input id="swal-description" class="swal2-input" placeholder="Description">` +
-        `<input id="swal-statut" class="swal2-input" placeholder="Statut (active)">`,
+        `<input id="swal-statut" class="swal2-input" placeholder="Status (active)">`,
       focusConfirm: false,
       confirmButtonText: 'Create',
       showCancelButton: true,
@@ -54,17 +54,17 @@ export class MarketplaceBackComponent {
         const statut = (document.getElementById('swal-statut') as HTMLInputElement).value.trim().toLowerCase();
   
         if (!name || !description || !statut) {
-          Swal.showValidationMessage('Tous les champs sont obligatoires.');
+          Swal.showValidationMessage('All fields are required.');
           return false;
         }
   
         if (name.length < 5 || description.length < 5 || statut.length < 5) {
-          Swal.showValidationMessage('Chaque champ doit contenir au moins 5 caractères.');
+          Swal.showValidationMessage('Each field must contain at least 5 characters.');
           return false;
         }
   
         if (statut !== 'active') {
-          Swal.showValidationMessage("Le statut doit être exactement 'active'.");
+          Swal.showValidationMessage("The status must be exactly 'active'.");
           return false;
         }
   
@@ -93,7 +93,7 @@ export class MarketplaceBackComponent {
         this.marketplaces = data;
       },
       error: (err) => {
-        this.errorMessage = 'Erreur lors du chargement des marketplaces';
+        this.errorMessage = 'Error while loading marketplaces.';
         console.error(err);
       }
     });
@@ -110,7 +110,7 @@ export class MarketplaceBackComponent {
   
           // Affichage d'une alerte SweetAlert avec les détails du marketplace sous forme de carte
           Swal.fire({
-            title: 'Marketplace Trouvé',
+            title: 'Marketplace found',
             html: `
               <div style="width: 350px; padding: 20px; border-radius: 10px; background-color: #f9f9f9; box-shadow: 0 4px 6px rgba(0,0,0,0.1); margin: 0 auto;">
                 <h3 style="margin-bottom: 15px; color: #333; text-align: center;">${this.uniqueMarketplace.name}</h3>
@@ -119,11 +119,11 @@ export class MarketplaceBackComponent {
                   <p style="margin: 5px 0; font-size: 14px; color: #666; text-align: center;">${this.uniqueMarketplace.description}</p>
                 </div>
                 <div style="margin-bottom: 10px;">
-                  <strong style="color: #555;">Statut:</strong>
+                  <strong style="color: #555;">Status:</strong>
                   <p style="margin: 5px 0; font-size: 14px; color: #666; text-align: center;">${this.uniqueMarketplace.statut}</p>
                 </div>
                 <div style="margin-bottom: 20px;">
-                  <strong style="color: #555;">Date de création:</strong>
+                  <strong style="color: #555;">Creation date:</strong>
                   <p style="margin: 5px 0; font-size: 14px; color: #666; text-align: center;">${this.uniqueMarketplace.dateCreation}</p>
                 </div>
               </div>
@@ -136,25 +136,25 @@ export class MarketplaceBackComponent {
           });
         },
         error: (err) => {
-          this.errorMessage = 'Erreur lors de la recherche de la marketplace';
+          this.errorMessage = 'Error while searching for the marketplace';
           console.error(err);
   
           // Affichage d'une alerte d'erreur si la recherche échoue
           Swal.fire({
-            title: 'Erreur',
-            text: 'L\'ID de la marketplace est invalide !',
+            title: 'Error',
+            text: 'The marketplace ID is invalid !',
             icon: 'error',
             confirmButtonText: 'OK'
           });
         }
       });
     } else {
-      this.errorMessage = 'L\'ID de la marketplace est invalide';
+      this.errorMessage = 'The marketplace ID is invalid.';
   
       // Affichage d'une alerte si l'ID est invalide
       Swal.fire({
         title: 'ID Invalide',
-        text: 'Veuillez entrer un ID valide.',
+        text: 'Please enter a valid ID.',
         icon: 'warning',
         confirmButtonText: 'OK'
       });
@@ -180,29 +180,29 @@ export class MarketplaceBackComponent {
           html:
             `<input id="swal-input-name" class="swal2-input" placeholder="Nom" value="${marketplace.name}">` +
             `<input id="swal-input-description" class="swal2-input" placeholder="Description" value="${marketplace.description}">` +
-            `<input id="swal-input-statut" class="swal2-input" placeholder="Statut" value="${marketplace.statut}">`,
+            `<input id="swal-input-statut" class="swal2-input" placeholder="Status" value="${marketplace.statut}">`,
           focusConfirm: false,
           showCancelButton: true,
-          confirmButtonText: 'Enregistrer',
-          cancelButtonText: 'Annuler',
+          confirmButtonText: 'Save',
+          cancelButtonText: 'Cancel',
           preConfirm: () => {
             const name = (document.getElementById('swal-input-name') as HTMLInputElement).value;
             const description = (document.getElementById('swal-input-description') as HTMLInputElement).value;
             const statut = (document.getElementById('swal-input-statut') as HTMLInputElement).value;
   
             if (!name || !description || !statut) {
-              Swal.showValidationMessage('Tous les champs sont requis');
+              Swal.showValidationMessage('All fields are required');
               return false;
             }
 
             
           if (name.length < 5 || description.length < 5 || statut.length < 5) {
-            Swal.showValidationMessage('Chaque champ doit contenir au moins 5 caractères.');
+            Swal.showValidationMessage('Each field must contain at least 5 characters.');
             return false;
           }
 
           if (statut !== 'active') {
-            Swal.showValidationMessage("Le statut doit être 'active'.");
+            Swal.showValidationMessage("The status must be exactly 'active'.");
             return false;
           }
   
@@ -220,11 +220,11 @@ export class MarketplaceBackComponent {
             this.marketplaceService.updateMarketplace(id, updatedMarketplace).subscribe({
               next: () => {
                 this.loadMarketplaces();
-                Swal.fire('Succès', 'Le marketplace a été mis à jour avec succès.', 'success');
+                Swal.fire('Succès', 'The marketplace has been successfully updated.', 'success');
               },
               error: (err) => {
                 console.error(err);
-                Swal.fire('Erreur', 'Échec de la mise à jour du marketplace.', 'error');
+                Swal.fire('Error', 'Failed to update the marketplace.', 'error');
               }
             });
           }
@@ -232,7 +232,7 @@ export class MarketplaceBackComponent {
       },
       error: (err) => {
         console.error(err);
-        Swal.fire('Erreur', 'Impossible de récupérer les données du marketplace.', 'error');
+        Swal.fire('Erreur', 'Unable to fetch marketplace data.', 'error');
       }
     });
   }
@@ -241,8 +241,8 @@ export class MarketplaceBackComponent {
   deleteMarketplace(id: number | undefined): void {
     if (id !== undefined) {
       Swal.fire({
-        title: 'Êtes-vous sûr ?',
-        text: 'Cette action supprimera définitivement le marketplace et tous ses produits associés.',
+        title: 'Are you sure ?',
+        text: 'This action will permanently delete the marketplace and all its associated products.',
         icon: 'warning',
         showCancelButton: true,
         confirmButtonColor: '#d33',
@@ -254,11 +254,11 @@ export class MarketplaceBackComponent {
           // Supprimer directement le marketplace
           this.marketplaceService.deleteMarketplace(id).subscribe({
             next: () => {
-              Swal.fire('Supprimé', 'Le marketplace a été supprimé avec succès.', 'success');
+              Swal.fire('Deleted', 'The marketplace has been successfully deleted.', 'success');
             },
             error: (err) => {
               console.error(err);
-              Swal.fire('Erreur', 'Échec de la suppression du marketplace.', 'error');
+              Swal.fire('Erreur', 'Failed to delete the marketplace.', 'error');
             }
           });
         }
@@ -283,8 +283,8 @@ submitMarketplaceForm() {
   if (this.marketplaces.length > 0) {
     Swal.fire({
       icon: 'error',
-      title: 'Navré !',
-      text: 'Il ne peut y avoir qu\'une seule marketplace.',
+      title: 'Sorry !',
+      text: 'There can only be one marketplace.',
       confirmButtonColor: '#dc3545'
     });
     return;
@@ -296,16 +296,16 @@ submitMarketplaceForm() {
       Swal.fire({
         icon: 'success',
         title: 'Succès',
-        text: 'Votre marketplace a été créée avec succès !',
+        text: 'Your marketplace has been successfully created. !',
         confirmButtonColor: '#28a745'
       });
     },
     error: (error) => {
-      console.error('Erreur lors de la création :', error);
+      console.error('Error during creation. :', error);
       Swal.fire({
         icon: 'error',
         title: 'Erreur',
-        text: 'Impossible de créer la marketplace. Veuillez réessayer.',
+        text: 'Unable to create the marketplace. Please try again.',
         confirmButtonColor: '#dc3545'
       });
     }

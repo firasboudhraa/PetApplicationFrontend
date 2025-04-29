@@ -51,7 +51,7 @@ export class LoginComponent {
 
           setTimeout(() => {
             this.showModal = false;
-            this.router.navigate(['/profile']);
+            this.router.navigate(['/home']);
           }, 2000);
         },
         error: (err) => {
