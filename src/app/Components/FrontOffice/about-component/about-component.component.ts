@@ -26,7 +26,7 @@ export class AboutComponentComponent implements OnInit{
 
   incrementCount(): void {
     const customerTarget = 250;
-    const professionalsTarget = 8500;
+    const professionalsTarget = 850;
     const productsTarget = 420;
     const petsTarget = 650;
 
@@ -48,7 +48,7 @@ export class AboutComponentComponent implements OnInit{
         this.productsCount === productsTarget && this.petsCount === petsTarget) {
         clearInterval(interval);
       }
-    }, 10); // Ajuste la vitesse de l'incrémentation ici
+    }, 10); 
   }
 
 }

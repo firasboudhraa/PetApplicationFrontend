@@ -5,6 +5,9 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { MedicalService } from '../Services/medical.service';
 import { cl } from '@fullcalendar/core/internal-common';
 import { PetdataServiceService } from '../Services/petdata-service.service';
+import { UserService } from '../Services/user.service';
+import { AuthService } from '../Components/FrontOffice/user/auth/auth.service';
+
 
 @Component({
   selector: 'app-medicalnotebook-form',
@@ -14,21 +17,24 @@ import { PetdataServiceService } from '../Services/petdata-service.service';
 export class MedicalnotebookFormComponent implements OnInit {
   carnetForm!: FormGroup;
   recordForm!: FormGroup;
-  userId : number = 1; 
+  userId1: number = 3; 
+
   carnets: any[] = [{
      id: 2,
       pet_id: 12 
   }];
   records: any[] = [];
-  pets: Pet[] = [
+ /* pets: Pet[] = [
     { id: 1, name: 'Rex', imagePath: 'assets/dog1.jpg', species: 'Chien', age: 3, color: 'Marron', sex: 'Mâle', ownerId: 101, description: 'Chien affectueux et joueur.', forAdoption: false, location: 'Paris' ,adoptionRequests: []},
     { id: 2, name: 'Misty', imagePath: 'assets/cat1.jpg', species: 'Chat', age: 2, color: 'Gris', sex: 'Femelle', ownerId: 102, description: 'Chat calme et doux.', forAdoption: true, location: 'Lyon' ,adoptionRequests: []},
     { id: 3, name: 'Charlie', imagePath: 'assets/dog2.jpg', species: 'Chien', age: 5, color: 'Noir', sex: 'Mâle', ownerId: 103, description: 'Chien énergique et intelligent.', forAdoption: false, location: 'Marseille' ,adoptionRequests: []},
     { id: 4, name: 'miomioe', imagePath: 'assets/dog2.jpg', species: 'chatton', age: 5, color: 'blanc', sex: 'Mâle', ownerId: 106, description: 'Chien énergique et intelligent.', forAdoption: false, location: 'Marseille' ,adoptionRequests: []},
 
-  ];  
+  ]; */ 
+  pets: Pet[] = []; // Liste des animaux
   id!: string; // ID du carnet ou record en cours d’édition
   selectedImage: File | null = null;
+  userId!: number;
 retour(){
   this.rt.navigate(['/medicalnotebook']);
 }
@@ -37,19 +43,23 @@ retour(){
     private act: ActivatedRoute,
     private rt: Router,
     private medicalService: MedicalService,
-    private petDataService : PetdataServiceService
+    private petDataService : PetdataServiceService,
+    private sharedDataService: UserService,
+     private authService:AuthService
   ) {}
 
   ngOnInit(): void {
     this.initForms();
     this.loadPets();
     this.loadCarnets();
+     const userId = this.authService.getDecodedToken()?.userId ?? 0;
 
     // 1. Récupérer l’ID du carnet si on édite un carnet
     this.id = this.act.snapshot.params['id'];
     if (this.id) {
       this.loadCarnetById(this.id);
     }
+
   }
 
   /** 🔹 Initialisation des formulaires */
@@ -149,6 +159,7 @@ retour(){
 
   /** 🔹 Charger tous les carnets */
   loadCarnets(): void {
+    
     this.medicalService.getAllCarnets().subscribe({
       next: (response) => {
         console.log('Carnets récupérés:', response); // Vérifiez que vous recevez la liste correcte
@@ -162,6 +173,7 @@ retour(){
   
   /** 🔹 Charger un carnet par ID */
   loadCarnetById(id: string) {
+    
     this.medicalService.getCarnetById(id).subscribe(
       (carnet) => {
         this.carnetForm.patchValue(carnet);
@@ -171,8 +183,10 @@ retour(){
   }
 
   /** 🔹 Charger la liste des animaux */
- loadPets() {
-  this.petDataService.getPetsByOwnerId(this.userId).subscribe(
+ loadPets() {   
+    const userId = this.authService.getDecodedToken()?.userId ?? 0;
+
+  this.petDataService.getPetsByOwnerId(userId).subscribe(
     (data) => (this.pets = data,
       console.log("Liste des animaux", this.pets)
 
