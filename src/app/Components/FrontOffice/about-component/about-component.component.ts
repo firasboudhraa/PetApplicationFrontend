@@ -48,7 +48,7 @@ export class AboutComponentComponent implements OnInit{
         this.productsCount === productsTarget && this.petsCount === petsTarget) {
         clearInterval(interval);
       }
-    }, 10); // Ajuste la vitesse de l'incrémentation ici
+    }, 10); 
   }
 
 }
