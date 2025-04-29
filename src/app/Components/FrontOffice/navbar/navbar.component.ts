@@ -19,8 +19,8 @@ import { catchError } from 'rxjs/operators';
 import { of } from 'rxjs';
 import { User } from '../user/models/user_model';
 import { AuthService } from '../user/auth/auth.service';
-import { cl } from '@fullcalendar/core/internal-common';
 import { UserService } from '../user/service_user/user.service';
+import  { Router } from '@angular/router';
 
 @Component({
   selector: 'app-navbar',
@@ -42,7 +42,8 @@ export class NavbarComponent implements OnInit {
     private userService: UserService,
     private authService: AuthService,
     private basketService: BasketService,
-    private productService: ProductService
+    private productService: ProductService,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -56,6 +57,12 @@ export class NavbarComponent implements OnInit {
     }
   }
 
+  hasRole(role: string): boolean {
+    const roles = this.authService.getUserRoles(); 
+    return roles.includes(role);
+  }
+  
+
   private loadUserProfile(userId: number): void {
     this.userService.getUserById(userId).subscribe({
       next: (data: User) => {
@@ -68,7 +75,7 @@ export class NavbarComponent implements OnInit {
               this.notifications = unseen;
 
               this.notificationService.notifications$.subscribe((newLive) => {
-                this.notifications = [...newLive, ...this.notifications]; // merge
+                this.notifications = [...newLive, ...this.notifications]; 
                 this.notifications = this.removeDuplicates(this.notifications);
                 console.log(this.notifications);
               });
@@ -83,7 +90,7 @@ export class NavbarComponent implements OnInit {
     });
   }
   getProfilePictureUrl(): string {
-    let url = ''; // Construct the URL as before
+    let url = ''; 
     if (!this.user.profileImageUrl) {
       url = '/assets/images/userDefaultPic.png';
     } else if (this.user.profileImageUrl.startsWith('http')) {
@@ -450,6 +457,7 @@ export class NavbarComponent implements OnInit {
           this.isLoggedIn = false;
           this.user = null;
           this.notifications = [];
+          this.router.navigate(['/login']);
         }
       },
       (error) => {

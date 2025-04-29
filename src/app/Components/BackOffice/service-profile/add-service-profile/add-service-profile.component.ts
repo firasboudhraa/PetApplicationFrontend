@@ -45,7 +45,7 @@ export class AddServiceProfileComponent {
   
       if (!mapElement || !inputElement) return;
   
-      const defaultCenter = { lat: 36.8065, lng: 10.1815 }; // Tunis
+      const defaultCenter = { lat: 36.8065, lng: 10.1815 }; 
   
       const map = new google.maps.Map(mapElement, {
         center: defaultCenter,
