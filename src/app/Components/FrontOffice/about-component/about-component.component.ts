@@ -26,7 +26,7 @@ export class AboutComponentComponent implements OnInit{
 
   incrementCount(): void {
     const customerTarget = 250;
-    const professionalsTarget = 8500;
+    const professionalsTarget = 850;
     const productsTarget = 420;
     const petsTarget = 650;
 
