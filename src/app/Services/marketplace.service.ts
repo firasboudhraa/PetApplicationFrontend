@@ -8,7 +8,7 @@ import { Product } from '../models/product';
   providedIn: 'root'
 })
 export class MarketplaceService {
-  private apiUrl = 'http://localhost:8010/api/marketplaces';
+  private apiUrl = 'http://localhost:8016/api/marketplaces';
 
   constructor(private http: HttpClient) {}
 

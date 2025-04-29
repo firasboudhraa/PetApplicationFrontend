@@ -237,13 +237,13 @@ export class PostsComponent implements OnInit {
         const { id, title, userId } = post;
         const author = this.userNames.get(userId) || '';
         const email = this.userEmails.get(userId) || '';
-
+  
         this.posts = this.posts.filter(p => p.id !== id);
         this.isDeleted = true;
         this.showConfirmModal = false;
-
+        this.postComments[id] = [];  // Clear comments for the deleted post
         setTimeout(() => (this.isDeleted = false), 3000);
-
+  
         this.postsService.deletePost(id, title, author, email).subscribe({
           next: () => console.log('Post deleted and email sent.'),
           error: err => console.error('Failed to delete post:', err)
@@ -251,12 +251,15 @@ export class PostsComponent implements OnInit {
       }
     }
   }
+  
 
-  openCommentsPopup(postId: number): void {
-    if (!this.showConfirmModal) {
-      this.selectedPostId = postId;
-    }
+ openCommentsPopup(postId: number): void {
+  // Prevent opening the comments popup if the confirmation modal is active
+  if (!this.showConfirmModal) {
+    this.selectedPostId = postId;
   }
+}
+
 
   closePopup(): void {
     this.selectedPostId = null;

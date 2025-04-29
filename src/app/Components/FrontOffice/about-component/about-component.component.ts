@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, QueryList, ViewChildren } from '@angular/core';
 
 @Component({
   selector: 'app-about-component',
@@ -6,5 +6,16 @@ import { Component } from '@angular/core';
   styleUrls: ['./about-component.component.css']
 })
 export class AboutComponentComponent {
+  isVideoPlaying = false;
+  videoSrc = 'assets/video/petCaring.mp4';
+
+  playVideo() {
+    this.isVideoPlaying = true;
+  }
+
+  closeVideo() {
+    this.isVideoPlaying = false;
+  }
+  
 
 }

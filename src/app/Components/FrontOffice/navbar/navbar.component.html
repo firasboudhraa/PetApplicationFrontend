@@ -51,7 +51,7 @@
         <li class="nav-item"[ngClass]="{active: this.activeLink === '/contact'}">
           <a routerLink="/contact" (click)='setActiveLink("/contact")' class="nav-link">Contact</a>
         </li>
-
+        <li class="nav-item"><a routerLink="/marketplace" class="nav-link">Market</a></li>
         <!-- Notification Dropdown -->
         <li class="nav-item dropdown" [class.show]="dropdownOpen">
           <a
@@ -103,44 +103,81 @@
             [attr.aria-expanded]="profileDropdownOpen"
             id="profile-image"
           >
-            <img *ngIf="!isLoggedIn"
-              [src]="
-                'assets/images/userDefaultPic.png'
-              "
+            <img
+              *ngIf="!isLoggedIn"
+              src="assets/images/userDefaultPic.png"
               alt="Profile"
               class="rounded-circle ms-5"
               width="75"
               height="75"
-              
             />
-            <img *ngIf="isLoggedIn"
-              [src]="
-                getProfilePictureUrl() 
-              "
+            <img
+              *ngIf="isLoggedIn"
+              [src]="getProfilePictureUrl()"
               alt="Profile"
               class="rounded-circle ms-5"
               width="75"
               height="75"
-              
             />
             <span class="ms-2" *ngIf="user">{{ user.username }}</span>
           </a>
-          <div
-            class="dropdown-menu dropdown-menu-right"
-            [class.show]="profileDropdownOpen"
-          >
-            <a class="dropdown-item" routerLink="/profile"(click)="toggleProfileDropdown($event)" *ngIf="isLoggedIn">Show Profile</a>
-            <a class="dropdown-item" routerLink="/userPets" (click)="toggleProfileDropdown($event)" *ngIf="isLoggedIn" >My Pets</a>
-            <a class="dropdown-item" routerLink="/medicalnotebook" (click)="toggleProfileDropdown($event)" *ngIf="isLoggedIn" >My medical notebook</a>
+        
+          <div class="dropdown-menu dropdown-menu-right" [class.show]="profileDropdownOpen">
+            <!-- Only for ROLE_SERVICE_PROVIDER -->
+            <a
+              class="dropdown-item"
+              *ngIf="hasRole('ROLE_SERVICE_PROVIDER')"
+              routerLink="/service-dashboard"
+              (click)="toggleProfileDropdown($event)"
+            >
+              Service Dashboard
+            </a>
+        
+            <!-- Only for ROLE_ADMIN -->
+            <a
+              class="dropdown-item"
+              *ngIf="hasRole('ROLE_ADMIN')"
+              routerLink="/admin-dashboard"
+              (click)="toggleProfileDropdown($event)"
+            >
+              Admin Dashboard
+            </a>
+        
+            <!-- For all other logged-in roles (excluding ADMIN and SERVICE_PROVIDER) -->
+            <ng-container
+              *ngIf="isLoggedIn && !hasRole('ROLE_ADMIN') && !hasRole('ROLE_SERVICE_PROVIDER')"
+            >
+              <a
+                class="dropdown-item"
+                routerLink="/profile"
+                (click)="toggleProfileDropdown($event)"
+              >
+                Show Profile
+              </a>
+              <a
+                class="dropdown-item"
+                routerLink="/userPets"
+                (click)="toggleProfileDropdown($event)"
+              >
+                My Pets
+              </a>
+              <a
+                class="dropdown-item"
+                routerLink="/medicalnotebook"
+                (click)="toggleProfileDropdown($event)"
+              >
+                My Medical Notebook
+              </a>
+            </ng-container>
+        
             <div class="dropdown-divider" *ngIf="isLoggedIn"></div>
-            <a class="dropdown-item" *ngIf="!isLoggedIn" routerLink="/login"
-              >Login</a
-            >
-            <a class="dropdown-item" *ngIf="isLoggedIn" (click)="logout()"
-              >Logout</a
-            >
+        
+            <!-- Always show Login/Logout -->
+            <a class="dropdown-item" *ngIf="!isLoggedIn" routerLink="/login">Login</a>
+            <a class="dropdown-item" *ngIf="isLoggedIn" (click)="logout()">Logout</a>
           </div>
         </li>
+                     
       </ul>
     </div>
   </div>

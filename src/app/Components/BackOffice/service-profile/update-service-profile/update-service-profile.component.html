@@ -1,0 +1,82 @@
+<app-sidebar-profile></app-sidebar-profile>
+<app-header-profile></app-header-profile>
+
+<div class="content-wrapper">
+    <div class="page-center">
+      <h1 class="title">
+        <i class="fa fa-home"></i> > Services > Update Service
+      </h1>
+  
+      <form [formGroup]="serviceForm" (ngSubmit)="onSubmit()">
+        <div class="form-group floating-label">
+          <input type="text" id="name" class="form-control" formControlName="name" required />
+          <label for="name">Service Name</label>
+          <small *ngIf="serviceForm.get('name')?.invalid && serviceForm.get('name')?.touched" class="text-danger">
+            Service name is required.
+          </small>
+        </div>
+  
+        <div class="form-group floating-label">
+          <textarea id="description" class="form-control" formControlName="description" required></textarea>
+          <label for="description">Description</label>
+          <small *ngIf="serviceForm.get('description')?.invalid && serviceForm.get('description')?.touched" class="text-danger">
+            Description is required.
+          </small>
+        </div>
+  
+        <div class="form-row">
+          <div class="form-group floating-label">
+            <input type="number" id="price" class="form-control" formControlName="price" required />
+            <label for="price">Price ($)</label>
+            <small *ngIf="serviceForm.get('price')?.invalid && serviceForm.get('price')?.touched" class="text-danger">
+              Price must be greater than 0.
+            </small>
+          </div>
+  
+          <div class="form-group floating-label">
+            <input type="number" id="duration" class="form-control" formControlName="durationInMinutes" required />
+            <label for="duration">Duration (minutes)</label>
+            <small *ngIf="serviceForm.get('durationInMinutes')?.invalid && serviceForm.get('durationInMinutes')?.touched" class="text-danger">
+              Minimum 10 minutes.
+            </small>
+          </div>
+        </div>
+  
+        <div class="form-group floating-label">
+          <input
+            type="text"
+            id="autocomplete" 
+            class="form-control"
+            formControlName="address"
+            required
+          />
+          <label for="autocomplete">Address</label>
+          <small *ngIf="serviceForm.get('address')?.invalid && serviceForm.get('address')?.touched" class="text-danger">
+            Address is required.
+          </small>
+        </div>
+        <div id="map" style="height: 300px; width: 100%; margin-top: 20px; border-radius: 8px;"></div>
+        <br/>
+  
+        <div class="form-row">
+          <div class="form-group floating-label">
+            <input type="datetime-local" id="startDate" class="form-control" formControlName="startDate" required />
+            <label for="startDate">Start Date</label>
+          </div>
+  
+          <div class="form-group floating-label">
+            <input type="datetime-local" id="endDate" class="form-control" formControlName="endDate" required />
+            <label for="endDate">End Date</label>
+          </div>
+        </div>
+  
+        <small *ngIf="serviceForm.errors?.['dateRangeInvalid']" class="text-danger">
+          End Date must be after Start Date.
+        </small>
+  
+        <button type="submit" class="btn btn-submit" [disabled]="serviceForm.invalid || loading">
+          <span *ngIf="loading" class="loading-spinner"></span> Submit
+        </button>
+      </form>
+    </div>
+  </div>
