@@ -56,16 +56,9 @@
         </div>
       </div>
 
-      <div class="mb-3">
-        <label>Veterinarian ID</label>
-        <input class="form-control" formControlName="veterinarian_id" placeholder="Veterinarian ID" required />
-        <div *ngIf="recordForm.controls['veterinarian_id'].invalid && recordForm.controls['veterinarian_id'].touched" class="text-danger">
-          Veterinarian ID is required.
-        </div>
-      </div>
 
       <div class="mb-3">
-        <label>Follow-up date (optional)</label>
+        <label>Follow-up date </label>
         <input class="form-control" formControlName="next_due_date" type="date" />
       </div>
 
