@@ -148,7 +148,7 @@
 <!-- Fenêtre du panier -->
 <div [ngClass]="{ 'cart-window': true, show: showBasket }">
   <div class="cart-content">
-    <h2>Panier</h2>
+    <h2>Cart</h2>
 
     <!-- Champ pour entrer l'ID du panier -->
     <div class="mb-3">
@@ -159,7 +159,7 @@
         class="form-control"
       />
       <button (click)="loadBasketById()" class="btn btn-primary mt-2">
-        Charger le panier
+        Charge my cart
       </button>
     </div>
 
@@ -219,12 +219,12 @@
     <!-- Actions -->
     <div class="mt-4 d-flex flex-column gap-2">
       <button class="btn btn-danger" (click)="clearBasket()">
-        Vider le panier
+        Clear cart
       </button>
       <button class="btn btn-success" routerLink="/payment">
-        Procéder au paiement
+        Procede to payment
       </button>
-      <button class="btn btn-secondary" (click)="toggleBasket()">Fermer</button>
+      <button class="btn btn-secondary" (click)="toggleBasket()">Close</button>
     </div>
   </div>
 </div>

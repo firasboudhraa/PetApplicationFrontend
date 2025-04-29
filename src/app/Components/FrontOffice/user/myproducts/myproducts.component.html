@@ -11,7 +11,7 @@
     <!-- Bouton pour ajouter un nouveau produit -->
     <div class="mb-4">
       <a [routerLink]="['/formproduit']">
-        <button class="btn btn-primary">Ajouter un produit</button>
+        <button class="btn btn-primary">Add product</button>
       </a>
     </div>
   
@@ -58,11 +58,6 @@
                       *ngIf="product.id_Product"
                       (click)="deleteProduct(product.id_Product)">Supprimer</button>
                         </div> 
-  
-              <button class="btn btn-add-to-cart"
-                      (click)="addToBasket(product.id_Product)"
-                      *ngIf="product.id_Product !== undefined">Ajouter au panier</button>
-           
           </div>
         </div>
       </div>

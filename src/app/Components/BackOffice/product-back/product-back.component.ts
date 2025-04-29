@@ -83,7 +83,7 @@ export class ProductBackComponent {
         },
         error: (error) => {
           console.error(error);
-          this.errorMessage = 'Erreur lors du chargement des produits';
+          this.errorMessage = 'Error while loading products';
           this.isLoading = false;
         }
       });
@@ -105,14 +105,14 @@ export class ProductBackComponent {
     
     addProduct(): void {
       if (!this.selectedFile) {
-        alert("Veuillez sélectionner une image.");
+        alert("Please select an image.");
         return;
       }
     
       const formData = new FormData();
-      formData.append("nom", this.newProduct.nom);
+      formData.append("name", this.newProduct.nom);
       formData.append("description", this.newProduct.description);
-      formData.append("prix", this.newProduct.prix.toString());
+      formData.append("price", this.newProduct.prix.toString());
       formData.append("stock", this.newProduct.stock.toString());
       formData.append("category", this.newProduct.category);
       formData.append('quantity', this.newProduct.quantity.toString());
@@ -132,7 +132,7 @@ export class ProductBackComponent {
         },
         error: (error: any) => {
           console.error(error);
-          this.errorMessage = "Erreur lors de l'ajout du produit.";
+          this.errorMessage = "Error while adding the product.";
         }
       });
     }
@@ -205,7 +205,7 @@ export class ProductBackComponent {
       const input = event.target as HTMLInputElement;
       if (input.files && input.files[0]) {
         // Logique de traitement du fichier
-        console.log('Fichier sélectionné pour modification:', input.files[0]);
+        console.log('File selected for modification', input.files[0]);
       }
     }
   
@@ -219,16 +219,16 @@ export class ProductBackComponent {
     updateProduct(): void {
       // Vérifier si selectedProduct est défini
       if (!this.selectedProduct) {
-        console.error('Produit non sélectionné.');
+        console.error('Product not selected');
         return;
       }
     
       const formData = new FormData();
     
       // Ajouter les propriétés de selectedProduct à formData
-      formData.append('nom', this.selectedProduct.nom);
+      formData.append('name', this.selectedProduct.nom);
       formData.append('description', this.selectedProduct.description);
-      formData.append('prix', Number(this.selectedProduct.prix).toString()); 
+      formData.append('price', Number(this.selectedProduct.prix).toString()); 
       formData.append('category', this.selectedProduct.category);
       formData.append('stock', this.selectedProduct.stock.toString());
       formData.append('quantity', this.selectedProduct.lowStockThreshold.toString());
@@ -244,7 +244,7 @@ export class ProductBackComponent {
           // SweetAlert2 popup de succès
           Swal.fire({
             icon: 'success',
-            title: 'Produit mis à jour avec succès !',
+            title: 'Product successfully updated !',
             showConfirmButton: false,
             timer: 1500 // Popup qui disparaît après 1,5 seconde
           }).then(() => {
@@ -252,8 +252,8 @@ export class ProductBackComponent {
           });
         },
         (error) => {
-          console.error('Erreur lors de la mise à jour du produit:', error);
-          Swal.fire('Erreur', 'Une erreur est survenue lors de la mise à jour.', 'error');
+          console.error('Error while updating the product:', error);
+          Swal.fire('Error', 'An error occurred during the update.', 'error');
         }
       );
     }
@@ -280,22 +280,22 @@ export class ProductBackComponent {
     // Supprimer un produit
     deleteProduct(product: Product): void {
       Swal.fire({
-        title: 'Êtes-vous sûr ?',
-        text: `Vous allez supprimer le produit ${product.nom}. Cette action est irréversible.`,
+        title: 'Are you sure ?',
+        text: `You are going to delete the product ${product.nom}. This action is irreversible.`,
         icon: 'warning',
         showCancelButton: true,
-        confirmButtonText: 'Oui, supprimer',
-        cancelButtonText: 'Annuler',
+        confirmButtonText: 'Yes, delete',
+        cancelButtonText: 'Cancel',
       }).then((result) => {
         if (result.isConfirmed) {
           this.productService.deleteProduct(product.id_Product!).subscribe({
             next: () => {
               this.loadProductsByMarketplace(this.selectedMarketplaceId);
-              Swal.fire('Supprimé!', 'Le produit a été supprimé avec succès.', 'success');
+              Swal.fire('Deleted!', 'The product has been successfully deleted.', 'success');
             },
             error: (error) => {
               console.error(error);
-              Swal.fire('Erreur', 'Il y a eu un problème lors de la suppression.', 'error');
+              Swal.fire('Error', 'A problem occurred during deletion.', 'error');
             }
           });
         }

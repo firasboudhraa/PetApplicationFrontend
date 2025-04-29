@@ -5,6 +5,10 @@ import { Observable, tap } from 'rxjs';
 import { Router } from '@angular/router';
 import { jwtDecode } from 'jwt-decode';
 import { User } from '../models/user_model';
+import { HttpHeaders } from '@angular/common/http';
+import { catchError, throwError } from 'rxjs';
+
+
 
 interface RegisterRequest {
   firstName: string;
@@ -49,10 +53,38 @@ export class AuthService {
       tap(response => {
         if (response.token) {
           this.setToken(response.token);
+          this.fetchCurrentUser().subscribe();
         }
       })
     );
   }
+
+  // Dans auth.service.ts
+  fetchCurrentUser(): Observable<User> {
+    const token = localStorage.getItem(this.tokenKey); // Récupère le token du localStorage
+    
+    if (!token) {
+      // Si aucun token n'est trouvé, renvoyer une erreur ou rediriger l'utilisateur
+      console.error('Token not found in localStorage');
+      return throwError('Token not found');
+    }
+  
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${token}`  // Ajoute l'en-tête d'autorisation
+    });
+  
+    return this.http.get<User>(`${this.apiUrl}/me`, { headers }).pipe(
+      tap(user => {
+        this.setCurrentUser(user);
+        localStorage.setItem('user', JSON.stringify(user));
+      }),
+      catchError(error => {
+        console.error('Error fetching current user', error);
+        return throwError(error);
+      })
+    );
+  }
+  
 
   logout(): Observable<any> {
     const token = this.getToken();
@@ -154,8 +186,5 @@ clearPendingEmail(): void {
   localStorage.removeItem(this.pendingEmailKey);
 }
 
-getCurrentUserId(): number | null {
-  const decoded = this.getDecodedToken();
-  return decoded?.userId || null;
-}
+
 }
