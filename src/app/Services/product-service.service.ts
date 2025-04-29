@@ -73,11 +73,12 @@ export class ProductService {
     return this.http.put<Product>(`${this.baseUrl}/${id}/decrease`, {});
   }
 
-  getProductsByUserId(userId: number, headers: HttpHeaders): Observable<Product[]> {
-    return this.http.get<Product[]>(`${this.baseUrl}/user/${userId}`, { headers });
-  }
-  
-  
+ // Récupérer les produits par ID utilisateur
+getProductsByUserId(userId: number): Observable<Product[]> {
+  return this.http.get<Product[]>(`${this.baseUrl}/user/${userId}`);
+}
+// Récupérer les produits par ID utilisateur
+
   // Ajouter un produit (par utilisateur)
   addProductByUser(userId: number, formData: FormData): Observable<Product> {
     return this.http.post<Product>(`${this.baseUrl}/user/${userId}`, formData);
@@ -93,10 +94,5 @@ export class ProductService {
     return this.http.delete<void>(`${this.baseUrl}/user/${userId}/product/${productId}`);
   }
 
-  private getAuthHeaders(): HttpHeaders {
-    const token = localStorage.getItem('token');
-    return new HttpHeaders({
-      Authorization: `Bearer ${token}`
-    });
-  }
+
 }

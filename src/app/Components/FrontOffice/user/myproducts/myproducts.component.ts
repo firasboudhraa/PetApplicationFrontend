@@ -4,12 +4,12 @@ import { Product } from '../../../../models/product';
 import { Basket } from '../../../../models/basket';
 import { AuthService } from '../../../FrontOffice/user/auth/auth.service';
 import axios from 'axios';
-import { Router } from '@angular/router'; 
 import Swal from 'sweetalert2';
 import { BasketService } from '../../../../Services/basket.service';
 import { environment } from 'src/environments/environment'
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { A } from '@fullcalendar/core/internal-common';
+import {UserService} from 'src/app/Services/user.service'
 
 @Component({
   selector: 'app-myproducts',
@@ -28,8 +28,8 @@ export class MyproductsComponent implements OnInit{
       alertSent: false,
       category: '',
       quantity: 0, 
-      userId: 0 
-    }; 
+      userId: 0 // Ajouté ici !
+    }; // Initialisation avec les valeurs par défaut de l'interface
     products: Product[] = [];
     selectedBasketId: number = 0;
     baskets: Basket[] = [];
@@ -41,8 +41,6 @@ export class MyproductsComponent implements OnInit{
     selectedCategory: string = '';
     currentPage: number = 1;
     itemsPerPage: number = 6;
-    currentUser: any; // ou un type plus spécifique, si tu le connais (ex: `User`)
-
     // Ajoutez ces propriétés à votre classe
     priceRange = {
       min: 0,
@@ -63,88 +61,15 @@ export class MyproductsComponent implements OnInit{
   
     constructor(private productService: ProductService,
       private basketService: BasketService,
-      private authService: AuthService,
-      private router: Router,
+      private authService: UserService,
       private http: HttpClient) { }
   
-   // Dans MyproductsComponent
-ngOnInit() {
-
-  this.loadCurrentUser();
-  this.getProductsByCurrentUser();
-  this.getBaskets();
-  this.filterProducts();
-}
-
-getProductsByCurrentUser() {
-  // Vérifie si l'utilisateur est authentifié en s'assurant que le token est présent
-  const token = localStorage.getItem('authToken');
-  if (!this.currentUser?.id || !token) {
-    console.log('Utilisateur non authentifié ou token manquant');
-    return;
-  }
-
-  // Ajout du token dans les headers pour la requête HTTP
-  const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
-
-  this.loading = true;
-  
-  // Appel du service pour récupérer les produits associés à l'utilisateur actuel
-  this.productService.getProductsByUserId(this.currentUser.id, headers).subscribe({
-    next: (data: Product[]) => {
-      this.products = data;
-      this.filteredProducts = [...data];
-      this.loading = false;
+    ngOnInit() {
+      this.getProducts();
+      this.getBaskets();
       this.filterProducts();
-    },
-    error: (err) => {
-      console.error('Erreur lors du chargement des produits utilisateur :', err);
-      this.loading = false;
-      if (err.status === 403) {
-        this.router.navigate(['/login']);
-      }
     }
-  });
   
-}
-
-
-private async loadCurrentUser() {
-  // 1. Essayer de récupérer l'utilisateur depuis AuthService
-  const userFromService = this.authService.getCurrentUser();
-  if (userFromService?.id) {
-    this.currentUser = userFromService;
-    this.getProductsByCurrentUser(); // Charger les produits de l'utilisateur
-    return;
-  }
-
-  // 2. Essayer de récupérer l'utilisateur depuis localStorage
-  const userFromStorage = localStorage.getItem('user');
-  if (userFromStorage) {
-    try {
-      this.currentUser = JSON.parse(userFromStorage);
-      if (this.currentUser?.id) {
-        return; // Si trouvé, rien à faire
-      }
-    } catch (e) {
-      console.error('Erreur de parsing des données utilisateur depuis localStorage', e);
-    }
-  }
-
-  // 3. Si l'utilisateur n'est toujours pas trouvé, faire une requête API
-  try {
-    const user = await this.authService.fetchCurrentUser().toPromise();
-    this.currentUser = user;
-  } catch (error) {
-    console.error('Échec de la récupération de l’utilisateur via l’API', error);
-    
-    // Solution de secours pour le débogage uniquement (à supprimer en production)
-    this.currentUser = { id: 1 }; // Valeur fictive pour éviter une erreur dans l’application
-    console.warn('Utilisateur de secours utilisé (à supprimer en production)', this.currentUser);
-  }
-
-}
-
     initializeBasket() {
       let basketId = localStorage.getItem('basketId');
   
@@ -158,10 +83,19 @@ private async loadCurrentUser() {
     // Méthode pour obtenir la liste des produits
     getProducts() {
       this.loading = true;
-      this.productService.getProducts().subscribe(
+    
+      const userId = this.authService.getCurrentUserId();
+    
+      if (!userId) {
+        this.errorMessage = 'Utilisateur non connecté ou ID invalide.';
+        this.loading = false;
+        return;
+      }
+    
+      this.productService.getProductsByUserId(userId).subscribe(
         (data: Product[]) => {
           this.products = data;
-          this.filteredProducts = [...data]; // Crée une copie pour les produits filtrés
+          this.filteredProducts = [...data]; // Copie pour le filtrage
           this.loading = false;
           this.filterProducts(); // Applique les filtres initiaux
         },
@@ -172,7 +106,7 @@ private async loadCurrentUser() {
         }
       );
     }
-  
+    
     filterProducts(): void {
       // Si les produits ne sont pas encore chargés, ne rien faire
       if (!this.products) return;
@@ -234,64 +168,62 @@ private async loadCurrentUser() {
       this.basketIds[productId] = basketId;
     }
   
-    addToBasket(productId: number) {
-      console.log('ID du panier:', this.basketIds[productId]); // Vérifie la valeur du panier
+    // addToBasket(productId: number) {
+    //   console.log('ID du panier:', this.basketIds[productId]); // Vérifie la valeur du panier
   
-      // Vérification si le panier sélectionné est valide
-      if (!this.basketIds[productId]) {
-        // Affichage d'un message d'erreur avec SweetAlert
-        Swal.fire({
-          icon: 'error',
-          title: 'Panier non sélectionné',
-          text: 'Veuillez sélectionner un panier avant d\'ajouter un produit.',
-          confirmButtonText: 'D\'accord'
-        });
-        return;
-      }
+    //   // Vérification si le panier sélectionné est valide
+    //   if (!this.basketIds[productId]) {
+    //     // Affichage d'un message d'erreur avec SweetAlert
+    //     Swal.fire({
+    //       icon: 'error',
+    //       title: 'Panier non sélectionné',
+    //       text: 'Veuillez sélectionner un panier avant d\'ajouter un produit.',
+    //       confirmButtonText: 'D\'accord'
+    //     });
+    //     return;
+    //   }
   
-      // Appel au service pour ajouter le produit au panier
-      this.basketService.addProductToBasket(this.basketIds[productId], productId).subscribe(
-        (response) => {
-          // Affichage du message de succès avec SweetAlert2
-          Swal.fire({
-            icon: 'success',
-            title: 'Produit ajouté',
-            text: 'Produit ajouté au panier avec succès!',
-            confirmButtonText: 'D\'accord'
-          });
-        },
-        (error) => {
-          console.error('Erreur lors de l\'ajout du produit au panier:', error);
-          // Affichage du message d'erreur avec SweetAlert
-          Swal.fire({
-            icon: 'error',
-            title: 'Erreur',
-            text: 'Une erreur est survenue lors de l\'ajout du produit.',
-            confirmButtonText: 'D\'accord'
-          });
-        }
-      );
-    }
+    //   // Appel au service pour ajouter le produit au panier
+    //   this.basketService.addProductToBasket(userId, this.basketIds[productId], productId).subscribe(
+    //     (response) => {
+    //       // Affichage du message de succès avec SweetAlert2
+    //       Swal.fire({
+    //         icon: 'success',
+    //         title: 'Produit ajouté',
+    //         text: 'Produit ajouté au panier avec succès!',
+    //         confirmButtonText: 'D\'accord'
+    //       });
+    //     },
+    //     (error) => {
+    //       console.error('Erreur lors de l\'ajout du produit au panier:', error);
+    //       // Affichage du message d'erreur avec SweetAlert
+    //       Swal.fire({
+    //         icon: 'error',
+    //         title: 'Erreur',
+    //         text: 'Une erreur est survenue lors de l\'ajout du produit.',
+    //         confirmButtonText: 'D\'accord'
+    //       });
+    //     }
+    //   );
+    // }
   
   
-    createProduct(): void {
-      if (!this.currentUser?.id) {
-        Swal.fire('Erreur', 'Vous devez être connecté pour créer un produit', 'error');
-        return;
-      }
-    
-      const userId = this.currentUser.id;
-    
-      if (!this.currentProduct.nom || this.currentProduct.nom.trim() === '') {
-        alert("Le nom du produit est requis.");
-        return;
-      }
-    
-      if (this.currentProduct.prix <= 0) {
-        alert("Le prix doit être supérieur à 0.");
+  
+  
+  
+    createProduct() {
+      // 1. Récupérer l'ID utilisateur
+      const userId = this.authService.getCurrentUserId();
+      console.log(`User ID passé : ${userId}`);
+
+      // 2. Vérifie si userId est valide
+      if (userId === null) {
+        alert("Utilisateur non connecté ou ID invalide !");
+        this.loading = false;
         return;
       }
     
+      // 3. Crée un FormData pour envoyer les données
       const formData = new FormData();
       formData.append('nom', this.currentProduct.nom);
       formData.append('description', this.currentProduct.description);
@@ -299,47 +231,44 @@ private async loadCurrentUser() {
       formData.append('stock', this.currentProduct.stock.toString());
       formData.append('category', this.currentProduct.category);
       formData.append('quantity', this.currentProduct.quantity.toString());
-      formData.append('userId', userId.toString()); // Ajout de l'ID utilisateur
     
+      // Ajoute l'image si présente
       const imageFile = (document.getElementById('image') as HTMLInputElement).files?.[0];
       if (imageFile) {
         formData.append('image', imageFile, imageFile.name);
       }
     
-      this.loading = true;
+      // 4. Utilise userId dans le log après l'avoir assigné
+      console.log(`Appel à l'URL: http://localhost:8011/api/products/user/${userId}`);
     
-      this.productService.addProductByUser(userId, formData).subscribe({
-        next: (product: Product) => {
+      // 5. Envoie la requête au backend
+      this.productService.addProductByUser(userId, formData).subscribe(
+        (product: Product) => {
           console.log('Produit créé avec succès:', product);
           this.products.push(product);
-          this.resetCurrentProduct(userId);
+          this.currentProduct = {
+            nom: '',
+            description: '',
+            prix: 0,
+            imageUrl: '',
+            stock: 0,
+            marketplaceId: 0,
+            lowStockThreshold: 0,
+            alertSent: false,
+            category: '',
+            quantity: 0,
+            userId: userId
+          };
           this.loading = false;
-          Swal.fire('Succès', 'Produit ajouté avec succès !', 'success');
+          alert("Produit ajouté avec succès !");
         },
-        error: (error) => {
+        (error) => {
           console.error('Erreur lors de la création du produit:', error);
           this.errorMessage = 'Erreur lors de la création du produit.';
           this.loading = false;
-          Swal.fire('Erreur', "Une erreur est survenue lors de l'ajout du produit.", 'error');
+          alert("Une erreur est survenue lors de l'ajout du produit.");
         }
-      });
-    }
-    
-    
-    private resetCurrentProduct(userId: number): void {
-      this.currentProduct = {
-        nom: '',
-        description: '',
-        prix: 0,
-        imageUrl: '',
-        stock: 0,
-        marketplaceId: 0,
-        lowStockThreshold: 0,
-        alertSent: false,
-        category: '',
-        quantity: 0,
-        userId: userId
-      };
+      );
     }
     
   

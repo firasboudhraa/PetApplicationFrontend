@@ -1,5 +1,5 @@
 <nav
-  class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light"
+  class="navbar navbar-expand-lg  ftco_navbar ftco-navbar-light"
   id="ftco-navbar"
 >
   <div class="container">
@@ -41,9 +41,6 @@
         </li>
         <li class="nav-item"[ngClass]="{active: this.activeLink === '/event'}">
           <a routerLink="/event" (click)='setActiveLink("/event")' class="nav-link">Events</a>
-        </li>
-        <li class="nav-item"[ngClass]="{active: this.activeLink === '/pricing'}">
-          <a routerLink="/pricing" (click)='setActiveLink("/pricing")' class="nav-link">Pricing</a>
         </li>
         <li class="nav-item"[ngClass]="{active: this.activeLink === '/blog'}">
           <a routerLink="/blog" (click)='setActiveLink("/blog")' class="nav-link">Blog</a>
