@@ -18,3 +18,45 @@
     border: none;
   }
   
+  .custom-login-alert {
+    border-radius: 8px;
+    padding: 1rem 1.5rem;
+    font-size: 1rem;
+    background-color: #f8d7da;
+    border: 1px solid #f5c2c7;
+    color: #842029;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    margin-bottom: 1.5rem;
+  }
+  
+  .login-link {
+    color: #842029;
+    text-decoration: underline;
+    font-weight: 600;
+    cursor: pointer;
+  }
+  
+  .login-link:hover {
+    text-decoration: none;
+    color: #6c1d23;
+  }
+  .where-to-find-heading {
+    font-size: 24px; /* Size of the heading */
+    font-weight: 600; /* Make the font weight bold for better visibility */
+    color: #009605; /* Dark color for better readability */
+    text-transform: uppercase; /* Uppercase for a more professional look */
+    letter-spacing: 1px; /* Slightly spaced letters */
+    display: inline-flex; /* Allows icon and text to stay aligned */
+    align-items: center; /* Vertically align the icon with the text */
+    gap: 8px; /* Space between icon and text */
+    margin-bottom: 20px; /* Spacing below the heading */
+    font-family: 'Arial', sans-serif; /* Clean and professional font */
+    padding-bottom: 8px; /* Padding to add space between text and underline */
+  }
+  
+  .where-to-find-heading:hover {
+    color: #3085d6; /* Change color on hover for interactivity */
+    cursor: pointer; /* Change cursor to pointer to show it's interactive */
+    border-bottom: 2px solid #ff7f50; /* Underline color change on hover */
+  }
+  
