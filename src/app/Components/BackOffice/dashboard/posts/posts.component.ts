@@ -253,13 +253,13 @@ export class PostsComponent implements OnInit {
   }
   
 
- openCommentsPopup(postId: number): void {
-  // Prevent opening the comments popup if the confirmation modal is active
-  if (!this.showConfirmModal) {
-    this.selectedPostId = postId;
+  openCommentsPopup(postId: number): void {
+    // Prevent opening the comments popup if the confirmation modal is active
+    if (!this.showConfirmModal && !this.showConfirmModalComment) {
+      this.selectedPostId = postId;
+    }
   }
-}
-
+  
 
   closePopup(): void {
     this.selectedPostId = null;
