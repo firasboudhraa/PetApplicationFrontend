@@ -2,9 +2,124 @@
 
 <div class="dashboard-content">
   <div class="dashboard-header">
-    <div class="header-left">
-            <h1 class="dashboard-title">My Profile</h1>
+    <!-- Header content if needed -->
+  </div>
+
+  <!-- Loading spinner -->
+  <div *ngIf="isLoading" class="loading-container">
+    <div class="spinner-border text-success" role="status">
+      <span class="visually-hidden">Loading...</span>
     </div>
   </div>
 
- 
+  <!-- Error message -->
+  <div *ngIf="!isLoading && errorMessage" class="error-container">
+    <div class="alert alert-danger" role="alert">
+      {{ errorMessage }}
+    </div>
+  </div>
+
+  <!-- Profile content -->
+  <div *ngIf="!isLoading && !errorMessage" class="profile-container">
+    <div class="profile-details">
+      <h1 class="welcome-heading">Welcome, {{ user.firstName }}!</h1>
+      
+      <div class="user-pic">
+        <img
+          [src]="getProfilePictureUrl()"
+          alt="Profile Image"
+          (error)="handleImageError($event)" />
+      </div>
+      
+      <div class="user-info">
+        <p><strong>First Name:</strong> {{ user.firstName }}</p>
+        <p><strong>Last Name:</strong> {{ user.lastName }}</p>
+        <p><strong>Email:</strong> {{ user.email }}</p>
+        <p><strong>Role:</strong> {{ getRolesAsString() }}</p>
+        <p *ngIf="user.bio && user.bio.trim() !== ''"><strong>Bio:</strong> {{ user.bio }}</p>
+      </div>
+      
+      <div class="profile-actions">
+        <button type="button" class="btn btn-primary" (click)="editProfile()">
+          <i class="fa fa-pencil me-2"></i>
+          Edit Profile
+        </button>
+      
+        <button class="btn btn-danger" (click)="supp(user.id)">
+          <i class="fa fa-user-times me-2"></i> Disable Account
+        </button>
+      
+        <button class="btn btn-secondary" (click)="logout()">
+          <i class="fa fa-sign-out me-2"></i> Logout
+        </button>
+      
+        <button class="btn adoption-btn" (click)="user_pref()">
+          <i class="fa fa-paw me-2"></i> Adoption
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Success/Error Modal -->
+  <div class="modal fade show d-block" *ngIf="showModal" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content text-center p-4" 
+           [ngClass]="{'modal-success': modalType === 'success', 
+                       'modal-error': modalType === 'error',
+                       'modal-warning': modalType === 'warning'}">
+        
+        <!-- Modal Icon -->
+        <i class="fa fa-3x mb-3"
+           [ngClass]="{'fa-check-circle': modalType === 'success', 
+                      'fa-times-circle': modalType === 'error',
+                      'fa-exclamation-triangle': modalType === 'warning'}">
+        </i>
+  
+        <div class="modal-body">
+          <h5 class="modal-title mb-3">{{ modalTitle }}</h5>
+          <p>{{ modalMessage }}</p>
+          
+          <button type="button" class="btn btn-sm" 
+                  [ngClass]="{'btn-outline-success': modalType === 'success',
+                             'btn-outline-danger': modalType === 'error',
+                             'btn-outline-warning': modalType === 'warning'}"
+                  (click)="closeModal()">
+            Close
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Delete Confirmation Modal -->
+  <div class="modal fade show d-block" *ngIf="isDeleteModalVisible" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content p-4">
+        <div class="modal-header border-0">
+          <h5 class="modal-title">Confirm Account Deletion</h5>
+          <button type="button" class="btn-close" (click)="confirmDelete(false)"></button>
+        </div>
+        <div class="modal-body text-center">
+          <i class="fa fa-exclamation-triangle fa-3x text-warning mb-3"></i>
+          <p>Are you sure you want to disable your account? This action cannot be undone.</p>
+        </div>
+        <div class="modal-footer border-0 justify-content-center">
+          <button type="button" class="btn btn-secondary" (click)="confirmDelete(false)">
+            Cancel
+          </button>
+          <button type="button" class="btn btn-danger" (click)="confirmDelete(true)">
+            Disable Account
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Adoption Modal -->
+  <app-user-profile-modal
+    *ngIf="isAdoptionModalVisible"
+    [isVisible]="isAdoptionModalVisible"
+    [userId]="user.id" 
+    (closeModal)="isAdoptionModalVisible = false">
+  </app-user-profile-modal>
+</div>

@@ -1,41 +1,57 @@
 .edit-profile {
-  max-width: 600px;
-  margin: 30px auto;
-  padding: 30px;
+  max-width: 700px; /* Reduced width */
+  margin: 20px auto;
+  padding: 15px; /* Reduced padding */
   background-color: #f9fdf8;
-  border-radius: 20px;
-  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.08);
+  border-radius: 15px; /* Smaller border-radius */
+  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.08);
   font-family: 'Segoe UI', sans-serif;
 }
 
 .edit-profile h1 {
   text-align: center;
   color: #4CAF50;
-  margin-bottom: 25px;
+  margin-bottom: 30px; /* Reduced margin */
   font-weight: bold;
+  font-size: 1.5rem; /* Smaller heading */
+}
+
+.edit-profile .form-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px; /* Reduced gap between columns */
+  margin-bottom: 20px; /* Reduced margin */
 }
 
 .edit-profile .form-group {
-  margin-bottom: 20px;
+  flex: 1 0 calc(50% - 16px); /* Reduced column gap */
+  min-width: 0;
+}
+
+.edit-profile .full-width {
+  flex: 1 0 100% !important; /* Force full width */
 }
 
 .edit-profile label {
   font-weight: 600;
   color: #333;
-  margin-bottom: 5px;
+  margin-bottom: 6px; /* Reduced margin */
   display: block;
+  font-size: 0.9rem; /* Smaller font size */
 }
 
 .edit-profile .form-control {
-  border-radius: 12px;
+  width: 100%;
+  border-radius: 10px; /* Smaller border-radius */
   border: 1px solid #ccc;
-  padding: 10px 14px;
+  padding: 10px 14px; /* Reduced padding */
   transition: border-color 0.2s;
+  font-size: 0.9rem; /* Smaller font size */
 }
 
 .edit-profile .form-control:focus {
   border-color: #4CAF50;
-  box-shadow: 0 0 0 0.15rem rgba(76, 175, 80, 0.25);
+  box-shadow: 0 0 0 0.2rem rgba(76, 175, 80, 0.25);
 }
 
 .edit-profile .preview img {
@@ -43,27 +59,49 @@
   border: 2px solid #4CAF50;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
   object-fit: cover;
-  height: 120px;
+  height: 120px; /* Smaller preview */
   width: 120px;
+  margin-top: 8px; /* Reduced margin */
 }
 
 .edit-profile .btn {
   background-color: #4CAF50;
   color: white;
-  font-weight: 500;
-  padding: 10px 24px;
-  border-radius: 25px;
+  font-weight: 600;
+  padding: 10px 24px; /* Reduced button size */
+  border-radius: 20px;
   border: none;
-  transition: background-color 0.3s ease;
+  transition: all 0.3s ease;
+  display: block;
+  margin: 30px auto 0; /* Reduced margin */
+  font-size: 0.9rem; /* Smaller button text */
+  cursor: pointer;
 }
 
 .edit-profile .btn:hover {
   background-color: #45a049;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.edit-profile .btn:disabled {
+  background-color: #cccccc;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
 }
 
 .alert {
-  margin-bottom: 20px;
+  margin-bottom: 20px; /* Reduced margin */
   border-radius: 12px;
-  padding: 12px;
+  padding: 12px; /* Reduced padding */
   font-weight: 500;
+  font-size: 0.9rem; /* Smaller font size */
+}
+
+.loading-spinner {
+  text-align: center;
+  padding: 20px;
+  font-size: 1rem; /* Smaller font size */
+  color: #4CAF50;
 }
