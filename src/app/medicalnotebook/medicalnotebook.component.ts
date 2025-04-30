@@ -284,7 +284,8 @@ searchVet: string = '';
 searchMonth: string = '';
 searchStartDate: string = '';
 searchEndDate: string = '';
-
+searchMinWeight: number | null = null;
+searchMaxWeight: number | null = null;
   
   // ✅ Getter pour filtrer dynamiquement les carnets selon le nom et la date
   get filteredCarnets(): any[] {
@@ -332,7 +333,18 @@ searchEndDate: string = '';
                    (!endDate || recordDate <= endDate);
           }));
   
-      return matchesName && matchesDate && matchesType && matchesVet && matchesMonth && matchesPeriod;
+      const matchesWeight =
+        (this.searchMinWeight === null || this.searchMaxWeight === null) ||
+        (carnet.medicalRecords &&
+          carnet.medicalRecords.some((record: any) => {
+            const poids = record.poids;
+            return (
+              (this.searchMinWeight === null || poids >= this.searchMinWeight) &&
+              (this.searchMaxWeight === null || poids <= this.searchMaxWeight)
+            );
+          }));
+  
+      return matchesName && matchesDate && matchesType && matchesVet && matchesMonth && matchesPeriod && matchesWeight;
     });
   }
   

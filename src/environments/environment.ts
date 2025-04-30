@@ -8,7 +8,7 @@ export const environment = {
     'EAAQqWxdDokEBOZBgZCSIW0NaGrOZCdHe1aoPyM8fzooVgP6o6yxUQQQIQkAN9Q2ENZCmYSGevnljZAAPpJEZBlGjNJ7ggqAIczSYfcZBGiV8bm2ZCg1uScxc7CJtaKr8wtZBwfemFbcyZAphotkjGli8YFEx2dax9p869x0nIZCr4ZA8gRbcBhV4OpuSUjcQth50',
 
   googleMapsApiKey: 'AIzaSyAnJDpXIRlCd7a8zSKpXn_iL9lzXBNHPuc',
-  apiKey: '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', 
+  apiKey: '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', // Store securely
   baseURL: 'https://models.inference.ai.azure.com',
 
   apiUrl: 'http://localhost:8222/api/',
