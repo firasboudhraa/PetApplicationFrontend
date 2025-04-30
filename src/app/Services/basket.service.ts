@@ -17,6 +17,10 @@ getAllUserIds(): Observable<number[]> {
   return this.http.get<number[]>('/api/users/ids'); // adapte l’URL selon ton backend
 }
 
+// Dans votre BasketService, ajoutez:
+getBasketByUserId(userId: number): Observable<Basket> {
+  return this.http.get<Basket>(`${this.baseUrl}/user/${userId}`);
+}
 
   getAllBaskets(): Observable<Basket[]> {
     return this.http.get<Basket[]>(this.baseUrl);
