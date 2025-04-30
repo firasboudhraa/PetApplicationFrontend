@@ -1,5 +1,5 @@
 <nav
-  class="navbar navbar-expand-lg  ftco_navbar ftco-navbar-light"
+  class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light"
   id="ftco-navbar"
 >
   <div class="container">
@@ -23,25 +23,27 @@
     </button>
     <div class="collapse navbar-collapse" id="ftco-nav">
       <ul class="navbar-nav ml-auto">
-        <li class="nav-item"   [ngClass]="{active : this.activeLink === '/'}"
+        <li class="nav-item"   [ngClass]="{active : this.activeLink === '/home'}"
         >
-          <a routerLink="/" (click)='setActiveLink("/")' class="nav-link">Home</a>
+          <a routerLink="/home" (click)='setActiveLink("/home")' class="nav-link">Home</a>
         </li>
         <li class="nav-item" [ngClass]="{active: this.activeLink === '/about'}">
           <a routerLink="/about" (click)='setActiveLink("/about")' class="nav-link">About</a>
         </li>
-        <li class="nav-item"[ngClass]="{active: this.activeLink === '/vet'}">
-          <a routerLink="/vet" (click)='setActiveLink("/vet")' class="nav-link">Veterinarian</a>
-        </li>
+  
         <li class="nav-item"[ngClass]="{active: this.activeLink === '/service'}">
           <a routerLink="/service" (click)='setActiveLink("/service")' class="nav-link">Services</a>
         </li>
         <li class="nav-item"[ngClass]="{active: this.activeLink === '/publicPets'}">
           <a routerLink="/publicPets" (click)='setActiveLink("/publicPets")' class="nav-link">Discover</a>
         </li>
+        <li class="nav-item"[ngClass]="{active: this.activeLink === '/petSittingSpace'}">
+          <a routerLink="/petSittingSpace" (click)='setActiveLink("/petSittingSpace")' class="nav-link">Sitting</a>
+        </li>
         <li class="nav-item"[ngClass]="{active: this.activeLink === '/event'}">
           <a routerLink="/event" (click)='setActiveLink("/event")' class="nav-link">Events</a>
         </li>
+       
         <li class="nav-item"[ngClass]="{active: this.activeLink === '/blog'}">
           <a routerLink="/blog" (click)='setActiveLink("/blog")' class="nav-link">Blog</a>
         </li>
@@ -186,12 +188,17 @@
   <div class="cart-content">
     <h2>Cart</h2>
 
+    <ng-container *ngIf="basket?.id_Basket as basketId">
+      <div class="alert alert-info mb-3">
+        Le numéro de votre panier est : <strong>{{ basketId }}</strong>
+      </div>
+    </ng-container>
     <!-- Champ pour entrer l'ID du panier -->
     <div class="mb-3">
       <input
         type="number"
         [(ngModel)]="basketId"
-        placeholder="Entrez l'ID du panier"
+        placeholder="Enter the number of your cart"
         class="form-control"
       />
       <button (click)="loadBasketById()" class="btn btn-primary mt-2">

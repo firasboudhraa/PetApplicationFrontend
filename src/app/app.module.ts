@@ -36,6 +36,8 @@
   import { PopoverModule } from 'ngx-bootstrap/popover';
   import { HTTP_INTERCEPTORS } from '@angular/common/http';
 
+
+
   Chart.register(...registerables);
   import { FooterComponent } from './Components/FrontOffice/footer/footer.component';
   import { HomeComponent } from './Components/FrontOffice/home/home.component';
@@ -131,6 +133,8 @@ import { ContactComponent } from './Components/FrontOffice/contact/contact.compo
 import { UpdateServiceProfileComponent } from './Components/BackOffice/service-profile/update-service-profile/update-service-profile.component';
 import { AppointmentsProfileUserComponent } from './Components/FrontOffice/user/appointments-profile-user/appointments-profile-user.component';
 import { MyproductsComponent } from './Components/FrontOffice/user/myproducts/myproducts.component';
+import { MyPetsProfileComponent } from './Components/BackOffice/my-pets-profile/my-pets-profile.component';
+import { PetStatsComponent } from './Components/BackOffice/dashboard/pet-stats/pet-stats.component';
 
   @NgModule({
     declarations: [
@@ -233,7 +237,9 @@ import { MyproductsComponent } from './Components/FrontOffice/user/myproducts/my
       ContactComponent,
       UpdateServiceProfileComponent,
       AppointmentsProfileUserComponent,
-      MyproductsComponent
+      MyproductsComponent,
+      MyPetsProfileComponent,
+      PetStatsComponent
     ],
     imports: [
       BrowserAnimationsModule,
@@ -256,6 +262,7 @@ import { MyproductsComponent } from './Components/FrontOffice/user/myproducts/my
       MatButtonModule,
       MatIconModule,
       RouterModule,
+      NgChartsModule,
 
       
     ],

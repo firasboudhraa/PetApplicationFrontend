@@ -21,21 +21,24 @@
         </select>
       </div>
       <div class="col-md-2">
-        <input type="text" class="form-control" placeholder="🧑‍⚕️ Veterinarian..." [(ngModel)]="searchVet" />
+        <input type="number" class="form-control" placeholder="Min Weight..." [(ngModel)]="searchMinWeight" />
+      </div>
+      <div class="col-md-2">
+        <input type="number" class="form-control" placeholder="Max Weight..." [(ngModel)]="searchMaxWeight" />
       </div>
       <div class="col-md-2">
         <input type="month" class="form-control" [(ngModel)]="searchMonth" />
       </div>
-      <div class="col-md-2 d-flex gap-2">
-        <button class="btn btn-secondary w-100" (click)="resetFilters()">🔄 Reset</button>
-      </div>
     </div>
 
-    <!-- 🧭 Buttons under filters -->
-    <div class="d-flex flex-wrap justify-content-center gap-2 mt-4">
+    <!-- 🧭 Buttons under filters, centered on the same row -->
+    <div class="d-flex justify-content-center gap-3 mt-4">
       <button class="btn btn-primary" (click)="navigateToMedicalNotebookForm()">➕ Add a Notebook</button>
       <button class="btn btn-primary" (click)="navigateToMedicalNotebookStats()">📊 Stats and Assistance</button>
       <button class="btn btn-primary" (click)="navigateToagenda()">🗓 Schedule</button>
+      <div class="col-md-2 d-flex justify-content-center">
+        <button class="btn btn-secondary w-100" (click)="resetFilters()">🔄 Reset</button>
+      </div>
     </div>
   </div>
 
@@ -44,8 +47,7 @@
     <div class="col-md-6 mb-4" *ngFor="let carnet of filteredCarnets; let i = index">
       <div class="card shadow border-0 rounded-4 p-3 d-flex flex-row align-items-start carnet-hover" style="transition: 0.3s; min-height: 270px;">
         <!-- 📸 Image -->
-      <img [src]="carnet.imageUrl" alt="Pet Image" class="pet-image" />
-
+        <img src="../../assets/images/carnet.png" alt="Pet Image" class="rounded-circle mx-auto d-block pet-image">
 
         <!-- 📝 Content -->
         <div class="flex-grow-1">
@@ -59,7 +61,7 @@
               <p><strong>Type:</strong> {{ carnet.medicalRecords[0].type }}</p>
               <p><strong>Date:</strong> {{ carnet.medicalRecords[0].dateTime | date: 'dd/MM/yyyy' }}</p>
               <p><strong>Description:</strong> {{ carnet.medicalRecords[0].description }}</p>
-              <p><strong>poids:</strong> {{ carnet.medicalRecords[0].poids}}</p>
+              <p><strong>Poids:</strong> {{ carnet.medicalRecords[0].poids || 'Not specified' }}</p>
             </div>
             <div *ngIf="!carnet.medicalRecords?.length">
               <p>No medical records available.</p>
@@ -91,7 +93,6 @@
             </button>
           </div>
         </div>
-
       </div>
     </div>
   </div>

@@ -1,0 +1,30 @@
+<div class="pet-stats-container">
+    <h2 class="section-title">🐾 Pet Statistics Dashboard</h2>
+  
+    <div class="charts-grid">
+      <!-- Pie Chart -->
+      <div class="chart-card">
+        <h4>Distribution by Species</h4>
+        <canvas baseChart
+          [data]="speciesChartData"
+          [options]="chartOptions"
+          [type]="'pie'">
+        </canvas>
+      </div>
+  
+      <!-- Bar Chart -->
+      <div class="chart-card">
+        <h4>Number of Pets per Species</h4>
+        <canvas baseChart
+          [data]="barChartData"
+          [options]="chartOptions"
+          [type]="'bar'">
+        </canvas>
+      </div>
+    </div>
+    
+    <div class="text-center mt-4">
+      <button class="btn btn-success" (click)="downloadPetStatsPdf()">⬇ Download PDF</button>
+    </div>
+  </div>
+  

@@ -10,8 +10,8 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { ChangeDetectorRef } from '@angular/core';
 import { User } from '../user/models/user_model';
 import { AuthService } from 'src/app/Components/FrontOffice/user/auth/auth.service'; // Ensure correct import path
-import Swal from 'sweetalert2';  // Ensure SweetAlert is installed
-
+import Swal from 'sweetalert2';  
+import { SpeechService } from 'src/app/Services/speech.service'; 
 declare var google: any;  // Ensure Google Maps API types are loaded via @types/google.maps
 
 @Component({
@@ -53,7 +53,8 @@ export class PostDetailComponent implements OnInit, AfterViewInit {
     private router: Router,
     private snackBar: MatSnackBar,
     private changeDetectorRef: ChangeDetectorRef,
-    private authService: AuthService  // Inject AuthService
+    private authService: AuthService,
+    private speechService: SpeechService
   ) {}
 
   isDeleted: boolean = false;
@@ -110,6 +111,7 @@ export class PostDetailComponent implements OnInit, AfterViewInit {
       error: (error) => console.error('Error loading post author:', error)
     });
   }
+  
 
   private loadComments(postId: number): void {
     this.commentService.getCommentsByPostId(postId).subscribe({
@@ -216,18 +218,19 @@ export class PostDetailComponent implements OnInit, AfterViewInit {
 
   openDeleteModal(postId: number): void {
     Swal.fire({
-      title: 'Êtes-vous sûr?',
-      text: "Cette action est irréversible!",
+      title: 'Are you sure?',
+      text: "This action is irreversible!",
       icon: 'warning',
       showCancelButton: true,
-      confirmButtonText: 'Oui, supprimer!',
-      cancelButtonText: 'Annuler'
+      confirmButtonText: 'Yes, delete it!',
+      cancelButtonText: 'Cancel'
     }).then((result) => {
       if (result.isConfirmed) {
         this.deletePostWithoutMail(postId);  // delete directly after confirm
       }
     });
   }
+  
   
   
   confirmDelete(): void {
@@ -254,8 +257,8 @@ export class PostDetailComponent implements OnInit, AfterViewInit {
         next: () => {
           console.log('Post deleted successfully');
           Swal.fire({
-            title: 'Supprimé!',
-            text: 'Le post a été supprimé avec succès.',
+            title: 'Deleted!',
+            text: 'The post has been successfully deleted.',
             icon: 'success',
             confirmButtonText: 'OK'
           }).then(() => {
@@ -264,33 +267,34 @@ export class PostDetailComponent implements OnInit, AfterViewInit {
         },
         error: (error) => {
           console.error('Error deleting post:', error);
-          Swal.fire('Erreur!', 'Une erreur est survenue lors de la suppression du post.', 'error');
+          Swal.fire('Error!', 'An error occurred while deleting the post.', 'error');
         }
       });
     }
   }
   
+  
 
   // Add the deleteComment method
   deleteComment(commentId: number): void {
     Swal.fire({
-      title: 'Êtes-vous sûr?',
-      text: "Cette action est irréversible!",
+      title: 'Confirm Delete?',
+      text: "Are you sure you want to delete this comment?",
       icon: 'warning',
       showCancelButton: true,
-      confirmButtonText: 'Oui, supprimer!',
-      cancelButtonText: 'Annuler'
+      confirmButtonText: 'Yes, delete!',
+      cancelButtonText: 'Discard'
     }).then((result) => {
       if (result.isConfirmed) {
         // Proceed with deletion if confirmed
         this.commentService.deleteComment(commentId).subscribe({
           next: () => {
             this.loadComments(this.post?.id!);  // Reload the comments after deletion
-            Swal.fire('Supprimé!', 'Le commentaire a été supprimé.', 'success'); // Success confirmation
+            Swal.fire('Deleted!', 'Your Comment Has Been Deleted.', 'success'); // Success confirmation
           },
           error: (err) => {
             console.error('Error deleting comment:', err);
-            Swal.fire('Erreur!', 'Une erreur est survenue lors de la suppression.', 'error'); // Error confirmation
+            Swal.fire('Error!', 'There Was An Error While Deleting Your Comment', 'error'); // Error confirmation
           }
         });
       }
@@ -298,10 +302,16 @@ export class PostDetailComponent implements OnInit, AfterViewInit {
   }
   
 
-  // Add the formatRole method
   formatRole(roles: string[]): string {
-    return roles.join(', ');  // Join the roles with a comma and space
+    return roles
+      .map(role => 
+        role
+          .replace(/_/g, ' ')  // Replace underscores with spaces
+          .replace(/\b\w/g, char => char.toUpperCase())  // Capitalize the first letter of each word
+      )
+      .join(', ');  // Join roles with a comma and space
   }
+  
 
   scrollToTop(): void {
     window.scrollTo({ top: 0, behavior: "smooth" });
@@ -343,4 +353,12 @@ export class PostDetailComponent implements OnInit, AfterViewInit {
       this.newCommentContent += emoji;
     }
   }
+
+  readPostAloud(): void {
+    if (this.post) {
+      this.speechService.readAloud(`Title: ${this.post.title}. Content: ${this.post.content}`);
+    }
+  }
+ 
+  
 }

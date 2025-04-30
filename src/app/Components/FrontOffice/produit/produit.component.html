@@ -8,7 +8,7 @@
           type="text" 
           class="form-control" 
           [(ngModel)]="searchQueryName" 
-          placeholder="Rechercher par nom"
+          placeholder="Search by name"
           (ngModelChange)="filterProducts()"
         />
       </div>
@@ -86,15 +86,6 @@
           <p class="card-text"><strong>{{ product.prix }} TND</strong></p>
 
 
-          <div class="form-group basket-select-container">
-            <label for="basketInput{{ product.id_Product }}">Basket ID</label>
-            <input type="number"
-                   id="basketInput{{ product.id_Product }}"
-                   class="form-control basket-select"
-                   [(ngModel)]="basketIds[product.id_Product]"
-                   *ngIf="product.id_Product !== undefined"
-                   placeholder="Entrez l'ID du panier" />
-          </div>
     
           <!-- Actions CRUD -->
    <!--
@@ -142,8 +133,18 @@
 </div>
 
 <!-- Bouton flottant pour ouvrir le chatbot -->
-<button class="chat-toggle-btn" (click)="toggleChat()">
-  💬
+ 
+<audio #barkAudio ></audio>
+<button class="mute-btn" (click)="toggleMute()" title="Toggle Sound">
+  <i [class]="mute ? 'fas fa-volume-mute' : 'fas fa-volume-up'"></i>
+</button>
+<button class="chat-toggle-btn" (click)="toggleChat();playAnimalSound()">
+  <lord-icon
+  src="https://cdn.lordicon.com/sxdpfsrn.json"
+  trigger="hover"
+  colors="primary:#121331,secondary:#9ce5f4,tertiary:#ebe6ef"
+  style="width:60px;height:60px">
+</lord-icon> 
 </button>
 
 <!-- Fenêtre du chatbot -->

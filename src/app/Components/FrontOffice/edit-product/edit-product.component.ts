@@ -142,11 +142,11 @@ export class EditProductComponent implements OnInit {
   getCategoryLabel(categoryValue: string): string {
     const categoryLabels: { [key: string]: string } = {
       cat1: 'Alimentation',
-      cat2: 'Accessoires',
-      cat3: 'Hygiène et soins',
-      cat4: 'Santé',
+      cat2: 'Accessories',
+      cat3: 'Hygiene and care',
+      cat4: 'Health',
       cat5: 'Habitat'
     };
-    return categoryLabels[categoryValue] || 'Inconnue';
+    return categoryLabels[categoryValue] || 'Unknown Category';
   }
 }

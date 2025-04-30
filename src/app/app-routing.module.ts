@@ -79,6 +79,8 @@ import { ContactComponent } from './Components/FrontOffice/contact/contact.compo
 import { UpdateServiceProfileComponent } from './Components/BackOffice/service-profile/update-service-profile/update-service-profile.component';
 import { AppointmentsProfileUserComponent } from './Components/FrontOffice/user/appointments-profile-user/appointments-profile-user.component';
 import { MyproductsComponent } from './Components/FrontOffice/user/myproducts/myproducts.component';
+import { MyPetsProfileComponent } from './Components/BackOffice/my-pets-profile/my-pets-profile.component';
+import { PetStatsComponent } from './Components/BackOffice/dashboard/pet-stats/pet-stats.component';
 
 const routes: Routes = [
   { path: 'about', component: AboutComponentComponent },
@@ -108,13 +110,14 @@ const routes: Routes = [
      {path:'eventback', component:EventbackComponent},
      {path:'update-event/:id', component:UpdateEventComponent},
      {path:'add-event', component:AddEventComponent},
-     { path: 'my-pets', component: UserPetsComponent },
+     { path: 'my-pets', component: PetStatsComponent },
      { path: 'adoption-request', component: AdoptionRequestDashbordComponent },
      { path: 'records', component: RecordsComponent },
      { path: 'posts', component: PostsComponent },
      { path: 'carnets', component: UsersCarnetComponent }
     ]
   },
+  {path:'test',component:PetStatsComponent},
   {path:'service-dashboard',component:ServiceProfileDashboardComponent},
   {path:'add-service-dashboard',component:AddServiceProfileComponent},
   {path:'appointments-dashboard',component:AppointmentsProfileComponent},
@@ -181,6 +184,7 @@ const routes: Routes = [
   { path: 'register', component: RegisterComponent },
   { path: 'editProfile/:id', component: EditProfileComponent },
   { path: 'myproducts', component: MyproductsComponent },
+  { path: 'mypets', component: MyPetsProfileComponent },
   { path: 'prefModal/:id', component: UserProfileModalComponent },
   { path: 'forgot-password', component: ForgotPasswordComponent },
   { path: 'reset-password', component: ResetPasswordComponent },

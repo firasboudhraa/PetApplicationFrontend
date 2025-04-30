@@ -184,17 +184,20 @@
 /* Bouton flottant pour ouvrir le chatbot */
 .chat-toggle-btn {
   position: fixed;
-  bottom: 30px;
-  right: 30px;
-  background-color: #00c58e;
-  color: white;
+  bottom: 20px;
+  right: 20px;
+  background: linear-gradient(90deg, #007bff, #0056b3); /* Blue gradient */
+  color: #fff;
   border: none;
   border-radius: 50%;
-  padding: 16px;
-  font-size: 24px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
-  transition: transform 0.3s, background-color 0.3s;
-  z-index: 999;
+  font-size: 30px; /* Icon size */
+  cursor: pointer;
+  z-index: 1000;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Subtle shadow */
+  transition: all 0.3s ease; /* Smooth transition for hover effects */
+  display: flex;
+  align-items: center;
+  justify-content: center; /* Centers the icon */
 }
 
 .chat-toggle-btn:hover {
@@ -252,7 +255,27 @@
   overflow-y: auto;
   background-color: #f9f9f9;
 }
+.mute-btn {
+  position: fixed; 
+  bottom: 100px; 
+  right: -20px;
+  background: #007bff; 
+  border: none;
+  color: #fff;
+  font-size: 18px;
+  cursor: pointer;
+  padding: 10px 15px; 
+  border-radius: 20px 0px 0px 20px;
+  transition: right 0.3s ease, background-color 0.3s ease, color 0.3s ease; 
+  z-index: 1000; 
+}
 
+.mute-btn:hover {
+  background: #0056b3; 
+  color: #fff; 
+  right: 0px;
+
+}
 .user-msg {
   text-align: right;
   margin: 5px 0;

@@ -242,6 +242,10 @@ export class PostsComponent implements OnInit {
         this.isDeleted = true;
         this.showConfirmModal = false;
         this.postComments[id] = [];  // Clear comments for the deleted post
+  
+        // ✅ FIX: Reset selectedPostId
+        this.selectedPostId = null;
+  
         setTimeout(() => (this.isDeleted = false), 3000);
   
         this.postsService.deletePost(id, title, author, email).subscribe({

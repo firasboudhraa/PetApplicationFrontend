@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { ProductService } from '../../../Services/product-service.service';
 import { Product } from '../../../models/product';
 import { Basket } from '../../../models/basket';
@@ -7,6 +7,7 @@ import Swal from 'sweetalert2';
 import { BasketService } from '../../../Services/basket.service';
 import { environment } from 'src/environments/environment'
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+import {UserService} from 'src/app/Services/user.service'
 
 
 @Component({
@@ -16,7 +17,16 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 })
 
 export class ProduitComponent implements OnInit {
-
+  @ViewChild('barkAudio') barkAudio!: ElementRef<HTMLAudioElement>; // Reference to the audio element
+  soundFiles: string[] = [
+    'kitten.wav',
+    'cow.wav',
+    'duck.wav',
+    'geese.wav',
+    'horse.wav',
+    'monkey.wav',
+    'kitten.wav'
+  ];
   currentProduct: Product = {
     nom: '',
     description: '',
@@ -52,21 +62,41 @@ export class ProduitComponent implements OnInit {
   };
   categories: string[] = [
     'Alimentation',
-    'Accessories',
-    'Hygiene and care',
-    'Health',
+    'Accessoires',
+    'Hygiène et soins',
+    'Santé',
     'Habitat'
   ];
+  mute !: boolean ;
+  toggleMute() {
+    this.mute = !this.mute; // Toggle the mute state
+  }
+  playAnimalSound(): void {
+    if (this.mute) return; 
+    const randomSound = this.soundFiles[Math.floor(Math.random() * this.soundFiles.length)];
+    const audioElement = this.barkAudio.nativeElement;
 
+    audioElement.src = `assets/audio/${randomSound}`;
+    audioElement.load(); 
+
+    audioElement.play().catch((error) => {
+      console.error('Audio playback failed:', error);
+    });
+  }
 
   constructor(private productService: ProductService,
     private basketService: BasketService,
-    private http: HttpClient) { }
+    private authService: UserService,
+    private http: HttpClient,
+    private el: ElementRef) { }
 
   ngOnInit() {
     this.getProducts();
     this.getBaskets();
     this.filterProducts();
+    const audioElement = this.el.nativeElement.querySelector('#barkAudio');
+    this.barkAudio = audioElement;
+
   }
 
   initializeBasket() {
@@ -76,7 +106,7 @@ export class ProduitComponent implements OnInit {
       // Créer un nouveau panier avec un ID unique
       basketId = Math.floor(Math.random() * 1000000).toString();
       localStorage.setItem('basketId', basketId);
-      console.log('New cart created with ID:', basketId);
+      console.log('Nouveau panier créé avec ID:', basketId);
     }
   }
   // Méthode pour obtenir la liste des produits
@@ -90,7 +120,7 @@ export class ProduitComponent implements OnInit {
         this.filterProducts(); // Applique les filtres initiaux
       },
       (error) => {
-        this.errorMessage = 'Error while retrieving products.';
+        this.errorMessage = 'Erreur lors de la récupération des produits.';
         this.loading = false;
         console.error(error);
       }
@@ -149,7 +179,7 @@ export class ProduitComponent implements OnInit {
         }));
       },
       (error) => {
-        console.error('Error while retrieving carts:', error);
+        console.error('Erreur lors de la récupération des paniers:', error);
       }
     );
   }
@@ -159,43 +189,64 @@ export class ProduitComponent implements OnInit {
   }
 
   addToBasket(productId: number) {
-    console.log('Cart ID:', this.basketIds[productId]); // Vérifie la valeur du panier
-
-    // Vérification si le panier sélectionné est valide
-    if (!this.basketIds[productId]) {
-      // Affichage d'un message d'erreur avec SweetAlert
-      Swal.fire({
-        icon: 'error',
-        title: 'Cart not selected',
-        text: 'Please select a cart before adding a product.',
-        confirmButtonText: 'Alright'
-      });
-      return;
-    }
-
-    // Appel au service pour ajouter le produit au panier
-    this.basketService.addProductToBasket(this.basketIds[productId], productId).subscribe(
-      (response) => {
-        // Affichage du message de succès avec SweetAlert2
-        Swal.fire({
-          icon: 'success',
-          title: 'Product added',
-          text: 'Product added to cart successfully!',
-          confirmButtonText: 'Alright'
-        });
+    const userId = this.authService.getCurrentUserId();
+  
+    console.log('ID de l’utilisateur connecté:', userId);
+  
+    // Étape 1 : récupérer le ou les paniers de l'utilisateur
+    this.basketService.getAllBasketsByUser(userId).subscribe(
+      (baskets) => {
+        if (!baskets || baskets.length === 0) {
+          Swal.fire({
+            icon: 'error',
+            title: 'Aucun panier trouvé',
+            text: 'Aucun panier n\'a été trouvé pour cet utilisateur.',
+            confirmButtonText: 'D\'accord'
+          });
+          return;
+        }
+  
+        // Exemple : on prend le premier panier trouvé (ou celui qui est "actif")
+        const basket = baskets[0];
+        const basketId = basket.id_Basket;
+  
+        console.log('ID du panier:', basketId);
+        console.log('ID du produit:', productId);
+  
+        // Étape 2 : ajouter le produit au panier via POST
+        this.basketService.addProductToBasketbyUser(userId, basketId, productId).subscribe(
+          (response) => {
+            Swal.fire({
+              icon: 'success',
+              title: 'Produit ajouté',
+              text: 'Produit ajouté au panier avec succès!',
+              confirmButtonText: 'D\'accord'
+            });
+          },
+          (error) => {
+            console.error('Erreur lors de l\'ajout du produit au panier:', error);
+            Swal.fire({
+              icon: 'error',
+              title: 'Erreur',
+              text: 'Une erreur est survenue lors de l\'ajout du produit.',
+              confirmButtonText: 'D\'accord'
+            });
+          }
+        );
       },
       (error) => {
-        console.error('Error adding product to cart:', error);
-        // Affichage du message d'erreur avec SweetAlert
+        console.error('Erreur lors de la récupération du panier:', error);
         Swal.fire({
           icon: 'error',
-          title: 'Error',
-          text: 'An error occurred while adding the product.',
-          confirmButtonText: 'Alright'
+          title: 'Erreur',
+          text: 'Impossible de récupérer les paniers de l’utilisateur.',
+          confirmButtonText: 'D\'accord'
         });
       }
     );
   }
+  
+  
 
 
 
@@ -204,18 +255,18 @@ export class ProduitComponent implements OnInit {
   // Méthode pour créer un produit
   createProduct() {
     if (!this.currentProduct.nom || this.currentProduct.nom.trim() === '') {
-      alert("Product name is required.");
+      alert("Le nom du produit est requis.");
       return;
     }
     if (this.currentProduct.prix <= 0) {
-      alert("Price must be greater than 0.");
+      alert("Le prix doit être supérieur à 0.");
       return;
     }
 
     const formData = new FormData();
-    formData.append('name', this.currentProduct.nom);
+    formData.append('nom', this.currentProduct.nom);
     formData.append('description', this.currentProduct.description);
-    formData.append('price', this.currentProduct.prix.toString());
+    formData.append('prix', this.currentProduct.prix.toString());
     formData.append('stock', this.currentProduct.stock.toString());
     formData.append('category', this.currentProduct.category);
     formData.append('quantity', this.currentProduct.quantity.toString());
@@ -230,7 +281,7 @@ export class ProduitComponent implements OnInit {
 
     this.productService.createProduct(formData).subscribe(
       (product: Product) => {
-        console.log('Product successfully created:', product);
+        console.log('Produit créé avec succès:', product);
         this.products.push(product);
         this.currentProduct = {
           nom: '',
@@ -246,13 +297,13 @@ export class ProduitComponent implements OnInit {
           userId: 0
         }; // Réinitialiser
         this.loading = false;
-        alert("Product successfully created !");
+        alert("Produit ajouté avec succès !");
       },
       (error) => {
-        console.error('Error creating product:', error);
-        this.errorMessage = 'Error creating product.';
+        console.error('Erreur lors de la création du produit:', error);
+        this.errorMessage = 'Erreur lors de la création du produit.';
         this.loading = false;
-        alert("An error occurred while adding the product");
+        alert("Une erreur est survenue lors de l'ajout du produit.");
       }
     );
   }
@@ -260,14 +311,14 @@ export class ProduitComponent implements OnInit {
   // Méthode pour mettre à jour un produit
   updateProduct() {
     if (!this.currentProduct.id_Product || this.currentProduct.id_Product === 0) {
-      alert("Product not found for update");
+      alert("Produit introuvable pour la mise à jour.");
       return;
     }
 
     const formData = new FormData();
-    formData.append('name', this.currentProduct.nom);
+    formData.append('nom', this.currentProduct.nom);
     formData.append('description', this.currentProduct.description);
-    formData.append('price', this.currentProduct.prix.toString());
+    formData.append('prix', this.currentProduct.prix.toString());
     formData.append('stock', this.currentProduct.stock.toString());
     formData.append('category', this.currentProduct.category);
     formData.append('quantity', this.currentProduct.quantity.toString());
@@ -300,10 +351,10 @@ export class ProduitComponent implements OnInit {
           userId: 0
         }; // Réinitialiser
         this.loading = false;
-        alert("Product updated successfully !");
+        alert("Produit mis à jour avec succès !");
       },
       (error) => {
-        this.errorMessage = 'Product not found for update.';
+        this.errorMessage = 'Erreur lors de la mise à jour du produit.';
         this.loading = false;
         console.error(error);
       }
@@ -317,12 +368,12 @@ export class ProduitComponent implements OnInit {
   deleteProduct(productId: number) {
     // Afficher la confirmation de suppression
     Swal.fire({
-      title: 'Are you sure ?',
-      text: "This action is irreversible !",
+      title: 'Êtes-vous sûr ?',
+      text: "Vous ne pourrez pas revenir en arrière!",
       icon: 'warning',
       showCancelButton: true,
-      confirmButtonText: 'Yes, delete!',
-      cancelButtonText: 'Cancel'
+      confirmButtonText: 'Oui, supprimer!',
+      cancelButtonText: 'Annuler'
     }).then((result) => {
       if (result.isConfirmed) {
         this.loading = true;
@@ -336,22 +387,22 @@ export class ProduitComponent implements OnInit {
             // Message de succès après suppression
             Swal.fire({
               icon: 'success',
-              title: 'Product deleted',
-              text: 'The product has been deleted successfully!',
-              confirmButtonText: 'Alright'
+              title: 'Produit supprimé',
+              text: 'Le produit a été supprimé avec succès!',
+              confirmButtonText: 'D\'accord'
             });
           },
           (error) => {
-            this.errorMessage = 'Error has occured while deleting the product.';
+            this.errorMessage = 'Erreur lors de la suppression du produit.';
             this.loading = false;
             console.error(error);
 
             // Message d'erreur si la suppression échoue
             Swal.fire({
               icon: 'error',
-              title: 'Error',
-              text: 'Error has occured while deleting the product.',
-              confirmButtonText: 'Alright'
+              title: 'Erreur',
+              text: 'Une erreur est survenue lors de la suppression.',
+              confirmButtonText: 'D\'accord'
             });
           }
         );

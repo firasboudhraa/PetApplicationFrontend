@@ -1,5 +1,5 @@
 <app-contact-info *ngIf="showLayout"></app-contact-info>
 <app-navbar *ngIf="showLayout"></app-navbar>
-<app-chat-popup></app-chat-popup>
+<app-chat-popup *ngIf="showChatPopup"></app-chat-popup>
 <router-outlet></router-outlet>
-<app-footer *ngIf="showLayout"></app-footer> 
+<app-footer *ngIf="showLayout"></app-footer>

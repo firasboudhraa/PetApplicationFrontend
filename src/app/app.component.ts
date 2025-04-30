@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import  { Router, NavigationEnd , Event  } from '@angular/router';
+import { Router, NavigationEnd, Event } from '@angular/router';
 import { filter } from 'rxjs/operators';
 
 @Component({
@@ -10,6 +10,7 @@ import { filter } from 'rxjs/operators';
 export class AppComponent {
   title = 'PetApplication';
   showLayout = true;
+  showChatPopup = true; // Ajouté ici
 
   constructor(private router: Router) {
     this.router.events
@@ -17,16 +18,28 @@ export class AppComponent {
         filter((event: Event): event is NavigationEnd => event instanceof NavigationEnd)
       )
       .subscribe(event => {
+        const url = event.urlAfterRedirects;
+
+        // Contrôle des éléments de layout
         this.showLayout = !(
-          event.urlAfterRedirects.startsWith('/dashboard') || 
-          event.urlAfterRedirects.startsWith('/service-dashboard') ||
-           event.urlAfterRedirects.startsWith('/add-service-dashboard') ||
-           event.urlAfterRedirects.startsWith('/appointments-dashboard') ||
-           event.urlAfterRedirects.startsWith('/stats-dashboard') ||
-          event.urlAfterRedirects.startsWith('/login') ||
-          event.urlAfterRedirects.startsWith('/register') ||
-          event.urlAfterRedirects.startsWith('/update-service-dashboard') ||
-          event.urlAfterRedirects.startsWith('/profile') 
+          url.startsWith('/dashboard') ||
+          url.startsWith('/service-dashboard') ||
+          url.startsWith('/add-service-dashboard') ||
+          url.startsWith('/appointments-dashboard') ||
+          url.startsWith('/stats-dashboard') ||
+          url.startsWith('/login') ||
+          url.startsWith('/register') ||
+          url.startsWith('/update-service-dashboard') ||
+          url.startsWith('/profile')
+        );
+
+        // Contrôle de l'affichage du chat
+        this.showChatPopup = !(
+          url.startsWith('/produit') || 
+          url.startsWith('/blog') ||
+          url.startsWith('/gemini') ||
+          url.startsWith('/register') ||
+          url.startsWith('/login')
         );
       });
   }

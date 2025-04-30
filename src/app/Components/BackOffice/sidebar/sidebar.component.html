@@ -50,42 +50,28 @@
           </li>
           <li class="nav-item">
             <a data-bs-toggle="collapse" routerLink="records">
-              <i class="fas fa-paw"></i>
+              <i class="fa fa-microphone"></i>
               <p>records</p>
             </a>
           </li>
           <li class="nav-item">
             <a data-bs-toggle="collapse" routerLink="services">
-              <i class="fas fa-paw"></i>
+              <i class="fas fa-cat"></i>
               <p>services</p>
             </a>
           </li>
           <li class="nav-item">
             <a data-bs-toggle="collapse" routerLink="carnets">
-              <i class="fas fa-paw"></i>
+              <i class="fa fa-paper-plane"></i>
               <p>Carnets</p>
             </a>
           </li>
           <li class="nav-item">
-            <a (click)="togglePetsSubmenu()" role="button" [attr.aria-expanded]="isPetsSubmenuOpen" aria-controls="petsSubmenu">
+            <a class="nav-link" routerLink="/dashboard/my-pets" routerLinkActive="active">
               <i class="fas fa-dog"></i>
               <p>Pets</p>
-              <span class="caret"></span>
             </a>
-            <div [ngClass]="isPetsSubmenuOpen? 'collapse show' : 'collapse'" id="petsSubmenu">
-              <ul class="nav nav-collapse">
-                <li>
-                  <a routerLink="my-pets">
-                    <span class="sub-item">My Pets</span>
-                  </a>
-                </li>
-                <li>
-                  <a routerLink="adoption-request">
-                    <span class="sub-item">My adoption request</span>
-                  </a>
-                </li>
-              </ul>
-            </div>
+            
           </li>
           <li class="nav-item">
             <a class="nav-link" routerLink="/dashboard/posts" routerLinkActive="active">
@@ -102,14 +88,14 @@
           </li>
           <li class="nav-item">
             <a data-bs-toggle="collapse" routerLink="/dashboard/payments">
-              <i class="fas fa-paw"></i>
+              <i class="fa fa-credit-card-alt"></i>
               <p>Payments</p>
             </a>
           </li>
           
           <li class="nav-item">
             <a routerLink="/dashboard/baskets" class="nav-link">
-              <i class="fas fa-dog"></i>
+              <i class="fa fa-shopping-basket"></i>
               <p>Baskets</p>
             </a>
           </li>
