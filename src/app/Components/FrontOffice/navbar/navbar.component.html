@@ -187,7 +187,11 @@
     <h2>Cart</h2>
 
     <!-- Champ pour entrer l'ID du panier -->
- <!--   <div class="mb-3">
+    <div *ngIf="basket?.id_Basket" class="alert alert-info mb-3">
+      Your id cart's number is : <strong>{{ basket!.id_Basket }}</strong>
+    </div>
+  
+    <div class="mb-3">
       <input
         type="number"
         [(ngModel)]="basketId"
@@ -198,7 +202,7 @@
         Charge my cart
       </button>
     </div>
-  -->
+ 
     <!-- Liste des produits dans le panier -->
     <ul class="cart-items">
       <li
