@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { ProductService } from '../../../Services/product-service.service';
 import { Product } from '../../../models/product';
 import { Basket } from '../../../models/basket';
@@ -17,7 +17,16 @@ import {UserService} from 'src/app/Services/user.service'
 })
 
 export class ProduitComponent implements OnInit {
-
+  @ViewChild('barkAudio') barkAudio!: ElementRef<HTMLAudioElement>; // Reference to the audio element
+  soundFiles: string[] = [
+    'kitten.wav',
+    'cow.wav',
+    'duck.wav',
+    'geese.wav',
+    'horse.wav',
+    'monkey.wav',
+    'kitten.wav'
+  ];
   currentProduct: Product = {
     nom: '',
     description: '',
@@ -58,17 +67,36 @@ export class ProduitComponent implements OnInit {
     'Santé',
     'Habitat'
   ];
+  mute !: boolean ;
+  toggleMute() {
+    this.mute = !this.mute; // Toggle the mute state
+  }
+  playAnimalSound(): void {
+    if (this.mute) return; 
+    const randomSound = this.soundFiles[Math.floor(Math.random() * this.soundFiles.length)];
+    const audioElement = this.barkAudio.nativeElement;
 
+    audioElement.src = `assets/audio/${randomSound}`;
+    audioElement.load(); 
+
+    audioElement.play().catch((error) => {
+      console.error('Audio playback failed:', error);
+    });
+  }
 
   constructor(private productService: ProductService,
     private basketService: BasketService,
     private authService: UserService,
-    private http: HttpClient) { }
+    private http: HttpClient,
+    private el: ElementRef) { }
 
   ngOnInit() {
     this.getProducts();
     this.getBaskets();
     this.filterProducts();
+    const audioElement = this.el.nativeElement.querySelector('#barkAudio');
+    this.barkAudio = audioElement;
+
   }
 
   initializeBasket() {

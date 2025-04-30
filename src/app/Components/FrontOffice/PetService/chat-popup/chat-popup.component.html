@@ -1,6 +1,9 @@
+<audio #barkAudio ></audio>
+<button class="mute-btn" (click)="toggleMute()" title="Toggle Sound">
+  <i [class]="mute ? 'fas fa-volume-mute' : 'fas fa-volume-up'"></i>
+</button>
 
-
-<button class="chat-toggle" (click)="togglePopup()">
+<button class="chat-toggle" (click)="togglePopup();playAnimalSound()">
     <lord-icon
     src="https://cdn.lordicon.com/sxdpfsrn.json"
     trigger="hover"
