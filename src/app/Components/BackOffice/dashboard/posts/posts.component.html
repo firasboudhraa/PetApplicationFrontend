@@ -51,8 +51,8 @@
           </td>
           <td>{{ post.createdAt | date: 'medium' }}</td>
           <td>
-            <button class="btn btn-red" (click)="deletePost(post.id)">Supprimer</button>
-            <button class="btn btn-blue" (click)="openCommentsPopup(post.id)">Voir commentaires</button>
+            <button class="btn btn-red" (click)="deletePost(post.id)">Delete</button>
+            <button class="btn btn-blue" (click)="openCommentsPopup(post.id)">See All Comments</button>
           </td>
         </tr>
       </ng-container>
@@ -117,11 +117,11 @@ id="contributorsChart"
 
   <div *ngIf="showConfirmModal" class="custom-modal-backdrop">
     <div class="custom-modal">
-      <h3>Confirmer la suppression</h3>
-      <p>Êtes-vous sûr de vouloir supprimer ce post ?</p>
+      <h3>Confirmer Deletion</h3>
+      <p>Are you Sure  ?</p>
       <div class="modal-buttons">
-        <button class="btn btn-secondary" (click)="cancelDelete()">Annuler</button>
-        <button class="btn btn-danger" (click)="confirmDelete()">Supprimer</button>
+        <button class="btn btn-secondary" (click)="cancelDelete()">Discard</button>
+        <button class="btn btn-danger" (click)="confirmDelete()">Delete</button>
       </div>
     </div>
   </div>
@@ -129,11 +129,11 @@ id="contributorsChart"
 
   <div *ngIf="showConfirmModalComment" class="custom-modal-backdrop">
     <div class="custom-modal">
-      <h3>Confirmer la suppression</h3>
-      <p>Êtes-vous sûr de vouloir supprimer ce commentaire ?</p>
+      <h3>Confirmer Deletion</h3>
+      <p>Are You Sure You Want To Delete This Comment ?</p>
       <div class="modal-buttons">
-        <button class="btn btn-secondary" (click)="cancelDeleteComment()">Annuler</button>
-        <button class="btn btn-danger" (click)="confirmDeleteComment(selectedCommentId!, selectedPostId!)">Supprimer</button>
+        <button class="btn btn-secondary" (click)="cancelDeleteComment()">Discard</button>
+        <button class="btn btn-danger" (click)="confirmDeleteComment(selectedCommentId!, selectedPostId!)">Delete</button>
       </div>
     </div>
   </div>
