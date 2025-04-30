@@ -48,7 +48,9 @@
         <li class="nav-item"[ngClass]="{active: this.activeLink === '/contact'}">
           <a routerLink="/contact" (click)='setActiveLink("/contact")' class="nav-link">Contact</a>
         </li>
-        <li class="nav-item"><a routerLink="/marketplace" class="nav-link">Market</a></li>
+        <li class="nav-item"[ngClass]="{active: this.activeLink === '/marketplace'}">
+          <a routerLink="/marketplace" (click)='setActiveLink("/marketplace")' class="nav-link">Market</a>
+        </li>
         <!-- Notification Dropdown -->
         <li class="nav-item dropdown" [class.show]="dropdownOpen">
           <a
