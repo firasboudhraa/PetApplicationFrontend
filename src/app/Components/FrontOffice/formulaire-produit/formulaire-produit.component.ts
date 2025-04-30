@@ -4,6 +4,9 @@ import { ProductService } from '../../../Services/product-service.service';
 import Swal from 'sweetalert2';
 import { HttpClient } from '@angular/common/http'; 
 import { Router } from '@angular/router';
+import { AuthService } from '../../FrontOffice/user/auth/auth.service';
+import {UserService} from 'src/app/Services/user.service'
+
 
 @Component({
   selector: 'app-formulaire-produit',
@@ -20,11 +23,12 @@ export class FormulaireProduitComponent implements OnInit {
   constructor(
     private productService: ProductService, 
     private fb: FormBuilder,
-    private http: HttpClient, 
+    private http: HttpClient,
+    private authService: UserService, 
     private router: Router 
   ) {
     this.productForm = this.fb.group({
-      nom: ['', [Validators.required, Validators.minLength(3) ,Validators.maxLength(30)]],
+      nom: ['', [Validators.required, Validators.minLength(3) ,Validators.maxLength(10)]],
       description: ['', [Validators.required, Validators.minLength(5), Validators.maxLength(100)]],
       prix: [0, [Validators.required, Validators.min(1)]],
       category: ['', Validators.required],
@@ -70,45 +74,54 @@ export class FormulaireProduitComponent implements OnInit {
 
   onSubmit() {
     if (this.productForm.invalid || !this.selectedFile) {
-      alert('Please fill out the form correctly and select an image.');
+      alert('Veuillez remplir correctement le formulaire et sélectionner une image.');
       return;
     }
-
+  
+    const userId = this.authService.getCurrentUserId(); // 🔥 Récupération de l'ID utilisateur
+  
+    if (!userId) {
+      alert("Utilisateur non connecté ou ID invalide !");
+      return;
+    }
+  
     this.isLoading = true;
-
+  
     const formData = new FormData();
-    formData.append('name', this.productForm.value.nom);
+    formData.append('nom', this.productForm.value.nom);
     formData.append('description', this.productForm.value.description);
-    formData.append('price', this.productForm.value.prix.toString());
+    formData.append('prix', this.productForm.value.prix.toString());
     formData.append('stock', this.productForm.value.stock.toString());
     formData.append('category', this.productForm.value.category);
     formData.append('quantity', this.productForm.value.quantity.toString());
     formData.append('image', this.selectedFile, this.selectedFile.name);
-
-    this.http.post('http://localhost:8011/api/products', formData).subscribe(
+  
+    // Utilise l'URL correcte avec userId dans le chemin
+    const url = `http://localhost:8011/api/products/user/${userId}`;
+  
+    this.http.post(url, formData).subscribe(
       (response) => {
-        console.log('Produit added successfully', response);
-        // Afficher un message de succès avec SweetAlert
+        console.log('Produit ajouté avec succès', response);
         Swal.fire({
           icon: 'success',
-          title: 'Produit has been added successfully!',
-          text: 'Produit has been added successfully.',
-          confirmButtonText: 'Alright'
+          title: 'Produit ajouté!',
+          text: 'Le produit a été ajouté avec succès.',
+          confirmButtonText: 'D\'accord'
         }).then(() => {
-          // Redirection vers la page des produits après le succès
           this.router.navigate(['/products']);
         });
-        this.resetForm(); // Réinitialiser le formulaire après succès
+        this.resetForm();
+        this.isLoading = false;
       },
       (error) => {
-        console.error('Error while adding :', error);
-        // Afficher un message d'erreur avec SweetAlert
+        console.error('Erreur lors de l\'ajout :', error);
         Swal.fire({
           icon: 'error',
-          title: 'Error',
-          text: 'Error while adding the product. Please try again.',
-          confirmButtonText: 'Close'
+          title: 'Erreur',
+          text: 'Erreur lors de l\'ajout du produit. Veuillez réessayer.',
+          confirmButtonText: 'Fermer'
         });
+        this.isLoading = false;
       }
     );
   }
