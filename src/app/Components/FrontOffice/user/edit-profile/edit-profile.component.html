@@ -1,10 +1,13 @@
+<app-side-bar-user></app-side-bar-user>
+
 <div class="edit-profile">
   <div *ngIf="isLoading" class="loading-spinner">
     <p>Loading...</p>
   </div>
 
   <div *ngIf="!isLoading">
-    <h1>Edit Profile</h1>
+    <h1>      <i class="fa fa-cogs" aria-hidden="true"></i>
+      Edit Profile</h1>
 
     <div *ngIf="errorMessage" class="alert alert-danger">
       {{ errorMessage }}
@@ -15,69 +18,75 @@
     </div>
 
     <form (ngSubmit)="updateProfile()" #profileForm="ngForm">
-      <div class="form-group">
-        <label for="firstName">First Name</label>
-        <input
-          type="text"
-          id="firstName"
-          class="form-control"
-          [(ngModel)]="user.firstName"
-          name="firstName"
-          required
-        />
-      </div>
-      <div class="form-group">
-        <label for="profilePicture">Profile Picture</label>
-        <input
-          type="file"
-          id="profilePicture"
-          class="form-control"
-          (change)="onFileSelected($event)"
-          accept="image/*"
-        />
-        <div *ngIf="previewUrl" class="preview mt-2">
-          <img [src]="previewUrl" alt="Profile Preview" width="150" class="img-thumbnail" />
+
+      <!-- First Name + Last Name Row -->
+      <div class="form-row">
+        <div class="form-group">
+          <label for="firstName">First Name</label>
+          <input
+            type="text"
+            id="firstName"
+            class="form-control"
+            [(ngModel)]="user.firstName"
+            name="firstName"
+            required
+          />
+        </div>
+        <div class="form-group">
+          <label for="lastName">Last Name</label>
+          <input
+            type="text"
+            id="lastName"
+            class="form-control"
+            [(ngModel)]="user.lastName"
+            name="lastName"
+            required
+          />
         </div>
       </div>
-     
 
-      <div class="form-group">
-        <label for="lastName">Last Name</label>
-        <input
-          type="text"
-          id="lastName"
-          class="form-control"
-          [(ngModel)]="user.lastName"
-          name="lastName"
-          required
-        />
+      <!-- Email + Bio Row -->
+      <div class="form-row">
+        <div class="form-group email-group">
+          <label for="email">Email</label>
+          <input
+            type="email"
+            id="email"
+            class="form-control"
+            [(ngModel)]="user.email"
+            name="email"
+            required
+          />
+        </div>
+        <div class="form-group bio-group">
+          <label for="bio">Bio <small>(optional)</small></label>
+          <textarea
+            id="bio"
+            class="form-control"
+            [(ngModel)]="user.bio"
+            placeholder="example: I am an active person who loves energetic cats"
+            name="bio"
+            rows="4"
+          ></textarea>
+        </div>
       </div>
 
-      <div class="form-group">
-        <label for="email">Email</label>
-        <input
-          type="email"
-          id="email"
-          class="form-control"
-          [(ngModel)]="user.email"
-          name="email"
-          required
-        />
+      <!-- Full-width profile picture -->
+      <div class="form-row">
+        <div class="form-group full-width">
+          <label for="profilePicture">Profile Picture</label>
+          <input
+            type="file"
+            id="profilePicture"
+            class="form-control"
+            (change)="onFileSelected($event)"
+            accept="image/*"
+          />
+          <div *ngIf="previewUrl" class="preview mt-2">
+            <img [src]="previewUrl" alt="Profile Preview" width="150" class="img-thumbnail" />
+          </div>
+        </div>
       </div>
-      <div class="form-group">
-        <label for="bio">Bio <small>(optional)</small></label>
-        <textarea
-          id="bio"
-          class="form-control"
-          [(ngModel)]="user.bio"
-          placeholder="example: I am an active person who loves energetic cats"
-          name="bio"
-          rows="4"
-        ></textarea>
-      </div>
-     
-       
-       
 
       <button type="submit" class="btn btn-primary" [disabled]="profileForm.invalid">
         Save Changes

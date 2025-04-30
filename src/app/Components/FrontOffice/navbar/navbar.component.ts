@@ -152,7 +152,7 @@ loadUserBasket(): void {
   const userId = this.authService.getDecodedToken()?.userId;
   
   if (!userId) {
-    alert('Veuillez vous connecter pour voir votre panier');
+    alert('Please login to see your basket');
     return;
   }
 

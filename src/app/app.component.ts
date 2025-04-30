@@ -29,15 +29,16 @@ export class AppComponent {
           url.startsWith('/stats-dashboard') ||
           url.startsWith('/login') ||
           url.startsWith('/register') ||
-          url.startsWith('/update-service-dashboard') ||
-          url.startsWith('/profile')
+          url.startsWith('/update-service-dashboard') 
         );
 
         // Contrôle de l'affichage du chat
         this.showChatPopup = !(
           url.startsWith('/produit') || 
           url.startsWith('/blog') ||
-          url.startsWith('/gemini')
+          url.startsWith('/gemini') ||
+          url.startsWith('/register') ||
+          url.startsWith('/login')
         );
       });
   }

@@ -81,6 +81,7 @@ import { AppointmentsProfileUserComponent } from './Components/FrontOffice/user/
 import { MyproductsComponent } from './Components/FrontOffice/user/myproducts/myproducts.component';
 import { MyPetsProfileComponent } from './Components/BackOffice/my-pets-profile/my-pets-profile.component';
 import { PetStatsComponent } from './Components/BackOffice/dashboard/pet-stats/pet-stats.component';
+import { MyProfileComponent } from './Components/FrontOffice/user/my-profile/my-profile.component';
 
 const routes: Routes = [
   { path: 'about', component: AboutComponentComponent },
@@ -190,6 +191,9 @@ const routes: Routes = [
   { path: 'reset-password', component: ResetPasswordComponent },
   { path: 'matching-pets', component: MatchingPetComponent },
   { path: 'profile', component: ProfileComponent },
+  { path: 'myprofile', component: MyProfileComponent },
+  
+
 
 
 

@@ -1,37 +1,30 @@
-import { Component, OnInit } from '@angular/core';
-import { AuthService } from '../auth/auth.service';
+import { Component } from '@angular/core';
 import { User } from '../models/user_model';
+import { AuthService } from '../auth/auth.service';
 import { Router } from '@angular/router';
 import { UserService } from '../service_user/user.service';
 
 @Component({
-  selector: 'app-profile',
-  templateUrl: './profile.component.html',
-  styleUrls: ['./profile.component.css']
+  selector: 'app-my-profile',
+  templateUrl: './my-profile.component.html',
+  styleUrls: ['./my-profile.component.css']
 })
-export class ProfileComponent implements OnInit {
-    user: User = {
+export class MyProfileComponent {
+ user: User = {
       id: 0,
       firstName: '',
       lastName: '',
       email: '',
       roles: [],
-      profileImageUrl: '',
-      bio: ''
+      profileImageUrl: '' ,
+       bio: ''
+  
     };
-    
-    // Modal properties
-    showModal = false;
-    modalMessage = '';
-    modalType: 'success' | 'error' | 'warning' = 'success';
-    modalTitle = '';
-    isDeleteModalVisible = false;
-    
     imageTimestamp: number = 0;
     isLoading = true;
     errorMessage = '';
     isAdoptionModalVisible = false;
-    
+  
     constructor(
       private authService: AuthService,
       private router: Router,
@@ -42,10 +35,11 @@ export class ProfileComponent implements OnInit {
       this.imageTimestamp = new Date().getTime();
       const tokenData = this.authService.getDecodedToken();
       
-      if (tokenData && tokenData.userId) {
-        this.loadUserProfile(tokenData.userId);
+      if (tokenData) {
+        const userId = tokenData.userId; 
+        this.loadUserProfile(userId);
       } else {
-        this.showAlert('error', 'Authentication Required', 'Please login to access your profile');
+        this.errorMessage = 'User not authenticated';
         this.isLoading = false;
         this.router.navigate(['/login']);
       }
@@ -54,21 +48,19 @@ export class ProfileComponent implements OnInit {
     private loadUserProfile(userId: number): void {
       this.userService.getUserById(userId).subscribe({
         next: (data: User) => {
+          console.log('User Data:', data); 
           this.user = { ...data };
           this.isLoading = false;
         },
         error: (err) => {
-          console.error('Failed to load profile:', err);
+          console.error('Failed to load user:', err);
           this.errorMessage = 'Failed to load user profile';
-          this.showAlert('error', 'Loading Failed', 'Failed to load user profile');
           this.isLoading = false;
         }
       });
     }
-    
     getProfilePictureUrl(): string {
-      let url = '';
-      
+      let url = ''; // Construct the URL as before
       if (!this.user.profileImageUrl) {
           url = '/assets/images/userDefaultPic.png';
       } else if (this.user.profileImageUrl.startsWith('http')) {
@@ -78,15 +70,14 @@ export class ProfileComponent implements OnInit {
       } else {
           url = `http://localhost:8084/api/user/images/${this.user.profileImageUrl}`;
       }
-      
       return `${url}?v=${this.imageTimestamp}`;
     }
+
     
     handleImageError(event: Event) {
       const img = event.target as HTMLImageElement;
       img.src = '/assets/images/userDefaultPic.png';
     }
-    
     getRolesAsString(): string {
       if (!this.user.roles) return 'No roles assigned';
       
@@ -102,11 +93,10 @@ export class ProfileComponent implements OnInit {
       }
       
       return 'Unknown role format';
+      
     }
   
     private formatRoleName(role: string): string {
-      if (!role) return 'Unknown';
-      
       return role.toLowerCase()
           .replace(/_/g, ' ')
           .replace(/\b\w/g, (l) => l.toUpperCase());
@@ -120,17 +110,14 @@ export class ProfileComponent implements OnInit {
         },
         error: (err) => {
           console.error('Logout failed:', err);
-          // Still clear token and redirect even if the backend call fails
           this.authService.clearToken();
           this.router.navigate(['/login']);
         }
       });
     }
-    
     user_pref() {
       this.isAdoptionModalVisible = true;
     }
-    
     editProfile() {
       const tokenData = this.authService.getDecodedToken();
     
@@ -138,55 +125,24 @@ export class ProfileComponent implements OnInit {
         this.router.navigate(['/editProfile', this.user.id]);
       } else {
         this.errorMessage = 'You can only edit your own profile';
-        this.showAlert('error', 'Permission Denied', 'You can only edit your own profile');
       }
     }
   
-    showAlert(type: 'success' | 'error' | 'warning', title: string, message: string): void {
-      this.modalType = type;
-      this.modalTitle = title;
-      this.modalMessage = message;
-      this.showModal = true;
-      
-      // Auto-hide after 3 seconds for success messages
-      if (type === 'success') {
-        setTimeout(() => {
-          this.showModal = false;
-        }, 3000);
-      }
-    }
-  
-    closeModal(): void {
-      this.showModal = false;
-    }
   
     supp(id: number): void {
-      this.isDeleteModalVisible = true;
+      this.userService.deleteUser(id).subscribe({
+        next: (response) => {
+          console.log('User deleted successfully:', response);
+          alert('User deleted successfully'); 
+          this.router.navigate(['/home']);
+        },
+        error: (err) => {
+          console.error('Error deleting user:', err);
+          this.errorMessage = 'Failed to delete user'; 
+        }
+      });
     }
+  }
   
-    confirmDelete(confirm: boolean): void {
-      this.isDeleteModalVisible = false;
-      
-      if (confirm) {
-        this.userService.softDeleteUser(this.user.id).subscribe({
-          next: () => {
-            this.showAlert('success', 'Account Deleted', 'Your account has been deleted successfully');
-            this.authService.logout().subscribe({
-              next: () => {
-                this.authService.clearToken();
-                this.router.navigate(['/login']);
-              },
-              error: (err) => {
-                this.authService.clearToken();
-                this.router.navigate(['/login']);
-              }
-            });
-          },
-          error: (err) => {
-            console.error('Account deletion failed:', err);
-            this.showAlert('error', 'Deletion Failed', 'Failed to delete account. Please try again.');
-          }
-        });
-      }
-    }
-}
+  
+
