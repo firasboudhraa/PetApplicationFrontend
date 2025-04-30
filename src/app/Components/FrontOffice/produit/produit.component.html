@@ -133,8 +133,18 @@
 </div>
 
 <!-- Bouton flottant pour ouvrir le chatbot -->
-<button class="chat-toggle-btn" (click)="toggleChat()">
-  💬
+ 
+<audio #barkAudio ></audio>
+<button class="mute-btn" (click)="toggleMute()" title="Toggle Sound">
+  <i [class]="mute ? 'fas fa-volume-mute' : 'fas fa-volume-up'"></i>
+</button>
+<button class="chat-toggle-btn" (click)="toggleChat();playAnimalSound()">
+  <lord-icon
+  src="https://cdn.lordicon.com/sxdpfsrn.json"
+  trigger="hover"
+  colors="primary:#121331,secondary:#9ce5f4,tertiary:#ebe6ef"
+  style="width:60px;height:60px">
+</lord-icon> 
 </button>
 
 <!-- Fenêtre du chatbot -->

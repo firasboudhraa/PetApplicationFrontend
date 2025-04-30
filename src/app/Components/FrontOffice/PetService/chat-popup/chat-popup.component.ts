@@ -1,4 +1,4 @@
-import { Component, ElementRef, Renderer2 } from '@angular/core';
+import { Component, ElementRef, Renderer2, ViewChild } from '@angular/core';
 import { v4 as uuidv4 } from 'uuid';
 
 declare var lordicon: any; 
@@ -10,13 +10,21 @@ import { HttpClient } from '@angular/common/http';
   styleUrls: ['./chat-popup.component.css']
 })
 export class ChatPopupComponent {
-
+  @ViewChild('barkAudio') barkAudio!: ElementRef<HTMLAudioElement>; // Reference to the audio element
   messages: { sender: 'user' | 'bot', content: string }[] = [];
   userInput: string = '';
   sessionId: string = uuidv4();  // Unique ID per session
   loading = false;
   showPopup = false;
-
+  soundFiles: string[] = [
+    'kitten.wav',
+    'cow.wav',
+    'duck.wav',
+    'geese.wav',
+    'horse.wav',
+    'monkey.wav',
+    'kitten.wav'
+  ];
   constructor(private http: HttpClient ,private renderer: Renderer2, private el: ElementRef) {}
 
   togglePopup() {
@@ -44,8 +52,26 @@ export class ChatPopupComponent {
     });
   }
 
+  mute !: boolean ;
+  toggleMute() {
+    this.mute = !this.mute; // Toggle the mute state
+  }
+  playAnimalSound(): void {
+    if (this.mute) return; 
+    const randomSound = this.soundFiles[Math.floor(Math.random() * this.soundFiles.length)];
+    const audioElement = this.barkAudio.nativeElement;
 
+    audioElement.src = `assets/audio/${randomSound}`;
+    audioElement.load(); 
 
+    audioElement.play().catch((error) => {
+      console.error('Audio playback failed:', error);
+    });
+  }
+  ngOnInit() {
+    const audioElement = this.el.nativeElement.querySelector('#barkAudio');
+    this.barkAudio = audioElement;
+  }
 
   sendMessage(): void {
     if (!this.userInput.trim()) return;
