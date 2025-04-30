@@ -38,4 +38,7 @@ export class PetSittingOfferService {
   cancelPetSittingOffer(offerId: number,sitterId:number): Observable<any> {
     return this.http.delete<any>(`${this.apiUrl}/${offerId}/cancel/${sitterId}`);
   }
+  deleteOffer(offerId:number): Observable<any>{
+    return this.http.delete<any>(`${this.apiUrl}/delete/${offerId}`)
+  }
 }

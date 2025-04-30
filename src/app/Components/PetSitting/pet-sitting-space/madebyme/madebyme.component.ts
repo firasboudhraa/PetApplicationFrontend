@@ -47,7 +47,9 @@ userId!:any;
 
     });
   }
-  
+  deleteOffer(offerId:number){
+   
+  }
   closeDetailModal(): void {
     this.renderer.removeClass(document.querySelector('.pet-sitting-space-container'), 'blur-effect');
     this.renderer.removeClass(document.querySelector('app-navbar'), 'blur-effect');

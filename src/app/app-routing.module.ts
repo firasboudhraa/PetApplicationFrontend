@@ -79,6 +79,7 @@ import { ContactComponent } from './Components/FrontOffice/contact/contact.compo
 import { UpdateServiceProfileComponent } from './Components/BackOffice/service-profile/update-service-profile/update-service-profile.component';
 import { AppointmentsProfileUserComponent } from './Components/FrontOffice/user/appointments-profile-user/appointments-profile-user.component';
 import { MyproductsComponent } from './Components/FrontOffice/user/myproducts/myproducts.component';
+import { MyPetsProfileComponent } from './Components/BackOffice/my-pets-profile/my-pets-profile.component';
 
 const routes: Routes = [
   { path: 'about', component: AboutComponentComponent },
@@ -181,6 +182,7 @@ const routes: Routes = [
   { path: 'register', component: RegisterComponent },
   { path: 'editProfile/:id', component: EditProfileComponent },
   { path: 'myproducts', component: MyproductsComponent },
+  { path: 'mypets', component: MyPetsProfileComponent },
   { path: 'prefModal/:id', component: UserProfileModalComponent },
   { path: 'forgot-password', component: ForgotPasswordComponent },
   { path: 'reset-password', component: ResetPasswordComponent },
