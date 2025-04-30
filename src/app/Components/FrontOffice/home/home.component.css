@@ -30,4 +30,45 @@
     font-weight: bold;
     color: green !important;  /* Couleur des chiffres en vert avec !important */
   }
+  #testimonials {
+    background-color: #f4f9f4;
+  }
+  
+  #testimonials h2 {
+    color: #28a745;
+    font-size: 2.5rem;
+    font-weight: bold;
+  }
+  
+  .testimonial-item {
+    background-color: #e8f5e9;
+    border-left: 4px solid #28a745;
+    padding: 20px;
+    margin: 10px 0;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  .testimonial-item p {
+    font-size: 1.125rem;
+    font-style: italic;
+    color: #333;
+  }
+  
+  .testimonial-item footer {
+    font-size: 1rem;
+    color: #555;
+    text-align: right;
+    font-weight: bold;
+  }
+  
+  .testimonial-item:hover {
+    background-color: #c8e6c9;
+    transform: translateY(-5px);
+    transition: all 0.3s ease;
+  }
+  
+  .testimonial-item footer:hover {
+    color: #28a745;
+  }
   
