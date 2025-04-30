@@ -38,13 +38,13 @@
 
   <div class="chat-body" *ngIf="!isChatMinimized">
     <div class="chat-messages">
-  <div *ngIf="isLoading" class="loading">Generating response...</div>
-  
-  <div *ngFor="let msg of responseHistory" class="chat-response">
-    {{ msg }}
-  </div>
-</div>
+      <!-- Afficher les messages de l'historique -->
+      <div *ngFor="let msg of responseHistory; let i = index" class="chat-message" [ngClass]="{'user-message': i % 2 === 0, 'ai-message': i % 2 !== 0}">
+        {{ msg }}
+      </div>
 
+      <div *ngIf="isLoading" class="loading">Generating response...</div>
+    </div>
 
     <div class="chat-input-container">
       <input type="text" #userPrompt placeholder="Ask a question..." class="chat-input" />

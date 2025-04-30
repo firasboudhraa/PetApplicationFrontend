@@ -99,37 +99,38 @@ console.log('Type List:', this.typeList);
   responseHistory: string [] = [];
   isLoading: boolean = false;
 
-  
   async askQuestion(prompt: string){
     const poidsData = this.poidsList.join(', ');
     const typeData = this.typeList.join(', ');
   
-     prompt = `
+    const fullPrompt = `
       Pet weight history: [${poidsData}]
       Consultation types: [${typeData}]
-    Generate a coherent and well-structured paragraph in English (no bullet points, no headings). Use only valid and non-null data. 
-    Analyze the evolution of the pet's weight and the types of consultations. Based on this analysis, provide concise recommendations,
-     including dietary suggestions and future care habits to adopt for the pet’s health and well-being.
+      Generate a coherent and well-structured paragraph in English (no bullet points, no headings). Use only valid and non-null data. 
+      Analyze the evolution of the pet's weight and the types of consultations. Based on this analysis, provide concise recommendations,
+      including dietary suggestions and future care habits to adopt for the pet’s health and well-being.
     `;
-          const response = await this.client.chat.completions.create({
-        messages: [
-          { role: "system", content: "" },
-          { role: "user", content: prompt }
-        ],
-        model: "gpt-4o",
-        temperature: 1,
-        max_tokens: 4096,
-        top_p: 1
-      }).then((response) => {
-        this.responseHistory.push(response.choices[0].message.content ?? '');
-
-        this.isLoading = false; 
-      })
-     
-        const raw = await response
-      // Affiche immédiatement toute la réponse 
-  return null
+  
+    this.responseHistory.push(prompt); // ✅ Affiche uniquement ce que l’utilisateur tape
+  
+    const response = await this.client.chat.completions.create({
+      messages: [
+        { role: "system", content: "" },
+        { role: "user", content: fullPrompt } // 🟡 Utilise le prompt complet uniquement pour GPT
+      ],
+      model: "gpt-4o",
+      temperature: 1,
+      max_tokens: 4096,
+      top_p: 1
+    }).then((response) => {
+      this.responseHistory.push(response.choices[0].message.content ?? '');
+      this.isLoading = false; 
+    });
+  
+    const raw = await response;
+    return null;
   }
+  
 
   isChatMinimized: boolean = false;
 
