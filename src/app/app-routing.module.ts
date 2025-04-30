@@ -82,6 +82,7 @@ import { MyproductsComponent } from './Components/FrontOffice/user/myproducts/my
 import { MyPetsProfileComponent } from './Components/BackOffice/my-pets-profile/my-pets-profile.component';
 import { PetStatsComponent } from './Components/BackOffice/dashboard/pet-stats/pet-stats.component';
 import { MyProfileComponent } from './Components/FrontOffice/user/my-profile/my-profile.component';
+import { AdoptionRequestProfileComponent } from './Components/BackOffice/adoption-request-profile/adoption-request-profile.component';
 
 const routes: Routes = [
   { path: 'about', component: AboutComponentComponent },
@@ -186,6 +187,7 @@ const routes: Routes = [
   { path: 'editProfile/:id', component: EditProfileComponent },
   { path: 'myproducts', component: MyproductsComponent },
   { path: 'mypets', component: MyPetsProfileComponent },
+  { path: 'adoptionRequestTracker', component: AdoptionRequestProfileComponent },
   { path: 'prefModal/:id', component: UserProfileModalComponent },
   { path: 'forgot-password', component: ForgotPasswordComponent },
   { path: 'reset-password', component: ResetPasswordComponent },
