@@ -377,3 +377,7 @@
     margin-bottom: 0.5rem;
   }
 }
+.reported {
+  background-color: #f8d7da; /* Light red background */
+  color: #721c24; /* Dark red text */
+}

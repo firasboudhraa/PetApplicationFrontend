@@ -33,6 +33,7 @@ export class PostsComponent implements OnInit {
   isDeleted = false;
   isDeletedComment = false;
   isGeneratingPdf = false;
+  highlightReportedPosts: Post[] = [];
 
   showCharts = true;
 
@@ -102,6 +103,7 @@ export class PostsComponent implements OnInit {
   private loadPosts(): void {
     this.postsService.getPosts().subscribe(posts => {
       this.posts = posts.sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
+      this.highlightReportedPosts = posts.filter(post => post.reported === true);
 
       if (this.showCharts) {
         this.updateCharts();

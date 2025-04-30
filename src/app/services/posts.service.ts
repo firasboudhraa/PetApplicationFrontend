@@ -155,4 +155,9 @@ export class PostsService {
   getPosts(): Observable<Post[]> {
     return this.http.get<Post[]>(this.apiUrl);
   }
+  // 🚩 Report a post
+reportPost(postId: number): Observable<void> {
+  return this.http.put<void>(`${this.apiUrl}/${postId}/report`, {});
+}
+
 }
