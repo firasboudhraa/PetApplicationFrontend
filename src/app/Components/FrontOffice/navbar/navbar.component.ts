@@ -146,6 +146,62 @@ export class NavbarComponent implements OnInit {
   }
   
 
+  // Ajoutez cette méthode à votre composant
+loadUserBasket(): void {
+  // 1. Récupérer l'ID de l'utilisateur connecté
+  const userId = this.authService.getDecodedToken()?.userId;
+  
+  if (!userId) {
+    alert('Veuillez vous connecter pour voir votre panier');
+    return;
+  }
+
+  // 2. Charger le panier depuis l'API
+  this.basketService.getBasketByUserId(userId).subscribe({
+    next: (basket) => {
+      if (basket) {
+        // 3. Si panier existe, afficher les produits
+        this.basket = basket;
+        this.loadProductDetails(basket.productIds);
+      } else {
+        // 4. Si aucun panier, créer un nouveau
+        this.createNewBasket(userId);
+      }
+    },
+    error: () => {
+      alert('Erreur lors du chargement du panier');
+    }
+  });
+}
+
+// Méthode pour créer un nouveau panier
+private createNewBasket(userId: number): void {
+  const newBasket: Basket = {
+    id_Basket: 0, // Valeur temporaire, sera remplacée par le backend
+    dateCreation: new Date().toISOString(),
+    statut: 'actif',
+    total: 0,
+    quantity: 0,
+    modePaiement: null,
+    dateValidation: null,
+    dateModification: null,
+    userId: userId,
+    productIds: [], // Initialiser avec un tableau vide
+    productIdsList: [], // Optionnel mais initialisé
+    productDetailsList: [] // Optionnel mais initialisé
+  };
+
+  this.basketService.createBasket(newBasket).subscribe({
+    next: (createdBasket) => {
+      this.basket = createdBasket;
+      console.log('Nouveau panier créé', createdBasket);
+    },
+    error: (error) => {
+      console.error('Erreur création panier', error);
+    }
+  });
+}
+
 loadBasketById(): void {
   if (this.basketId !== null) {
     this.basketService
@@ -209,26 +265,49 @@ private processProductIds(productIds: string | number[]): number[] {
   }
   
   
-  private loadProductDetails(productIds: number[]): void {
-    if (productIds.length > 0) {
-      const productDetailObservables = productIds.map((id) =>
-        this.productService.getProductById(id).pipe(catchError(() => of(null)))
-      );
+  private loadProductDetails(productIds: number[] = []): void {
+    // 1. Gestion du cas où productIds est vide/null
+    if (!productIds || productIds.length === 0) {
+      this.basket!.productDetailsList = [];
+      this.updateTotal();
+      return;
+    }
   
-      forkJoin(productDetailObservables).subscribe((products) => {
-        const filteredProducts = products.filter((p) => p !== null) as Product[];
+    // 2. Création des requêtes pour chaque produit
+    const productRequests = productIds.map(id =>
+      this.productService.getProductById(id).pipe(
+        catchError(() => of(null)) // Gère les erreurs individuelles
+      )
+    );
   
-        filteredProducts.forEach((product) => {
-          product.imageUrl = `http://localhost:8011/api/products/images/${product.imageUrl}`;
-          if (product.quantity === undefined || product.quantity === null) {
-            product.quantity = 1; // Initialize quantity
-          }
-        });
+    // 3. Exécution parallèle des requêtes
+    forkJoin(productRequests).subscribe({
+      next: (products) => {
+        // 4. Filtrage et transformation des produits
+        this.basket!.productDetailsList = products
+          .filter(p => p !== null)
+          .map(product => {
+            // Ajoute l'URL complète de l'image
+            product!.imageUrl = `http://localhost:8011/api/products/images/${product!.imageUrl}`;
+            
+            // Initialise la quantité si nécessaire
+            if (product!.quantity === undefined || product!.quantity === null) {
+              product!.quantity = 1;
+            }
+            
+            return product as Product;
+          });
   
-        this.basket!.productDetailsList = filteredProducts;
+        // 5. Mise à jour du total
         this.updateTotal();
-      });
-    }}
+      },
+      error: (err) => {
+        console.error('Erreur lors du chargement des produits:', err);
+        this.basket!.productDetailsList = [];
+        this.updateTotal();
+      }
+    });
+  }
 
   // Demander confirmation avant de supprimer un article
   confirmRemoveItem(productId: number) {

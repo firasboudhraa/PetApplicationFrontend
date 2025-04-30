@@ -345,4 +345,7 @@ export class PostDetailComponent implements OnInit, AfterViewInit {
       this.newCommentContent += emoji;
     }
   }
+
+
+  
 }
