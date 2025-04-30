@@ -37,7 +37,9 @@ export class AppComponent {
         this.showChatPopup = !(
           url.startsWith('/produit') || 
           url.startsWith('/blog') ||
-          url.startsWith('/gemini')
+          url.startsWith('/gemini') ||
+          url.startsWith('/register') ||
+          url.startsWith('/login')
         );
       });
   }
