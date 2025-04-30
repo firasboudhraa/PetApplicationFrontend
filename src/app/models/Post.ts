@@ -12,6 +12,8 @@ export class Post {
   commentList: Comment[] = [];
   latitude: number;  // Latitude pour la carte
   longitude: number; // Longitude pour la carte
+  reported?: boolean; // Optional: use `?` if it might not always be returned
+
 
   constructor(
     id: number,

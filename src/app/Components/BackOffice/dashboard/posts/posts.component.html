@@ -1,15 +1,11 @@
 <div class="container">
   <h2>Liste des Posts</h2>
 
-  
   <button class="btn btn-primary" (click)="hoverToStatistics()">
     Go to Statistics
   </button>
 
-
   <button class="btn btn-primary" (click)="generatePdf()">Download Blog PDF</button>
-  
-
 
   <table class="posts-table">
     <thead>
@@ -18,25 +14,28 @@
         <th>Image</th>
         <th>Titre</th>
         <th>Auteur</th>
-        <th>Email</th> <!-- Added Email column -->
+        <th>Email</th>
         <th>Type</th>
         <th>Likes</th>
         <th>Commentaires</th>
-        <th>Contenu</th> <!-- Added Content column -->
+        <th>Contenu</th>
         <th>Date</th>
         <th>Actions</th>
       </tr>
     </thead>
     <tbody>
       <ng-container *ngFor="let post of posts; let i = index">
-        <tr>
+        <tr [class.reported]="post.reported == true"> <!-- Add the "reported" class if the post is reported -->
           <td>{{ i + 1 }}</td>
           <td>
             <img [src]="'http://localhost:8082/posts/images/' + post.imageUrl" alt="Post Image" class="post-img">
           </td>
-          <td>{{ post.title }}</td>
+          <td>
+            {{ post.title }}
+            <span *ngIf="post.reported" style="color: red; font-weight: bold; margin-left: 10px;">Reported</span> <!-- Red "Reported" label -->
+          </td>
           <td>{{ userNames.get(post.userId) }}</td>
-          <td>{{ userEmails.get(post.userId) }}</td> <!-- Display email here -->
+          <td>{{ userEmails.get(post.userId) }}</td>
           <td>{{ post.type }}</td>
           <td>{{ likeCounts[post.id] || 0 }}</td>
           <td>{{ commentCounts[post.id] || 0 }}</td>
@@ -64,43 +63,40 @@
     <!-- Activity Over Time Chart -->
     <h3>Activity Over Last 7 Days</h3>
     <canvas baseChart
-id="activityChart"
-[data]="activityChartData"
-[options]="activityChartOptions"
-[type]="activityChartType">
-</canvas>
+      id="activityChart"
+      [data]="activityChartData"
+      [options]="activityChartOptions"
+      [type]="activityChartType">
+    </canvas>
 
-<!-- Post Type Distribution Chart -->
-<h3>Post Type Distribution Chart</h3>
+    <!-- Post Type Distribution Chart -->
+    <h3>Post Type Distribution Chart</h3>
+    <canvas baseChart
+      id="typeChart"
+      [data]="typeChartData"
+      [options]="typeChartOptions"
+      [type]="'pie'">
+    </canvas>
 
-<canvas baseChart
-id="typeChart"
-[data]="typeChartData"
-[options]="typeChartOptions"
-[type]="'pie'">
-</canvas>
+    <!-- Top Contributors Chart -->
+    <h3>Top Contributors</h3>
+    <canvas baseChart
+      id="contributorsChart"
+      [data]="contributorsChartData"
+      [options]="contributorsChartOptions"
+      [type]="'bar'">
+    </canvas>
 
-<!-- Top Contributors Chart -->
-<h3>Top Contributors</h3>
+    <button (click)="generateStatisticsPdf()" class="btn btn-primary">Download Statistics PDF</button>
+  </div>
 
-<canvas baseChart
-
-id="contributorsChart"
-[data]="contributorsChartData"
-[options]="contributorsChartOptions"
-[type]="'bar'">
-</canvas>
-
-
-
-  <button (click)="generateStatisticsPdf()" class="btn btn-primary">Download Statistics PDF</button>
-
-
+  <!-- Modal for Viewing Post Comments -->
   <div class="modal" *ngIf="selectedPostId !== null && !showConfirmModal">
     <div class="modal-content">
       <span class="close" (click)="closePopup()">&times;</span>
       <h3>Commentaires du post</h3>
-      <div *ngIf="selectedPostId && (postComments[selectedPostId] || []).length > 0; else noComments">        <ul class="comments-list">
+      <div *ngIf="selectedPostId && (postComments[selectedPostId] || []).length > 0; else noComments">
+        <ul class="comments-list">
           <li *ngFor="let comment of postComments[selectedPostId]">
             <strong>{{ userNames.get(comment.userId) || 'Inconnu' }}</strong> : {{ comment.content }}
             <button class="btn btn-small-red" (click)="deleteComment(comment.id, selectedPostId!)">✖ Delete</button>
@@ -113,12 +109,11 @@ id="contributorsChart"
     </div>
   </div>
 
-<!-- Button to Download Statistics PDF -->
-
+  <!-- Confirmation Modal for Post Deletion -->
   <div *ngIf="showConfirmModal" class="custom-modal-backdrop">
     <div class="custom-modal">
       <h3>Confirmer Deletion</h3>
-      <p>Are you Sure  ?</p>
+      <p>Are you Sure?</p>
       <div class="modal-buttons">
         <button class="btn btn-secondary" (click)="cancelDelete()">Discard</button>
         <button class="btn btn-danger" (click)="confirmDelete()">Delete</button>
@@ -126,11 +121,11 @@ id="contributorsChart"
     </div>
   </div>
 
-
+  <!-- Confirmation Modal for Comment Deletion -->
   <div *ngIf="showConfirmModalComment" class="custom-modal-backdrop">
     <div class="custom-modal">
       <h3>Confirmer Deletion</h3>
-      <p>Are You Sure You Want To Delete This Comment ?</p>
+      <p>Are You Sure You Want To Delete This Comment?</p>
       <div class="modal-buttons">
         <button class="btn btn-secondary" (click)="cancelDeleteComment()">Discard</button>
         <button class="btn btn-danger" (click)="confirmDeleteComment(selectedCommentId!, selectedPostId!)">Delete</button>
@@ -138,11 +133,12 @@ id="contributorsChart"
     </div>
   </div>
 
-
+  <!-- Success Notification for Post Deletion -->
   <div *ngIf="isDeleted" class="notification">
     Post deleted successfully!
   </div>
 
+  <!-- Success Notification for Comment Deletion -->
   <div *ngIf="isDeletedComment" class="notification">
     Comment deleted successfully!
   </div>

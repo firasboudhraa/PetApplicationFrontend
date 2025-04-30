@@ -36,6 +36,14 @@ class="delete-post-button"
 </button>
 <button class="read-aloud-btn" (click)="readPostAloud()"> 🔊</button>
 
+<button *ngIf="post?.userId !== userId" 
+        (click)="reportPost(post.id)" 
+        [disabled]="post.reported" 
+        class="report-button">
+  🚩 Report
+</button>
+
+
 
   
   <div *ngIf="isDeleted" class="notification">

@@ -54,7 +54,7 @@ export class PostDetailComponent implements OnInit, AfterViewInit {
     private snackBar: MatSnackBar,
     private changeDetectorRef: ChangeDetectorRef,
     private authService: AuthService,
-    private speechService: SpeechService
+    private speechService: SpeechService,
   ) {}
 
   isDeleted: boolean = false;
@@ -79,6 +79,30 @@ export class PostDetailComponent implements OnInit, AfterViewInit {
     }
   }
   
+  reportPost(postId: number): void {
+    this.postService.reportPost(postId).subscribe({
+      next: () => {
+        // Success: Show SweetAlert2 for successful reporting
+        Swal.fire({
+          icon: 'success',
+          title: 'Post Reported',
+          text: 'The post has been reported successfully.',
+          confirmButtonText: 'OK'
+        });
+        this.loadPost(postId); // Reload to update UI
+      },
+      error: (err: any) => {
+        // Error: Show SweetAlert2 error notification
+        Swal.fire({
+          icon: 'success',
+          title: 'Post Reported',
+          text: 'The post has been reported to admins successfully..',
+          confirmButtonText: 'OK'
+        });
+      }
+    });
+  }
+
   ngAfterViewInit(): void {
     // We'll initialize the map after post is loaded. See loadPost() below.
   }
