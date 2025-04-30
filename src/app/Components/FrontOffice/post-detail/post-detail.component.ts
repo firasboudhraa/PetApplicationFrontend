@@ -10,8 +10,8 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { ChangeDetectorRef } from '@angular/core';
 import { User } from '../user/models/user_model';
 import { AuthService } from 'src/app/Components/FrontOffice/user/auth/auth.service'; // Ensure correct import path
-import Swal from 'sweetalert2';  // Ensure SweetAlert is installed
-
+import Swal from 'sweetalert2';  
+import { SpeechService } from 'src/app/Services/speech.service'; 
 declare var google: any;  // Ensure Google Maps API types are loaded via @types/google.maps
 
 @Component({
@@ -53,7 +53,8 @@ export class PostDetailComponent implements OnInit, AfterViewInit {
     private router: Router,
     private snackBar: MatSnackBar,
     private changeDetectorRef: ChangeDetectorRef,
-    private authService: AuthService  // Inject AuthService
+    private authService: AuthService,
+    private speechService: SpeechService
   ) {}
 
   isDeleted: boolean = false;
@@ -110,6 +111,7 @@ export class PostDetailComponent implements OnInit, AfterViewInit {
       error: (error) => console.error('Error loading post author:', error)
     });
   }
+  
 
   private loadComments(postId: number): void {
     this.commentService.getCommentsByPostId(postId).subscribe({
@@ -300,10 +302,16 @@ export class PostDetailComponent implements OnInit, AfterViewInit {
   }
   
 
-  // Add the formatRole method
   formatRole(roles: string[]): string {
-    return roles.join(', ');  // Join the roles with a comma and space
+    return roles
+      .map(role => 
+        role
+          .replace(/_/g, ' ')  // Replace underscores with spaces
+          .replace(/\b\w/g, char => char.toUpperCase())  // Capitalize the first letter of each word
+      )
+      .join(', ');  // Join roles with a comma and space
   }
+  
 
   scrollToTop(): void {
     window.scrollTo({ top: 0, behavior: "smooth" });
@@ -346,6 +354,11 @@ export class PostDetailComponent implements OnInit, AfterViewInit {
     }
   }
 
-
+  readPostAloud(): void {
+    if (this.post) {
+      this.speechService.readAloud(`Title: ${this.post.title}. Content: ${this.post.content}`);
+    }
+  }
+ 
   
 }
