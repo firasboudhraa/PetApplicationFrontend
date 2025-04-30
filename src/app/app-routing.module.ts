@@ -80,6 +80,7 @@ import { UpdateServiceProfileComponent } from './Components/BackOffice/service-p
 import { AppointmentsProfileUserComponent } from './Components/FrontOffice/user/appointments-profile-user/appointments-profile-user.component';
 import { MyproductsComponent } from './Components/FrontOffice/user/myproducts/myproducts.component';
 import { MyPetsProfileComponent } from './Components/BackOffice/my-pets-profile/my-pets-profile.component';
+import { PetStatsComponent } from './Components/BackOffice/dashboard/pet-stats/pet-stats.component';
 
 const routes: Routes = [
   { path: 'about', component: AboutComponentComponent },
@@ -109,13 +110,14 @@ const routes: Routes = [
      {path:'eventback', component:EventbackComponent},
      {path:'update-event/:id', component:UpdateEventComponent},
      {path:'add-event', component:AddEventComponent},
-     { path: 'my-pets', component: UserPetsComponent },
+     { path: 'my-pets', component: PetStatsComponent },
      { path: 'adoption-request', component: AdoptionRequestDashbordComponent },
      { path: 'records', component: RecordsComponent },
      { path: 'posts', component: PostsComponent },
      { path: 'carnets', component: UsersCarnetComponent }
     ]
   },
+  {path:'test',component:PetStatsComponent},
   {path:'service-dashboard',component:ServiceProfileDashboardComponent},
   {path:'add-service-dashboard',component:AddServiceProfileComponent},
   {path:'appointments-dashboard',component:AppointmentsProfileComponent},

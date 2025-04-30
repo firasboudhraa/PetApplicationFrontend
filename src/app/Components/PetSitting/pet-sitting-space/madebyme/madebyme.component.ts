@@ -48,7 +48,24 @@ userId!:any;
     });
   }
   deleteOffer(offerId:number){
-   
+    Swal.fire({
+      title: 'Are you sure?',
+      text: 'You won\'t be able to revert this!',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, delete it!',
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.petSittingOfferService.deleteOffer(offerId).subscribe((response) => {
+          Swal.fire('Deleted!', 'The offer has been deleted.', 'success');
+          this.applyFilter();
+        }, (error) => {
+          Swal.fire('Error!', 'There was an error delete the offer.', 'error');
+        });
+      }
+    });
   }
   closeDetailModal(): void {
     this.renderer.removeClass(document.querySelector('.pet-sitting-space-container'), 'blur-effect');

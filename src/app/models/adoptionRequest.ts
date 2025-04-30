@@ -2,7 +2,7 @@ import { Pet } from "./pet";
 
 export interface AdoptionRequest {
     id: number;
-    adoptedPet: Pet; // Represents the Pet entity (linked via @ManyToOne)
+    adoptedPet: Pet; 
     requesterUserId: number;
     location: string;
     message: string;
@@ -10,7 +10,7 @@ export interface AdoptionRequest {
     isRejected: boolean;
     isChangedByPetOwner: boolean;
     isChangedByRequestOwner: boolean;
-    date: Date;  // Using Date type
+    date: Date; 
     time: string;
     rejectionReason: string;
     changedFields: string[];

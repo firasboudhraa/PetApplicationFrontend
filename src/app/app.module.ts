@@ -134,6 +134,7 @@ import { UpdateServiceProfileComponent } from './Components/BackOffice/service-p
 import { AppointmentsProfileUserComponent } from './Components/FrontOffice/user/appointments-profile-user/appointments-profile-user.component';
 import { MyproductsComponent } from './Components/FrontOffice/user/myproducts/myproducts.component';
 import { MyPetsProfileComponent } from './Components/BackOffice/my-pets-profile/my-pets-profile.component';
+import { PetStatsComponent } from './Components/BackOffice/dashboard/pet-stats/pet-stats.component';
 
   @NgModule({
     declarations: [
@@ -237,7 +238,8 @@ import { MyPetsProfileComponent } from './Components/BackOffice/my-pets-profile/
       UpdateServiceProfileComponent,
       AppointmentsProfileUserComponent,
       MyproductsComponent,
-      MyPetsProfileComponent
+      MyPetsProfileComponent,
+      PetStatsComponent
     ],
     imports: [
       BrowserAnimationsModule,
