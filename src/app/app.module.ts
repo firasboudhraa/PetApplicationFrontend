@@ -135,6 +135,7 @@ import { AppointmentsProfileUserComponent } from './Components/FrontOffice/user/
 import { MyproductsComponent } from './Components/FrontOffice/user/myproducts/myproducts.component';
 import { MyPetsProfileComponent } from './Components/BackOffice/my-pets-profile/my-pets-profile.component';
 import { PetStatsComponent } from './Components/BackOffice/dashboard/pet-stats/pet-stats.component';
+import { MyProfileComponent } from './Components/FrontOffice/user/my-profile/my-profile.component';
 
   @NgModule({
     declarations: [
@@ -239,7 +240,8 @@ import { PetStatsComponent } from './Components/BackOffice/dashboard/pet-stats/p
       AppointmentsProfileUserComponent,
       MyproductsComponent,
       MyPetsProfileComponent,
-      PetStatsComponent
+      PetStatsComponent,
+      MyProfileComponent
     ],
     imports: [
       BrowserAnimationsModule,
