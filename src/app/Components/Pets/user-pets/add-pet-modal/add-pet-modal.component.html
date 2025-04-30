@@ -31,13 +31,25 @@
                     </div>
                   </div>
                 <!-- Specie -->
-                <div class="form-group">
-                    <label for="species">Specie</label>
-                    <input id="species" type="text" class="form-control" formControlName="species" placeholder="Enter pet specie" />
-                  <div *ngIf="petForm.get('species')?.invalid && petForm.get('species')?.touched" class="text-danger">
-                    Pet species invalid
-                  </div>
+                <label for="species">Species</label>
+                <select class="form-control" id="species" (change)="onSpeciesChange($event)">
+                  <option *ngFor="let option of speciesOptions" [value]="option.value">{{ option.label }}</option>
+                  <option value="other">Other...</option>
+                </select>
+                
+                <div *ngIf="isOtherSpeciesSelected" class="mt-2">
+                  <label for="customSpecies">Enter Custom Species</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="customSpecies"
+                    (input)="onCustomSpeciesInput($event)"
+                    [value]="customSpecies"
+                    placeholder="e.g. Hamster"
+                  />
                 </div>
+                
+
                 <!-- Age --> 
                 <div class="form-group">
                   <label for="age">Age</label>
