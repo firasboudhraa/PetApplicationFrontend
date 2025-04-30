@@ -216,18 +216,19 @@ export class PostDetailComponent implements OnInit, AfterViewInit {
 
   openDeleteModal(postId: number): void {
     Swal.fire({
-      title: 'Êtes-vous sûr?',
-      text: "Cette action est irréversible!",
+      title: 'Are you sure?',
+      text: "This action is irreversible!",
       icon: 'warning',
       showCancelButton: true,
-      confirmButtonText: 'Oui, supprimer!',
-      cancelButtonText: 'Annuler'
+      confirmButtonText: 'Yes, delete it!',
+      cancelButtonText: 'Cancel'
     }).then((result) => {
       if (result.isConfirmed) {
         this.deletePostWithoutMail(postId);  // delete directly after confirm
       }
     });
   }
+  
   
   
   confirmDelete(): void {
@@ -254,8 +255,8 @@ export class PostDetailComponent implements OnInit, AfterViewInit {
         next: () => {
           console.log('Post deleted successfully');
           Swal.fire({
-            title: 'Supprimé!',
-            text: 'Le post a été supprimé avec succès.',
+            title: 'Deleted!',
+            text: 'The post has been successfully deleted.',
             icon: 'success',
             confirmButtonText: 'OK'
           }).then(() => {
@@ -264,33 +265,34 @@ export class PostDetailComponent implements OnInit, AfterViewInit {
         },
         error: (error) => {
           console.error('Error deleting post:', error);
-          Swal.fire('Erreur!', 'Une erreur est survenue lors de la suppression du post.', 'error');
+          Swal.fire('Error!', 'An error occurred while deleting the post.', 'error');
         }
       });
     }
   }
   
+  
 
   // Add the deleteComment method
   deleteComment(commentId: number): void {
     Swal.fire({
-      title: 'Êtes-vous sûr?',
-      text: "Cette action est irréversible!",
+      title: 'Confirm Delete?',
+      text: "Are you sure you want to delete this comment?",
       icon: 'warning',
       showCancelButton: true,
-      confirmButtonText: 'Oui, supprimer!',
-      cancelButtonText: 'Annuler'
+      confirmButtonText: 'Yes, delete!',
+      cancelButtonText: 'Discard'
     }).then((result) => {
       if (result.isConfirmed) {
         // Proceed with deletion if confirmed
         this.commentService.deleteComment(commentId).subscribe({
           next: () => {
             this.loadComments(this.post?.id!);  // Reload the comments after deletion
-            Swal.fire('Supprimé!', 'Le commentaire a été supprimé.', 'success'); // Success confirmation
+            Swal.fire('Deleted!', 'Your Comment Has Been Deleted.', 'success'); // Success confirmation
           },
           error: (err) => {
             console.error('Error deleting comment:', err);
-            Swal.fire('Erreur!', 'Une erreur est survenue lors de la suppression.', 'error'); // Error confirmation
+            Swal.fire('Error!', 'There Was An Error While Deleting Your Comment', 'error'); // Error confirmation
           }
         });
       }

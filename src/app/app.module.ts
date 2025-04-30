@@ -36,6 +36,8 @@
   import { PopoverModule } from 'ngx-bootstrap/popover';
   import { HTTP_INTERCEPTORS } from '@angular/common/http';
 
+
+
   Chart.register(...registerables);
   import { FooterComponent } from './Components/FrontOffice/footer/footer.component';
   import { HomeComponent } from './Components/FrontOffice/home/home.component';
@@ -258,6 +260,7 @@ import { MyPetsProfileComponent } from './Components/BackOffice/my-pets-profile/
       MatButtonModule,
       MatIconModule,
       RouterModule,
+      NgChartsModule,
 
       
     ],

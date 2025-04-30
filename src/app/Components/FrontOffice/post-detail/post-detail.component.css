@@ -40,20 +40,50 @@ body {
   object-fit: cover; /* Ensures the image fits nicely without distortion */
 }
 
-
-/* Modify Post Button Styling */
-.modify-post-button {
-    background-color: #4CAF50; /* Green color indicating action */
-    color: #fff; /* White text for contrast */
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Soft shadow for depth */
-}
-
-/* Delete Post Button Styling */
+/* Base Button Styling */
+.modify-post-button,
 .delete-post-button {
-    background-color: #F44336; /* Red color indicating delete */
-    color: #fff; /* White text for contrast */
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Soft shadow for depth */
+  border: none;
+  border-radius: 0.5rem; /* Rounded rectangle */
+  padding: 0.5rem 1.25rem; /* Wider than taller */
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #fff;
+  cursor: pointer;
+  transition: all 0.25s ease-in-out;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 }
+
+/* Specific Styles */
+.modify-post-button {
+  background-color: #43a047; /* Sleeker green */
+}
+
+.modify-post-button:hover {
+  background-color: #388e3c;
+  box-shadow: 0 6px 12px rgba(67, 160, 71, 0.3);
+  transform: translateY(-1px);
+}
+
+.delete-post-button {
+  background-color: #e53935; /* Sleeker red */
+}
+
+.delete-post-button:hover {
+  background-color: #c62828;
+  box-shadow: 0 6px 12px rgba(229, 57, 53, 0.3);
+  transform: translateY(-1px);
+}
+
+/* Responsive Tweaks */
+@media (max-width: 600px) {
+  .modify-post-button,
+  .delete-post-button {
+    font-size: 0.8rem;
+    padding: 0.4rem 1rem;
+  }
+}
+
 
 /* Hover Effects */
 .modify-post-button:hover {
