@@ -12,6 +12,12 @@ export class BasketService {
 
   constructor(private http: HttpClient) {}
 
+  // basket.service.ts
+getAllUserIds(): Observable<number[]> {
+  return this.http.get<number[]>('/api/users/ids'); // adapte l’URL selon ton backend
+}
+
+
   getAllBaskets(): Observable<Basket[]> {
     return this.http.get<Basket[]>(this.baseUrl);
   }
@@ -41,7 +47,9 @@ getProductsByBasketId(basketId: number): Observable<Product[]> {
   return this.http.get<Product[]>(`${this.baseUrl}/${basketId}/products`);
 }
 
-
+addProductToBasketbyUser(userId: number, basketId: number, productId: number): Observable<Basket> {
+  return this.http.post<Basket>(`${this.baseUrl}/user/${userId}/${basketId}/add-product/${productId}`, {});
+}
     // Ajouter un produit au panier
     addProductToBasket(basketId: number, productId: number): Observable<Basket> {
       return this.http.post<Basket>(`${this.baseUrl}/${basketId}/add-product/${productId}`, {});

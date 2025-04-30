@@ -137,97 +137,55 @@ export class NavbarComponent implements OnInit {
 
   // Afficher/masquer le panier
   toggleBasket() {
-    this.showBasket = !this.showBasket;
-  }
-
-  loadBasketById(): void {
-    if (this.basketId !== null) {
-      this.basketService
-        .getBasketById(this.basketId)
-        .pipe(
-          catchError((error) => {
-            console.error('Erreur lors du chargement du panier', error);
-            Swal.fire({
-              icon: 'error',
-              title: 'Panier non trouvé',
-              text: "Le panier avec cet ID n'existe pas.",
-            });
-            return of(null);
-          })
-        )
-        .subscribe((basket: Basket | null) => {
-          if (basket) {
-            this.basket = basket;
-
-            // Vérification et conversion de 'productIds'
-            if (basket.productIds) {
-              if (typeof basket.productIds === 'string') {
-                const idsString = basket.productIds as string;
-                this.basket.productIdsList = idsString
-                  .split(',')
-                  .map((id: string) => parseInt(id.trim(), 10))
-                  .filter((id) => !isNaN(id));
-              } else if (Array.isArray(basket.productIds)) {
-                this.basket.productIdsList = basket.productIds;
-              }
-            } else {
-              console.error('productIds est undefined ou null');
-              this.basket.productIdsList = [];
-            }
-
-            // Charger les détails des produits
-            if (
-              this.basket.productIdsList &&
-              this.basket.productIdsList.length > 0
-            ) {
-              const productDetailObservables = this.basket.productIdsList.map(
-                (id) =>
-                  this.productService
-                    .getProductById(id)
-                    .pipe(catchError(() => of(null)))
-              );
-
-              forkJoin(productDetailObservables).subscribe((products) => {
-                const filteredProducts = products.filter(
-                  (p) => p !== null
-                ) as Product[];
-
-                // Ajouter l'URL complète de l'image et initialiser la quantité à 1
-                filteredProducts.forEach((product) => {
-                  product.imageUrl = `http://localhost:8011/api/products/images/${product.imageUrl}`;
-                  if (
-                    product.quantity === undefined ||
-                    product.quantity === null
-                  ) {
-                    product.quantity = 1; // Initialiser la quantité à 1 lors de l'ajout du produit
-                  }
-                });
-
-                this.basket!.productDetailsList = filteredProducts;
-
-                // Calcul du total en fonction du prix * quantité
-                this.totalPrice = filteredProducts.reduce(
-                  (sum, product) =>
-                    sum + (product.prix || 0) * (product.quantity || 1),
-                  0
-                );
-              });
-            } else {
-              this.basket.productDetailsList = [];
-              this.totalPrice = 0; // Panier vide = prix total à 0
-            }
-
-            console.log('Panier récupéré :', this.basket);
-          } else {
-            Swal.fire({
-              icon: 'warning',
-              title: 'Aucun panier trouvé',
-              text: "Aucun panier trouvé avec cet ID. Veuillez vérifier l'ID du panier.",
-            });
-          }
-        });
+    this.showBasket = !this.showBasket;  // Toggle l'affichage du panier
+    console.log('Panier affiché:', this.showBasket);  // Vérifie si l'état du panier change
+    if (this.showBasket) {
+      console.log('Chargement du panier...');
+      this.loadBasket();  // Charge les produits quand le panier s'ouvre
     }
   }
+  
+
+loadBasketById(): void {
+  if (this.basketId !== null) {
+    this.basketService
+      .getBasketById(this.basketId)
+      .pipe(
+        catchError((error) => {
+          console.error('Erreur lors du chargement du panier', error);
+          Swal.fire({
+            icon: 'error',
+            title: 'Panier non trouvé',
+            text: "Le panier avec cet ID n'existe pas.",
+          });
+          return of(null);
+        })
+      )
+      .subscribe((basket: Basket | null) => {
+        if (basket) {
+          this.basket = basket;
+          this.basket.productIdsList = this.processProductIds(basket.productIds);
+          this.loadProductDetails(this.basket.productIdsList);
+        } else {
+          Swal.fire({
+            icon: 'warning',
+            title: 'Aucun panier trouvé',
+            text: "Aucun panier trouvé avec cet ID. Veuillez vérifier l'ID du panier.",
+          });
+        }
+      });
+  }
+}
+
+private processProductIds(productIds: string | number[]): number[] {
+  if (typeof productIds === 'string') {
+    return productIds.split(',').map((id: string) => parseInt(id.trim(), 10));
+  } else if (Array.isArray(productIds)) {
+    return productIds as number[];
+  }
+  return [];
+}
+
 
   // Charger le panier depuis l'API
   loadBasket(): void {
@@ -240,13 +198,37 @@ export class NavbarComponent implements OnInit {
         })
       )
       .subscribe((baskets) => {
-        console.log('Baskets récupérés :', baskets); // Ajoutez cette ligne pour afficher les baskets récupérés
+        console.log('Baskets récupérés :', baskets);  // Vérifie que les baskets sont bien récupérés
         if (baskets.length > 0) {
           this.basket = baskets[baskets.length - 1]; // Prendre le dernier panier
-          console.log('Panier actuel :', this.basket); // Afficher le panier actuel
+          console.log('Panier actuel :', this.basket);  // Affiche le panier actuel
+        } else {
+          console.log('Aucun panier trouvé.');
         }
       });
   }
+  
+  
+  private loadProductDetails(productIds: number[]): void {
+    if (productIds.length > 0) {
+      const productDetailObservables = productIds.map((id) =>
+        this.productService.getProductById(id).pipe(catchError(() => of(null)))
+      );
+  
+      forkJoin(productDetailObservables).subscribe((products) => {
+        const filteredProducts = products.filter((p) => p !== null) as Product[];
+  
+        filteredProducts.forEach((product) => {
+          product.imageUrl = `http://localhost:8011/api/products/images/${product.imageUrl}`;
+          if (product.quantity === undefined || product.quantity === null) {
+            product.quantity = 1; // Initialize quantity
+          }
+        });
+  
+        this.basket!.productDetailsList = filteredProducts;
+        this.updateTotal();
+      });
+    }}
 
   // Demander confirmation avant de supprimer un article
   confirmRemoveItem(productId: number) {
