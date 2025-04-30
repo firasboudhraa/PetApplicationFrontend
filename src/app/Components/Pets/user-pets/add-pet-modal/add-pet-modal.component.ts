@@ -3,6 +3,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from 'src/app/Components/FrontOffice/user/auth/auth.service';
 import { GoogleMapsLoaderService } from 'src/app/Services/google-maps-loader.service';
 import { PetdataServiceService } from 'src/app/Services/petdata-service.service';
+import { PetsSpeciesService } from 'src/app/Services/shared/pets-species.service';
 import Swal from 'sweetalert2';
 
 
@@ -22,13 +23,36 @@ export class AddPetModalComponent {
     this.close.emit();
   }
 
-  constructor(private petDataService: PetdataServiceService ,private authService:AuthService , private mapsLoader :GoogleMapsLoaderService) {}
+  constructor(private petDataService: PetdataServiceService ,private authService:AuthService,private speciesService: PetsSpeciesService , private mapsLoader :GoogleMapsLoaderService) {}
+  speciesOptions: { label: string; value: string }[] = [];
 
   petForm!: FormGroup;
   selectedImage: File | null = null;
   imageError: string | null = null;
-
+  isOtherSpeciesSelected: boolean = false;
+  customSpecies: string = '';
+  
+  onSpeciesChange(event: Event) {
+    const selectElement = event.target as HTMLSelectElement;
+    const selectedValue = selectElement.value;
+  
+    this.isOtherSpeciesSelected = selectedValue === 'other';
+  
+    if (!this.isOtherSpeciesSelected) {
+      this.petForm.get('species')?.setValue(selectedValue);
+      this.customSpecies = '';
+    }
+  }
+  
+  onCustomSpeciesInput(event: Event) {
+    const inputElement = event.target as HTMLInputElement;
+    const customValue = inputElement.value;
+    this.customSpecies = customValue;
+    this.petForm.get('species')?.setValue(customValue);
+  }
+  
   ngOnInit() {
+    this.speciesOptions = this.speciesService.speciesOption;
     this.userId = this.authService.getDecodedToken() ? this.authService.getDecodedToken()?.userId : 0 ;
     this.petForm = new FormGroup({
       name: new FormControl('', Validators.required),
