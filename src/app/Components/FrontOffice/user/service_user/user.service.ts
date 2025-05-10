@@ -80,7 +80,11 @@ export class UserService {
         catchError(this.handleError)
       );
   }
-  
+  // Add this method to your UserService class
+
+  updateUserProfileImage(formData: FormData, userId: number) {
+    return this.http.put(`${this.apiUrl}/update-profile-image/${userId}`, formData);
+  }
   /**
    * Get user adoption preferences
    * @param userId User ID
@@ -125,4 +129,6 @@ export class UserService {
     console.error(errorMessage);
     return throwError(() => new Error(errorMessage));
   }
+
+
 }

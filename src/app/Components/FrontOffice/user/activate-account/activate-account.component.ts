@@ -23,11 +23,16 @@ export class ActivateAccountComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    // Clear any existing tokens when visiting the activation page
+    this.authService.clearToken();
+    localStorage.removeItem('user');
+    
+    // Get the code from URL parameters but don't activate automatically
     this.route.queryParams.subscribe(params => {
       if (params['code']) {
         this.activationCode = params['code'];
-        // Show the code and activation button instead of auto-submitting
         this.showActivationButton = true;
+        console.log('Activation code from URL:', this.activationCode);
       }
     });
   }
@@ -39,11 +44,13 @@ export class ActivateAccountComponent implements OnInit {
     this.errorMessage = '';
     this.successMessage = '';
 
+    console.log('Sending activation code:', this.activationCode);
+
     this.authService.activateAccount(this.activationCode).subscribe({
       next: (response) => {
         this.isLoading = false;
         if (response.success) {
-          this.successMessage = 'Account activated successfully! proceed to login';
+          this.successMessage = 'Account activated successfully! Redirecting to login...';
           this.startCountdown();
         } else {
           this.errorMessage = response.message || 'Activation failed';
@@ -52,6 +59,7 @@ export class ActivateAccountComponent implements OnInit {
       error: (error) => {
         this.isLoading = false;
         this.errorMessage = error.error?.message || 'Invalid or expired activation code';
+        console.error('Activation error:', error);
       }
     });
   }

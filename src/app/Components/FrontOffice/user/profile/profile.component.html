@@ -29,13 +29,18 @@
           [src]="getProfilePictureUrl()"
           alt="Profile Image"
           (error)="handleImageError($event)" />
+        <i class="fa fa-plus-circle" 
+           aria-hidden="true" 
+           (click)="openProfilePicModal()"></i>
       </div>
       
       <div class="user-info">
+    
         <p><strong>First Name:</strong> {{ user.firstName }}</p>
         <p><strong>Last Name:</strong> {{ user.lastName }}</p>
         <p><strong>Email:</strong> {{ user.email }}</p>
         <p><strong>Role:</strong> {{ getRolesAsString() }}</p>
+     
         <p *ngIf="user.bio && user.bio.trim() !== ''"><strong>Bio:</strong> {{ user.bio }}</p>
       </div>
       
@@ -90,6 +95,36 @@
       </div>
     </div>
   </div>
+  <div class="modal fade show d-block" *ngIf="isProfilePicModalVisible" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content p-4">
+        <div class="modal-header border-0">
+          <h5 class="modal-title">Update Profile Picture</h5>
+          <button type="button" class="btn-close" (click)="isProfilePicModalVisible = false"></button>
+        </div>
+        <div class="modal-body text-center">
+          <div class="preview-container mb-3">
+            <img *ngIf="previewUrl" [src]="previewUrl" alt="Profile preview" class="profile-preview">
+            <img *ngIf="!previewUrl" [src]="getProfilePictureUrl()" alt="Current profile picture" class="profile-preview">
+          </div>
+          
+          <div class="mb-3">
+            <label for="profilePicture" class="form-label">Choose new profile picture</label>
+            <input type="file" class="form-control" id="profilePicture" (change)="onFileSelected($event)" accept="image/*">
+          </div>
+        </div>
+        <div class="modal-footer border-0 justify-content-center">
+          <button type="button" class="btn btn-secondary" (click)="isProfilePicModalVisible = false">
+            Cancel
+          </button>
+          <button type="button" class="btn btn-primary" (click)="updateProfilePicture()">
+            Update Picture
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
 
   <!-- Delete Confirmation Modal -->
   <div class="modal fade show d-block" *ngIf="isDeleteModalVisible" tabindex="-1">

@@ -3,6 +3,7 @@ import { AuthService } from '../auth/auth.service';
 import { User } from '../models/user_model';
 import { Router } from '@angular/router';
 import { UserService } from '../service_user/user.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-profile',
@@ -31,6 +32,11 @@ export class ProfileComponent implements OnInit {
     isLoading = true;
     errorMessage = '';
     isAdoptionModalVisible = false;
+    
+    isProfilePicModalVisible = false;
+selectedFile?: File;
+previewUrl: string | ArrayBuffer | null = null;
+
     
     constructor(
       private authService: AuthService,
@@ -131,6 +137,7 @@ export class ProfileComponent implements OnInit {
       this.isAdoptionModalVisible = true;
     }
     
+    
     editProfile() {
       const tokenData = this.authService.getDecodedToken();
     
@@ -189,4 +196,52 @@ export class ProfileComponent implements OnInit {
         });
       }
     }
+
+    openProfilePicModal(): void {
+      this.isProfilePicModalVisible = true;
+      this.previewUrl = null; // Reset preview when opening modal
+    }
+    
+    onFileSelected(event: Event): void {
+      const input = event.target as HTMLInputElement;
+      if (input.files && input.files.length > 0) {
+        this.selectedFile = input.files[0];
+        
+        // Preview the selected image
+        const reader = new FileReader();
+        reader.onload = () => {
+          this.previewUrl = reader.result;
+        };
+        reader.readAsDataURL(this.selectedFile);
+      }
+    }
+    
+    updateProfilePicture(): void {
+      if (!this.selectedFile) {
+        this.showAlert('warning', 'No Image Selected', 'Please select an image first');
+        return;
+      }
+    
+      const formData = new FormData();
+      formData.append('image', this.selectedFile);
+    
+      this.userService.updateUserProfileImage(formData, this.user.id).subscribe({
+        next: () => {
+          // Update the timestamp to force image refresh
+          this.imageTimestamp = new Date().getTime();
+          this.showAlert('success', 'Success', 'Profile picture updated successfully');
+          this.isProfilePicModalVisible = false;
+          this.previewUrl = null;
+          this.selectedFile = undefined;
+          
+          // Refresh user data to get updated profile URL
+          this.loadUserProfile(this.user.id);
+        },
+        error: (error) => {
+          console.error('Error updating profile picture:', error);
+          this.showAlert('error', 'Update Failed', 'Failed to update profile picture');
+        }
+      });
+    }
+  
 }

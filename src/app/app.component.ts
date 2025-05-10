@@ -29,7 +29,14 @@ export class AppComponent {
           url.startsWith('/stats-dashboard') ||
           url.startsWith('/login') ||
           url.startsWith('/register') ||
-          url.startsWith('/update-service-dashboard') 
+          url.startsWith('/update-service-dashboard') ||
+          url.startsWith('/profile') ||
+           url.startsWith('/forgot-password') ||
+          url.startsWith('/reset-password') 
+
+         
+
+
         );
 
         // Contrôle de l'affichage du chat

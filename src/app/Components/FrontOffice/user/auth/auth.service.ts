@@ -1,16 +1,12 @@
 // auth.service.ts
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { Observable, tap } from 'rxjs';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Observable, tap, catchError, throwError } from 'rxjs';
 import { Router } from '@angular/router';
 import { jwtDecode } from 'jwt-decode';
 import { User } from '../models/user_model';
-import { HttpHeaders } from '@angular/common/http';
-import { catchError, throwError } from 'rxjs';
 
-
-
-interface RegisterRequest {
+export interface RegisterRequest {
   firstName: string;
   lastName: string;
   email: string;
@@ -37,16 +33,16 @@ interface DecodedToken {
   exp: number;        // Expiration
 }
 
-
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
   private apiUrl = 'http://localhost:8084/api/auth';
   private tokenKey = 'auth_token';
+  private currentUser: User | null = null;
+  private pendingEmailKey = 'pending_email';
 
   constructor(private http: HttpClient, private router: Router) { }
-
 
   login(credentials: LoginRequest): Observable<AuthResponse> {
     return this.http.post<AuthResponse>(`${this.apiUrl}/login`, credentials).pipe(
@@ -59,18 +55,16 @@ export class AuthService {
     );
   }
 
-  // Dans auth.service.ts
   fetchCurrentUser(): Observable<User> {
-    const token = localStorage.getItem(this.tokenKey); // Récupère le token du localStorage
+    const token = localStorage.getItem(this.tokenKey);
     
     if (!token) {
-      // Si aucun token n'est trouvé, renvoyer une erreur ou rediriger l'utilisateur
       console.error('Token not found in localStorage');
-      return throwError('Token not found');
+      return throwError(() => new Error('Token not found'));
     }
   
     const headers = new HttpHeaders({
-      Authorization: `Bearer ${token}`  // Ajoute l'en-tête d'autorisation
+      Authorization: `Bearer ${token}`
     });
   
     return this.http.get<User>(`${this.apiUrl}/me`, { headers }).pipe(
@@ -80,11 +74,10 @@ export class AuthService {
       }),
       catchError(error => {
         console.error('Error fetching current user', error);
-        return throwError(error);
+        return throwError(() => error);
       })
     );
   }
-  
 
   logout(): Observable<any> {
     const token = this.getToken();
@@ -98,27 +91,26 @@ export class AuthService {
     return this.http.post(`${this.apiUrl}/forgot-password`, { email: email });
   }
 
-// auth.service.ts
-resetPassword(token: string, newPassword: string): Observable<any> {
-  // Ensure we're only sending the token value, not the full URL
-  const cleanToken = this.extractTokenFromUrl(token);
-  return this.http.post(`${this.apiUrl}/reset-password`, { 
-    token: cleanToken, 
-    newPassword 
-  });
-}
-
-private extractTokenFromUrl(token: string): string {
-  if (token.includes('token=')) {
-    try {
-      const url = new URL(token);
-      return url.searchParams.get('token') || token;
-    } catch {
-      return token;
-    }
+  resetPassword(token: string, newPassword: string): Observable<any> {
+    const cleanToken = this.extractTokenFromUrl(token);
+    return this.http.post(`${this.apiUrl}/reset-password`, { 
+      token: cleanToken, 
+      newPassword 
+    });
   }
-  return token;
-}
+
+  private extractTokenFromUrl(token: string): string {
+    if (token.includes('token=')) {
+      try {
+        const url = new URL(token);
+        return url.searchParams.get('token') || token;
+      } catch {
+        return token;
+      }
+    }
+    return token;
+  }
+
   register(userData: RegisterRequest): Observable<any> {
     this.setPendingEmail(userData.email);
     return this.http.post(`${this.apiUrl}/register`, userData);
@@ -127,7 +119,6 @@ private extractTokenFromUrl(token: string): string {
   resendVerificationCode(email: string): Observable<any> {
     return this.http.post(`${this.apiUrl}/resend-code`, { email });
   }
-    
 
   private setToken(token: string): void {
     localStorage.setItem(this.tokenKey, token);
@@ -155,7 +146,6 @@ private extractTokenFromUrl(token: string): string {
   isLoggedIn(): boolean {
     return !!this.getToken();
   }
-  private currentUser: User | null = null;
 
   setCurrentUser(user: User) {
     this.currentUser = user;
@@ -170,21 +160,25 @@ private extractTokenFromUrl(token: string): string {
   }
 
   activateAccount(code: string): Observable<any> {
-    return this.http.post(`${this.apiUrl}/activate`, { code });
+    console.log('Activating account with code:', code);
+    return this.http.post(`${this.apiUrl}/activate`, { code }).pipe(
+      tap(response => console.log('Activation response:', response)),
+      catchError(error => {
+        console.error('Activation error:', error);
+        return throwError(() => error);
+      })
+    );
   }
-private pendingEmailKey = 'pending_email';
 
-setPendingEmail(email: string): void {
-  localStorage.setItem(this.pendingEmailKey, email);
-}
+  setPendingEmail(email: string): void {
+    localStorage.setItem(this.pendingEmailKey, email);
+  }
 
-getPendingEmail(): string | null {
-  return localStorage.getItem(this.pendingEmailKey);
-}
+  getPendingEmail(): string | null {
+    return localStorage.getItem(this.pendingEmailKey);
+  }
 
-clearPendingEmail(): void {
-  localStorage.removeItem(this.pendingEmailKey);
-}
-
-
+  clearPendingEmail(): void {
+    localStorage.removeItem(this.pendingEmailKey);
+  }
 }

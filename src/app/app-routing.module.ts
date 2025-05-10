@@ -173,7 +173,8 @@ const routes: Routes = [
   { path: 'adoption-request', component: AdoptionRequestComponent },
   { path: 'edit-adoption-request', component: EditAdoptionRequestComponent },
   { path: 'chat', component: ChatPopupComponent },
-  {
+  { path: 'users', component: UsersComponent },
+  /*{
     path: 'dashboard',
     component: DashboardComponent,
     canActivate: [AuthGuard],
@@ -181,6 +182,7 @@ const routes: Routes = [
     children: [{ path: 'users', component: UsersComponent }],
   },
 
+  */
   /*user routes */
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
@@ -194,10 +196,6 @@ const routes: Routes = [
   { path: 'matching-pets', component: MatchingPetComponent },
   { path: 'profile', component: ProfileComponent },
   { path: 'myprofile', component: MyProfileComponent },
-  
-
-
-
 
   {
     path: 'activate_account',

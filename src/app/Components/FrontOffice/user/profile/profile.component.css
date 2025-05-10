@@ -11,7 +11,16 @@
   max-width: 800px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
-
+.container {
+  display: flex;
+  margin-left: 250px; /* Sidebar offset */
+  padding: 80px 30px 30px; /* Top padding for header, some side padding */
+  width: calc(100% - 250px);
+  min-height: 100vh;
+  background-color: #f2f5f9; /* Softer background */
+  flex-direction: column;
+  gap: 20px;
+}
 /* User Info Section */
 .user-info {
   text-align: center;
@@ -183,4 +192,92 @@
   color: #721c24;
   border-radius: 5px;
   margin-top: 20px;
+}
+/* User Picture Container */
+.user-pic {
+  position: relative;
+  margin-bottom: 20px;
+  width: 150px;
+  height: 150px;
+}
+
+.user-pic img {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  border: 3px solid #122d13;
+  object-fit: cover;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* User Picture Container */
+.user-pic {
+  position: relative;
+  margin-bottom: 20px;
+  width: 150px;
+  height: 150px;
+}
+
+.user-pic img {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  border: 3px solid #122d13;
+  object-fit: cover;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Edit icon styling */
+.user-pic .fa-plus-circle {
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+  font-size: 30px;
+  color: #28a745;
+  background-color: white;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: transform 0.2s ease, color 0.2s ease, box-shadow 0.2s ease;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  z-index: 10;
+}
+
+.user-pic .fa-plus-circle:hover {
+  transform: scale(1.1);
+  color: #218838;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+/* Overlay for better UX when hovering over profile pic */
+.user-pic::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  background-color: rgba(0, 0, 0, 0);
+  transition: background-color 0.3s ease;
+  pointer-events: none;
+}
+
+.user-pic:hover::after {
+  background-color: rgba(0, 0, 0, 0.2);
+}
+
+/* Profile picture preview in modal */
+.profile-preview {
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 3px solid #28a745;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.preview-container {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
 }

@@ -1,79 +1,179 @@
-<div class="container mt-5" id="register">
-  <div class="row justify-content-center">
-    <div class="col-md-6">
-      <div class="card shadow-lg rounded" style="border: none;">
-        <div class="card-header bg-primary text-white text-center py-3">
-          <h3>Register</h3>
+<div class="registration-page">
+  <div class="container-fluid">
+    <div class="row">
+      <!-- Left side with gradient and description -->
+      <div class="col-lg-6 welcome-section" >
+        <div class="welcome-content" >
+          <h1 class="welcome-heading">Join Our forreverBuddy</h1>
+          <p class="welcome-text">
+            Connect, care, and celebrate pets together – join our community today!
+          </p>
+          <img src="assets/images/logo.png" alt="Logo" class="logo" style="width: 200px; height: auto; margin-left: 100px; margin-top: 20px;">         
+          <div class="features">
+            <div class="feature">
+              <i class="fas fa-user-md feature-icon"></i>
+              <p class="feature-text">Connect with trusted veterinarians</p>
+            </div>
+            <div class="feature">
+              <i class="fas fa-calendar-check feature-icon"></i>
+              <p class="feature-text">Easy appointment scheduling</p>
+            </div>
+            <div class="feature">
+              <i class="fas fa-comments feature-icon"></i>
+              <p class="feature-text">Community support & advice</p>
+            </div>
+            <div class="feature">
+              <i class="fas fa-shield-alt feature-icon"></i>
+              <p class="feature-text">Verified service providers</p>
+            </div>
+          </div>
         </div>
-        <div class="card-body p-4">
+      </div>
+
+      <!-- Right side with registration form -->
+      <div class="col-lg-6 form-section">
+        <div class="form-content">
+          <h2 class="form-title">Create Your Account</h2>
+
           <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
-            
             <!-- Error Message -->
             <div *ngIf="errorMessage" class="alert alert-danger text-center">
-              {{ errorMessage }}
+              <i class="fas fa-exclamation-circle me-2"></i> {{ errorMessage }}
             </div>
-            
+
             <!-- Success Message -->
             <div *ngIf="successMessage" class="alert alert-success text-center">
-              {{ successMessage }}
+              <i class="fas fa-check-circle me-2"></i> {{ successMessage }}
             </div>
 
-            <!-- First Name -->
-            <div class="mb-4">
-              <label for="firstName" class="form-label text-muted">First Name</label>
-              <input type="text" class="form-control rounded-3" id="firstName" formControlName="firstName" placeholder="Enter your first name">
-              <div *ngIf="registerForm.get('firstName')?.invalid && registerForm.get('firstName')?.touched" class="text-danger small">
-                First name is required
+            <div class="row-form">
+              <!-- First Name -->
+              <div class="form-group">
+                <label for="firstName" class="form-label">
+                  <i class="fas fa-user me-2 text-pet-primary"></i>First Name
+                </label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="firstName"
+                  formControlName="firstName"
+                  placeholder="Enter first name"
+                />
+                <div
+                  *ngIf="
+                    registerForm.get('firstName')?.invalid &&
+                    registerForm.get('firstName')?.touched
+                  "
+                  class="error-feedback"
+                >
+                  <i class="fas fa-info-circle me-1"></i> First name is required
+                </div>
               </div>
-            </div>
 
-            <!-- Last Name -->
-            <div class="mb-4">
-              <label for="lastName" class="form-label text-muted">Last Name</label>
-              <input type="text" class="form-control rounded-3" id="lastName" formControlName="lastName" placeholder="Enter your last name">
-              <div *ngIf="registerForm.get('lastName')?.invalid && registerForm.get('lastName')?.touched" class="text-danger small">
-                Last name is required
+              <!-- Last Name -->
+              <div class="form-group">
+                <label for="lastName" class="form-label">
+                  <i class="fas fa-user me-2 text-pet-primary"></i>Last Name
+                </label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="lastName"
+                  formControlName="lastName"
+                  placeholder="Enter last name"
+                />
+                <div
+                  *ngIf="
+                    registerForm.get('lastName')?.invalid &&
+                    registerForm.get('lastName')?.touched
+                  "
+                  class="error-feedback"
+                >
+                  <i class="fas fa-info-circle me-1"></i> Last name is required
+                </div>
               </div>
             </div>
 
             <!-- Email -->
-            <div class="mb-4">
-              <label for="email" class="form-label text-muted">Email</label>
-              <input type="email" class="form-control rounded-3" id="email" formControlName="email" placeholder="Enter your email">
-              <div *ngIf="registerForm.get('email')?.invalid && registerForm.get('email')?.touched" class="text-danger small">
-                Valid email is required
+            <div class="form-group">
+              <label for="email" class="form-label">
+                <i class="fas fa-envelope me-2 text-pet-primary"></i>Email
+              </label>
+              <input
+                type="email"
+                class="form-control"
+                id="email"
+                formControlName="email"
+                placeholder="Enter your email"
+              />
+              <div
+                *ngIf="
+                  registerForm.get('email')?.invalid &&
+                  registerForm.get('email')?.touched
+                "
+                class="error-feedback"
+              >
+                <i class="fas fa-info-circle me-1"></i> Valid email is required
               </div>
             </div>
 
             <!-- Password -->
-            <div class="mb-4 position-relative">
-              <label for="password" class="form-label text-muted">Password</label>
-              <input type="password" class="form-control rounded-3" id="password" formControlName="password" placeholder="Enter your password">
-              <div *ngIf="registerForm.get('password')?.invalid && registerForm.get('password')?.touched" class="text-danger small">
-                Password must be at least 6 characters
+            <div class="form-group">
+              <label for="password" class="form-label">
+                <i class="fas fa-lock me-2 text-pet-primary"></i>Password
+              </label>
+              <input
+                type="password"
+                class="form-control"
+                id="password"
+                formControlName="password"
+                placeholder="Create a password"
+              />
+              <div
+                *ngIf="
+                  registerForm.get('password')?.invalid &&
+                  registerForm.get('password')?.touched
+                "
+                class="error-feedback"
+              >
+                <i class="fas fa-info-circle me-1"></i> Password must be at
+                least 8 characters, contain uppercase, lowercase, number, and special character.
               </div>
             </div>
 
             <!-- Role -->
-            <div class="mb-4">
-              <label for="role" class="form-label text-muted">Role</label>
-              <select class="form-control rounded-3" id="role" formControlName="role">
+            <div class="form-group">
+              <label for="role" class="form-label">
+                <i class="fas fa-user-tag me-2 text-pet-primary"></i>I am a...
+              </label>
+              <select class="form-control" id="role" formControlName="role">
                 <option value="PET_OWNER">Pet Owner</option>
                 <option value="VETERINARIAN">Veterinarian</option>
-                <option value="SERVICE_PROVIDER">Service Provider</option>
+                <option value="SERVICE_PROVIDER">Pet Service Provider</option>
+
               </select>
             </div>
 
             <!-- Submit Button -->
-            <button type="submit" class="btn btn-primary w-100 rounded-pill py-2" [disabled]="registerForm.invalid">
-              <i class="fa fa-user-plus me-2"></i> Register
-            </button>
+            <div class="form-group mt-4">
+              <button
+                type="submit"
+                class="btn btn-pet-primary w-100 rounded-pill btn-with-icon btn-pulse"
+                [disabled]="registerForm.invalid"
+              >
+                <i class="fa fa-user-plus"></i>
+                <span>Sign Up</span>
+              </button>
+            </div>
           </form>
 
           <!-- Link to Login -->
-          <div class="mt-4 text-center">
-            <p class="text-muted">
-              Already have an account? <a routerLink="/login" class="text-decoration-none text-primary">Login here</a>
+          <div class="mt-3 text-center">
+            <p>
+              Already have an account?
+              <a routerLink="/login" class="login-link text-decoration-none">
+                Login here
+              </a>
             </p>
           </div>
         </div>
@@ -82,8 +182,8 @@
   </div>
 </div>
 
-<!-- Modal for Notifications -->
-<!-- Modal for Notifications -->
+
+
 <div class="modal fade show d-block" *ngIf="showModal" tabindex="-1" style="background: rgba(0,0,0,0.5);">
   <div class="modal-dialog modal-sm">
     <div class="modal-content text-center p-4" [ngStyle]="{ 'background-color': modalType === 'success' ? '#e8fbe5' : '#f8d7da' }" style="border-radius: 20px;">

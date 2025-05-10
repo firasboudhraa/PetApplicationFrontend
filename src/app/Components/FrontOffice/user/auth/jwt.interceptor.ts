@@ -4,21 +4,23 @@ import {
   HttpRequest,
   HttpHandler,
   HttpEvent,
-  HttpInterceptor
+  HttpInterceptor,
+  HttpErrorResponse
 } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, throwError } from 'rxjs';
+import { catchError } from 'rxjs/operators';
 import { AuthService } from './auth.service';
+import { Router } from '@angular/router';
 
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {
-  constructor(private authService: AuthService) {}
+  constructor(private authService: AuthService, private router: Router) {}
 
   intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
-    // Skip token for specific endpoints only
     const skipAuth = [
       '/api/auth/login', 
-  '/api/auth/register',
-  '/api/auth/activate'
+      '/api/auth/register',
+      '/api/auth/activate'
     ].some(url => request.url.includes(url));
 
     if (skipAuth) {
@@ -34,7 +36,16 @@ export class AuthInterceptor implements HttpInterceptor {
       setHeaders: { Authorization: `Bearer ${token}` }
     });
 
-    return next.handle(authReq);
+    // Add error handling to handle 401 responses
+    return next.handle(authReq).pipe(
+      catchError((error: HttpErrorResponse) => {
+        if (error.status === 401) {
+          // Clear invalid token and redirect to login
+          this.authService.clearToken();
+          localStorage.removeItem('user');
+        }
+        return throwError(() => error);
+      })
+    );
   }
-
 }

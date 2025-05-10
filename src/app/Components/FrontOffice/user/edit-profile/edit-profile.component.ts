@@ -132,5 +132,32 @@ export class EditProfileComponent implements OnInit {
       .replace(/_/g, ' ')  
       .replace(/\b\w/g, (l) => l.toUpperCase());
   }
+
+  // Add this function to your EditProfileComponent class
+
+updateProfilePicture(): void {
+  if (!this.selectedFile) {
+    this.toastr.warning('Please select an image first');
+    return;
+  }
+
+  const formData = new FormData();
+  formData.append('image', this.selectedFile);
+
+  this.userService.updateUserProfileImage(formData, this.user.id).subscribe({
+    next: () => {
+      this.toastr.success('Profile picture updated successfully');
+      // Refresh the preview or redirect if needed
+      this.previewUrl = null;
+      this.selectedFile = undefined;
+      // Optionally reload the user data
+      this.loadUserProfile(this.user.id);
+    },
+    error: (error) => {
+      console.error('Error updating profile picture:', error);
+      this.toastr.error('Failed to update profile picture');
+    }
+  });
+}
 }
 

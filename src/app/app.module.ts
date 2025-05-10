@@ -243,7 +243,7 @@ import { AdoptionRequestProfileComponent } from './Components/BackOffice/adoptio
       MyPetsProfileComponent,
       PetStatsComponent,
       MyProfileComponent,
-      AdoptionRequestProfileComponent
+      AdoptionRequestProfileComponent,
     ],
     imports: [
       BrowserAnimationsModule,
